@@ -1,1 +1,6 @@
-// domains/auth/domain/entities/auth-token.entity.ts
+export interface AuthTokensEntity {
+  accessToken: string;
+  refreshToken: string;
+  tokenType?: string;
+  expiresIn?: number;
+}

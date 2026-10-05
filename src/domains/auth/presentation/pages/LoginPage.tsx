@@ -1,68 +1,32 @@
-import { useParams, Link } from 'react-router';
-import { useUIStore } from '@/core/stores/ui.store';
-import { Badge } from '@/shared/ui/badge';
+import { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/shared/ui/card';
-import { Button } from '@/shared/ui/button';
-import { Edit3, ArrowLeft } from 'lucide-react';
+import { LoginForm } from '../components/LoginForm';
+import { ForgotPasswordForm } from '../components/ForgotPasswordForm';
 
 export function LoginPage() {
-  const params = useParams();
-  const { isEditMode, viewMode } = useUIStore();
+  const [view, setView] = useState<'login' | 'forgot-password'>('login');
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              Sign In to Kanzen Tech
-            </h1>
-            {isEditMode && (
-              <Badge variant="warning" size="sm" className="flex items-center gap-1">
-                <Edit3 className="h-3 w-3" />
-                <span>Edit Mode</span>
-              </Badge>
-            )}
-          </div>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Authenticate with corporate credentials to access elevated controls.
-          </p>
-        </div>
+    <Card className="w-full shadow-2xl border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md">
+      <CardHeader className="text-center pb-4">
+        <CardTitle className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+          {view === 'login' ? 'Console Authentication' : 'Account Recovery'}
+        </CardTitle>
+        <CardDescription className="text-xs text-slate-500 dark:text-slate-400">
+          {view === 'login'
+            ? 'Sign in with your enterprise credentials to access management controls.'
+            : 'Enter your email to request an authenticated reset link.'}
+        </CardDescription>
+      </CardHeader>
 
-        <div className="flex items-center gap-2">
-          {Object.keys(params).length > 0 && (
-            <Badge variant="neutral" size="sm" className="font-mono text-xs">
-              {JSON.stringify(params)}
-            </Badge>
-          )}
-        </div>
-      </div>
-
-      {/* Main Content Showcase */}
-      <Card className="border-slate-200 dark:border-slate-800">
-        <CardHeader>
-          <CardTitle className="text-lg">Unified View Experience</CardTitle>
-          <CardDescription>
-            Layout mode: <strong className="text-slate-900 dark:text-white uppercase font-mono">{viewMode}</strong>.
-            This view dynamically blends public visitor presentation with inline staff authoring.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            Content modules and domain services for this view will synchronize seamlessly with the backend REST endpoints.
-          </p>
-          <div className="pt-2">
-            <Link to="/">
-              <Button variant="outline" size="sm" className="flex items-center gap-1.5">
-                <ArrowLeft className="h-3.5 w-3.5" />
-                <span>Return to Home</span>
-              </Button>
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+      <CardContent>
+        {view === 'login' ? (
+          <LoginForm onForgotPasswordClick={() => setView('forgot-password')} />
+        ) : (
+          <ForgotPasswordForm onBackToLogin={() => setView('login')} />
+        )}
+      </CardContent>
+    </Card>
   );
 }
 
