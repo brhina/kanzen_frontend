@@ -1,1 +1,1 @@
-// shared/ui/button/index.ts
+export * from './Button';

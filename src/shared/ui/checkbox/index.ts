@@ -1,1 +1,1 @@
-// shared/ui/checkbox/index.ts
+export * from './Checkbox';

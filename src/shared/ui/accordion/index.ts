@@ -1,1 +1,1 @@
-// shared/ui/accordion/index.ts
+export * from './Accordion';

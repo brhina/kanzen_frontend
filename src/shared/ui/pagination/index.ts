@@ -1,1 +1,1 @@
-// shared/ui/pagination/index.ts
+export * from './Pagination';

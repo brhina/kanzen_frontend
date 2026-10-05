@@ -1,1 +1,2 @@
-// shared/ui/table/index.ts
+export * from './Table';
+export type { ColumnDef, SortingState } from '@tanstack/react-table';

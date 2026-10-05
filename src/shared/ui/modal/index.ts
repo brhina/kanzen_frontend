@@ -1,1 +1,1 @@
-// shared/ui/modal/index.ts
+export * from './Modal';

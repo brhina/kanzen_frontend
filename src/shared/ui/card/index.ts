@@ -1,1 +1,1 @@
-// shared/ui/card/index.ts
+export * from './Card';

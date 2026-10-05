@@ -1,1 +1,1 @@
-// shared/ui/avatar/index.ts
+export * from './Avatar';

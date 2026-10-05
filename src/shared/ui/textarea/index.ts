@@ -1,1 +1,1 @@
-// shared/ui/textarea/index.ts
+export * from './Textarea';

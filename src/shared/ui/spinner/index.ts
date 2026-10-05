@@ -1,1 +1,1 @@
-// shared/ui/spinner/index.ts
+export * from './Spinner';

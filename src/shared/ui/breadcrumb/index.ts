@@ -1,1 +1,1 @@
-// shared/ui/breadcrumb/index.ts
+export * from './Breadcrumb';

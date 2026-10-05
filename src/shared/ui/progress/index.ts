@@ -1,1 +1,1 @@
-// shared/ui/progress/index.ts
+export * from './Progress';

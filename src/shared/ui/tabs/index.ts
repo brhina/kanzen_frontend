@@ -1,1 +1,1 @@
-// shared/ui/tabs/index.ts
+export * from './Tabs';

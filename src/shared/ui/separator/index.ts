@@ -1,1 +1,1 @@
-// shared/ui/separator/index.ts
+export * from './Separator';

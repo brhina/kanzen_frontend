@@ -1,1 +1,1 @@
-// shared/ui/input/index.ts
+export * from './Input';

@@ -1,1 +1,1 @@
-// shared/ui/drawer/index.ts
+export * from './Drawer';

@@ -1,1 +1,1 @@
-// shared/ui/badge/index.ts
+export * from './Badge';

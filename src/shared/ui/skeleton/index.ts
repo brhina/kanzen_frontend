@@ -1,1 +1,1 @@
-// shared/ui/skeleton/index.ts
+export * from './Skeleton';

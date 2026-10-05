@@ -1,1 +1,1 @@
-// shared/ui/dropdown/index.ts
+export * from './Dropdown';
