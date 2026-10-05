@@ -1,1 +1,7 @@
-// domains/blog/domain/value-objects/seo-meta.vo.ts
+export interface SeoMeta {
+  metaTitle?: string;
+  metaDescription?: string;
+  keywords?: string[];
+  canonicalUrl?: string;
+  ogImage?: string;
+}

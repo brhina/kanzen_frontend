@@ -1,1 +1,7 @@
-// domains/blog/domain/enums/blog-category-status.enum.ts
+export const BlogCategoryStatus = {
+  ACTIVE: 'active',
+  INACTIVE: 'inactive',
+} as const;
+
+export type BlogCategoryStatus = (typeof BlogCategoryStatus)[keyof typeof BlogCategoryStatus];
+export type BlogCategoryStatusType = BlogCategoryStatus;
