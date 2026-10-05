@@ -74,4 +74,40 @@ describe('authMapper', () => {
     expect(state.user?.isAdmin).toBe(true);
     expect(state.hasPermission('users:read')).toBe(true);
   });
+
+  it('safely handles undefined or null rawUser without throwing Cannot read properties of undefined (reading id)', () => {
+    const entity = authMapper.toUserEntity(undefined);
+    expect(entity.id).toBe('');
+    expect(entity.fullName).toBe('');
+    expect(entity.permissions).toEqual([]);
+
+    const nullEntity = authMapper.toUserEntity(null);
+    expect(nullEntity.id).toBe('');
+  });
+
+  it('hydrates authStore when response is wrapped in standard backend ApiResponse envelope', () => {
+    authMapper.syncAuthStore({
+      data: {
+        accessToken: 'envelope-acc-jwt',
+        refreshToken: 'envelope-ref-jwt',
+        user: {
+          id: 'u-100',
+          firstName: 'Backend',
+          lastName: 'User',
+          fullName: 'Backend User',
+          email: 'backend@kanzen.tech',
+          isAdmin: false,
+          permissions: ['portfolio:read'],
+          status: 'active',
+        },
+      },
+    } as any);
+
+    const state = useAuthStore.getState();
+    expect(state.isAuthenticated).toBe(true);
+    expect(state.accessToken).toBe('envelope-acc-jwt');
+    expect(state.refreshToken).toBe('envelope-ref-jwt');
+    expect(state.user?.id).toBe('u-100');
+    expect(state.user?.email).toBe('backend@kanzen.tech');
+  });
 });

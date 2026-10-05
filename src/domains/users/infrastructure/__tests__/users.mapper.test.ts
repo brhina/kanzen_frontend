@@ -52,4 +52,28 @@ describe('usersMapper', () => {
     expect(result.limit).toBe(10);
     expect(result.totalPages).toBe(2);
   });
+
+  it('maps UserResponseDto wrapped in backend data envelope', () => {
+    const entity = usersMapper.toEntity({
+      data: {
+        id: 'u-wrapped',
+        firstName: 'Wrapped',
+        lastName: 'User',
+        fullName: 'Wrapped User',
+        email: 'wrapped@kanzen.tech',
+        isAdmin: true,
+        permissions: ['all'],
+        status: 'active',
+      },
+    } as any);
+
+    expect(entity.id).toBe('u-wrapped');
+    expect(entity.fullName).toBe('Wrapped User');
+  });
+
+  it('safely handles undefined or null dto', () => {
+    const entity = usersMapper.toEntity(undefined as any);
+    expect(entity.id).toBe('');
+    expect(entity.fullName).toBe('');
+  });
 });
