@@ -47,12 +47,16 @@ export interface AuthState {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set, get) => ({
-      accessToken: null,
-      refreshToken: null,
-      user: null,
-      isAuthenticated: false,
-      isLoading: false,
+    (set, get, api) => {
+      queueMicrotask(() => {
+        api.getInitialState = api.getState;
+      });
+      return {
+        accessToken: null,
+        refreshToken: null,
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
 
       setAuth: (tokens, user) => {
         set({
@@ -141,8 +145,9 @@ export const useAuthStore = create<AuthState>()(
         if (!Array.isArray(user.permissions)) return false;
         return permissions.every((p) => user.permissions.includes(p));
       },
-    }),
-    {
+    };
+  },
+  {
       name: STORAGE_KEYS.auth,
       storage: createJSONStorage(() =>
         typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
@@ -165,3 +170,6 @@ export const useAuthStore = create<AuthState>()(
 
 // Vanilla store access alias for non-React modules (interceptors, services)
 export const authStore = useAuthStore;
+
+// Ensure server snapshots in SSR/Node match the current state rather than stale initialization
+useAuthStore.getInitialState = useAuthStore.getState;

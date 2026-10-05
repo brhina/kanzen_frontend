@@ -25,12 +25,16 @@ export interface UIState {
 
 export const useUIStore = create<UIState>()(
   persist(
-    (set) => ({
-      theme: 'system',
-      isEditMode: false,
-      viewMode: 'grid',
-      sidebarOpen: false,
-      activeDrawer: null,
+    (set, _get, api) => {
+      queueMicrotask(() => {
+        api.getInitialState = api.getState;
+      });
+      return {
+        theme: 'system',
+        isEditMode: false,
+        viewMode: 'grid',
+        sidebarOpen: false,
+        activeDrawer: null,
 
       setTheme: (theme) => {
         set({ theme });
@@ -81,8 +85,9 @@ export const useUIStore = create<UIState>()(
       closeDrawer: () => {
         set({ activeDrawer: null });
       },
-    }),
-    {
+    };
+  },
+  {
       name: STORAGE_KEYS.ui,
       storage: createJSONStorage(() =>
         typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
@@ -103,3 +108,6 @@ export const useUIStore = create<UIState>()(
 );
 
 export const uiStore = useUIStore;
+
+// Ensure server snapshots in SSR/Node match the current state rather than stale initialization
+useUIStore.getInitialState = useUIStore.getState;
