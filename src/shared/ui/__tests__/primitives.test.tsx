@@ -33,7 +33,7 @@ describe('Shared Kernel UI Primitives Rendering', () => {
       </Button>,
     );
     expect(htmlPrimary).toContain('Save Changes');
-    expect(htmlPrimary).toContain('bg-indigo-600');
+    expect(htmlPrimary).toContain('bg-brand-500');
 
     const htmlDanger = renderToStaticMarkup(
       <Button variant="danger" size="sm">

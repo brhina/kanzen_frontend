@@ -21,7 +21,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const subtleVariants: Record<BadgeVariant, string> = {
-  brand: 'bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/50 dark:text-indigo-300 dark:border-indigo-800',
+  brand: 'bg-brand-50 text-brand-700 border-brand-200 dark:bg-brand-950/50 dark:text-brand-300 dark:border-brand-800',
   neutral: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-700',
   success: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/50 dark:text-emerald-300 dark:border-emerald-800',
   warning: 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/50 dark:text-amber-300 dark:border-amber-800',
@@ -30,7 +30,7 @@ const subtleVariants: Record<BadgeVariant, string> = {
 };
 
 const solidVariants: Record<BadgeVariant, string> = {
-  brand: 'bg-indigo-600 text-white border-transparent',
+  brand: 'bg-brand-500 text-white border-transparent',
   neutral: 'bg-slate-600 text-white border-transparent',
   success: 'bg-emerald-600 text-white border-transparent',
   warning: 'bg-amber-600 text-white border-transparent',
@@ -39,7 +39,7 @@ const solidVariants: Record<BadgeVariant, string> = {
 };
 
 const outlineVariants: Record<BadgeVariant, string> = {
-  brand: 'bg-transparent text-indigo-600 border-indigo-300 dark:text-indigo-400 dark:border-indigo-700',
+  brand: 'bg-transparent text-brand-600 border-brand-300 dark:text-brand-400 dark:border-brand-700',
   neutral: 'bg-transparent text-slate-700 border-slate-300 dark:text-slate-300 dark:border-slate-700',
   success: 'bg-transparent text-emerald-600 border-emerald-300 dark:text-emerald-400 dark:border-emerald-700',
   warning: 'bg-transparent text-amber-600 border-amber-300 dark:text-amber-400 dark:border-amber-700',
@@ -48,7 +48,7 @@ const outlineVariants: Record<BadgeVariant, string> = {
 };
 
 const dotColors: Record<BadgeVariant, string> = {
-  brand: 'bg-indigo-500',
+  brand: 'bg-brand-500',
   neutral: 'bg-slate-400',
   success: 'bg-emerald-500',
   warning: 'bg-amber-500',

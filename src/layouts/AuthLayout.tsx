@@ -22,7 +22,7 @@ export function AuthLayout({ className = '' }: AuthLayoutProps) {
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-indigo-500/10 blur-3xl dark:bg-indigo-500/15"
+        className="pointer-events-none absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-brand-500/10 blur-3xl dark:bg-brand-500/15"
         aria-hidden="true"
       />
 

@@ -65,7 +65,7 @@ export function Tabs({
               className={cn(
                 'relative flex items-center gap-2 pb-3 pt-2 text-sm font-medium transition-colors select-none cursor-pointer',
                 isSelected
-                  ? 'text-indigo-600 dark:text-indigo-400 font-semibold'
+                  ? 'text-brand-600 dark:text-brand-400 font-semibold'
                   : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200',
                 tab.disabled && 'pointer-events-none opacity-40',
               )}
@@ -77,7 +77,7 @@ export function Tabs({
                   className={cn(
                     'rounded-full px-2 py-0.5 text-xs',
                     isSelected
-                      ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300'
+                      ? 'bg-brand-100 text-brand-700 dark:bg-brand-950 dark:text-brand-300'
                       : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400',
                   )}
                 >
@@ -85,7 +85,7 @@ export function Tabs({
                 </span>
               )}
               {isSelected && (
-                <div className="absolute inset-x-0 bottom-0 h-0.5 bg-indigo-600 dark:bg-indigo-400 rounded-full" />
+                <div className="absolute inset-x-0 bottom-0 h-0.5 bg-brand-500 dark:bg-brand-400 rounded-full" />
               )}
             </button>
           );
@@ -114,7 +114,7 @@ export function Tabs({
                 className={cn(
                   'rounded-full px-1.5 py-0.2 text-[11px]',
                   isSelected
-                    ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-300'
+                    ? 'bg-brand-50 text-brand-600 dark:bg-brand-950 dark:text-brand-300'
                     : 'bg-slate-200/60 text-slate-500 dark:bg-slate-700 dark:text-slate-400',
                 )}
               >

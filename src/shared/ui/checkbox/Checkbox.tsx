@@ -62,8 +62,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             disabled={disabled}
             aria-invalid={!!errorMessage}
             className={cn(
-              'h-4 w-4 rounded border-slate-300 text-indigo-600 transition-colors',
-              'focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-slate-700 dark:bg-slate-900',
+              'h-4 w-4 rounded border-slate-300 text-brand-500 transition-colors',
+              'focus:ring-2 focus:ring-brand-500 focus:ring-offset-0 dark:border-slate-700 dark:bg-slate-900',
               'disabled:cursor-not-allowed disabled:opacity-50',
               errorMessage && 'border-red-500 text-red-600 focus:ring-red-500',
               className,

@@ -74,7 +74,7 @@ export function Pagination({
             <select
               value={limit}
               onChange={(e) => onLimitChange(Number(e.target.value))}
-              className="rounded-md border border-slate-200 bg-white px-2 py-1 text-xs text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="rounded-md border border-slate-200 bg-white px-2 py-1 text-xs text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 focus:outline-none focus:ring-1 focus:ring-brand-500"
             >
               {PAGE_SIZE_OPTIONS.map((size) => (
                 <option key={size} value={size}>
@@ -122,7 +122,7 @@ export function Pagination({
               className={cn(
                 'inline-flex h-8 w-8 items-center justify-center rounded-lg text-xs font-medium transition-colors',
                 isActive
-                  ? 'bg-indigo-600 text-white shadow-xs dark:bg-indigo-500'
+                  ? 'bg-brand-500 text-white shadow-xs dark:bg-brand-500'
                   : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800',
               )}
             >

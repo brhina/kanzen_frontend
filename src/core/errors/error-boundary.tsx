@@ -98,7 +98,7 @@ export class ErrorBoundary extends Component<
             <button
               type="button"
               onClick={this.reset}
-              className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-indigo-700 transition"
+              className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white shadow hover:bg-brand-600 transition"
             >
               Try Again
             </button>

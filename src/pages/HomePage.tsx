@@ -43,7 +43,7 @@ export function HomePage() {
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white leading-[1.1]">
               High-Impact Engineering,{' '}
-              <span className="bg-gradient-to-r from-brand-600 via-indigo-600 to-cyan-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-amber-500 bg-clip-text text-transparent">
                 Architecture & AI
               </span>
             </h1>
@@ -70,7 +70,7 @@ export function HomePage() {
             {/* Technical Proof Points */}
             <div className="pt-8 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-medium text-slate-500 dark:text-slate-400">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                <CheckCircle2 className="h-4 w-4 text-brand-500" />
                 <span>99.99% Guaranteed SLA</span>
               </div>
               <div className="flex items-center gap-2">
@@ -78,7 +78,7 @@ export function HomePage() {
                 <span>Zero-Trust Security</span>
               </div>
               <div className="flex items-center gap-2">
-                <Zap className="h-4 w-4 text-amber-500" />
+                <Zap className="h-4 w-4 text-brand-500" />
                 <span>Sub-50ms Global Latency</span>
               </div>
             </div>
@@ -122,7 +122,7 @@ export function HomePage() {
 
             <Card className="hover:shadow-lg transition-shadow border-slate-200 dark:border-slate-800">
               <CardHeader>
-                <div className="h-10 w-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2">
+                <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center mb-2">
                   <Cpu className="h-5 w-5" />
                 </div>
                 <CardTitle>AI & Deep Learning</CardTitle>
@@ -142,7 +142,7 @@ export function HomePage() {
 
             <Card className="hover:shadow-lg transition-shadow border-slate-200 dark:border-slate-800">
               <CardHeader>
-                <div className="h-10 w-10 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mb-2">
+                <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center mb-2">
                   <Zap className="h-5 w-5" />
                 </div>
                 <CardTitle>High-Performance Cloud</CardTitle>

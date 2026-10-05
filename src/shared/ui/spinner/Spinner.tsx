@@ -15,7 +15,7 @@ const sizeClasses = {
 };
 
 const variantClasses = {
-  primary: 'border-indigo-600 border-t-transparent dark:border-indigo-400 dark:border-t-transparent',
+  primary: 'border-brand-500 border-t-transparent dark:border-brand-400 dark:border-t-transparent',
   secondary: 'border-slate-500 border-t-transparent dark:border-slate-400 dark:border-t-transparent',
   white: 'border-white border-t-transparent',
   current: 'border-current border-t-transparent',

@@ -13,7 +13,7 @@ export interface ProgressProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const variantClasses: Record<ProgressVariant, string> = {
-  brand: 'bg-indigo-600 dark:bg-indigo-500',
+  brand: 'bg-brand-500 dark:bg-brand-500',
   success: 'bg-emerald-600 dark:bg-emerald-500',
   warning: 'bg-amber-500 dark:bg-amber-400',
   danger: 'bg-red-600 dark:bg-red-500',

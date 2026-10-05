@@ -88,9 +88,9 @@ export function Table<TData extends Record<string, any>>({
                         {canSort && (
                           <span className="shrink-0 text-slate-400">
                             {isSorted === 'asc' ? (
-                              <ArrowUp className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
+                              <ArrowUp className="h-3.5 w-3.5 text-brand-500 dark:text-brand-400" />
                             ) : isSorted === 'desc' ? (
-                              <ArrowDown className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
+                              <ArrowDown className="h-3.5 w-3.5 text-brand-500 dark:text-brand-400" />
                             ) : (
                               <ArrowUpDown className="h-3.5 w-3.5 opacity-60" />
                             )}

@@ -35,7 +35,7 @@ export function AboutPage() {
 
         <Card>
           <CardHeader>
-            <div className="h-10 w-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2">
+            <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center mb-2">
               <Shield className="h-5 w-5" />
             </div>
             <CardTitle>Zero-Trust Security</CardTitle>
@@ -47,7 +47,7 @@ export function AboutPage() {
 
         <Card>
           <CardHeader>
-            <div className="h-10 w-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-2">
+            <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center mb-2">
               <Users className="h-5 w-5" />
             </div>
             <CardTitle>Senior Engineers Only</CardTitle>
@@ -59,7 +59,7 @@ export function AboutPage() {
 
         <Card>
           <CardHeader>
-            <div className="h-10 w-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-2">
+            <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center mb-2">
               <Award className="h-5 w-5" />
             </div>
             <CardTitle>Measured Outcomes</CardTitle>
@@ -71,13 +71,13 @@ export function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="rounded-2xl bg-gradient-to-r from-brand-900 via-indigo-950 to-slate-900 p-8 sm:p-12 text-white text-center space-y-6">
+      <section className="rounded-2xl bg-gradient-to-r from-slate-950 via-brand-950 to-slate-900 p-8 sm:p-12 text-white text-center space-y-6 border border-brand-500/20">
         <h2 className="text-3xl font-bold tracking-tight">Ready to elevate your engineering standard?</h2>
         <p className="max-w-xl mx-auto text-slate-300 text-sm sm:text-base">
           Schedule an architectural deep dive with our principal engineering team.
         </p>
         <Link to="/contact">
-          <Button variant="primary" size="lg" className="bg-white text-brand-900 hover:bg-slate-100">
+          <Button variant="primary" size="lg" className="shadow-lg shadow-brand-500/25">
             <span>Consult With Us</span>
             <ArrowRight className="h-4 w-4 ml-1.5" />
           </Button>
