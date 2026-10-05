@@ -1,0 +1,1 @@
+// shared/hooks/useScrollLock.ts
