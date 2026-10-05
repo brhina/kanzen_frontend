@@ -113,8 +113,13 @@ export const queryKeys = {
   },
   newsletter: {
     all: ['newsletter'] as const,
+    lists: () => [...queryKeys.newsletter.all, 'list'] as const,
+    list: (filters?: Record<string, unknown>) =>
+      [...queryKeys.newsletter.lists(), filters] as const,
     subscribers: (filters?: Record<string, unknown>) =>
       [...queryKeys.newsletter.all, 'subscribers', filters] as const,
+    details: () => [...queryKeys.newsletter.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.newsletter.details(), id] as const,
   },
   media: {
     all: ['media'] as const,
