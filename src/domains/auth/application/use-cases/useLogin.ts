@@ -29,7 +29,7 @@ export function useLogin(options: UseLoginOptions = {}) {
 
       addToast({
         title: 'Welcome Back',
-        message: `Successfully signed in as ${data.user.fullName || data.user.email}`,
+        message: `Successfully signed in as ${data?.user?.fullName || data?.user?.email || 'User'}`,
         type: 'success',
       });
 

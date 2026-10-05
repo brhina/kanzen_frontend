@@ -7,19 +7,46 @@ export const authMapper = {
   /**
    * Convert AuthResponseDto tokens to AuthTokensEntity
    */
-  toTokens(dto: AuthResponseDto | RefreshTokenResponseDto): AuthTokensEntity {
+  toTokens(
+    dto:
+      | AuthResponseDto
+      | RefreshTokenResponseDto
+      | { data: AuthResponseDto | RefreshTokenResponseDto },
+  ): AuthTokensEntity {
+    const payload = (dto && 'data' in dto && dto.data ? dto.data : dto) as
+      | AuthResponseDto
+      | RefreshTokenResponseDto;
     return {
-      accessToken: dto.accessToken,
-      refreshToken: dto.refreshToken || '',
-      tokenType: dto.tokenType || 'Bearer',
-      expiresIn: dto.expiresIn,
+      accessToken: payload?.accessToken || '',
+      refreshToken: payload?.refreshToken || '',
+      tokenType: payload?.tokenType || 'Bearer',
+      expiresIn: payload?.expiresIn,
     };
   },
 
   /**
    * Normalize user data into UserEntity
    */
-  toUserEntity(rawUser: Partial<UserEntity>): UserEntity {
+  toUserEntity(rawUser?: Partial<UserEntity> | null): UserEntity {
+    if (!rawUser) {
+      return {
+        id: '',
+        firstName: '',
+        lastName: '',
+        fullName: '',
+        email: '',
+        phone: undefined,
+        avatar: undefined,
+        isAdmin: false,
+        permissions: [],
+        status: 'active',
+        emailVerifiedAt: undefined,
+        lastLoginAt: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
+    }
+
     return {
       id: rawUser.id || '',
       firstName: rawUser.firstName || '',
@@ -43,12 +70,13 @@ export const authMapper = {
   /**
    * Hydrate authStore with full token and user payload
    */
-  syncAuthStore(dto: AuthResponseDto): void {
-    const user = this.toUserEntity(dto.user);
+  syncAuthStore(dto: AuthResponseDto | { data: AuthResponseDto }): void {
+    const payload = (dto && 'data' in dto && dto.data ? dto.data : dto) as AuthResponseDto;
+    const user = this.toUserEntity(payload?.user);
     useAuthStore.getState().setAuth(
       {
-        accessToken: dto.accessToken,
-        refreshToken: dto.refreshToken,
+        accessToken: payload?.accessToken || '',
+        refreshToken: payload?.refreshToken || '',
       },
       user,
     );

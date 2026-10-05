@@ -5,22 +5,41 @@ export const usersMapper = {
   /**
    * Convert UserResponseDto to domain UserEntity
    */
-  toEntity(dto: UserResponseDto): UserEntity {
+  toEntity(dto: UserResponseDto | { data: UserResponseDto }): UserEntity {
+    const raw = (dto && 'data' in dto && dto.data ? dto.data : dto) as UserResponseDto;
+    if (!raw) {
+      return {
+        id: '',
+        firstName: '',
+        lastName: '',
+        fullName: '',
+        email: '',
+        phone: undefined,
+        avatar: undefined,
+        isAdmin: false,
+        permissions: [],
+        status: 'active',
+        emailVerifiedAt: undefined,
+        lastLoginAt: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
+    }
     return {
-      id: dto.id,
-      firstName: dto.firstName,
-      lastName: dto.lastName,
-      fullName: dto.fullName || `${dto.firstName} ${dto.lastName}`.trim(),
-      email: dto.email,
-      phone: dto.phone,
-      avatar: dto.avatar,
-      isAdmin: dto.isAdmin,
-      permissions: Array.isArray(dto.permissions) ? dto.permissions : [],
-      status: dto.status || 'active',
-      emailVerifiedAt: dto.emailVerifiedAt,
-      lastLoginAt: dto.lastLoginAt,
-      createdAt: dto.createdAt,
-      updatedAt: dto.updatedAt,
+      id: raw.id || '',
+      firstName: raw.firstName || '',
+      lastName: raw.lastName || '',
+      fullName: raw.fullName || `${raw.firstName || ''} ${raw.lastName || ''}`.trim(),
+      email: raw.email || '',
+      phone: raw.phone,
+      avatar: raw.avatar,
+      isAdmin: Boolean(raw.isAdmin),
+      permissions: Array.isArray(raw.permissions) ? raw.permissions : [],
+      status: raw.status || 'active',
+      emailVerifiedAt: raw.emailVerifiedAt,
+      lastLoginAt: raw.lastLoginAt,
+      createdAt: raw.createdAt,
+      updatedAt: raw.updatedAt,
     };
   },
 
