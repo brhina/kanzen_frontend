@@ -77,6 +77,8 @@ describe('AdminBar', () => {
     expect(html).toContain('Jane Admin');
     expect(html).toContain('Edit Mode:');
     expect(html).toContain('/dashboard');
+    expect(html).toContain('/leads');
+    expect(html).toContain('/applications');
     expect(html).toContain('/settings');
   });
 

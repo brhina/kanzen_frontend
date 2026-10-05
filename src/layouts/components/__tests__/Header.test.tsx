@@ -30,6 +30,7 @@ describe('Header', () => {
     expect(html).toContain('Portfolio');
     expect(html).toContain('Case Studies');
     expect(html).toContain('Blog');
+    expect(html).toContain('Careers');
     expect(html).toContain('About');
     expect(html).toContain('Contact');
   });

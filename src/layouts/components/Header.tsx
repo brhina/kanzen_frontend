@@ -9,6 +9,10 @@ import {
   LogOut,
   Edit3,
   Sparkles,
+  Calendar,
+  Layers,
+  Shield,
+  Briefcase,
 } from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useUIStore } from '@/core/stores/ui.store';
@@ -24,6 +28,7 @@ export interface HeaderProps {
 interface NavItem {
   label: string;
   href: string;
+  badge?: string;
 }
 
 const NAV_ITEMS: NavItem[] = [
@@ -33,6 +38,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Case Studies', href: '/case-studies' },
   { label: 'Blog', href: '/blog' },
+  { label: 'Careers', href: '/careers', badge: 'Hiring' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ];
@@ -77,6 +83,30 @@ export function Header({ className = '' }: HeaderProps) {
       label: 'Executive Dashboard',
       icon: <LayoutDashboard className="h-4 w-4 text-slate-500" />,
       onClick: () => navigate('/dashboard'),
+    },
+    {
+      id: 'leads',
+      label: 'CRM Leads Pipeline',
+      icon: <Layers className="h-4 w-4 text-indigo-500" />,
+      onClick: () => navigate('/leads'),
+    },
+    {
+      id: 'consultations',
+      label: 'Appointments & Consultations',
+      icon: <Calendar className="h-4 w-4 text-cyan-500" />,
+      onClick: () => navigate('/consultations'),
+    },
+    {
+      id: 'applications',
+      label: 'Talent & Applications',
+      icon: <Briefcase className="h-4 w-4 text-amber-500" />,
+      onClick: () => navigate('/applications'),
+    },
+    {
+      id: 'users',
+      label: 'Team & RBAC Users',
+      icon: <Shield className="h-4 w-4 text-emerald-500" />,
+      onClick: () => navigate('/users'),
     },
     {
       id: 'settings',

@@ -116,9 +116,15 @@ export function Footer({ className = '' }: FooterProps) {
                 </Link>
               </li>
               <li>
-                <Link to="/careers" className="inline-flex items-center gap-1 hover:text-slate-900 dark:hover:text-white transition-colors">
+                <Link to="/careers" className="inline-flex items-center gap-1.5 hover:text-slate-900 dark:hover:text-white transition-colors">
                   <span>Careers</span>
+                  <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-200/60 dark:border-emerald-800">Hiring</span>
                   <ArrowUpRight className="h-3 w-3 text-slate-400" />
+                </Link>
+              </li>
+              <li>
+                <Link to="/applications" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                  Candidate Status Portal
                 </Link>
               </li>
               <li>
@@ -143,6 +149,11 @@ export function Footer({ className = '' }: FooterProps) {
               <li>
                 <Link to="/consultations" className="hover:text-slate-900 dark:hover:text-white transition-colors">
                   Book Technical Consultation
+                </Link>
+              </li>
+              <li>
+                <Link to="/leads" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                  Scope &amp; Budget Estimator
                 </Link>
               </li>
               <li>

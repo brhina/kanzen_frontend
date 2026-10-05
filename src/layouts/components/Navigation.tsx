@@ -19,6 +19,9 @@ import {
   Moon,
   Laptop,
   Image as ImageIcon,
+  Calendar,
+  Shield,
+  FileCheck,
 } from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useUIStore } from '@/core/stores/ui.store';
@@ -53,20 +56,23 @@ const NAV_GROUPS: NavGroup[] = [
     ],
   },
   {
-    title: 'Knowledge & Insights',
+    title: 'Inbound & Consultation',
     items: [
-      { label: 'Engineering Blog', href: '/blog', icon: BookOpen },
-      { label: 'Newsletter', href: '/newsletter', icon: Mail },
+      { label: 'Technical Consultations', href: '/consultations', icon: Calendar, badge: 'Book' },
+      { label: 'Scope & Estimator', href: '/leads', icon: Sparkles },
+      { label: 'Tech Radar Newsletter', href: '/newsletter', icon: Mail },
+      { label: 'Direct Inquiry', href: '/contact', icon: Mail },
     ],
   },
   {
-    title: 'Company & Trust',
+    title: 'Company & Talent',
     items: [
       { label: 'About Us', href: '/about', icon: Info },
       { label: 'Engineering Process', href: '/process', icon: Workflow },
       { label: 'Careers', href: '/careers', icon: Users2, badge: 'Hiring' },
+      { label: 'Candidate Portal', href: '/applications', icon: FileCheck },
+      { label: 'Engineering Blog', href: '/blog', icon: BookOpen },
       { label: 'Client Testimonials', href: '/testimonials', icon: MessageSquareQuote },
-      { label: 'Contact', href: '/contact', icon: Mail },
     ],
   },
 ];
@@ -172,6 +178,38 @@ export function Navigation({ className = '' }: NavigationProps) {
               >
                 <LayoutDashboard className="h-3.5 w-3.5 text-slate-500" />
                 <span>Dashboard</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleNavigate('/leads')}
+                className="flex items-center gap-1.5 rounded-lg p-2 text-slate-700 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-800 transition-colors text-left"
+              >
+                <Layers className="h-3.5 w-3.5 text-indigo-500" />
+                <span>CRM Leads</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleNavigate('/consultations')}
+                className="flex items-center gap-1.5 rounded-lg p-2 text-slate-700 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-800 transition-colors text-left"
+              >
+                <Calendar className="h-3.5 w-3.5 text-cyan-500" />
+                <span>Consultations</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleNavigate('/applications')}
+                className="flex items-center gap-1.5 rounded-lg p-2 text-slate-700 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-800 transition-colors text-left"
+              >
+                <Users2 className="h-3.5 w-3.5 text-amber-500" />
+                <span>Recruiting</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleNavigate('/users')}
+                className="flex items-center gap-1.5 rounded-lg p-2 text-slate-700 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-800 transition-colors text-left"
+              >
+                <Shield className="h-3.5 w-3.5 text-emerald-500" />
+                <span>Team & RBAC</span>
               </button>
               <button
                 type="button"

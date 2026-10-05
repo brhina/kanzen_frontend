@@ -12,6 +12,8 @@ import {
   ChevronDown,
   LayoutDashboard,
   Users,
+  Layers,
+  Briefcase,
 } from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useUIStore } from '@/core/stores/ui.store';
@@ -180,6 +182,24 @@ export function AdminBar({ className = '' }: AdminBarProps) {
           >
             <LayoutDashboard className="h-3.5 w-3.5 text-slate-400" />
             <span className="hidden md:inline">Dashboard</span>
+          </Link>
+
+          <Link
+            to="/leads"
+            className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
+            title="CRM Leads Pipeline"
+          >
+            <Layers className="h-3.5 w-3.5 text-indigo-400" />
+            <span className="hidden xl:inline">Leads</span>
+          </Link>
+
+          <Link
+            to="/applications"
+            className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
+            title="Recruitment & Applications"
+          >
+            <Briefcase className="h-3.5 w-3.5 text-amber-400" />
+            <span className="hidden xl:inline">Recruiting</span>
           </Link>
 
           <Link

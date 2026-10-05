@@ -41,6 +41,8 @@ describe('Navigation', () => {
     expect(html).toContain('Solutions &amp; Offerings');
     expect(html).toContain('Services');
     expect(html).toContain('Products');
+    expect(html).toContain('Careers');
+    expect(html).toContain('Candidate Portal');
     expect(html).toContain('Start a Project');
   });
 });
