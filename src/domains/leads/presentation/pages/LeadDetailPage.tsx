@@ -106,7 +106,7 @@ export function LeadDetailPage() {
   };
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Navigation Breadcrumb & Back */}
       <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
         <Link to="/leads">

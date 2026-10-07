@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useLeads } from '../../application/use-cases/useLeads';
 import { useDeleteLead } from '../../application/use-cases/useDeleteLead';
 import type { LeadEntity } from '../../domain/entities/lead.entity';
@@ -7,9 +7,13 @@ import { LeadStatusBadge } from './LeadStatusBadge';
 import { LeadQualificationScore } from './LeadQualificationScore';
 import { LeadDetailDrawer } from './LeadDetailDrawer';
 import { Button } from '@/shared/ui/button';
-import { Input } from '@/shared/ui/input';
 import {
-  Search,
+  SearchFilterBar,
+  FilterGroup,
+  FilterPill,
+  FilterSelect,
+} from '@/shared/ui/filter';
+import {
   Building2,
   Calendar,
   Eye,
@@ -31,6 +35,9 @@ const STATUS_TABS = [
 export function LeadTable() {
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+  const [scoreFilter, setScoreFilter] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<'newest' | 'score' | 'name'>('newest');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedLead, setSelectedLead] = useState<LeadEntity | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -48,6 +55,74 @@ export function LeadTable() {
   const total = data?.total || 0;
   const totalPages = data?.totalPages || 1;
 
+  // Active filter count
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (selectedStatus !== 'all') count++;
+    if (scoreFilter !== 'all') count++;
+    if (sortBy !== 'newest') count++;
+    return count;
+  }, [selectedStatus, scoreFilter, sortBy]);
+
+  // Active filter chips
+  const activeChips = useMemo(() => {
+    const chips = [];
+    if (searchTerm) {
+      chips.push({
+        id: 'search',
+        label: `Search: "${searchTerm}"`,
+        onRemove: () => setSearchTerm(''),
+      });
+    }
+    if (selectedStatus !== 'all') {
+      const tab = STATUS_TABS.find((t) => t.id === selectedStatus);
+      chips.push({
+        id: 'status',
+        label: `Status: ${tab?.label || selectedStatus}`,
+        onRemove: () => setSelectedStatus('all'),
+      });
+    }
+    if (scoreFilter !== 'all') {
+      chips.push({
+        id: 'score',
+        label: `Score: ${scoreFilter === 'high' ? '>75 High Priority' : '>40 Qualified'}`,
+        onRemove: () => setScoreFilter('all'),
+      });
+    }
+    if (sortBy !== 'newest') {
+      chips.push({
+        id: 'sort',
+        label: `Sort: ${sortBy === 'score' ? 'Score High-to-Low' : 'Name A-Z'}`,
+        onRemove: () => setSortBy('newest'),
+      });
+    }
+    return chips;
+  }, [searchTerm, selectedStatus, scoreFilter, sortBy]);
+
+  const handleResetFilters = () => {
+    setSearchTerm('');
+    setSelectedStatus('all');
+    setScoreFilter('all');
+    setSortBy('newest');
+    setCurrentPage(1);
+  };
+
+  // Filter and sort leads locally if scoreFilter or sortBy is applied
+  const displayedLeads = useMemo(() => {
+    let list = [...leads];
+    if (scoreFilter === 'high') {
+      list = list.filter((l) => (l.qualificationScore || 0) >= 75);
+    } else if (scoreFilter === 'medium') {
+      list = list.filter((l) => (l.qualificationScore || 0) >= 40);
+    }
+    if (sortBy === 'score') {
+      list.sort((a, b) => (b.qualificationScore || 0) - (a.qualificationScore || 0));
+    } else if (sortBy === 'name') {
+      list.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    return list;
+  }, [leads, scoreFilter, sortBy]);
+
   const handleInspect = (lead: LeadEntity) => {
     setSelectedLead(lead);
     setIsDrawerOpen(true);
@@ -62,44 +137,67 @@ export function LeadTable() {
 
   return (
     <div className="space-y-4">
-      {/* Filter Tabs & Search Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        {/* Status Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
-          {STATUS_TABS.map((tab) => {
-            const isActive = selectedStatus === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => {
-                  setSelectedStatus(tab.id);
-                  setCurrentPage(1);
-                }}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-                  isActive
-                    ? 'bg-brand-600 text-white shadow-sm'
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
-                }`}
-              >
-                {tab.label}
-              </button>
-            );
-          })}
-        </div>
+      {/* Search & Expandable Filter Bar */}
+      <SearchFilterBar
+        searchValue={searchTerm}
+        onSearchChange={(val) => {
+          setSearchTerm(val);
+          setCurrentPage(1);
+        }}
+        searchPlaceholder="Search leads by name, email, company..."
+        isFilterExpanded={isFilterExpanded}
+        onToggleFilter={() => setIsFilterExpanded((prev) => !prev)}
+        activeFilterCount={activeFilterCount}
+        activeChips={activeChips}
+        onClearAllFilters={handleResetFilters}
+        resultsSummary={
+          <span className="text-xs text-slate-500 font-medium">
+            Showing <span className="font-semibold text-slate-700 dark:text-slate-300">{displayedLeads.length}</span> of {total} leads
+          </span>
+        }
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+          <FilterGroup label="Lead Status" count={selectedStatus !== 'all' ? 1 : undefined}>
+            <div className="flex flex-wrap gap-1.5">
+              {STATUS_TABS.map((tab) => (
+                <FilterPill
+                  key={tab.id}
+                  label={tab.label}
+                  isActive={selectedStatus === tab.id}
+                  onClick={() => {
+                    setSelectedStatus(tab.id);
+                    setCurrentPage(1);
+                  }}
+                />
+              ))}
+            </div>
+          </FilterGroup>
 
-        {/* Search Bar */}
-        <div className="w-full md:w-72">
-          <Input
-            placeholder="Search leads by name, email, company..."
-            value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              setCurrentPage(1);
-            }}
-            leftIcon={<Search className="w-4 h-4 text-slate-400" />}
-          />
+          <FilterGroup label="Qualification Score" count={scoreFilter !== 'all' ? 1 : undefined}>
+            <FilterSelect
+              value={scoreFilter}
+              onChange={(e) => setScoreFilter(e.target.value)}
+              options={[
+                { value: 'all', label: 'All Scores' },
+                { value: 'high', label: 'High Priority (75+)' },
+                { value: 'medium', label: 'Qualified (40+)' },
+              ]}
+            />
+          </FilterGroup>
+
+          <FilterGroup label="Sort By" count={sortBy !== 'newest' ? 1 : undefined}>
+            <FilterSelect
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as 'newest' | 'score' | 'name')}
+              options={[
+                { value: 'newest', label: 'Newest Inquiries First' },
+                { value: 'score', label: 'Highest Score First' },
+                { value: 'name', label: 'Name (A to Z)' },
+              ]}
+            />
+          </FilterGroup>
         </div>
-      </div>
+      </SearchFilterBar>
 
       {/* Main Table Container */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
@@ -123,7 +221,7 @@ export function LeadTable() {
                     Loading CRM leads...
                   </td>
                 </tr>
-              ) : leads.length === 0 ? (
+              ) : displayedLeads.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-slate-500 space-y-2">
                     <Inbox className="w-8 h-8 mx-auto text-slate-400" />
@@ -132,7 +230,7 @@ export function LeadTable() {
                   </td>
                 </tr>
               ) : (
-                leads.map((lead) => (
+                displayedLeads.map((lead) => (
                   <tr
                     key={lead.id}
                     className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors cursor-pointer"

@@ -21,7 +21,6 @@ import {
   Sliders,
   DollarSign,
   Clock,
-  ArrowRight,
 } from 'lucide-react';
 
 interface LeadDetailDrawerProps {
@@ -85,7 +84,7 @@ export function LeadDetailDrawer({ lead, isOpen, onClose }: LeadDetailDrawerProp
       footer={
         <div className="flex items-center justify-between w-full">
           <Link to={`/leads/${lead.id}`}>
-            <Button variant="outline" size="sm" rightIcon={<ArrowRight className="w-3.5 h-3.5" />}>
+            <Button variant="outline" size="sm">
               Open Full Lead Page
             </Button>
           </Link>
