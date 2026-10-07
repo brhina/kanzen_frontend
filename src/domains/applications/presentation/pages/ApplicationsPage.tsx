@@ -13,6 +13,12 @@ import { Input } from '@/shared/ui/input';
 import { Badge } from '@/shared/ui/badge';
 import { Card, CardHeader, CardTitle, CardContent } from '@/shared/ui/card';
 import {
+  SearchFilterBar,
+  FilterGroup,
+  FilterPill,
+  FilterSelect,
+} from '@/shared/ui/filter';
+import {
   Users,
   Search,
   Briefcase,
@@ -20,6 +26,17 @@ import {
 } from 'lucide-react';
 import type { JobApplicationEntity } from '../../domain/entities/job-application.entity';
 import type { ApplicationStatus } from '../../domain/enums/application-status.enum';
+
+const STAGE_TABS: { id: ApplicationStatus | 'all'; label: string }[] = [
+  { id: 'all', label: 'All Applicants' },
+  { id: 'applied', label: 'Applied' },
+  { id: 'screening', label: 'Screening' },
+  { id: 'interview', label: 'Interview' },
+  { id: 'offer', label: 'Offer' },
+  { id: 'hired', label: 'Hired' },
+  { id: 'rejected', label: 'Rejected' },
+  { id: 'withdrawn', label: 'Withdrawn' },
+];
 
 export function ApplicationsPage() {
   const [searchParams] = useSearchParams();
@@ -34,6 +51,8 @@ export function ApplicationsPage() {
   const [statusFilter, setStatusFilter] = useState<ApplicationStatus | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [jobIdFilter, setJobIdFilter] = useState(urlJobId);
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+  const [sortBy, setSortBy] = useState<'newest' | 'rating' | 'experience' | 'name'>('newest');
 
   // Detail Drawer State
   const [selectedApplication, setSelectedApplication] =
@@ -74,6 +93,74 @@ export function ApplicationsPage() {
     return { total, applied, screening, interview, offer, hired };
   }, [applications]);
 
+  // Active filter count
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (statusFilter !== 'all') count++;
+    if (jobIdFilter) count++;
+    if (sortBy !== 'newest') count++;
+    return count;
+  }, [statusFilter, jobIdFilter, sortBy]);
+
+  // Active filter chips
+  const activeChips = useMemo(() => {
+    const chips = [];
+    if (searchQuery) {
+      chips.push({
+        id: 'search',
+        label: `Search: "${searchQuery}"`,
+        onRemove: () => setSearchQuery(''),
+      });
+    }
+    if (statusFilter !== 'all') {
+      const tab = STAGE_TABS.find((t) => t.id === statusFilter);
+      chips.push({
+        id: 'status',
+        label: `Stage: ${tab?.label || statusFilter}`,
+        onRemove: () => setStatusFilter('all'),
+      });
+    }
+    if (jobIdFilter) {
+      chips.push({
+        id: 'jobId',
+        label: `Job ID: ${jobIdFilter}`,
+        onRemove: () => setJobIdFilter(''),
+      });
+    }
+    if (sortBy !== 'newest') {
+      const sortLabels: Record<string, string> = {
+        rating: 'Highest Rating',
+        experience: 'Most Experience',
+        name: 'Candidate Name (A-Z)',
+      };
+      chips.push({
+        id: 'sort',
+        label: `Sort: ${sortLabels[sortBy] || sortBy}`,
+        onRemove: () => setSortBy('newest'),
+      });
+    }
+    return chips;
+  }, [searchQuery, statusFilter, jobIdFilter, sortBy]);
+
+  const handleResetFilters = () => {
+    setSearchQuery('');
+    setStatusFilter('all');
+    setJobIdFilter('');
+    setSortBy('newest');
+  };
+
+  const displayedApplications = useMemo(() => {
+    let list = [...applications];
+    if (sortBy === 'rating') {
+      list.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+    } else if (sortBy === 'experience') {
+      list.sort((a, b) => (b.yearsOfExperience || 0) - (a.yearsOfExperience || 0));
+    } else if (sortBy === 'name') {
+      list.sort((a, b) => a.fullName.localeCompare(b.fullName));
+    }
+    return list;
+  }, [applications, sortBy]);
+
   const handleOpenDetail = (app: JobApplicationEntity) => {
     setSelectedApplication(app);
     setIsDrawerOpen(true);
@@ -110,31 +197,20 @@ export function ApplicationsPage() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white">
-              Recruitment & Candidate Pipeline
-            </h1>
-            <Badge variant="brand" size="sm">
-              Talent Engine
-            </Badge>
-          </div>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-2xl">
-            Streamlined candidate evaluation, resume screening, and hiring stage progression.
-          </p>
-        </div>
-
+      <div className="pb-6 border-b border-slate-200 dark:border-slate-800">
         <div className="flex items-center gap-2">
-          <Link to="/careers">
-            <Button variant="outline" size="sm" className="flex items-center gap-1.5">
-              <Briefcase className="h-4 w-4" />
-              <span>Browse Open Positions</span>
-            </Button>
-          </Link>
+          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white">
+            Recruitment & Candidate Pipeline
+          </h1>
+          <Badge variant="brand" size="sm">
+            Talent Engine
+          </Badge>
         </div>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-2xl">
+          Streamlined candidate evaluation, resume screening, and hiring stage progression.
+        </p>
       </div>
 
       {isRecruiter ? (
@@ -197,71 +273,80 @@ export function ApplicationsPage() {
             </div>
           </div>
 
-          {/* Filtering Bar */}
-          <div className="space-y-3">
-            {/* Stage filter pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-              {(
-                [
-                  'all',
-                  'applied',
-                  'screening',
-                  'interview',
-                  'offer',
-                  'hired',
-                  'rejected',
-                  'withdrawn',
-                ] as const
-              ).map((stage) => {
-                const isSelected = statusFilter === stage;
-                return (
-                  <button
-                    key={stage}
-                    type="button"
-                    onClick={() => setStatusFilter(stage)}
-                    className={`px-3 py-1 rounded-full text-xs font-medium capitalize transition-colors duration-150 border ${
-                      isSelected
-                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                        : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'
-                    }`}
-                  >
-                    {stage === 'all' ? 'All Applicants' : stage}
-                  </button>
-                );
-              })}
-            </div>
+          {/* Search & Expandable Filters */}
+          <SearchFilterBar
+            searchValue={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search applicants by name, email, or company..."
+            isFilterExpanded={isFilterExpanded}
+            onToggleFilter={() => setIsFilterExpanded((prev) => !prev)}
+            activeFilterCount={activeFilterCount}
+            activeChips={activeChips}
+            onClearAllFilters={handleResetFilters}
+            resultsSummary={
+              <span className="text-xs text-slate-500 font-medium">
+                Showing <span className="font-semibold text-slate-700 dark:text-slate-300">{displayedApplications.length}</span> candidates
+              </span>
+            }
+            actions={
+              <Link to="/careers">
+                <Button variant="outline" size="sm" className="flex items-center gap-1.5 shrink-0">
+                  <Briefcase className="h-4 w-4" />
+                  <span>Browse Open Roles</span>
+                </Button>
+              </Link>
+            }
+          >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+              <FilterGroup label="Pipeline Stage" count={statusFilter !== 'all' ? 1 : undefined}>
+                <div className="flex flex-wrap gap-1.5">
+                  {STAGE_TABS.map((stage) => (
+                    <FilterPill
+                      key={stage.id}
+                      label={stage.label}
+                      isActive={statusFilter === stage.id}
+                      onClick={() => setStatusFilter(stage.id)}
+                    />
+                  ))}
+                </div>
+              </FilterGroup>
 
-            {/* Keyword Search & Reset */}
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
-              <div className="sm:col-span-8">
-                <Input
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search applicants by name, email, or company..."
-                  leftIcon={<Search className="h-4 w-4 text-slate-400" />}
+              <FilterGroup label="Sort Candidates" count={sortBy !== 'newest' ? 1 : undefined}>
+                <FilterSelect
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as 'newest' | 'rating' | 'experience' | 'name')}
+                  options={[
+                    { value: 'newest', label: 'Newest Submissions' },
+                    { value: 'rating', label: 'Highest Rating' },
+                    { value: 'experience', label: 'Most Experience' },
+                    { value: 'name', label: 'Candidate Name (A-Z)' },
+                  ]}
                 />
-              </div>
+              </FilterGroup>
 
               {jobIdFilter && (
-                <div className="sm:col-span-4 flex items-center justify-between bg-indigo-50 dark:bg-indigo-950/50 px-3 py-1.5 rounded-lg border border-indigo-200 dark:border-indigo-800 text-xs">
-                  <span className="text-indigo-700 dark:text-indigo-300 truncate">
-                    Filtered by Job ID: {jobIdFilter}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setJobIdFilter('')}
-                    className="text-indigo-600 hover:text-indigo-900 font-bold ml-2"
-                  >
-                    ×
-                  </button>
-                </div>
+                <FilterGroup label="Job Reference" count={1}>
+                  <div className="flex items-center justify-between p-2.5 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 text-xs">
+                    <span className="font-medium text-indigo-700 dark:text-indigo-300 truncate">
+                      Job ID: {jobIdFilter}
+                    </span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setJobIdFilter('')}
+                      className="h-6 px-2 text-xs text-indigo-600 hover:text-indigo-800"
+                    >
+                      Clear
+                    </Button>
+                  </div>
+                </FilterGroup>
               )}
             </div>
-          </div>
+          </SearchFilterBar>
 
           {/* Table */}
           <ApplicationTable
-            applications={applications}
+            applications={displayedApplications}
             isLoading={isLoading}
             onViewDetail={handleOpenDetail}
             onUpdateStatus={handleQuickStatusChange}

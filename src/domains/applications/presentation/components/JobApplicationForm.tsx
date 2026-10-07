@@ -7,8 +7,6 @@ import {
   FileText,
   UploadCloud,
   CheckCircle2,
-  ChevronRight,
-  ChevronLeft,
   Loader2,
   Sparkles,
   User,
@@ -546,9 +544,7 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
               variant="outline"
               size="sm"
               onClick={handleBack}
-              className="flex items-center gap-1"
             >
-              <ChevronLeft className="h-4 w-4" />
               <span>Back</span>
             </Button>
           )}
@@ -567,10 +563,9 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
               variant="primary"
               size="sm"
               onClick={handleNext}
-              className="bg-indigo-600 hover:bg-indigo-700 flex items-center gap-1.5"
+              className="bg-indigo-600 hover:bg-indigo-700"
             >
               <span>Next</span>
-              <ChevronRight className="h-4 w-4" />
             </Button>
           ) : (
             <Button
