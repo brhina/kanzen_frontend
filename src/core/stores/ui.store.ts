@@ -11,6 +11,7 @@ export interface UIState {
   viewMode: ViewMode;
   sidebarOpen: boolean;
   activeDrawer: string | null;
+  adminBarMinimized: boolean;
 
   setTheme: (theme: ThemeMode) => void;
   toggleEditMode: () => void;
@@ -21,6 +22,8 @@ export interface UIState {
   toggleSidebar: () => void;
   openDrawer: (drawerId: string) => void;
   closeDrawer: () => void;
+  setAdminBarMinimized: (minimized: boolean) => void;
+  toggleAdminBarMinimized: () => void;
 }
 
 export const useUIStore = create<UIState>()(
@@ -35,6 +38,7 @@ export const useUIStore = create<UIState>()(
         viewMode: 'grid',
         sidebarOpen: false,
         activeDrawer: null,
+        adminBarMinimized: false,
 
       setTheme: (theme) => {
         set({ theme });
@@ -85,6 +89,14 @@ export const useUIStore = create<UIState>()(
       closeDrawer: () => {
         set({ activeDrawer: null });
       },
+
+      setAdminBarMinimized: (adminBarMinimized) => {
+        set({ adminBarMinimized });
+      },
+
+      toggleAdminBarMinimized: () => {
+        set((state) => ({ adminBarMinimized: !state.adminBarMinimized }));
+      },
     };
   },
   {
@@ -102,6 +114,7 @@ export const useUIStore = create<UIState>()(
         theme: state.theme,
         isEditMode: state.isEditMode,
         viewMode: state.viewMode,
+        adminBarMinimized: state.adminBarMinimized,
       }),
     },
   ),
