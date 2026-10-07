@@ -83,68 +83,91 @@ export function PortfolioItemPage() {
   const categoryLabel = PORTFOLIO_CATEGORY_LABELS[item.category] || item.category;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8 space-y-10">
-      {/* Navigation & Header */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <Link
-            to="/portfolio"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span>Back to Engineering Portfolio</span>
-          </Link>
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+      {/* Navigation Breadcrumb */}
+      <div>
+        <Link
+          to="/portfolio"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          <span>Back to All Projects</span>
+        </Link>
+      </div>
 
-          {canWrite && (
-            <Button
-              variant="outline"
+      {/* Staff Inline Control Header */}
+      {canWrite && (
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-amber-200 bg-amber-50/70 p-4 dark:border-amber-900/40 dark:bg-amber-950/20">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300">
+              Staff Controls:
+            </span>
+            <Badge
+              variant={item.status === 'published' ? 'success' : 'neutral'}
               size="sm"
+              className="capitalize font-mono text-xs"
+            >
+              Status: {item.status}
+            </Badge>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="xs"
               onClick={() => setIsEditDrawerOpen(true)}
-              className="flex items-center gap-1.5 text-xs"
+              className="flex items-center gap-1"
             >
               <Edit3 className="h-3.5 w-3.5" />
               <span>Edit Project</span>
             </Button>
-          )}
-        </div>
-
-        {/* Title & Metadata */}
-        <div className="space-y-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="brand" size="sm" className="font-medium">
-              {categoryLabel}
-            </Badge>
-
-            {item.isConfidential && (
-              <Badge variant="warning" size="sm" className="flex items-center gap-1 font-mono text-xs">
-                <Lock className="h-3 w-3" />
-                <span>Confidential Client (NDA)</span>
-              </Badge>
-            )}
-
-            {item.status !== 'published' && (
-              <Badge variant="neutral" size="sm" className="capitalize text-xs">
-                {item.status}
-              </Badge>
-            )}
           </div>
+        </div>
+      )}
 
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
-            {item.title}
-          </h1>
+      {/* Hero Header */}
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge variant="brand" size="sm" className="font-medium">
+            {categoryLabel}
+          </Badge>
 
-          {item.subtitle && (
-            <p className="text-lg sm:text-xl text-primary-600 dark:text-primary-400 font-medium">
-              {item.subtitle}
-            </p>
+          {item.isConfidential && (
+            <Badge variant="warning" size="sm" className="flex items-center gap-1 font-mono text-xs">
+              <Lock className="h-3 w-3" />
+              <span>Confidential Client (NDA)</span>
+            </Badge>
           )}
 
-          {item.client && (
-            <p className="text-sm text-slate-500 dark:text-slate-400">
-              Client Partner: <strong className="text-slate-800 dark:text-slate-200">{item.client}</strong>
-            </p>
+          {item.isFeatured && (
+            <Badge variant="warning" size="sm">
+              Featured Project
+            </Badge>
+          )}
+
+          {item.status !== 'published' && (
+            <Badge variant="neutral" size="sm" className="capitalize text-xs">
+              {item.status}
+            </Badge>
           )}
         </div>
+
+        <h1 className="text-3xl font-black text-slate-900 sm:text-5xl dark:text-white">
+          {item.title}
+        </h1>
+
+        {item.subtitle && (
+          <p className="text-lg font-medium text-brand-600 dark:text-brand-400 max-w-3xl">
+            {item.subtitle}
+          </p>
+        )}
+
+        {item.client && (
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Client Partner: <strong className="text-slate-800 dark:text-slate-200">{item.client}</strong>
+          </p>
+        )}
       </div>
 
       {/* Gallery & Media Showcase */}
@@ -217,7 +240,7 @@ export function PortfolioItemPage() {
         </div>
 
         {/* Sidebar Parameters (1 span) */}
-        <div className="space-y-6">
+        <div className="space-y-6 lg:sticky lg:top-20">
           {/* External Links Card */}
           {(item.liveUrl || item.githubUrl) && (
             <div className="rounded-2xl border border-slate-200 dark:border-slate-800 p-6 bg-slate-50 dark:bg-slate-900/60 space-y-3">

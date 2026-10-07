@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Plus, Search, Sparkles, Box } from 'lucide-react';
+import { Sparkles, Box } from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useProducts } from '../../application/use-cases/useProducts';
 import { useCreateProduct } from '../../application/use-cases/useCreateProduct';
@@ -13,7 +13,12 @@ import { ProductForm } from '../components/ProductForm';
 import { Drawer } from '@/shared/ui/drawer';
 import { Modal } from '@/shared/ui/modal';
 import { Button } from '@/shared/ui/button';
-import { Input } from '@/shared/ui/input';
+import {
+  SearchFilterBar,
+  FilterGroup,
+  FilterPill,
+  FilterSelect,
+} from '@/shared/ui/filter';
 
 const categoryTabs = [
   { id: 'all', label: 'All Products' },
@@ -30,6 +35,9 @@ export function ProductsPage() {
 
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+  const [licenseFilter, setLicenseFilter] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<'stars' | 'name' | 'newest'>('stars');
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<ProductEntity | null>(null);
@@ -46,6 +54,72 @@ export function ProductsPage() {
   const deleteMutation = useDeleteProduct();
 
   const products = useMemo(() => data?.products || [], [data?.products]);
+
+  // Active filter count
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (selectedCategory !== 'all') count++;
+    if (licenseFilter !== 'all') count++;
+    if (sortBy !== 'stars') count++;
+    return count;
+  }, [selectedCategory, licenseFilter, sortBy]);
+
+  // Active filter chips
+  const activeChips = useMemo(() => {
+    const chips = [];
+    if (searchQuery) {
+      chips.push({
+        id: 'search',
+        label: `Search: "${searchQuery}"`,
+        onRemove: () => setSearchQuery(''),
+      });
+    }
+    if (selectedCategory !== 'all') {
+      const tab = categoryTabs.find((t) => t.id === selectedCategory);
+      chips.push({
+        id: 'category',
+        label: `Category: ${tab?.label || selectedCategory}`,
+        onRemove: () => setSelectedCategory('all'),
+      });
+    }
+    if (licenseFilter !== 'all') {
+      chips.push({
+        id: 'license',
+        label: `License: ${licenseFilter}`,
+        onRemove: () => setLicenseFilter('all'),
+      });
+    }
+    if (sortBy !== 'stars') {
+      chips.push({
+        id: 'sort',
+        label: `Sort: ${sortBy === 'name' ? 'Name (A-Z)' : 'Newest'}`,
+        onRemove: () => setSortBy('stars'),
+      });
+    }
+    return chips;
+  }, [searchQuery, selectedCategory, licenseFilter, sortBy]);
+
+  const handleResetFilters = () => {
+    setSearchQuery('');
+    setSelectedCategory('all');
+    setLicenseFilter('all');
+    setSortBy('stars');
+  };
+
+  // Filtered and sorted products
+  const displayedProducts = useMemo(() => {
+    let list = [...products];
+    if (licenseFilter !== 'all') {
+      list = list.filter((p) =>
+        (p as any).license?.toLowerCase().includes(licenseFilter.toLowerCase()) ||
+        p.techStack?.some((t) => t.toLowerCase().includes(licenseFilter.toLowerCase())),
+      );
+    }
+    if (sortBy === 'name') {
+      list.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    return list;
+  }, [products, licenseFilter, sortBy]);
 
   const handleOpenCreate = () => {
     setEditingProduct(null);
@@ -83,7 +157,7 @@ export function ProductsPage() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Hero Banner */}
       <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16 border border-slate-800">
         <div className="relative z-10 max-w-3xl space-y-4">
@@ -102,53 +176,77 @@ export function ProductsPage() {
         </div>
       </div>
 
-      {/* Filter Tabs & Search Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        {/* Category Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-          {categoryTabs.map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setSelectedCategory(tab.id)}
-              className={`inline-flex shrink-0 items-center rounded-full px-4 py-1.5 text-xs font-semibold transition ${
-                selectedCategory === tab.id
-                  ? 'bg-slate-900 text-white shadow-xs dark:bg-white dark:text-slate-900'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Right Search & Add Action */}
-        <div className="flex items-center gap-3">
-          <div className="relative w-48 sm:w-64">
-            <Search className="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
-            <Input
-              type="search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search products..."
-              className="h-9 pl-9 text-xs"
-            />
-          </div>
-
-          {canWrite && (
+      {/* Unified Search & Advanced Filters Bar */}
+      <SearchFilterBar
+        search={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Search products, developer tools, libraries..."
+        isExpanded={isFilterExpanded}
+        onToggleExpanded={setIsFilterExpanded}
+        activeFilterCount={activeFilterCount}
+        hasActiveFilters={activeFilterCount > 0 || Boolean(searchQuery)}
+        onReset={handleResetFilters}
+        totalCount={products.length}
+        filteredCount={displayedProducts.length}
+        resultsLabel="software platforms"
+        activeChips={activeChips}
+        actions={
+          canWrite && (
             <Button
               type="button"
               variant="primary"
               size="sm"
               onClick={handleOpenCreate}
-              className="flex items-center gap-1.5 shrink-0"
+              className="shrink-0"
             >
-              <Plus className="h-4 w-4" />
-              <span>Add Product</span>
+              Add Product
             </Button>
-          )}
+          )
+        }
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {/* Category Tabs */}
+          <FilterGroup label="Product Type" count={categoryTabs.length}>
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {categoryTabs.map((tab) => (
+                <FilterPill
+                  key={tab.id}
+                  label={tab.label}
+                  isSelected={selectedCategory === tab.id}
+                  onClick={() => setSelectedCategory(tab.id)}
+                />
+              ))}
+            </div>
+          </FilterGroup>
+
+          {/* License Filter */}
+          <FilterGroup label="License & Distribution">
+            <FilterSelect
+              value={licenseFilter}
+              onChange={(e) => setLicenseFilter(e.target.value)}
+              options={[
+                { value: 'all', label: 'All Licenses' },
+                { value: 'mit', label: 'MIT Open Source' },
+                { value: 'apache', label: 'Apache 2.0' },
+                { value: 'proprietary', label: 'Commercial Proprietary' },
+              ]}
+            />
+          </FilterGroup>
+
+          {/* Sort By */}
+          <FilterGroup label="Sort Software">
+            <FilterSelect
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as 'stars' | 'name' | 'newest')}
+              options={[
+                { value: 'stars', label: 'Featured / Popular' },
+                { value: 'name', label: 'Name (A-Z)' },
+                { value: 'newest', label: 'Recently Published' },
+              ]}
+            />
+          </FilterGroup>
         </div>
-      </div>
+      </SearchFilterBar>
 
       {/* Products Grid */}
       {isLoading ? (
@@ -160,7 +258,7 @@ export function ProductsPage() {
             />
           ))}
         </div>
-      ) : products.length === 0 ? (
+      ) : displayedProducts.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-slate-200 p-12 text-center dark:border-slate-800">
           <Box className="mx-auto h-10 w-10 text-slate-300 dark:text-slate-600 mb-2" />
           <h3 className="text-base font-semibold text-slate-900 dark:text-white">
@@ -183,7 +281,7 @@ export function ProductsPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
+          {displayedProducts.map((product) => (
             <ProductCard
               key={product.id || product.slug}
               product={product}

@@ -52,7 +52,7 @@ export function ServiceDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="mx-auto max-w-7xl px-4 py-16 text-center">
+      <div className="w-full px-4 py-16 text-center">
         <div className="inline-block h-8 w-8 animate-spin rounded-full border-3 border-brand-500 border-t-transparent" />
         <p className="mt-3 text-sm text-slate-500">Loading service details...</p>
       </div>
@@ -81,7 +81,7 @@ export function ServiceDetailPage() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Back button */}
       <div>
         <Link

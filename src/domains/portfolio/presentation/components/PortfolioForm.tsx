@@ -8,7 +8,7 @@ import { Textarea } from '@/shared/ui/textarea';
 import { Select } from '@/shared/ui/select';
 import { Button } from '@/shared/ui/button';
 import { Checkbox } from '@/shared/ui/checkbox';
-import { Plus, Trash2 } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 
 export interface PortfolioFormProps {
   initialData?: PortfolioItemEntity | null;
@@ -297,10 +297,9 @@ export function PortfolioForm({
             variant="outline"
             size="sm"
             onClick={handleAddMetric}
-            className="flex items-center gap-1 text-xs"
+            className="text-xs"
           >
-            <Plus className="h-3 w-3" />
-            <span>Add Metric</span>
+            Add Metric
           </Button>
         </div>
 

@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { ExternalLink, ArrowRight, Edit3 } from 'lucide-react';
+import { ExternalLink, Edit3 } from 'lucide-react';
 import type { ProductEntity } from '../../domain/entities/product.entity';
 import { ProductStatusBadge } from './ProductStatusBadge';
 import { Badge } from '@/shared/ui/badge';
@@ -96,9 +96,8 @@ export function ProductCard({
         </div>
 
         <Link to={`/products/${product.slug}`}>
-          <Button variant="outline" size="xs" className="flex items-center gap-1 group-hover:border-brand-500 group-hover:text-brand-600 dark:group-hover:text-brand-400">
+          <Button variant="outline" size="xs" className="group-hover:border-brand-500 group-hover:text-brand-600 dark:group-hover:text-brand-400">
             <span>Learn More</span>
-            <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
           </Button>
         </Link>
       </div>

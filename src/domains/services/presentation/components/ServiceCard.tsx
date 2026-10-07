@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { ArrowRight, Clock, Edit3 } from 'lucide-react';
+import { Clock, Edit3 } from 'lucide-react';
 import type { ServiceEntity } from '../../domain/entities/service.entity';
 import { ServiceCategoryBadge } from './ServiceCategoryBadge';
 import { ServicePricingBadge } from './ServicePricingBadge';
@@ -92,9 +92,8 @@ export function ServiceCard({
         </div>
 
         <Link to={`/services/${service.slug}`}>
-          <Button variant="outline" size="xs" className="flex items-center gap-1 group-hover:border-brand-500 group-hover:text-brand-600 dark:group-hover:text-brand-400">
+          <Button variant="outline" size="xs" className="group-hover:border-brand-500 group-hover:text-brand-600 dark:group-hover:text-brand-400">
             <span>Explore</span>
-            <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
           </Button>
         </Link>
       </div>

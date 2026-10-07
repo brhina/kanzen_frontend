@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Plus, Search, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { usePortfolioItems } from '../../application/use-cases/usePortfolioItems';
 import { useCreatePortfolioItem } from '../../application/use-cases/useCreatePortfolioItem';
@@ -7,13 +7,17 @@ import { useUpdatePortfolioItem } from '../../application/use-cases/useUpdatePor
 import { useDeletePortfolioItem } from '../../application/use-cases/useDeletePortfolioItem';
 import type { PortfolioItemEntity } from '../../domain/entities/portfolio-item.entity';
 import type { CreatePortfolioDto, UpdatePortfolioDto } from '../../infrastructure/portfolio.dto';
-import { PortfolioCategoryFilter } from '../components/PortfolioCategoryFilter';
 import { PortfolioGrid } from '../components/PortfolioGrid';
 import { PortfolioForm } from '../components/PortfolioForm';
 import { Drawer } from '@/shared/ui/drawer';
 import { Modal } from '@/shared/ui/modal';
 import { Button } from '@/shared/ui/button';
-import { Input } from '@/shared/ui/input';
+import {
+  SearchFilterBar,
+  FilterGroup,
+  FilterPill,
+  FilterSelect,
+} from '@/shared/ui/filter';
 
 export function PortfolioPage() {
   const { user } = useAuthStore();
@@ -28,6 +32,9 @@ export function PortfolioPage() {
   // Filtering state
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+  const [techFilter, setTechFilter] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<'featured' | 'title' | 'newest'>('featured');
 
   // Drawer & modal state
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -55,6 +62,79 @@ export function PortfolioPage() {
     }
     return counts;
   }, [items]);
+
+  // Extract unique tech tags
+  const availableTechs = useMemo(() => {
+    const set = new Set<string>();
+    items.forEach((item) => {
+      item.technologies?.forEach((t) => set.add(t));
+    });
+    return Array.from(set);
+  }, [items]);
+
+  // Count active filters
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (selectedCategory !== 'all') count++;
+    if (techFilter !== 'all') count++;
+    if (sortBy !== 'featured') count++;
+    return count;
+  }, [selectedCategory, techFilter, sortBy]);
+
+  // Active filter chips
+  const activeChips = useMemo(() => {
+    const chips = [];
+    if (searchQuery) {
+      chips.push({
+        id: 'search',
+        label: `Search: "${searchQuery}"`,
+        onRemove: () => setSearchQuery(''),
+      });
+    }
+    if (selectedCategory !== 'all') {
+      chips.push({
+        id: 'category',
+        label: `Category: ${selectedCategory}`,
+        onRemove: () => setSelectedCategory('all'),
+      });
+    }
+    if (techFilter !== 'all') {
+      chips.push({
+        id: 'tech',
+        label: `Tech: ${techFilter}`,
+        onRemove: () => setTechFilter('all'),
+      });
+    }
+    if (sortBy !== 'featured') {
+      chips.push({
+        id: 'sort',
+        label: `Sort: ${sortBy === 'title' ? 'Title (A-Z)' : 'Newest'}`,
+        onRemove: () => setSortBy('featured'),
+      });
+    }
+    return chips;
+  }, [searchQuery, selectedCategory, techFilter, sortBy]);
+
+  const handleResetFilters = () => {
+    setSearchQuery('');
+    setSelectedCategory('all');
+    setTechFilter('all');
+    setSortBy('featured');
+  };
+
+  // Filtered and sorted portfolio items
+  const displayedItems = useMemo(() => {
+    let list = [...items];
+    if (techFilter !== 'all') {
+      list = list.filter((i) =>
+        i.technologies?.some((t) => t.toLowerCase() === techFilter.toLowerCase()),
+      );
+    }
+    if (sortBy === 'title') {
+      list.sort((a, b) => a.title.localeCompare(b.title));
+    }
+    return list;
+  }, [items, techFilter, sortBy]);
 
   const handleOpenCreate = () => {
     setEditingItem(null);
@@ -87,58 +167,106 @@ export function PortfolioPage() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
-      {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
-        <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-primary-50 dark:bg-primary-950/60 text-primary-600 dark:text-primary-400 mb-3 border border-primary-200/60 dark:border-primary-800/60">
-            <Sparkles className="h-3.5 w-3.5" />
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+      {/* Header Banner */}
+      <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16 border border-slate-800">
+        <div className="relative z-10 max-w-3xl space-y-4">
+          <div className="inline-flex items-center gap-2 rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
+            <Sparkles className="h-3.5 w-3.5 text-brand-400" />
             <span>Proven Engineering Outcomes</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white">
+
+          <h1 className="text-3xl font-black tracking-tight sm:text-5xl text-white">
             Engineering Portfolio
           </h1>
-          <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
+
+          <p className="text-sm text-slate-300 sm:text-base leading-relaxed">
             A showcase of mission-critical systems, distributed architectures, and high-performance digital platforms engineered by Kanzen Tech.
           </p>
         </div>
+      </div>
 
-        {canWrite && (
-          <div className="flex items-center gap-3">
+      {/* Unified Search & Advanced Filters Bar */}
+      <SearchFilterBar
+        search={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Search projects by client, architecture, or stack..."
+        isExpanded={isFilterExpanded}
+        onToggleExpanded={setIsFilterExpanded}
+        activeFilterCount={activeFilterCount}
+        hasActiveFilters={activeFilterCount > 0 || Boolean(searchQuery)}
+        onReset={handleResetFilters}
+        totalCount={items.length}
+        filteredCount={displayedItems.length}
+        resultsLabel="portfolio engagements"
+        activeChips={activeChips}
+        actions={
+          canWrite && (
             <Button
               variant="primary"
+              size="sm"
               onClick={handleOpenCreate}
-              className="flex items-center gap-2 shadow-lg shadow-primary-500/20"
+              className="shadow-sm"
             >
-              <Plus className="h-4 w-4" />
-              <span>Add Project</span>
+              Add Project
             </Button>
-          </div>
-        )}
-      </div>
+          )
+        }
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {/* Category Filter */}
+          <FilterGroup label="Project Practice">
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              <FilterPill
+                label="All Categories"
+                isSelected={selectedCategory === 'all'}
+                count={categoryCounts['all']}
+                onClick={() => setSelectedCategory('all')}
+              />
+              {Object.keys(categoryCounts)
+                .filter((k) => k !== 'all')
+                .map((catKey) => (
+                  <FilterPill
+                    key={catKey}
+                    label={catKey}
+                    isSelected={selectedCategory === catKey}
+                    count={categoryCounts[catKey]}
+                    onClick={() => setSelectedCategory(catKey)}
+                  />
+                ))}
+            </div>
+          </FilterGroup>
 
-      {/* Controls Bar: Filters & Search */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <PortfolioCategoryFilter
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-          counts={categoryCounts}
-        />
+          {/* Tech Stack Filter */}
+          <FilterGroup label="Core Technology">
+            <FilterSelect
+              value={techFilter}
+              onChange={(e) => setTechFilter(e.target.value)}
+              options={[
+                { value: 'all', label: 'All Technologies' },
+                ...availableTechs.slice(0, 15).map((t) => ({ value: t, label: t })),
+              ]}
+            />
+          </FilterGroup>
 
-        <div className="relative w-full lg:w-72">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-          <Input
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search projects or stack..."
-            className="pl-9 text-xs"
-          />
+          {/* Sort By */}
+          <FilterGroup label="Sort Projects">
+            <FilterSelect
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as 'featured' | 'title' | 'newest')}
+              options={[
+                { value: 'featured', label: 'Featured Engagements' },
+                { value: 'title', label: 'Project Name (A-Z)' },
+                { value: 'newest', label: 'Recently Completed' },
+              ]}
+            />
+          </FilterGroup>
         </div>
-      </div>
+      </SearchFilterBar>
 
       {/* Portfolio Grid */}
       <PortfolioGrid
-        items={items}
+        items={displayedItems}
         isLoading={isLoading}
         canWrite={canWrite}
         onEdit={handleEdit}
