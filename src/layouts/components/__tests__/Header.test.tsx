@@ -67,6 +67,20 @@ describe('Header', () => {
     );
 
     expect(html).toContain('AM'); // Initials on Avatar
+    expect(html).toContain('Alex Morgan'); // User name displayed with profile image
     expect(html).not.toContain('Sign In');
+  });
+
+  it('renders navbar at increased full width with w-full and no icon in Start Project button', () => {
+    const html = renderToStaticMarkup(
+      <MemoryRouter initialEntries={['/']}>
+        <Header />
+      </MemoryRouter>
+    );
+
+    expect(html).toContain('w-full');
+    expect(html).not.toContain('max-w-7xl');
+    // Start Project button exists without any icons inside
+    expect(html).toContain('Start Project');
   });
 });

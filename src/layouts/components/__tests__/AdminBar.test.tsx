@@ -129,4 +129,89 @@ describe('AdminBar', () => {
 
     expect(html).toContain('ON');
   });
+
+  it('renders right-side sidebar layout classes on lg viewports', () => {
+    useAuthStore.setState({
+      isAuthenticated: true,
+      user: {
+        firstName: 'Jane',
+        lastName: 'Admin',
+        fullName: 'Jane Admin',
+        email: 'admin@kanzen.tech',
+        isAdmin: true,
+        permissions: [],
+        status: 'active',
+      },
+    });
+
+    const html = renderToStaticMarkup(
+      <MemoryRouter>
+        <AdminBar />
+      </MemoryRouter>
+    );
+
+    expect(html).toContain('lg:fixed');
+    expect(html).toContain('lg:top-16');
+    expect(html).toContain('lg:right-0');
+    expect(html).toContain('lg:w-64');
+  });
+
+  it('contains zero svg icons beside or within buttons across all controls', () => {
+    useAuthStore.setState({
+      isAuthenticated: true,
+      user: {
+        firstName: 'Jane',
+        lastName: 'Admin',
+        fullName: 'Jane Admin',
+        email: 'admin@kanzen.tech',
+        isAdmin: true,
+        permissions: [],
+        status: 'active',
+      },
+    });
+
+    const html = renderToStaticMarkup(
+      <MemoryRouter>
+        <AdminBar />
+      </MemoryRouter>
+    );
+
+    // Verify absolutely no svg icons are rendered in the entire AdminBar
+    expect(html).not.toContain('<svg');
+    // Verify text labels are fully present
+    expect(html).toContain('Dashboard');
+    expect(html).toContain('Leads');
+    expect(html).toContain('Recruiting');
+    expect(html).toContain('Media');
+    expect(html).toContain('Users');
+    expect(html).toContain('Settings');
+    expect(html).toContain('Showcase');
+    expect(html).toContain('Manage');
+    expect(html).toContain('Minimize');
+  });
+
+  it('renders minimized trigger pill without any icons', () => {
+    useAuthStore.setState({
+      isAuthenticated: true,
+      user: {
+        firstName: 'Jane',
+        lastName: 'Admin',
+        fullName: 'Jane Admin',
+        email: 'admin@kanzen.tech',
+        isAdmin: true,
+        permissions: [],
+        status: 'active',
+      },
+    });
+    useUIStore.setState({ adminBarMinimized: true });
+
+    const html = renderToStaticMarkup(
+      <MemoryRouter>
+        <AdminBar />
+      </MemoryRouter>
+    );
+
+    expect(html).toContain('Admin Bar');
+    expect(html).not.toContain('<svg');
+  });
 });
