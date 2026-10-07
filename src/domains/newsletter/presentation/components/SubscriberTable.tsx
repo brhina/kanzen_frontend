@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNewsletterSubscribers } from '../../application/use-cases/useNewsletterSubscribers';
 import { useUpdateSubscriber } from '../../application/use-cases/useUpdateSubscriber';
 import { useDeleteSubscriber } from '../../application/use-cases/useDeleteSubscriber';
@@ -6,9 +6,13 @@ import { useExportSubscribers } from '../../application/use-cases/useExportSubsc
 import { NewsletterSubscriberStatus } from '../../domain/enums/newsletter-status.enum';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
-import { Input } from '@/shared/ui/input';
 import {
-  Search,
+  SearchFilterBar,
+  FilterGroup,
+  FilterPill,
+  FilterSelect,
+} from '@/shared/ui/filter';
+import {
   Download,
   Mail,
   CheckCircle,
@@ -25,13 +29,16 @@ import {
 const STATUS_TABS = [
   { id: 'all', label: 'All Subscribers' },
   { id: NewsletterSubscriberStatus.ACTIVE, label: 'Active' },
-  { id: NewsletterSubscriberStatus.PENDING, label: 'Pending Confirmation' },
+  { id: NewsletterSubscriberStatus.PENDING, label: 'Pending' },
   { id: NewsletterSubscriberStatus.UNSUBSCRIBED, label: 'Unsubscribed' },
 ];
 
 export function SubscriberTable() {
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [sourceFilter, setSourceFilter] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<'newest' | 'email'>('newest');
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   const updateSubscriber = useUpdateSubscriber();
@@ -84,58 +91,145 @@ export function SubscriberTable() {
     }
   };
 
+  // Active filter count
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (selectedStatus !== 'all') count++;
+    if (sourceFilter !== 'all') count++;
+    if (sortBy !== 'newest') count++;
+    return count;
+  }, [selectedStatus, sourceFilter, sortBy]);
+
+  // Active filter chips
+  const activeChips = useMemo(() => {
+    const chips = [];
+    if (searchTerm) {
+      chips.push({
+        id: 'search',
+        label: `Search: "${searchTerm}"`,
+        onRemove: () => setSearchTerm(''),
+      });
+    }
+    if (selectedStatus !== 'all') {
+      const tab = STATUS_TABS.find((t) => t.id === selectedStatus);
+      chips.push({
+        id: 'status',
+        label: `Status: ${tab?.label || selectedStatus}`,
+        onRemove: () => setSelectedStatus('all'),
+      });
+    }
+    if (sourceFilter !== 'all') {
+      chips.push({
+        id: 'source',
+        label: `Source: ${sourceFilter.charAt(0).toUpperCase() + sourceFilter.slice(1)}`,
+        onRemove: () => setSourceFilter('all'),
+      });
+    }
+    if (sortBy !== 'newest') {
+      chips.push({
+        id: 'sort',
+        label: 'Sort: Email (A-Z)',
+        onRemove: () => setSortBy('newest'),
+      });
+    }
+    return chips;
+  }, [searchTerm, selectedStatus, sourceFilter, sortBy]);
+
+  const handleResetFilters = () => {
+    setSearchTerm('');
+    setSelectedStatus('all');
+    setSourceFilter('all');
+    setSortBy('newest');
+    setCurrentPage(1);
+  };
+
+  const displayedSubscribers = useMemo(() => {
+    let list = [...subscribers];
+    if (sourceFilter !== 'all') {
+      list = list.filter((s) => s.source?.toLowerCase() === sourceFilter.toLowerCase());
+    }
+    if (sortBy === 'email') {
+      list.sort((a, b) => a.email.localeCompare(b.email));
+    }
+    return list;
+  }, [subscribers, sourceFilter, sortBy]);
+
   return (
     <div className="space-y-4">
-      {/* Controls & Export Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        {/* Status Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
-          {STATUS_TABS.map((tab) => {
-            const isActive = selectedStatus === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => {
-                  setSelectedStatus(tab.id);
-                  setCurrentPage(1);
-                }}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-                  isActive
-                    ? 'bg-brand-600 text-white shadow-sm'
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
-                }`}
-              >
-                {tab.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Search & Export Buttons */}
-        <div className="flex items-center gap-2">
-          <div className="w-full md:w-64">
-            <Input
-              placeholder="Search subscriber email..."
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-                setCurrentPage(1);
-              }}
-              leftIcon={<Search className="w-4 h-4 text-slate-400" />}
-            />
-          </div>
-
+      {/* Search, Filter, and Export Controls */}
+      <SearchFilterBar
+        searchValue={searchTerm}
+        onSearchChange={(val) => {
+          setSearchTerm(val);
+          setCurrentPage(1);
+        }}
+        searchPlaceholder="Search subscriber email..."
+        isFilterExpanded={isFilterExpanded}
+        onToggleFilter={() => setIsFilterExpanded((prev) => !prev)}
+        activeFilterCount={activeFilterCount}
+        activeChips={activeChips}
+        onClearAllFilters={handleResetFilters}
+        resultsSummary={
+          <span className="text-xs text-slate-500 font-medium">
+            Showing <span className="font-semibold text-slate-700 dark:text-slate-300">{displayedSubscribers.length}</span> of {total} subscribers
+          </span>
+        }
+        actions={
           <Button
             variant="outline"
             size="sm"
             onClick={exportCsv}
             isLoading={isExporting}
-            leftIcon={<Download className="w-4 h-4" />}
+            className="flex items-center gap-1.5 h-10 px-3.5"
           >
-            Export CSV
+            <Download className="w-4 h-4" />
+            <span>Export CSV</span>
           </Button>
+        }
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+          <FilterGroup label="Subscriber Status" count={selectedStatus !== 'all' ? 1 : undefined}>
+            <div className="flex flex-wrap gap-1.5">
+              {STATUS_TABS.map((tab) => (
+                <FilterPill
+                  key={tab.id}
+                  label={tab.label}
+                  isActive={selectedStatus === tab.id}
+                  onClick={() => {
+                    setSelectedStatus(tab.id);
+                    setCurrentPage(1);
+                  }}
+                />
+              ))}
+            </div>
+          </FilterGroup>
+
+          <FilterGroup label="Acquisition Source" count={sourceFilter !== 'all' ? 1 : undefined}>
+            <FilterSelect
+              value={sourceFilter}
+              onChange={(e) => setSourceFilter(e.target.value)}
+              options={[
+                { value: 'all', label: 'All Sources' },
+                { value: 'homepage', label: 'Homepage Signup' },
+                { value: 'blog', label: 'Blog Article Signup' },
+                { value: 'footer', label: 'Footer Newsletter' },
+                { value: 'modal', label: 'Interactive Modal' },
+              ]}
+            />
+          </FilterGroup>
+
+          <FilterGroup label="Sort Order" count={sortBy !== 'newest' ? 1 : undefined}>
+            <FilterSelect
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as 'newest' | 'email')}
+              options={[
+                { value: 'newest', label: 'Newest Subscribers First' },
+                { value: 'email', label: 'Email (A to Z)' },
+              ]}
+            />
+          </FilterGroup>
         </div>
-      </div>
+      </SearchFilterBar>
 
       {/* Main Subscribers Table */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
@@ -159,7 +253,7 @@ export function SubscriberTable() {
                     Loading subscriber records...
                   </td>
                 </tr>
-              ) : subscribers.length === 0 ? (
+              ) : displayedSubscribers.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-slate-500 space-y-2">
                     <Inbox className="w-8 h-8 mx-auto text-slate-400" />
@@ -169,7 +263,7 @@ export function SubscriberTable() {
                   </td>
                 </tr>
               ) : (
-                subscribers.map((item) => (
+                displayedSubscribers.map((item) => (
                   <tr
                     key={item.id}
                     className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors"
@@ -272,7 +366,7 @@ export function SubscriberTable() {
         {/* Table Footer */}
         <div className="px-4 py-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 flex items-center justify-between text-xs text-slate-500">
           <div>
-            Showing {subscribers.length} of {total} subscribers
+            Showing {displayedSubscribers.length} of {total} subscribers
           </div>
           <div className="flex items-center gap-2">
             <Button
