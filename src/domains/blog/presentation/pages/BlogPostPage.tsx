@@ -97,7 +97,7 @@ export function BlogPostPage() {
   const isPublished = post.status === BlogPostStatus.PUBLISHED;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-6">
       {/* Inline Staff Control Header */}
       <PermissionGate permission="blog:write">
         <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-amber-200 bg-amber-50/70 p-4 dark:border-amber-900/40 dark:bg-amber-950/20">

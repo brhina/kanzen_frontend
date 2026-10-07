@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Plus, LayoutGrid, Table as TableIcon, Filter } from 'lucide-react';
+import { LayoutGrid, Table as TableIcon } from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useUIStore } from '@/core/stores/ui.store';
 import { useBlogPosts } from '../../application/use-cases/useBlogPosts';
@@ -13,7 +13,6 @@ import { BlogPostStatus } from '../../domain/enums/blog-post-status.enum';
 import type { BlogPostEntity } from '../../domain/entities/blog-post.entity';
 import type { CreateBlogPostDto, UpdateBlogPostDto } from '../../infrastructure/blog.dto';
 import { BlogHero } from '../components/BlogHero';
-import { BlogCategoryFilter } from '../components/BlogCategoryFilter';
 import { BlogCard } from '../components/BlogCard';
 import { BlogTable } from '../components/BlogTable';
 import { BlogSidebar } from '../components/BlogSidebar';
@@ -21,6 +20,12 @@ import { BlogPostForm } from '../components/BlogPostForm';
 import { Drawer } from '@/shared/ui/drawer';
 import { Modal } from '@/shared/ui/modal';
 import { Button } from '@/shared/ui/button';
+import {
+  SearchFilterBar,
+  FilterGroup,
+  FilterPill,
+  FilterSelect,
+} from '@/shared/ui/filter';
 
 export function BlogPage() {
   const { user } = useAuthStore();
@@ -33,30 +38,94 @@ export function BlogPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  // Advanced filter expanded state & active chips
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'title'>('newest');
+
+  // Queries
+  const { data: categories = [] } = useBlogCategories();
+  const { data: featuredPosts = [] } = useFeaturedPosts();
+  const { data: blogData, isLoading, refetch } = useBlogPosts({
+    isAdminView: isStaff,
+    categoryId: selectedCategory !== 'all' ? selectedCategory : undefined,
+    status: statusFilter !== 'all' ? (statusFilter as BlogPostStatus) : undefined,
+    search: searchQuery || undefined,
+  });
+
+  const posts = useMemo(() => blogData?.posts || [], [blogData?.posts]);
+
+  // Count active filters
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (selectedCategory !== 'all') count++;
+    if (statusFilter !== 'all') count++;
+    if (sortBy !== 'newest') count++;
+    return count;
+  }, [selectedCategory, statusFilter, sortBy]);
+
+  // Active filter chips
+  const activeChips = useMemo(() => {
+    const chips = [];
+    if (searchQuery) {
+      chips.push({
+        id: 'search',
+        label: `Search: "${searchQuery}"`,
+        onRemove: () => setSearchQuery(''),
+      });
+    }
+    if (selectedCategory !== 'all') {
+      const catObj = categories.find((c) => c.id === selectedCategory || c.slug === selectedCategory);
+      chips.push({
+        id: 'category',
+        label: `Category: ${catObj?.name || selectedCategory}`,
+        onRemove: () => setSelectedCategory('all'),
+      });
+    }
+    if (statusFilter !== 'all') {
+      chips.push({
+        id: 'status',
+        label: `Status: ${statusFilter}`,
+        onRemove: () => setStatusFilter('all'),
+      });
+    }
+    if (sortBy !== 'newest') {
+      chips.push({
+        id: 'sort',
+        label: `Sort: ${sortBy === 'oldest' ? 'Oldest First' : 'Title A-Z'}`,
+        onRemove: () => setSortBy('newest'),
+      });
+    }
+    return chips;
+  }, [searchQuery, selectedCategory, categories, statusFilter, sortBy]);
+
+  const handleResetFilters = () => {
+    setSearchQuery('');
+    setSelectedCategory('all');
+    setStatusFilter('all');
+    setSortBy('newest');
+  };
+
+  // Sort posts if needed
+  const sortedPosts = useMemo(() => {
+    const list = [...posts];
+    if (sortBy === 'oldest') {
+      list.reverse();
+    } else if (sortBy === 'title') {
+      list.sort((a, b) => a.title.localeCompare(b.title));
+    }
+    return list;
+  }, [posts, sortBy]);
 
   // Drawer & modal state
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPostEntity | null>(null);
   const [postToDelete, setPostToDelete] = useState<BlogPostEntity | null>(null);
 
-  // Queries
-  const { data: blogData, isLoading, refetch } = useBlogPosts({
-    isAdminView: isStaff,
-    categoryId: selectedCategory !== 'all' ? selectedCategory : undefined,
-    status: statusFilter !== 'all' ? statusFilter : undefined,
-    search: searchQuery || undefined,
-  });
-
-  const { data: categories = [] } = useBlogCategories();
-  const { data: featuredPosts = [] } = useFeaturedPosts();
-
   // Mutations
   const createMutation = useCreateBlogPost();
   const updateMutation = useUpdateBlogPost();
   const publishMutation = usePublishBlogPost();
   const deleteMutation = useDeleteBlogPost();
-
-  const posts = useMemo(() => blogData?.posts || [], [blogData?.posts]);
 
   // Open drawer for creating a new post
   const handleOpenCreate = () => {
@@ -114,71 +183,59 @@ export function BlogPage() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Hero Section */}
       <BlogHero
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
         totalArticles={blogData?.total ?? posts.length}
       />
 
-      {/* Staff Inline Toolbar */}
-      {isStaff && (
-        <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/80">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5 mr-2">
-              <Filter className="h-3.5 w-3.5" />
-              <span>Status</span>
-            </span>
-
-            {['all', BlogPostStatus.PUBLISHED, BlogPostStatus.DRAFT, BlogPostStatus.REVIEW, BlogPostStatus.SCHEDULED].map(
-              (st) => (
-                <button
-                  key={st}
-                  type="button"
-                  onClick={() => setStatusFilter(st)}
-                  className={`rounded-lg px-3 py-1 text-xs font-semibold capitalize transition ${
-                    statusFilter === st
-                      ? 'bg-brand-600 text-white shadow-xs'
-                      : 'bg-white text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
-                  }`}
-                >
-                  {st}
-                </button>
-              ),
-            )}
-          </div>
-
-          <div className="flex items-center gap-3">
+      {/* Unified Search & Advanced Filters Bar */}
+      <SearchFilterBar
+        search={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Filter articles by title, topic, or tags..."
+        isExpanded={isFilterExpanded}
+        onToggleExpanded={setIsFilterExpanded}
+        activeFilterCount={activeFilterCount}
+        hasActiveFilters={activeFilterCount > 0 || Boolean(searchQuery)}
+        onReset={handleResetFilters}
+        totalCount={blogData?.total ?? posts.length}
+        filteredCount={sortedPosts.length}
+        resultsLabel="articles"
+        activeChips={activeChips}
+        actions={
+          <>
             {/* View Mode Toggle (Grid vs Table) */}
-            <div className="flex items-center rounded-lg bg-slate-200/80 p-0.5 dark:bg-slate-800">
-              <button
-                type="button"
-                onClick={() => setViewMode('grid')}
-                className={`flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-medium ${
-                  viewMode === 'grid'
-                    ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
-                    : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
-                }`}
-                title="Grid Showcase"
-              >
-                <LayoutGrid className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Grid</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewMode('table')}
-                className={`flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-medium ${
-                  viewMode === 'table'
-                    ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
-                    : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
-                }`}
-                title="Management Table"
-              >
-                <TableIcon className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Table</span>
-              </button>
-            </div>
+            {isStaff && (
+              <div className="flex items-center rounded-xl bg-slate-100 p-0.5 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('grid')}
+                  className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold cursor-pointer transition ${
+                    viewMode === 'grid'
+                      ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                      : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                  }`}
+                  title="Grid Showcase"
+                >
+                  <LayoutGrid className="h-3.5 w-3.5" />
+                  <span className="hidden sm:inline">Grid</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('table')}
+                  className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold cursor-pointer transition ${
+                    viewMode === 'table'
+                      ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                      : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                  }`}
+                  title="Management Table"
+                >
+                  <TableIcon className="h-3.5 w-3.5" />
+                  <span className="hidden sm:inline">Table</span>
+                </button>
+              </div>
+            )}
 
             {/* Create Article Action */}
             {canWrite && (
@@ -187,40 +244,81 @@ export function BlogPage() {
                 variant="primary"
                 size="sm"
                 onClick={handleOpenCreate}
-                className="flex items-center gap-1.5 shadow-sm"
+                className="shadow-sm"
               >
-                <Plus className="h-4 w-4" />
-                <span>New Article</span>
+                New Article
               </Button>
             )}
-          </div>
-        </div>
-      )}
+          </>
+        }
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Categories */}
+          <FilterGroup label="Categories" count={categories.length + 1}>
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              <FilterPill
+                label="All Categories"
+                isSelected={selectedCategory === 'all'}
+                onClick={() => setSelectedCategory('all')}
+              />
+              {categories.map((cat) => (
+                <FilterPill
+                  key={cat.id || cat.slug}
+                  label={cat.name}
+                  isSelected={selectedCategory === cat.id || selectedCategory === cat.slug}
+                  onClick={() => setSelectedCategory(cat.id || cat.slug)}
+                />
+              ))}
+            </div>
+          </FilterGroup>
 
-      {/* Category Pills Filter */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <BlogCategoryFilter
-          categories={categories}
-          selectedCategoryId={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-        />
-        {selectedCategory !== 'all' && (
-          <Button
-            type="button"
-            variant="ghost"
-            size="xs"
-            onClick={() => setSelectedCategory('all')}
-            className="text-xs text-slate-500 self-start sm:self-auto"
-          >
-            Clear category filter
-          </Button>
-        )}
-      </div>
+          {/* Status Filter (for staff) or Topic highlight */}
+          {isStaff ? (
+            <FilterGroup label="Publication Status" count={5}>
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {[
+                  { id: 'all', label: 'All Statuses' },
+                  { id: BlogPostStatus.PUBLISHED, label: 'Published' },
+                  { id: BlogPostStatus.DRAFT, label: 'Draft' },
+                  { id: BlogPostStatus.REVIEW, label: 'In Review' },
+                  { id: BlogPostStatus.SCHEDULED, label: 'Scheduled' },
+                ].map((st) => (
+                  <FilterPill
+                    key={st.id}
+                    label={st.label}
+                    isSelected={statusFilter === st.id}
+                    onClick={() => setStatusFilter(st.id)}
+                  />
+                ))}
+              </div>
+            </FilterGroup>
+          ) : (
+            <FilterGroup label="Reading Experience">
+              <p className="text-xs text-slate-500 dark:text-slate-400 pt-1 leading-relaxed">
+                Filter production insights across microservices, event streaming, and cloud platforms.
+              </p>
+            </FilterGroup>
+          )}
+
+          {/* Sort By */}
+          <FilterGroup label="Sort Articles">
+            <FilterSelect
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as 'newest' | 'oldest' | 'title')}
+              options={[
+                { value: 'newest', label: 'Newest First (Chronological)' },
+                { value: 'oldest', label: 'Oldest First' },
+                { value: 'title', label: 'Title Alphabetical (A-Z)' },
+              ]}
+            />
+          </FilterGroup>
+        </div>
+      </SearchFilterBar>
 
       {/* Main Content Layout */}
       {viewMode === 'table' && isStaff ? (
         <BlogTable
-          posts={posts}
+          posts={sortedPosts}
           onEdit={handleOpenEdit}
           onDelete={(post) => setPostToDelete(post)}
           onPublishToggle={handlePublishToggle}
@@ -239,7 +337,7 @@ export function BlogPage() {
                   />
                 ))}
               </div>
-            ) : posts.length === 0 ? (
+            ) : sortedPosts.length === 0 ? (
               <div className="rounded-2xl border border-dashed border-slate-200 p-12 text-center dark:border-slate-800">
                 <h3 className="text-base font-semibold text-slate-900 dark:text-white">
                   No articles found
@@ -261,7 +359,7 @@ export function BlogPage() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {posts.map((post) => (
+                {sortedPosts.map((post) => (
                   <BlogCard
                     key={post.id || post.slug}
                     post={post}

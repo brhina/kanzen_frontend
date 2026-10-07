@@ -5,7 +5,7 @@ import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { Textarea } from '@/shared/ui/textarea';
 import { slugify } from '@/shared/utils/string';
-import { Plus, X, Loader2, Sparkles, Check } from 'lucide-react';
+import { X, Loader2, Sparkles, Check } from 'lucide-react';
 import type { JobPostingEntity } from '../../domain/entities/job-posting.entity';
 import type {
   ExperienceLevel,
@@ -446,8 +446,7 @@ export const JobPostingForm: React.FC<JobPostingFormProps> = ({
             onClick={addTech}
             className="shrink-0"
           >
-            <Plus className="h-4 w-4 mr-1" />
-            <span>Add</span>
+            Add
           </Button>
         </div>
         {technologies.length > 0 && (
@@ -495,8 +494,7 @@ export const JobPostingForm: React.FC<JobPostingFormProps> = ({
             onClick={addRequirement}
             className="shrink-0"
           >
-            <Plus className="h-4 w-4 mr-1" />
-            <span>Add</span>
+            Add
           </Button>
         </div>
         {requirements.length > 0 && (
@@ -544,8 +542,7 @@ export const JobPostingForm: React.FC<JobPostingFormProps> = ({
             onClick={addNiceToHave}
             className="shrink-0"
           >
-            <Plus className="h-4 w-4 mr-1" />
-            <span>Add</span>
+            Add
           </Button>
         </div>
         {niceToHave.length > 0 && (
@@ -593,8 +590,7 @@ export const JobPostingForm: React.FC<JobPostingFormProps> = ({
             onClick={addBenefit}
             className="shrink-0"
           >
-            <Plus className="h-4 w-4 mr-1" />
-            <span>Add</span>
+            Add
           </Button>
         </div>
         {benefits.length > 0 && (

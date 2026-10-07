@@ -1,7 +1,10 @@
-import React from 'react';
-import { Search, X, MapPin, Award } from 'lucide-react';
-import { Input } from '@/shared/ui/input';
-import { Button } from '@/shared/ui/button';
+import React, { useState, useMemo } from 'react';
+import {
+  SearchFilterBar,
+  FilterGroup,
+  FilterPill,
+  FilterSelect,
+} from '@/shared/ui/filter';
 import type {
   ExperienceLevel,
   WorkMode,
@@ -18,6 +21,8 @@ interface JobFilterBarProps {
   selectedLevel?: ExperienceLevel | '';
   onSelectLevel: (level: ExperienceLevel | '') => void;
   onReset?: () => void;
+  totalResults?: number;
+  actions?: React.ReactNode;
   className?: string;
 }
 
@@ -32,98 +37,115 @@ export const JobFilterBar: React.FC<JobFilterBarProps> = ({
   selectedLevel = '',
   onSelectLevel,
   onReset,
+  totalResults,
+  actions,
   className = '',
 }) => {
-  const hasFilters = Boolean(
-    selectedDepartment !== 'All' ||
-      search ||
-      selectedMode ||
-      selectedLevel,
-  );
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (selectedDepartment && selectedDepartment !== 'All') count++;
+    if (selectedMode) count++;
+    if (selectedLevel) count++;
+    return count;
+  }, [selectedDepartment, selectedMode, selectedLevel]);
+
+  const activeChips = useMemo(() => {
+    const chips = [];
+    if (search) {
+      chips.push({
+        id: 'search',
+        label: `Search: "${search}"`,
+        onRemove: () => onSearchChange(''),
+      });
+    }
+    if (selectedDepartment && selectedDepartment !== 'All') {
+      chips.push({
+        id: 'department',
+        label: `Dept: ${selectedDepartment}`,
+        onRemove: () => onSelectDepartment('All'),
+      });
+    }
+    if (selectedMode) {
+      chips.push({
+        id: 'mode',
+        label: `Mode: ${selectedMode.charAt(0).toUpperCase() + selectedMode.slice(1)}`,
+        onRemove: () => onSelectMode(''),
+      });
+    }
+    if (selectedLevel) {
+      chips.push({
+        id: 'level',
+        label: `Level: ${selectedLevel.charAt(0).toUpperCase() + selectedLevel.slice(1)}`,
+        onRemove: () => onSelectLevel(''),
+      });
+    }
+    return chips;
+  }, [search, selectedDepartment, selectedMode, selectedLevel, onSearchChange, onSelectDepartment, onSelectMode, onSelectLevel]);
 
   return (
-    <div className={`space-y-4 ${className}`}>
-      {/* Department Pills */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-        {departments.map((dept) => {
-          const isSelected = selectedDepartment === dept;
-          return (
-            <button
-              key={dept}
-              type="button"
-              onClick={() => onSelectDepartment(dept)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors duration-150 border ${
-                isSelected
-                  ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
-                  : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              {dept}
-            </button>
-          );
-        })}
-      </div>
+    <div className={className}>
+      <SearchFilterBar
+        searchValue={search}
+        onSearchChange={onSearchChange}
+        searchPlaceholder="Search roles by title, stack, keyword..."
+        isFilterExpanded={isFilterExpanded}
+        onToggleFilter={() => setIsFilterExpanded((prev) => !prev)}
+        activeFilterCount={activeFilterCount}
+        activeChips={activeChips}
+        onClearAllFilters={onReset}
+        resultsSummary={
+          totalResults !== undefined ? (
+            <span className="text-xs text-slate-500 font-medium">
+              Found <span className="font-semibold text-slate-700 dark:text-slate-300">{totalResults}</span> positions
+            </span>
+          ) : undefined
+        }
+        actions={actions}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+          <FilterGroup label="Department" count={selectedDepartment !== 'All' ? 1 : undefined}>
+            <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto">
+              {departments.map((dept) => (
+                <FilterPill
+                  key={dept}
+                  label={dept}
+                  isActive={selectedDepartment === dept}
+                  onClick={() => onSelectDepartment(dept)}
+                />
+              ))}
+            </div>
+          </FilterGroup>
 
-      {/* Search & Filter Dropdowns */}
-      <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
-        <div className="sm:col-span-5 relative">
-          <Input
-            value={search}
-            onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Search roles by title, stack, keyword..."
-            leftIcon={<Search className="h-4 w-4 text-slate-400" />}
-          />
-        </div>
-
-        <div className="sm:col-span-3">
-          <div className="relative">
-            <select
+          <FilterGroup label="Work Mode" count={selectedMode ? 1 : undefined}>
+            <FilterSelect
               value={selectedMode}
               onChange={(e) => onSelectMode(e.target.value as WorkMode | '')}
-              className="w-full h-10 px-3 pl-8 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
-            >
-              <option value="">All Work Modes</option>
-              <option value="remote">Remote</option>
-              <option value="hybrid">Hybrid</option>
-              <option value="on-site">On-Site</option>
-            </select>
-            <MapPin className="h-3.5 w-3.5 text-slate-400 absolute left-2.5 top-3 pointer-events-none" />
-          </div>
-        </div>
+              options={[
+                { value: '', label: 'All Work Modes' },
+                { value: 'remote', label: 'Remote' },
+                { value: 'hybrid', label: 'Hybrid' },
+                { value: 'on-site', label: 'On-Site' },
+              ]}
+            />
+          </FilterGroup>
 
-        <div className="sm:col-span-3">
-          <div className="relative">
-            <select
+          <FilterGroup label="Experience Level" count={selectedLevel ? 1 : undefined}>
+            <FilterSelect
               value={selectedLevel}
-              onChange={(e) =>
-                onSelectLevel(e.target.value as ExperienceLevel | '')
-              }
-              className="w-full h-10 px-3 pl-8 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
-            >
-              <option value="">All Experience Levels</option>
-              <option value="junior">Junior</option>
-              <option value="mid">Mid-Level</option>
-              <option value="senior">Senior</option>
-              <option value="lead">Lead / Principal</option>
-            </select>
-            <Award className="h-3.5 w-3.5 text-slate-400 absolute left-2.5 top-3 pointer-events-none" />
-          </div>
+              onChange={(e) => onSelectLevel(e.target.value as ExperienceLevel | '')}
+              options={[
+                { value: '', label: 'All Experience Levels' },
+                { value: 'junior', label: 'Junior' },
+                { value: 'mid', label: 'Mid-Level' },
+                { value: 'senior', label: 'Senior' },
+                { value: 'lead', label: 'Lead / Principal' },
+              ]}
+            />
+          </FilterGroup>
         </div>
-
-        {hasFilters && onReset && (
-          <div className="sm:col-span-1 flex justify-end">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onReset}
-              className="text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 flex items-center gap-1"
-            >
-              <X className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Reset</span>
-            </Button>
-          </div>
-        )}
-      </div>
+      </SearchFilterBar>
     </div>
   );
 };

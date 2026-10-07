@@ -80,102 +80,106 @@ export function JobPostingPage() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Navigation Breadcrumb */}
-      <div className="flex items-center justify-between gap-4">
+      <div>
         <Link
           to="/careers"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
         >
-          <ArrowLeft className="h-3.5 w-3.5" />
-          <span>All Open Positions</span>
+          <ArrowLeft className="h-4 w-4" />
+          <span>Back to All Open Positions</span>
         </Link>
+      </div>
 
-        {/* Staff Quick Actions */}
-        <div className="flex items-center gap-2">
-          {canManage && (
+      {/* Staff Inline Control Header */}
+      {canManage && (
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-amber-200 bg-amber-50/70 p-4 dark:border-amber-900/40 dark:bg-amber-950/20">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300">
+              Recruiter Controls:
+            </span>
+            <JobStatusBadge status={job.status} />
+          </div>
+
+          <div className="flex items-center gap-2">
             <Button
+              type="button"
               variant="outline"
-              size="sm"
+              size="xs"
               onClick={() => setIsEditDrawerOpen(true)}
-              className="text-xs flex items-center gap-1.5"
+              className="flex items-center gap-1"
             >
               <Edit3 className="h-3.5 w-3.5" />
               <span>Edit Role</span>
             </Button>
-          )}
 
-          {canViewApplications && job.id && (
-            <Link to={`/applications?jobId=${job.id}`}>
-              <Button
-                variant="outline"
-                size="sm"
-                className="text-xs flex items-center gap-1.5"
-              >
-                <Users className="h-3.5 w-3.5" />
-                <span>View Candidates ({job.applicationCount})</span>
-              </Button>
-            </Link>
-          )}
-
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleShare}
-            className="text-xs flex items-center gap-1.5 text-slate-600 dark:text-slate-300"
-          >
-            <Share2 className="h-3.5 w-3.5" />
-            <span>{copiedLink ? 'Copied Link!' : 'Share'}</span>
-          </Button>
+            {canViewApplications && job.id && (
+              <Link to={`/applications?jobId=${job.id}`}>
+                <Button
+                  variant="outline"
+                  size="xs"
+                  className="flex items-center gap-1"
+                >
+                  <Users className="h-3.5 w-3.5" />
+                  <span>Candidates ({job.applicationCount})</span>
+                </Button>
+              </Link>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Role Title Banner */}
-      <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+      {/* Hero Header */}
+      <div className="space-y-4">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-2.5 py-0.5 rounded-full border border-indigo-200/60 dark:border-indigo-800">
+            <span className="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 bg-brand-500/10 px-2.5 py-0.5 rounded-full border border-brand-500/20">
               {job.department}
             </span>
             <JobTypeBadge mode={job.mode} />
             <JobTypeBadge type={job.type} />
             <JobTypeBadge level={job.experienceLevel} />
-          </div>
-
-          <div className="flex items-center gap-2">
             {job.isUrgent && (
               <Badge variant="danger" size="sm" className="flex items-center gap-1">
                 <Flame className="h-3.5 w-3.5 fill-rose-500" />
                 <span>Urgent Hiring</span>
               </Badge>
             )}
-            <JobStatusBadge status={job.status} />
           </div>
+
+          <Button
+            variant="ghost"
+            size="xs"
+            onClick={handleShare}
+            className="text-xs flex items-center gap-1.5 text-slate-600 dark:text-slate-300"
+          >
+            <Share2 className="h-3.5 w-3.5" />
+            <span>{copiedLink ? 'Copied Link!' : 'Share Position'}</span>
+          </Button>
         </div>
 
-        <div className="space-y-2">
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            {job.title}
-          </h1>
+        <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
+          {job.title}
+        </h1>
 
-          <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-slate-500 dark:text-slate-400 flex-wrap pt-1">
-            <div className="flex items-center gap-1.5">
-              <MapPin className="h-4 w-4 text-slate-400" />
-              <span>{job.locationDisplay}</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <DollarSign className="h-4 w-4 text-slate-400" />
-              <span>{job.salaryRangeFormatted}</span>
-            </div>
-            {job.publishedAt && (
-              <div className="flex items-center gap-1.5">
-                <Calendar className="h-4 w-4 text-slate-400" />
-                <span>
-                  Posted {new Date(job.publishedAt).toLocaleDateString()}
-                </span>
-              </div>
-            )}
+        <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-slate-500 dark:text-slate-400 flex-wrap pt-1">
+          <div className="flex items-center gap-1.5">
+            <MapPin className="h-4 w-4 text-brand-500" />
+            <span>{job.locationDisplay}</span>
           </div>
+          <div className="flex items-center gap-1.5">
+            <DollarSign className="h-4 w-4 text-emerald-500" />
+            <span>{job.salaryRangeFormatted}</span>
+          </div>
+          {job.publishedAt && (
+            <div className="flex items-center gap-1.5">
+              <Calendar className="h-4 w-4 text-slate-400" />
+              <span>
+                Posted {new Date(job.publishedAt).toLocaleDateString()}
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -184,9 +188,9 @@ export function JobPostingPage() {
         {/* Left Column (8 cols): Description, Requirements, Perks */}
         <div className="lg:col-span-7 space-y-8">
           {/* Overview */}
-          <section className="space-y-3">
+          <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs dark:border-slate-800 dark:bg-slate-900">
             <h2 className="text-lg font-bold text-slate-900 dark:text-white">
-              Role Overview & Mission
+              Role Overview &amp; Mission
             </h2>
             <div className="prose dark:prose-invert max-w-none text-sm text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
               {job.description}
@@ -203,11 +207,11 @@ export function JobPostingPage() {
         </div>
 
         {/* Right Column (5 cols): Quick Apply Box & Role Metadata */}
-        <div className="lg:col-span-5 space-y-6 sticky top-24">
+        <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-20">
           {/* Quick Apply Card */}
-          <Card className="border-indigo-200 dark:border-indigo-900 shadow-md bg-gradient-to-b from-white to-indigo-50/20 dark:from-slate-900 dark:to-indigo-950/20">
+          <Card className="border-slate-200 dark:border-slate-800 rounded-2xl shadow-xs">
             <CardHeader className="pb-3">
-              <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold text-xs uppercase tracking-wider">
+              <div className="flex items-center gap-2 text-brand-600 dark:text-brand-400 font-bold text-xs uppercase tracking-wider">
                 <FileText className="h-4 w-4" />
                 <span>Candidate Application</span>
               </div>

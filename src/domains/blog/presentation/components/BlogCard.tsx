@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Clock, Eye, Heart, Calendar, ArrowRight, Edit3 } from 'lucide-react';
+import { Clock, Eye, Heart, Calendar, Edit3 } from 'lucide-react';
 import type { BlogPostEntity } from '../../domain/entities/blog-post.entity';
 import { BlogPostStatus } from '../../domain/enums/blog-post-status.enum';
 import { Badge } from '@/shared/ui/badge';
@@ -150,10 +150,10 @@ export function BlogCard({ post, onEdit, showAdminActions = true }: BlogCardProp
             </span>
             <Link
               to={`/blog/${post.slug}`}
-              className="ml-1 text-brand-600 hover:text-brand-700 dark:text-brand-400"
+              className="ml-1 text-xs font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-400"
               aria-label={`Read ${post.title}`}
             >
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <span>Read</span>
             </Link>
           </div>
         </div>

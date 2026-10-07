@@ -60,7 +60,6 @@ export function BlogSidebar({ featuredPosts = [], categories = [] }: BlogSidebar
                   className="flex items-center justify-between rounded-lg px-2.5 py-1.5 text-xs text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/80 dark:hover:text-white transition-colors"
                 >
                   <span>{cat.name}</span>
-                  <span className="text-[10px] text-slate-400">&rarr;</span>
                 </Link>
               ))}
             </div>

@@ -1,13 +1,12 @@
-import { Search, Sparkles } from 'lucide-react';
-import { Input } from '@/shared/ui/input';
+import { Sparkles } from 'lucide-react';
 
 export interface BlogHeroProps {
-  searchQuery: string;
-  onSearchChange: (query: string) => void;
+  searchQuery?: string;
+  onSearchChange?: (query: string) => void;
   totalArticles?: number;
 }
 
-export function BlogHero({ searchQuery, onSearchChange, totalArticles = 0 }: BlogHeroProps) {
+export function BlogHero({ totalArticles = 0 }: BlogHeroProps) {
   return (
     <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16 border border-slate-800">
       {/* Background glow or accents */}
@@ -36,20 +35,6 @@ export function BlogHero({ searchQuery, onSearchChange, totalArticles = 0 }: Blo
         <p className="text-base text-slate-300 sm:text-lg leading-relaxed max-w-2xl">
           Deep dives into distributed systems, event-driven microservices, high-throughput pipelines, and production AI engineering.
         </p>
-
-        {/* Search Bar */}
-        <div className="relative max-w-xl pt-2">
-          <div className="relative flex items-center">
-            <Search className="pointer-events-none absolute left-4 h-5 w-5 text-slate-400" />
-            <Input
-              type="search"
-              value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Search articles by title, topic, or tag (e.g. Kafka, Kubernetes, Go)..."
-              className="h-12 w-full rounded-xl bg-slate-900/90 pl-11 pr-4 text-sm text-white placeholder-slate-400 shadow-inner ring-1 ring-slate-700/80 focus:ring-2 focus:ring-brand-500 border-0"
-            />
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import {
   Clock,
   LayoutGrid,
   ListFilter,
+  Sparkles,
 } from 'lucide-react';
 
 export function ContactPage() {
@@ -19,7 +20,7 @@ export function ContactPage() {
   const [activeView, setActiveView] = useState<'inbox' | 'form'>('inbox');
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* AUTHORIZED STAFF INBOX DESK */}
       {canManage ? (
         <div className="space-y-6">
@@ -79,7 +80,7 @@ export function ContactPage() {
                   Back to Inbox
                 </Button>
               </div>
-              <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+              <div className="bg-white dark:bg-slate-900/90 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
                 <ContactForm />
               </div>
             </div>
@@ -87,72 +88,84 @@ export function ContactPage() {
         </div>
       ) : (
         /* PUBLIC VISITOR CONTACT CHANNELS & FORM */
-        <div className="max-w-5xl mx-auto py-4 space-y-12">
-          <div className="text-center space-y-4">
-            <Badge variant="brand" size="md" className="mx-auto">
-              Direct Communication
-            </Badge>
-            <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-              Get in Touch with Kanzen Tech
-            </h1>
-            <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              Have questions about our engineering capabilities, consulting engagements, or partnership programs? We are here to help.
-            </p>
+        <div className="space-y-10">
+          {/* Header Banner */}
+          <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16 border border-slate-800">
+            <div className="relative z-10 max-w-3xl space-y-4">
+              <div className="inline-flex items-center gap-2 rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
+                <Sparkles className="h-3.5 w-3.5 text-brand-400" />
+                <span>Direct Communication</span>
+              </div>
+
+              <h1 className="text-3xl font-black tracking-tight sm:text-5xl text-white">
+                Get in Touch with Kanzen Tech
+              </h1>
+
+              <p className="text-sm text-slate-300 sm:text-base leading-relaxed">
+                Have questions about our engineering capabilities, consulting engagements, or partnership programs? We are here to help.
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Direct Channels Column */}
             <div className="space-y-4">
-              <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 flex items-center justify-center">
+              <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700 space-y-3">
+                <div className="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 flex items-center justify-center">
                   <Mail className="w-5 h-5" />
                 </div>
-                <h3 className="font-bold text-base text-slate-900 dark:text-white">
-                  Direct Inquiries
-                </h3>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  General inquiries, enterprise sales, and client collaborations:
-                </p>
-                <div className="text-sm font-semibold text-brand-600">
+                <div>
+                  <h3 className="font-bold text-base text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                    Direct Inquiries
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">
+                    General inquiries, enterprise sales, and client collaborations:
+                  </p>
+                </div>
+                <div className="text-sm font-semibold text-brand-600 dark:text-brand-400">
                   <a href="mailto:hello@kanzen.tech" className="hover:underline">
                     hello@kanzen.tech
                   </a>
                 </div>
               </div>
 
-              <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 flex items-center justify-center">
+              <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700 space-y-3">
+                <div className="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 flex items-center justify-center">
                   <MapPin className="w-5 h-5" />
                 </div>
-                <h3 className="font-bold text-base text-slate-900 dark:text-white">
-                  Engineering Hub
-                </h3>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Nairobi, Kenya · Silicon Savannah
-                </p>
-                <p className="text-xs text-slate-400">
-                  Global remote distributed delivery across US, UK & EMEA timezones.
-                </p>
+                <div>
+                  <h3 className="font-bold text-base text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                    Engineering Hub
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">
+                    Nairobi, Kenya · Silicon Savannah
+                  </p>
+                  <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                    Global remote distributed delivery across US, UK & EMEA timezones.
+                  </p>
+                </div>
               </div>
 
-              <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center">
+              <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700 space-y-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                   <Clock className="w-5 h-5" />
                 </div>
-                <h3 className="font-bold text-base text-slate-900 dark:text-white">
-                  Operating Hours
-                </h3>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Monday – Friday: 08:00 – 18:00 EAT
-                </p>
-                <p className="text-xs text-slate-400">
-                  24/7 dedicated support for active enterprise SLA clients.
-                </p>
+                <div>
+                  <h3 className="font-bold text-base text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                    Operating Hours
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">
+                    Monday – Friday: 08:00 – 18:00 EAT
+                  </p>
+                  <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                    24/7 dedicated support for active enterprise SLA clients.
+                  </p>
+                </div>
               </div>
             </div>
 
             {/* Interactive Inquiry Form */}
-            <div className="lg:col-span-2 bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+            <div className="lg:col-span-2 bg-white dark:bg-slate-900/90 p-8 sm:p-10 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
               <ContactForm />
             </div>
           </div>

@@ -9,11 +9,9 @@ import { JobTypeBadge } from '../components/JobTypeBadge';
 import { JobPostingForm } from '../components/JobPostingForm';
 import { Drawer } from '@/shared/ui/drawer';
 import { Button } from '@/shared/ui/button';
-import { Badge } from '@/shared/ui/badge';
 import { Card, CardContent } from '@/shared/ui/card';
 import {
   Briefcase,
-  Plus,
   LayoutGrid,
   Table as TableIcon,
   Sparkles,
@@ -104,66 +102,23 @@ export function CareersPage() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-10">
-      {/* Page Header & Hero */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-              Engineering Careers at Kanzen
-            </h1>
-            <Badge variant="brand" size="sm" className="hidden sm:inline-flex">
-              We&apos;re Hiring
-            </Badge>
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-10">
+      {/* Header Banner */}
+      <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16 border border-slate-800">
+        <div className="relative z-10 max-w-3xl space-y-4">
+          <div className="inline-flex items-center gap-2 rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
+            <Sparkles className="h-3.5 w-3.5 text-brand-400" />
+            <span>Autonomous Engineering &amp; High Agency</span>
           </div>
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
+
+          <h1 className="text-3xl font-black tracking-tight sm:text-5xl text-white">
+            Engineering Careers at Kanzen
+          </h1>
+
+          <p className="text-sm text-slate-300 sm:text-base leading-relaxed">
             Join a global team designing, architecting, and scaling high-throughput distributed systems. We prioritize async autonomy, clean code, and zero legacy bloat.
           </p>
         </div>
-
-        {/* Staff Inline Control Bar */}
-        {canManage && (
-          <div className="flex items-center gap-3 self-start md:self-auto shrink-0 flex-wrap">
-            <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-lg border border-slate-200 dark:border-slate-700">
-              <button
-                type="button"
-                onClick={() => setViewFormat('grid')}
-                className={`p-1.5 rounded text-xs font-medium flex items-center gap-1.5 transition-colors ${
-                  viewFormat === 'grid'
-                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-                title="Grid View"
-              >
-                <LayoutGrid className="h-4 w-4" />
-                <span className="hidden sm:inline">Grid</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewFormat('table')}
-                className={`p-1.5 rounded text-xs font-medium flex items-center gap-1.5 transition-colors ${
-                  viewFormat === 'table'
-                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-                title="Recruiter Table View"
-              >
-                <TableIcon className="h-4 w-4" />
-                <span className="hidden sm:inline">Pipeline Table</span>
-              </button>
-            </div>
-
-            <Button
-              variant="primary"
-              size="md"
-              onClick={openCreateDrawer}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white flex items-center gap-2"
-            >
-              <Plus className="h-4 w-4" />
-              <span>Post New Role</span>
-            </Button>
-          </div>
-        )}
       </div>
 
       {/* Filter Bar */}
@@ -178,6 +133,50 @@ export function CareersPage() {
         selectedLevel={selectedLevel}
         onSelectLevel={setSelectedLevel}
         onReset={resetFilters}
+        totalResults={jobs.length}
+        actions={
+          canManage && (
+            <div className="flex items-center gap-2">
+              <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl border border-slate-200 dark:border-slate-700">
+                <button
+                  type="button"
+                  onClick={() => setViewFormat('grid')}
+                  className={`p-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer ${
+                    viewFormat === 'grid'
+                      ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                  title="Grid View"
+                >
+                  <LayoutGrid className="h-4 w-4" />
+                  <span className="hidden sm:inline">Grid</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewFormat('table')}
+                  className={`p-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer ${
+                    viewFormat === 'table'
+                      ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                  title="Recruiter Table View"
+                >
+                  <TableIcon className="h-4 w-4" />
+                  <span className="hidden sm:inline">Table</span>
+                </button>
+              </div>
+
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={openCreateDrawer}
+                className="bg-indigo-600 hover:bg-indigo-700 text-white shrink-0"
+              >
+                Post New Role
+              </Button>
+            </div>
+          )
+        }
       />
 
       {/* Main Content Area */}
