@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { ArrowRight, CheckCircle2, Edit3, Building2 } from 'lucide-react';
+import { CheckCircle2, Edit3, Building2 } from 'lucide-react';
 import type { SolutionEntity } from '../../domain/entities/solution.entity';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
@@ -97,9 +97,8 @@ export function SolutionCard({
         </div>
 
         <Link to={`/solutions/${solution.slug}`}>
-          <Button variant="outline" size="xs" className="flex items-center gap-1 group-hover:border-brand-500 group-hover:text-brand-600 dark:group-hover:text-brand-400">
+          <Button variant="outline" size="xs" className="group-hover:border-brand-500 group-hover:text-brand-600 dark:group-hover:text-brand-400">
             <span>Explore Blueprint</span>
-            <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
           </Button>
         </Link>
       </div>

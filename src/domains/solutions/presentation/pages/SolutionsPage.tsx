@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Plus, Search, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useSolutions } from '../../application/use-cases/useSolutions';
 import { useCreateSolution } from '../../application/use-cases/useCreateSolution';
@@ -12,7 +12,12 @@ import { SolutionForm } from '../components/SolutionForm';
 import { Drawer } from '@/shared/ui/drawer';
 import { Modal } from '@/shared/ui/modal';
 import { Button } from '@/shared/ui/button';
-import { Input } from '@/shared/ui/input';
+import {
+  SearchFilterBar,
+  FilterGroup,
+  FilterPill,
+  FilterSelect,
+} from '@/shared/ui/filter';
 
 export function SolutionsPage() {
   const { user } = useAuthStore();
@@ -21,6 +26,9 @@ export function SolutionsPage() {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndustry, setSelectedIndustry] = useState<string>('all');
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+  const [architectureType, setArchitectureType] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<'featured' | 'name' | 'newest'>('featured');
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [editingSolution, setEditingSolution] = useState<SolutionEntity | null>(null);
@@ -46,6 +54,73 @@ export function SolutionsPage() {
     });
     return Array.from(set);
   }, [solutions]);
+
+  // Count active filters
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (selectedIndustry !== 'all') count++;
+    if (architectureType !== 'all') count++;
+    if (sortBy !== 'featured') count++;
+    return count;
+  }, [selectedIndustry, architectureType, sortBy]);
+
+  // Active filter chips
+  const activeChips = useMemo(() => {
+    const chips = [];
+    if (searchQuery) {
+      chips.push({
+        id: 'search',
+        label: `Search: "${searchQuery}"`,
+        onRemove: () => setSearchQuery(''),
+      });
+    }
+    if (selectedIndustry !== 'all') {
+      chips.push({
+        id: 'industry',
+        label: `Industry: ${selectedIndustry}`,
+        onRemove: () => setSelectedIndustry('all'),
+      });
+    }
+    if (architectureType !== 'all') {
+      chips.push({
+        id: 'arch',
+        label: `Architecture: ${architectureType}`,
+        onRemove: () => setArchitectureType('all'),
+      });
+    }
+    if (sortBy !== 'featured') {
+      chips.push({
+        id: 'sort',
+        label: `Sort: ${sortBy === 'name' ? 'Name (A-Z)' : 'Newest'}`,
+        onRemove: () => setSortBy('featured'),
+      });
+    }
+    return chips;
+  }, [searchQuery, selectedIndustry, architectureType, sortBy]);
+
+  const handleResetFilters = () => {
+    setSearchQuery('');
+    setSelectedIndustry('all');
+    setArchitectureType('all');
+    setSortBy('featured');
+  };
+
+  // Filtered and sorted solutions
+  const displayedSolutions = useMemo(() => {
+    let list = [...solutions];
+    if (architectureType !== 'all') {
+      list = list.filter((s) =>
+        s.description?.toLowerCase().includes(architectureType.toLowerCase()) ||
+        s.tagline?.toLowerCase().includes(architectureType.toLowerCase()) ||
+        s.name?.toLowerCase().includes(architectureType.toLowerCase()) ||
+        s.features?.some((f) => f.toLowerCase().includes(architectureType.toLowerCase())),
+      );
+    }
+    if (sortBy === 'name') {
+      list.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    return list;
+  }, [solutions, architectureType, sortBy]);
 
   const handleOpenCreate = () => {
     setEditingSolution(null);
@@ -83,7 +158,7 @@ export function SolutionsPage() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Banner */}
       <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16 border border-slate-800">
         <div className="relative z-10 max-w-3xl space-y-4">
@@ -102,64 +177,83 @@ export function SolutionsPage() {
         </div>
       </div>
 
-      {/* Control Row: Filter Pills, Search, and Staff Add Action */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        {/* Industry Filter Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-          <button
-            type="button"
-            onClick={() => setSelectedIndustry('all')}
-            className={`inline-flex shrink-0 items-center rounded-full px-4 py-1.5 text-xs font-semibold transition ${
-              selectedIndustry === 'all'
-                ? 'bg-slate-900 text-white shadow-xs dark:bg-white dark:text-slate-900'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
-            }`}
-          >
-            All Industries
-          </button>
-          {availableIndustries.map((ind) => (
-            <button
-              key={ind}
-              type="button"
-              onClick={() => setSelectedIndustry(ind)}
-              className={`inline-flex shrink-0 items-center rounded-full px-4 py-1.5 text-xs font-semibold transition ${
-                selectedIndustry === ind
-                  ? 'bg-slate-900 text-white shadow-xs dark:bg-white dark:text-slate-900'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
-              }`}
-            >
-              {ind}
-            </button>
-          ))}
-        </div>
-
-        {/* Right Search & Action */}
-        <div className="flex items-center gap-3">
-          <div className="relative w-48 sm:w-64">
-            <Search className="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
-            <Input
-              type="search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search solutions..."
-              className="h-9 pl-9 text-xs"
-            />
-          </div>
-
-          {canWrite && (
+      {/* Unified Search & Advanced Filters Bar */}
+      <SearchFilterBar
+        search={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Search solution blueprints, domain patterns..."
+        isExpanded={isFilterExpanded}
+        onToggleExpanded={setIsFilterExpanded}
+        activeFilterCount={activeFilterCount}
+        hasActiveFilters={activeFilterCount > 0 || Boolean(searchQuery)}
+        onReset={handleResetFilters}
+        totalCount={solutions.length}
+        filteredCount={displayedSolutions.length}
+        resultsLabel="solution architectures"
+        activeChips={activeChips}
+        actions={
+          canWrite && (
             <Button
               type="button"
               variant="primary"
               size="sm"
               onClick={handleOpenCreate}
-              className="flex items-center gap-1.5 shrink-0"
+              className="shrink-0"
             >
-              <Plus className="h-4 w-4" />
-              <span>Add Solution</span>
+              Add Solution
             </Button>
-          )}
+          )
+        }
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {/* Industry Filter */}
+          <FilterGroup label="Industry Domain" count={availableIndustries.length + 1}>
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              <FilterPill
+                label="All Industries"
+                isSelected={selectedIndustry === 'all'}
+                onClick={() => setSelectedIndustry('all')}
+              />
+              {availableIndustries.map((ind) => (
+                <FilterPill
+                  key={ind}
+                  label={ind}
+                  isSelected={selectedIndustry === ind}
+                  onClick={() => setSelectedIndustry(ind)}
+                />
+              ))}
+            </div>
+          </FilterGroup>
+
+          {/* Architecture Type */}
+          <FilterGroup label="System Architecture">
+            <FilterSelect
+              value={architectureType}
+              onChange={(e) => setArchitectureType(e.target.value)}
+              options={[
+                { value: 'all', label: 'All Architectures' },
+                { value: 'cloud', label: 'Cloud-Native & Serverless' },
+                { value: 'distributed', label: 'Distributed Event-Driven' },
+                { value: 'ai', label: 'AI & Inference Systems' },
+                { value: 'fintech', label: 'High-Compliance & Security' },
+              ]}
+            />
+          </FilterGroup>
+
+          {/* Sort By */}
+          <FilterGroup label="Sort Solutions">
+            <FilterSelect
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as 'featured' | 'name' | 'newest')}
+              options={[
+                { value: 'featured', label: 'Featured Blueprints' },
+                { value: 'name', label: 'Blueprint Name (A-Z)' },
+                { value: 'newest', label: 'Recently Architected' },
+              ]}
+            />
+          </FilterGroup>
         </div>
-      </div>
+      </SearchFilterBar>
 
       {/* Solutions Grid */}
       {isLoading ? (
@@ -171,7 +265,7 @@ export function SolutionsPage() {
             />
           ))}
         </div>
-      ) : solutions.length === 0 ? (
+      ) : displayedSolutions.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-slate-200 p-12 text-center dark:border-slate-800">
           <h3 className="text-base font-semibold text-slate-900 dark:text-white">
             No solutions found
@@ -193,7 +287,7 @@ export function SolutionsPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {solutions.map((solution) => (
+          {displayedSolutions.map((solution) => (
             <SolutionCard
               key={solution.id || solution.slug}
               solution={solution}

@@ -1,10 +1,9 @@
 import { useState, useMemo } from 'react';
 import {
   MessageSquare,
-  Search,
   ShieldCheck,
   Clock,
-  Heart,
+  Sparkles,
 } from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useTestimonials } from '../../application/use-cases/useTestimonials';
@@ -22,7 +21,12 @@ import { TestimonialCard } from '../components/TestimonialCard';
 import { TestimonialCarousel } from '../components/TestimonialCarousel';
 import { TestimonialForm } from '../components/TestimonialForm';
 import { Button } from '@/shared/ui/button';
-import { Input } from '@/shared/ui/input';
+import {
+  SearchFilterBar,
+  FilterGroup,
+  FilterPill,
+  FilterSelect,
+} from '@/shared/ui/filter';
 import { Modal } from '@/shared/ui/modal';
 import { Drawer } from '@/shared/ui/drawer';
 import { Skeleton } from '@/shared/ui/skeleton';
@@ -46,6 +50,8 @@ export function TestimonialsPage() {
   const [activeTab, setActiveTab] = useState<'wall' | 'pending' | 'rejected'>('wall');
   const [selectedRating, setSelectedRating] = useState<number | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+  const [sortBy, setSortBy] = useState<'rating' | 'newest' | 'author'>('rating');
 
   // Modals & Drawers
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
@@ -103,6 +109,73 @@ export function TestimonialsPage() {
     return sourceList;
   }, [activeTab, isStaff, adminList, publicList, selectedRating]);
 
+  // Active filter count
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (selectedRating !== 'all') count++;
+    if (activeTab !== 'wall') count++;
+    if (sortBy !== 'rating') count++;
+    return count;
+  }, [selectedRating, activeTab, sortBy]);
+
+  // Active filter chips
+  const activeChips = useMemo(() => {
+    const chips = [];
+    if (searchQuery) {
+      chips.push({
+        id: 'search',
+        label: `Search: "${searchQuery}"`,
+        onRemove: () => setSearchQuery(''),
+      });
+    }
+    if (selectedRating !== 'all') {
+      chips.push({
+        id: 'rating',
+        label: `${selectedRating} Stars`,
+        onRemove: () => setSelectedRating('all'),
+      });
+    }
+    if (activeTab !== 'wall') {
+      chips.push({
+        id: 'tab',
+        label: `Queue: ${activeTab === 'pending' ? 'Pending Review' : 'Rejected'}`,
+        onRemove: () => setActiveTab('wall'),
+      });
+    }
+    if (sortBy !== 'rating') {
+      chips.push({
+        id: 'sort',
+        label: `Sort: ${sortBy === 'newest' ? 'Most Recent' : 'Author (A-Z)'}`,
+        onRemove: () => setSortBy('rating'),
+      });
+    }
+    return chips;
+  }, [searchQuery, selectedRating, activeTab, sortBy]);
+
+  const handleResetFilters = () => {
+    setSearchQuery('');
+    setSelectedRating('all');
+    setActiveTab('wall');
+    setSortBy('rating');
+  };
+
+  // Sorted display items
+  const sortedDisplayItems = useMemo(() => {
+    const list = [...displayItems];
+    if (sortBy === 'author') {
+      list.sort((a, b) => a.author.localeCompare(b.author));
+    } else if (sortBy === 'newest') {
+      list.sort((a, b) => {
+        const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        return timeB - timeA;
+      });
+    } else {
+      list.sort((a, b) => b.rating - a.rating);
+    }
+    return list;
+  }, [displayItems, sortBy]);
+
   // Average rating
   const avgRating = useMemo(() => {
     const list = publicList.length > 0 ? publicList : adminList;
@@ -151,38 +224,33 @@ export function TestimonialsPage() {
   const isLoading = isStaff ? isLoadingAdmin : isLoadingPublic;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-10">
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-10">
       {/* Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
-        <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 mb-3 border border-rose-200/60 dark:border-rose-800/60">
-            <Heart className="h-3.5 w-3.5 fill-current" />
-            <span>Client Endorsements & Proof</span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white">
-            Wall of Verified Client Love
-          </h1>
-          <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
-            Honest assessments, technical feedback, and engineering endorsements from leadership teams across the globe.
-          </p>
-        </div>
+      <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16 border border-slate-800">
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="max-w-3xl space-y-4">
+            <div className="inline-flex items-center gap-2 rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
+              <Sparkles className="h-3.5 w-3.5 text-brand-400" />
+              <span>Client Endorsements &amp; Proof</span>
+            </div>
 
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-900 px-4 py-2 rounded-2xl border border-slate-200 dark:border-slate-800">
-            <StarRating rating={5} size="sm" />
-            <span className="text-sm font-bold text-slate-900 dark:text-white">
-              {avgRating} / 5.0
-            </span>
+            <h1 className="text-3xl font-black tracking-tight sm:text-5xl text-white">
+              Wall of Verified Client Love
+            </h1>
+
+            <p className="text-sm text-slate-300 sm:text-base leading-relaxed">
+              Honest assessments, technical feedback, and engineering endorsements from leadership teams across the globe.
+            </p>
           </div>
 
-          <Button
-            variant="primary"
-            onClick={() => setIsSubmitModalOpen(true)}
-            className="flex items-center gap-2 shadow-lg shadow-primary-500/20"
-          >
-            <MessageSquare className="h-4 w-4" />
-            <span>Submit Your Review</span>
-          </Button>
+          <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center gap-2 bg-slate-800/80 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-slate-700">
+              <StarRating rating={5} size="sm" />
+              <span className="text-sm font-bold text-white">
+                {avgRating} / 5.0
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -239,46 +307,87 @@ export function TestimonialsPage() {
         </div>
       )}
 
-      {/* Filter by Stars & Search */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setSelectedRating('all')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
-              selectedRating === 'all'
-                ? 'bg-primary-600 text-white shadow-sm'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
-            }`}
+      {/* Unified Search & Advanced Filters Bar */}
+      <SearchFilterBar
+        search={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Search reviews by client, endorsement, or company..."
+        isExpanded={isFilterExpanded}
+        onToggleExpanded={setIsFilterExpanded}
+        activeFilterCount={activeFilterCount}
+        hasActiveFilters={activeFilterCount > 0 || Boolean(searchQuery)}
+        onReset={handleResetFilters}
+        totalCount={publicList.length || adminList.length}
+        filteredCount={sortedDisplayItems.length}
+        resultsLabel="verified reviews"
+        activeChips={activeChips}
+        actions={
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => setIsSubmitModalOpen(true)}
+            className="flex items-center gap-2 shadow-xs"
           >
-            All Ratings
-          </button>
-          {[5, 4, 3].map((r) => (
-            <button
-              key={r}
-              type="button"
-              onClick={() => setSelectedRating(r)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
-                selectedRating === r
-                  ? 'bg-primary-600 text-white shadow-sm'
-                  : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
-              }`}
-            >
-              {r} Stars Only
-            </button>
-          ))}
-        </div>
+            <MessageSquare className="h-4 w-4" />
+            <span>Submit Review</span>
+          </Button>
+        }
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {/* Star Rating Pills */}
+          <FilterGroup label="Client Rating">
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              <FilterPill
+                label="All Ratings"
+                isSelected={selectedRating === 'all'}
+                onClick={() => setSelectedRating('all')}
+              />
+              {[5, 4, 3].map((r) => (
+                <FilterPill
+                  key={r}
+                  label={`${r} Stars Only`}
+                  isSelected={selectedRating === r}
+                  onClick={() => setSelectedRating(r)}
+                />
+              ))}
+            </div>
+          </FilterGroup>
 
-        <div className="relative w-full sm:w-72">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-          <Input
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by client or company..."
-            className="pl-9 text-xs"
-          />
+          {/* Moderation Stage (for Staff) */}
+          {isStaff ? (
+            <FilterGroup label="Review Moderation Queue">
+              <FilterSelect
+                value={activeTab}
+                onChange={(e) => setActiveTab(e.target.value as 'wall' | 'pending' | 'rejected')}
+                options={[
+                  { value: 'wall', label: 'Public Wall of Love' },
+                  { value: 'pending', label: `Pending Queue (${pendingCount})` },
+                  { value: 'rejected', label: `Rejected (${rejectedCount})` },
+                ]}
+              />
+            </FilterGroup>
+          ) : (
+            <FilterGroup label="Verification Status">
+              <p className="text-xs text-slate-500 dark:text-slate-400 pt-1 leading-relaxed">
+                100% verified enterprise engineering feedback audited by leadership.
+              </p>
+            </FilterGroup>
+          )}
+
+          {/* Sort By */}
+          <FilterGroup label="Sort Endorsements">
+            <FilterSelect
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as 'rating' | 'newest' | 'author')}
+              options={[
+                { value: 'rating', label: 'Highest Rated (5.0 First)' },
+                { value: 'newest', label: 'Most Recent Submission' },
+                { value: 'author', label: 'Author Name (A-Z)' },
+              ]}
+            />
+          </FilterGroup>
         </div>
-      </div>
+      </SearchFilterBar>
 
       {/* Loading Skeletons */}
       {isLoading && (
@@ -303,15 +412,15 @@ export function TestimonialsPage() {
       )}
 
       {/* Empty State */}
-      {!isLoading && displayItems.length === 0 && (
-        <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 dark:border-slate-800 p-12 text-center space-y-3">
-          <MessageSquare className="h-10 w-10 text-slate-400" />
-          <h3 className="text-base font-bold text-slate-900 dark:text-white">
+      {!isLoading && sortedDisplayItems.length === 0 && (
+        <div className="rounded-2xl border border-dashed border-slate-200 p-12 text-center dark:border-slate-800">
+          <MessageSquare className="mx-auto h-10 w-10 text-slate-400 mb-3" />
+          <h3 className="text-base font-semibold text-slate-900 dark:text-white">
             {activeTab === 'pending'
               ? 'Moderation Queue Clear'
               : 'No Testimonials Found'}
           </h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm">
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
             {activeTab === 'pending'
               ? 'All submitted client reviews have been processed and verified.'
               : 'No testimonials currently match your filter criteria.'}
@@ -320,9 +429,9 @@ export function TestimonialsPage() {
       )}
 
       {/* Grid of Testimonials */}
-      {!isLoading && displayItems.length > 0 && (
+      {!isLoading && sortedDisplayItems.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {displayItems.map((testimonial) => (
+          {sortedDisplayItems.map((testimonial) => (
             <TestimonialCard
               key={testimonial.id}
               testimonial={testimonial}
