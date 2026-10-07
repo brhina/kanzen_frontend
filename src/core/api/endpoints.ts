@@ -162,6 +162,8 @@ export const API_ENDPOINTS = {
   media: {
     adminList: 'admin/media',
     upload: 'admin/media/upload',
+    detail: (id: string) => `admin/media/${id}`,
+    update: (id: string) => `admin/media/${id}`,
     delete: (id: string) => `admin/media/${id}`,
   },
   notifications: {
@@ -170,12 +172,22 @@ export const API_ENDPOINTS = {
     markRead: (id: string) => `notifications/${id}/read`,
     markAllRead: 'notifications/read-all',
     broadcast: 'admin/notifications/broadcast',
+    adminList: 'admin/notifications',
+    adminDetail: (id: string) => `admin/notifications/${id}`,
+    adminCreate: 'admin/notifications',
+    adminDelete: (id: string) => `admin/notifications/${id}`,
   },
   analytics: {
     track: 'analytics/track',
     dashboard: 'admin/analytics/dashboard',
+    overview: 'admin/analytics/overview',
     pageViews: 'admin/analytics/page-views',
     trafficSources: 'admin/analytics/traffic-sources',
+    traffic: 'admin/analytics/traffic',
+    topPages: 'admin/analytics/top-pages',
+    leads: 'admin/analytics/leads',
+    funnel: 'admin/analytics/funnel',
+    events: 'admin/analytics/events',
   },
   audit: {
     adminList: 'admin/audit',
@@ -184,10 +196,15 @@ export const API_ENDPOINTS = {
   settings: {
     public: 'settings/public',
     adminAll: 'admin/settings',
-    adminGroup: (group: string) => `admin/settings/${group}`,
+    adminGroup: (group: string) => `admin/settings?group=${group}`,
+    adminKey: (key: string) => `admin/settings/${key}`,
+    adminCreate: 'admin/settings',
+    adminUpdate: (key: string) => `admin/settings/${key}`,
+    adminDelete: (key: string) => `admin/settings/${key}`,
   },
   health: {
     status: 'health',
-    detailed: 'health/detailed',
+    detailed: 'admin/health/detail',
+    publicDetailed: 'health/detailed',
   },
 } as const;
