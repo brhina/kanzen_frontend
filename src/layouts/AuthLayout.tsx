@@ -27,7 +27,7 @@ export function AuthLayout({ className = '' }: AuthLayoutProps) {
       />
 
       {/* Top Header */}
-      <header className="relative z-10 mx-auto flex w-full max-w-7xl items-center justify-between p-6">
+      <header className="relative z-10 flex w-full items-center justify-between p-6">
         <Link
           to="/"
           className="group flex items-center gap-2.5 transition-transform hover:scale-[1.01]"
