@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useConsultations } from '../../application/use-cases/useConsultations';
 import { useConfirmConsultation } from '../../application/use-cases/useConfirmConsultation';
 import { useCancelConsultation } from '../../application/use-cases/useCancelConsultation';
@@ -11,11 +11,16 @@ import { Badge } from '@/shared/ui/badge';
 import { Input } from '@/shared/ui/input';
 import { Modal } from '@/shared/ui/modal';
 import {
+  SearchFilterBar,
+  FilterGroup,
+  FilterPill,
+  FilterSelect,
+} from '@/shared/ui/filter';
+import {
   Calendar,
   Video,
   Phone,
   Users,
-  Search,
   ExternalLink,
   CheckCircle,
   XCircle,
@@ -29,15 +34,22 @@ import {
 
 const STATUS_TABS = [
   { id: 'all', label: 'All Appointments' },
-  { id: ConsultationStatus.PENDING, label: 'Pending Confirmation' },
+  { id: ConsultationStatus.PENDING, label: 'Pending' },
   { id: ConsultationStatus.SCHEDULED, label: 'Scheduled' },
   { id: ConsultationStatus.COMPLETED, label: 'Completed' },
   { id: ConsultationStatus.CANCELLED, label: 'Cancelled' },
 ];
 
-export function ConsultationTable() {
+export interface ConsultationTableProps {
+  actions?: React.ReactNode;
+}
+
+export function ConsultationTable({ actions }: ConsultationTableProps = {}) {
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+  const [formatFilter, setFormatFilter] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<'newest' | 'preferredDate' | 'name'>('newest');
   const [currentPage, setCurrentPage] = useState(1);
 
   // Confirm Modal state
@@ -113,44 +125,140 @@ export function ConsultationTable() {
     }
   };
 
+  // Active filter count
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (selectedStatus !== 'all') count++;
+    if (formatFilter !== 'all') count++;
+    if (sortBy !== 'newest') count++;
+    return count;
+  }, [selectedStatus, formatFilter, sortBy]);
+
+  // Active filter chips
+  const activeChips = useMemo(() => {
+    const chips = [];
+    if (searchTerm) {
+      chips.push({
+        id: 'search',
+        label: `Search: "${searchTerm}"`,
+        onRemove: () => setSearchTerm(''),
+      });
+    }
+    if (selectedStatus !== 'all') {
+      const tab = STATUS_TABS.find((t) => t.id === selectedStatus);
+      chips.push({
+        id: 'status',
+        label: `Status: ${tab?.label || selectedStatus}`,
+        onRemove: () => setSelectedStatus('all'),
+      });
+    }
+    if (formatFilter !== 'all') {
+      chips.push({
+        id: 'format',
+        label: `Format: ${formatFilter === 'video' ? 'Video Call' : formatFilter === 'phone' ? 'Phone Call' : 'In-Person'}`,
+        onRemove: () => setFormatFilter('all'),
+      });
+    }
+    if (sortBy !== 'newest') {
+      chips.push({
+        id: 'sort',
+        label: `Sort: ${sortBy === 'preferredDate' ? 'Appointment Date' : 'Attendee Name'}`,
+        onRemove: () => setSortBy('newest'),
+      });
+    }
+    return chips;
+  }, [searchTerm, selectedStatus, formatFilter, sortBy]);
+
+  const handleResetFilters = () => {
+    setSearchTerm('');
+    setSelectedStatus('all');
+    setFormatFilter('all');
+    setSortBy('newest');
+    setCurrentPage(1);
+  };
+
+  const displayedAppointments = useMemo(() => {
+    let list = [...appointments];
+    if (formatFilter !== 'all') {
+      list = list.filter((a) => a.meetingType?.toLowerCase() === formatFilter.toLowerCase());
+    }
+    if (sortBy === 'preferredDate') {
+      list.sort((a, b) => {
+        const da = a.preferredDate ? new Date(a.preferredDate).getTime() : 0;
+        const db = b.preferredDate ? new Date(b.preferredDate).getTime() : 0;
+        return db - da;
+      });
+    } else if (sortBy === 'name') {
+      list.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    return list;
+  }, [appointments, formatFilter, sortBy]);
+
   return (
     <div className="space-y-4">
       {/* Filters & Search */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
-          {STATUS_TABS.map((tab) => {
-            const isActive = selectedStatus === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => {
-                  setSelectedStatus(tab.id);
-                  setCurrentPage(1);
-                }}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-                  isActive
-                    ? 'bg-brand-600 text-white shadow-sm'
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
-                }`}
-              >
-                {tab.label}
-              </button>
-            );
-          })}
-        </div>
+      <SearchFilterBar
+        searchValue={searchTerm}
+        onSearchChange={(val) => {
+          setSearchTerm(val);
+          setCurrentPage(1);
+        }}
+        searchPlaceholder="Search attendee, company, email..."
+        isFilterExpanded={isFilterExpanded}
+        onToggleFilter={() => setIsFilterExpanded((prev) => !prev)}
+        activeFilterCount={activeFilterCount}
+        activeChips={activeChips}
+        onClearAllFilters={handleResetFilters}
+        resultsSummary={
+          <span className="text-xs text-slate-500 font-medium">
+            Showing <span className="font-semibold text-slate-700 dark:text-slate-300">{displayedAppointments.length}</span> of {total} appointments
+          </span>
+        }
+        actions={actions}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+          <FilterGroup label="Appointment Status" count={selectedStatus !== 'all' ? 1 : undefined}>
+            <div className="flex flex-wrap gap-1.5">
+              {STATUS_TABS.map((tab) => (
+                <FilterPill
+                  key={tab.id}
+                  label={tab.label}
+                  isActive={selectedStatus === tab.id}
+                  onClick={() => {
+                    setSelectedStatus(tab.id);
+                    setCurrentPage(1);
+                  }}
+                />
+              ))}
+            </div>
+          </FilterGroup>
 
-        <div className="w-full md:w-72">
-          <Input
-            placeholder="Search attendee, company..."
-            value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              setCurrentPage(1);
-            }}
-            leftIcon={<Search className="w-4 h-4 text-slate-400" />}
-          />
+          <FilterGroup label="Meeting Format" count={formatFilter !== 'all' ? 1 : undefined}>
+            <FilterSelect
+              value={formatFilter}
+              onChange={(e) => setFormatFilter(e.target.value)}
+              options={[
+                { value: 'all', label: 'All Meeting Formats' },
+                { value: 'video', label: 'Video Conference' },
+                { value: 'phone', label: 'Phone Call' },
+                { value: 'in_person', label: 'In-Person Consultation' },
+              ]}
+            />
+          </FilterGroup>
+
+          <FilterGroup label="Sort By" count={sortBy !== 'newest' ? 1 : undefined}>
+            <FilterSelect
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as 'newest' | 'preferredDate' | 'name')}
+              options={[
+                { value: 'newest', label: 'Newest Booked First' },
+                { value: 'preferredDate', label: 'Preferred Schedule Date' },
+                { value: 'name', label: 'Attendee Name (A-Z)' },
+              ]}
+            />
+          </FilterGroup>
         </div>
-      </div>
+      </SearchFilterBar>
 
       {/* Appointments Data Table */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
@@ -174,7 +282,7 @@ export function ConsultationTable() {
                     Loading consultations...
                   </td>
                 </tr>
-              ) : appointments.length === 0 ? (
+              ) : displayedAppointments.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-slate-500 space-y-2">
                     <Inbox className="w-8 h-8 mx-auto text-slate-400" />
@@ -184,7 +292,7 @@ export function ConsultationTable() {
                   </td>
                 </tr>
               ) : (
-                appointments.map((item) => (
+                displayedAppointments.map((item) => (
                   <tr
                     key={item.id}
                     className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors"
@@ -315,7 +423,7 @@ export function ConsultationTable() {
         {/* Table Footer */}
         <div className="px-4 py-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 flex items-center justify-between text-xs text-slate-500">
           <div>
-            Showing {appointments.length} of {total} appointments
+            Showing {displayedAppointments.length} of {total} appointments
           </div>
           <div className="flex items-center gap-2">
             <Button

@@ -1,7 +1,8 @@
 import { Link } from 'react-router';
-import { ArrowRight, Building2, Download, Edit3, Trash2 } from 'lucide-react';
+import { Building2, Download, Edit3, Trash2 } from 'lucide-react';
 import type { CaseStudyEntity } from '../../domain/entities/case-study.entity';
 import { Badge } from '@/shared/ui/badge';
+import { Button } from '@/shared/ui/button';
 import { CaseStudyMetrics } from './CaseStudyMetrics';
 import { toast } from '@/shared/ui/toast/toast.store';
 
@@ -29,13 +30,14 @@ export function CaseStudyCard({
   };
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+    <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700">
       {/* Cover Image & Badges */}
-      <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
+      <div className="relative aspect-16/9 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
         <img
           src={study.coverImage}
           alt={study.title}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-80" />
 
@@ -55,102 +57,122 @@ export function CaseStudyCard({
                 {study.status}
               </Badge>
             )}
-          </div>
-        </div>
-
-        {/* Client Tag */}
-        <div className="absolute bottom-3 left-3 right-3 text-white">
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
-            <Building2 className="h-3.5 w-3.5" />
-            <span>{study.client}</span>
-            {study.clientSize && (
-              <span className="text-slate-400 font-normal">({study.clientSize})</span>
-            )}
-          </div>
-          <h3 className="text-lg font-bold tracking-tight text-white line-clamp-1">
-            {study.title}
-          </h3>
-        </div>
-      </div>
-
-      {/* Body Content */}
-      <div className="flex flex-1 flex-col p-6 space-y-4">
-        <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
-          {study.summary}
-        </p>
-
-        {/* Key Metrics Preview */}
-        {study.metrics && study.metrics.length > 0 && (
-          <div className="pt-1">
-            <CaseStudyMetrics metrics={study.metrics.slice(0, 3)} variant="compact" />
-          </div>
-        )}
-
-        {/* Tech Stack Chips */}
-        {study.technologies && study.technologies.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 pt-1">
-            {study.technologies.slice(0, 4).map((tech, idx) => (
-              <span
-                key={idx}
-                className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"
-              >
-                {tech}
-              </span>
-            ))}
-            {study.technologies.length > 4 && (
-              <span className="px-1.5 py-0.5 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-800 text-slate-500">
-                +{study.technologies.length - 4}
-              </span>
-            )}
-          </div>
-        )}
-
-        {/* Footer Actions */}
-        <div className="mt-auto flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80 pt-4">
-          <Link
-            to={`/case-studies/${study.slug}`}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
-          >
-            <span>Read Deep Dive</span>
-            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-          </Link>
-
-          <div className="flex items-center gap-2">
-            {(study.downloadable || study.pdfUrl) && (
-              <button
-                type="button"
-                onClick={handlePdfClick}
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors cursor-pointer"
-                title="Download Whitepaper"
-              >
-                <Download className="h-3 w-3" />
-                <span>PDF</span>
-              </button>
-            )}
-
             {canWrite && (
-              <div className="flex items-center gap-1 border-l border-slate-200 dark:border-slate-800 pl-2">
-                <button
-                  type="button"
-                  onClick={() => onEdit?.(study)}
-                  className="p-1.5 rounded-md text-slate-400 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-950/40 transition-colors cursor-pointer"
-                  title="Edit Case Study"
-                >
-                  <Edit3 className="h-3.5 w-3.5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onDelete?.(study)}
-                  className="p-1.5 rounded-md text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
-                  title="Delete Case Study"
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                </button>
+              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 dark:bg-slate-900/90 backdrop-blur-xs rounded-lg p-0.5">
+                {onEdit && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEdit(study);
+                    }}
+                    className="p-1 rounded text-slate-600 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors cursor-pointer"
+                    title="Edit Case Study"
+                  >
+                    <Edit3 className="h-3 w-3" />
+                  </button>
+                )}
+                {onDelete && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDelete(study);
+                    }}
+                    className="p-1 rounded text-slate-600 hover:text-rose-600 dark:text-slate-300 dark:hover:text-rose-400 transition-colors cursor-pointer"
+                    title="Delete Case Study"
+                  >
+                    <Trash2 className="h-3 w-3" />
+                  </button>
+                )}
               </div>
             )}
           </div>
         </div>
       </div>
+
+      {/* Body Content */}
+      <div className="flex flex-1 flex-col justify-between p-6">
+        <div className="space-y-3">
+          {/* Client Header */}
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <Building2 className="h-3.5 w-3.5 text-brand-500" />
+            <span>{study.client}</span>
+            {study.clientSize && (
+              <span className="text-slate-400 dark:text-slate-500 font-normal">({study.clientSize})</span>
+            )}
+          </div>
+
+          {/* Title */}
+          <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors line-clamp-1">
+            <Link to={`/case-studies/${study.slug}`}>
+              {study.title}
+            </Link>
+          </h3>
+
+          {/* Summary */}
+          <p className="text-xs text-slate-600 dark:text-slate-300 line-clamp-2 leading-relaxed">
+            {study.summary}
+          </p>
+
+          {/* Key Metrics Preview */}
+          {study.metrics && study.metrics.length > 0 && (
+            <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80">
+              <CaseStudyMetrics metrics={study.metrics.slice(0, 3)} variant="compact" />
+            </div>
+          )}
+
+          {/* Tech Stack Chips */}
+          {study.technologies && study.technologies.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {study.technologies.slice(0, 4).map((tech, idx) => (
+                <span
+                  key={idx}
+                  className="rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-mono text-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                >
+                  {tech}
+                </span>
+              ))}
+              {study.technologies.length > 4 && (
+                <span className="rounded-md bg-slate-100 px-1.5 py-0.5 text-[11px] font-mono text-slate-500 dark:bg-slate-800">
+                  +{study.technologies.length - 4}
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Footer Actions */}
+        <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
+          {(study.downloadable || study.pdfUrl) ? (
+            <Button
+              type="button"
+              variant="ghost"
+              size="xs"
+              onClick={handlePdfClick}
+              className="inline-flex items-center gap-1.5 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+              title="Download Whitepaper"
+            >
+              <Download className="h-3 w-3" />
+              <span>PDF</span>
+            </Button>
+          ) : (
+            <div />
+          )}
+
+          <Link to={`/case-studies/${study.slug}`}>
+            <Button
+              variant="outline"
+              size="xs"
+              className="group-hover:border-brand-500 group-hover:text-brand-600 dark:group-hover:text-brand-400"
+            >
+              <span>Read Deep Dive</span>
+            </Button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
+
+export default CaseStudyCard;

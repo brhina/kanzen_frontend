@@ -14,9 +14,6 @@ import {
   CheckCircle2,
   Calendar,
   Building2,
-  ArrowRight,
-  ArrowLeft,
-  Send,
   Video,
 } from 'lucide-react';
 
@@ -215,7 +212,6 @@ export function ConsultationBookingForm({
                     alert('Please enter your name and email to continue.');
                   }
                 }}
-                rightIcon={<ArrowRight className="w-4 h-4" />}
               >
                 Next: Project Needs
               </Button>
@@ -263,7 +259,6 @@ export function ConsultationBookingForm({
                 type="button"
                 variant="outline"
                 onClick={() => setCurrentStep(1)}
-                leftIcon={<ArrowLeft className="w-4 h-4" />}
               >
                 Back
               </Button>
@@ -277,7 +272,6 @@ export function ConsultationBookingForm({
                     alert('Please provide a brief project description.');
                   }
                 }}
-                rightIcon={<ArrowRight className="w-4 h-4" />}
               >
                 Next: Time & Format
               </Button>
@@ -331,7 +325,6 @@ export function ConsultationBookingForm({
                 type="button"
                 variant="outline"
                 onClick={() => setCurrentStep(2)}
-                leftIcon={<ArrowLeft className="w-4 h-4" />}
               >
                 Back
               </Button>
@@ -339,7 +332,6 @@ export function ConsultationBookingForm({
                 type="button"
                 variant="primary"
                 onClick={() => setCurrentStep(4)}
-                rightIcon={<ArrowRight className="w-4 h-4" />}
               >
                 Review Summary
               </Button>
@@ -409,7 +401,6 @@ export function ConsultationBookingForm({
                 type="button"
                 variant="outline"
                 onClick={() => setCurrentStep(3)}
-                leftIcon={<ArrowLeft className="w-4 h-4" />}
               >
                 Back to Schedule
               </Button>
@@ -418,7 +409,6 @@ export function ConsultationBookingForm({
                 variant="primary"
                 size="lg"
                 isLoading={bookConsultation.isPending}
-                leftIcon={<Send className="w-4 h-4" />}
               >
                 Confirm & Reserve Consultation
               </Button>

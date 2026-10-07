@@ -80,60 +80,76 @@ export function CaseStudyPage() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8 space-y-12">
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Top Navigation & Controls */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <Link
-            to="/case-studies"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span>All Enterprise Case Studies</span>
-          </Link>
+      <div className="flex items-center justify-between">
+        <Link
+          to="/case-studies"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          <span>Back to All Case Studies</span>
+        </Link>
 
-          <div className="flex items-center gap-3">
-            {study.pdfUrl && (
-              <CaseStudyDownload pdfUrl={study.pdfUrl} title={study.title} variant="button" />
-            )}
+        {study.pdfUrl && (
+          <CaseStudyDownload pdfUrl={study.pdfUrl} title={study.title} variant="button" />
+        )}
+      </div>
 
-            {canWrite && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setIsEditDrawerOpen(true)}
-                className="flex items-center gap-1.5 text-xs"
-              >
-                <Edit3 className="h-3.5 w-3.5" />
-                <span>Edit Case Study</span>
-              </Button>
-            )}
+      {/* Staff Inline Control Header */}
+      {canWrite && (
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-amber-200 bg-amber-50/70 p-4 dark:border-amber-900/40 dark:bg-amber-950/20">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300">
+              Staff Controls:
+            </span>
+            <Badge
+              variant={study.status === 'published' ? 'success' : 'neutral'}
+              size="sm"
+              className="capitalize font-mono text-xs"
+            >
+              Status: {study.status}
+            </Badge>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="xs"
+              onClick={() => setIsEditDrawerOpen(true)}
+              className="flex items-center gap-1"
+            >
+              <Edit3 className="h-3.5 w-3.5" />
+              <span>Edit Case Study</span>
+            </Button>
           </div>
         </div>
+      )}
 
-        {/* Client Badges & Title */}
-        <div className="space-y-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="brand" size="sm" className="font-semibold capitalize">
-              {study.clientIndustry}
+      {/* Client Badges & Title */}
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge variant="brand" size="sm" className="font-semibold capitalize">
+            {study.clientIndustry}
+          </Badge>
+
+          {study.isFeatured && (
+            <Badge variant="warning" size="sm">
+              Featured Case Study
             </Badge>
+          )}
 
-            {study.isFeatured && (
-              <Badge variant="info" size="sm">
-                Featured Case Study
-              </Badge>
-            )}
+          {study.status !== 'published' && (
+            <Badge variant="neutral" size="sm" className="capitalize text-xs">
+              {study.status}
+            </Badge>
+          )}
+        </div>
 
-            {study.status !== 'published' && (
-              <Badge variant="neutral" size="sm" className="capitalize text-xs">
-                {study.status}
-              </Badge>
-            )}
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">
-            {study.title}
-          </h1>
+        <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">
+          {study.title}
+        </h1>
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600 dark:text-slate-400 pt-1">
             <span className="flex items-center gap-1.5 font-semibold text-slate-900 dark:text-white">
@@ -169,7 +185,6 @@ export function CaseStudyPage() {
             )}
           </div>
         </div>
-      </div>
 
       {/* Hero Cover Image */}
       <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl bg-slate-900">
@@ -190,130 +205,139 @@ export function CaseStudyPage() {
         </div>
       )}
 
-      {/* Executive Summary */}
-      <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-6 sm:p-10 space-y-3">
-        <h2 className="text-lg font-bold text-slate-900 dark:text-white">
-          Executive Summary
-        </h2>
-        <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-          {study.summary}
-        </p>
-      </div>
-
-      {/* Deep-Dive Narrative Sections */}
-      <div className="space-y-10">
-        {/* The Challenge */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-2.5 text-amber-600 dark:text-amber-400">
-            <AlertTriangle className="h-5 w-5" />
-            <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-              The Architecture Bottleneck & Challenge
+      {/* Main Grid: Left Narrative & Right Sidebar */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Left Narrative (2 Columns) */}
+        <div className="lg:col-span-2 space-y-8">
+          {/* Executive Summary */}
+          <section className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 space-y-3 shadow-xs">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white">
+              Executive Summary
             </h2>
-          </div>
-          <div className="rounded-2xl border border-amber-200 dark:border-amber-900/50 bg-amber-500/5 p-6 sm:p-8">
-            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
-              {study.challenge}
+            <p className="text-base text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
+              {study.summary}
             </p>
-          </div>
-        </section>
-
-        {/* The Strategic Approach */}
-        {study.approach && (
-          <section className="space-y-4">
-            <div className="flex items-center gap-2.5 text-blue-600 dark:text-blue-400">
-              <Lightbulb className="h-5 w-5" />
-              <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-                Strategic Engineering Approach
-              </h2>
-            </div>
-            <div className="rounded-2xl border border-blue-200 dark:border-blue-900/50 bg-blue-500/5 p-6 sm:p-8">
-              <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
-                {study.approach}
-              </p>
-            </div>
           </section>
-        )}
 
-        {/* The Technical Solution */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-2.5 text-primary-600 dark:text-primary-400">
-            <Cpu className="h-5 w-5" />
-            <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-              The Architectural Solution
-            </h2>
-          </div>
-          <div className="rounded-2xl border border-primary-200 dark:border-primary-900/50 bg-primary-500/5 p-6 sm:p-8">
-            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
-              {study.solution}
-            </p>
-          </div>
-        </section>
+          {/* Deep-Dive Narrative Sections */}
+          <div className="space-y-8">
+            {/* The Challenge */}
+            <section className="space-y-4">
+              <div className="flex items-center gap-2.5 text-amber-600 dark:text-amber-400">
+                <AlertTriangle className="h-5 w-5" />
+                <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+                  The Architecture Bottleneck &amp; Challenge
+                </h2>
+              </div>
+              <div className="rounded-2xl border border-amber-200 dark:border-amber-900/50 bg-amber-500/5 p-6 sm:p-8">
+                <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
+                  {study.challenge}
+                </p>
+              </div>
+            </section>
 
-        {/* Supporting Images / Architecture Diagrams */}
-        {study.images && study.images.length > 0 && (
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Architecture Schematics & Telemetry Graphs
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {study.images.map((img, idx) => (
-                <div
-                  key={idx}
-                  className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-950"
-                >
-                  <img
-                    src={img}
-                    alt={`Architecture Diagram ${idx + 1}`}
-                    className="w-full object-cover"
-                  />
+            {/* The Strategic Approach */}
+            {study.approach && (
+              <section className="space-y-4">
+                <div className="flex items-center gap-2.5 text-blue-600 dark:text-blue-400">
+                  <Lightbulb className="h-5 w-5" />
+                  <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+                    Strategic Engineering Approach
+                  </h2>
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
+                <div className="rounded-2xl border border-blue-200 dark:border-blue-900/50 bg-blue-500/5 p-6 sm:p-8">
+                  <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
+                    {study.approach}
+                  </p>
+                </div>
+              </section>
+            )}
 
-        {/* Verified Results */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-2.5 text-emerald-600 dark:text-emerald-400">
-            <Trophy className="h-5 w-5" />
-            <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-              Verified Production Results
-            </h2>
-          </div>
-          <div className="rounded-2xl border border-emerald-200 dark:border-emerald-900/50 bg-emerald-500/5 p-6 sm:p-8">
-            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
-              {study.results}
-            </p>
-          </div>
-        </section>
-      </div>
+            {/* The Technical Solution */}
+            <section className="space-y-4">
+              <div className="flex items-center gap-2.5 text-brand-600 dark:text-brand-400">
+                <Cpu className="h-5 w-5" />
+                <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+                  The Architectural Solution
+                </h2>
+              </div>
+              <div className="rounded-2xl border border-brand-200 dark:border-brand-900/50 bg-brand-500/5 p-6 sm:p-8">
+                <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
+                  {study.solution}
+                </p>
+              </div>
+            </section>
 
-      {/* Tech Stack Chips */}
-      {study.technologies && study.technologies.length > 0 && (
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 p-6 bg-white dark:bg-slate-900 space-y-3">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-            <Layers className="h-4 w-4" />
-            <span>Technologies & Distributed Stack</span>
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {study.technologies.map((tech, idx) => (
-              <span
-                key={idx}
-                className="px-3 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold"
-              >
-                {tech}
-              </span>
-            ))}
+            {/* Supporting Images / Architecture Diagrams */}
+            {study.images && study.images.length > 0 && (
+              <div className="space-y-4">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  Architecture Schematics &amp; Telemetry Graphs
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {study.images.map((img, idx) => (
+                    <div
+                      key={idx}
+                      className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-950"
+                    >
+                      <img
+                        src={img}
+                        alt={`Architecture Diagram ${idx + 1}`}
+                        className="w-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Verified Results */}
+            <section className="space-y-4">
+              <div className="flex items-center gap-2.5 text-emerald-600 dark:text-emerald-400">
+                <Trophy className="h-5 w-5" />
+                <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+                  Verified Production Results
+                </h2>
+              </div>
+              <div className="rounded-2xl border border-emerald-200 dark:border-emerald-900/50 bg-emerald-500/5 p-6 sm:p-8">
+                <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
+                  {study.results}
+                </p>
+              </div>
+            </section>
           </div>
         </div>
-      )}
 
-      {/* Downloadable PDF Banner */}
-      <CaseStudyDownload
-        pdfUrl={study.pdfUrl}
-        title={study.title}
-        variant="banner"
-      />
+        {/* Right Sidebar (1 Column) */}
+        <div className="space-y-6 lg:sticky lg:top-20">
+          {/* Tech Stack Chips */}
+          {study.technologies && study.technologies.length > 0 && (
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 p-6 bg-white dark:bg-slate-900 shadow-xs space-y-3">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                <Layers className="h-4 w-4 text-brand-500" />
+                <span>Technologies &amp; Distributed Stack</span>
+              </h3>
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {study.technologies.map((tech, idx) => (
+                  <span
+                    key={idx}
+                    className="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-mono text-slate-700 dark:bg-slate-800 dark:text-slate-300 font-semibold"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Downloadable PDF Banner */}
+          <CaseStudyDownload
+            pdfUrl={study.pdfUrl}
+            title={study.title}
+            variant="banner"
+          />
+        </div>
+      </div>
 
       {/* Inline Drawer for Editing Case Study */}
       <Drawer
