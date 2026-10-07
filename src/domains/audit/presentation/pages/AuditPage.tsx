@@ -1,67 +1,215 @@
-import { useParams, Link } from 'react-router';
+import { useState } from 'react';
 import { useUIStore } from '@/core/stores/ui.store';
+import type { AuditLogEntity } from '../../domain/entities/audit-log.entity';
+import { useAuditLogs } from '../../application/use-cases/useAuditLogs';
+import { AuditLogTable } from '../components/AuditLogTable';
+import { AuditChangeDiff } from '../components/AuditChangeDiff';
 import { Badge } from '@/shared/ui/badge';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/shared/ui/card';
 import { Button } from '@/shared/ui/button';
-import { Edit3, ArrowLeft } from 'lucide-react';
+import { Modal } from '@/shared/ui/modal';
+import { Pagination } from '@/shared/ui/pagination';
+
+const RESOURCE_OPTIONS = [
+  'all',
+  'user',
+  'blog',
+  'service',
+  'product',
+  'lead',
+  'consultation',
+  'setting',
+  'media',
+  'auth',
+];
+
+const ACTION_OPTIONS = [
+  'all',
+  'create',
+  'update',
+  'delete',
+  'publish',
+  'login',
+];
 
 export function AuditPage() {
-  const params = useParams();
-  const { isEditMode, viewMode } = useUIStore();
+  const { isEditMode } = useUIStore();
+
+  const [resource, setResource] = useState('all');
+  const [action, setAction] = useState('all');
+  const [status, setStatus] = useState('all');
+  const [page, setPage] = useState(1);
+  const [selectedLog, setSelectedLog] = useState<AuditLogEntity | null>(null);
+
+  const { data, isLoading, refetch } = useAuditLogs({
+    resource: resource === 'all' ? undefined : resource,
+    action: action === 'all' ? undefined : action,
+    status: status === 'all' ? undefined : status,
+    page,
+    limit: 25,
+  });
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-6">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              Enterprise Audit Trail
+              System Audit Inspector
             </h1>
+            <Badge variant="brand" size="sm">
+              Compliance Trail
+            </Badge>
             {isEditMode && (
-              <Badge variant="warning" size="sm" className="flex items-center gap-1">
-                <Edit3 className="h-3 w-3" />
-                <span>Edit Mode</span>
+              <Badge variant="warning" size="sm">
+                Edit Mode
               </Badge>
             )}
           </div>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Immutable ledger of all administrative actions, data edits, and logins.
+            Tamper-evident record of administrative operations, authorization attempts, and database entity mutations.
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
-          {Object.keys(params).length > 0 && (
-            <Badge variant="neutral" size="sm" className="font-mono text-xs">
-              {JSON.stringify(params)}
-            </Badge>
-          )}
+        <div className="flex items-center gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => refetch()}
+            className="text-xs"
+          >
+            Refresh Logs
+          </Button>
         </div>
       </div>
 
-      {/* Main Content Showcase */}
-      <Card className="border-slate-200 dark:border-slate-800">
-        <CardHeader>
-          <CardTitle className="text-lg">Unified View Experience</CardTitle>
-          <CardDescription>
-            Layout mode: <strong className="text-slate-900 dark:text-white uppercase font-mono">{viewMode}</strong>.
-            This view dynamically blends public visitor presentation with inline staff authoring.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            Content modules and domain services for this view will synchronize seamlessly with the backend REST endpoints.
-          </p>
-          <div className="pt-2">
-            <Link to="/">
-              <Button variant="outline" size="sm" className="flex items-center gap-1.5">
-                <ArrowLeft className="h-3.5 w-3.5" />
-                <span>Return to Home</span>
-              </Button>
-            </Link>
+      {/* Filter Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+        <div className="flex flex-wrap items-center gap-4 text-xs">
+          <div className="flex items-center gap-2">
+            <label htmlFor="audit-resource-select" className="font-semibold text-slate-700 dark:text-slate-300">
+              Resource:
+            </label>
+            <select
+              id="audit-resource-select"
+              value={resource}
+              onChange={(e) => {
+                setResource(e.target.value);
+                setPage(1);
+              }}
+              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-slate-800 dark:border-slate-700 dark:bg-slate-850 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-brand-500"
+            >
+              {RESOURCE_OPTIONS.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt.toUpperCase()}
+                </option>
+              ))}
+            </select>
           </div>
-        </CardContent>
-      </Card>
+
+          <div className="flex items-center gap-2">
+            <label htmlFor="audit-action-select" className="font-semibold text-slate-700 dark:text-slate-300">
+              Action:
+            </label>
+            <select
+              id="audit-action-select"
+              value={action}
+              onChange={(e) => {
+                setAction(e.target.value);
+                setPage(1);
+              }}
+              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-slate-800 dark:border-slate-700 dark:bg-slate-850 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-brand-500"
+            >
+              {ACTION_OPTIONS.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt.toUpperCase()}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <label htmlFor="audit-status-select" className="font-semibold text-slate-700 dark:text-slate-300">
+              Status:
+            </label>
+            <select
+              id="audit-status-select"
+              value={status}
+              onChange={(e) => {
+                setStatus(e.target.value);
+                setPage(1);
+              }}
+              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-slate-800 dark:border-slate-700 dark:bg-slate-850 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-brand-500"
+            >
+              <option value="all">ALL</option>
+              <option value="success">SUCCESS</option>
+              <option value="failure">FAILURE</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="text-xs font-mono text-slate-500 dark:text-slate-400">
+          {data?.total ?? 0} total events
+        </div>
+      </div>
+
+      {/* Audit Log Stream Table */}
+      <AuditLogTable
+        logs={data?.items || []}
+        isLoading={isLoading}
+        onInspectChanges={(log) => setSelectedLog(log)}
+      />
+
+      {/* Pagination */}
+      {data && data.totalPages > 1 && (
+        <div className="flex justify-center pt-4">
+          <Pagination
+            page={page}
+            limit={25}
+            total={data.total}
+            totalPages={data.totalPages}
+            onPageChange={(newPage) => setPage(newPage)}
+          />
+        </div>
+      )}
+
+      {/* Side-by-Side Change Diff Modal */}
+      {selectedLog && (
+        <Modal
+          isOpen={Boolean(selectedLog)}
+          onClose={() => setSelectedLog(null)}
+          title={`Mutation Diff: ${selectedLog.action.toUpperCase()} ${selectedLog.resource.toUpperCase()}`}
+          className="max-w-4xl w-full"
+        >
+          <div className="space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3 text-xs text-slate-500 dark:border-slate-800">
+              <div>
+                Operator: <strong className="text-slate-800 dark:text-slate-200">{selectedLog.userEmail || selectedLog.userId || 'System'}</strong>
+              </div>
+              <div>
+                IP: <strong className="font-mono text-slate-800 dark:text-slate-200">{selectedLog.ipAddress || 'Internal'}</strong>
+              </div>
+              <div>
+                Resource ID: <strong className="font-mono text-slate-800 dark:text-slate-200">{selectedLog.resourceId || 'N/A'}</strong>
+              </div>
+            </div>
+
+            <AuditChangeDiff changes={selectedLog.changes} />
+
+            <div className="flex justify-end pt-3 border-t border-slate-100 dark:border-slate-800">
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => setSelectedLog(null)}
+              >
+                Close Diff
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }
