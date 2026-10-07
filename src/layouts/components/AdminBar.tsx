@@ -1,38 +1,43 @@
-import { useState } from 'react';
 import { Link } from 'react-router';
-import {
-  Shield,
-  Edit3,
-  Eye,
-  LayoutGrid,
-  Table as TableIcon,
-  Image as ImageIcon,
-  Settings as SettingsIcon,
-  ChevronUp,
-  ChevronDown,
-  LayoutDashboard,
-  Users,
-  Layers,
-  Briefcase,
-} from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useUIStore } from '@/core/stores/ui.store';
 import { Badge } from '@/shared/ui/badge';
+import { cn } from '@/shared/utils/cn';
 
 export interface AdminBarProps {
   className?: string;
 }
 
+const NAV_LINKS = [
+  { to: '/dashboard', label: 'Dashboard', title: 'Open Executive Dashboard' },
+  { to: '/leads', label: 'Leads', title: 'CRM Leads Pipeline' },
+  { to: '/applications', label: 'Recruiting', title: 'Recruitment & Applications' },
+  { to: '/media', label: 'Media', title: 'Open Media Library' },
+  { to: '/users', label: 'Users', title: 'Manage Team & Permissions' },
+  { to: '/settings', label: 'Settings', title: 'System Settings' },
+];
+
 /**
- * Administrative Control Toolbar.
+ * Administrative Control Toolbar & Sidebar.
  * Automatically mounts when an authenticated user has elevated privileges
  * (isAdmin or at least one explicit permission).
- * Provides immediate inline toggling between Public Showcase and Admin Edit Mode.
+ * - On mobile/tablet (< lg): Renders as a top sticky administrative bar.
+ * - On desktop (lg+): Renders as a dedicated right-side sidebar.
+ * All icons beside and within buttons have been removed for a clean, typographic interface.
  */
 export function AdminBar({ className = '' }: AdminBarProps) {
   const { user, isAuthenticated } = useAuthStore();
-  const { isEditMode, toggleEditMode, viewMode, setViewMode } = useUIStore();
-  const [isMinimized, setIsMinimized] = useState(false);
+  const {
+    isEditMode,
+    toggleEditMode,
+    viewMode,
+    setViewMode,
+    adminBarMinimized,
+    setAdminBarMinimized,
+  } = useUIStore();
+
+  const isMinimized = Boolean(adminBarMinimized);
+  const setIsMinimized = (minimized: boolean) => setAdminBarMinimized(minimized);
 
   // Mounts strictly for staff with administrative capabilities
   const isElevated =
@@ -56,22 +61,20 @@ export function AdminBar({ className = '' }: AdminBarProps) {
         <button
           type="button"
           onClick={() => setIsMinimized(false)}
-          className="flex items-center gap-2 rounded-full bg-slate-900/95 px-4 py-2 text-xs font-semibold text-slate-100 shadow-xl ring-1 ring-slate-800 backdrop-blur-md transition-all hover:bg-slate-850 hover:ring-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500"
+          className="flex items-center gap-2 rounded-full bg-slate-900/95 px-4 py-2 text-xs font-semibold text-slate-100 shadow-xl ring-1 ring-slate-800 backdrop-blur-md transition-all hover:bg-slate-850 hover:ring-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer"
           title="Expand Administrative Control Bar"
           aria-expanded={false}
         >
-          <span className="relative flex h-2 w-2">
+          <span className="relative flex h-2 w-2" aria-hidden="true">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
           </span>
-          <Shield className="h-3.5 w-3.5 text-brand-400" />
           <span>Admin Bar</span>
           {isEditMode && (
             <Badge variant="warning" size="sm" className="ml-1 text-[10px]">
               Edit Mode
             </Badge>
           )}
-          <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
         </button>
       </aside>
     );
@@ -80,59 +83,69 @@ export function AdminBar({ className = '' }: AdminBarProps) {
   return (
     <aside
       aria-label="Administrative toolbar"
-      className={`sticky top-0 z-50 w-full border-b border-slate-800/80 bg-slate-950/95 text-slate-100 shadow-lg backdrop-blur-md transition-all ${className}`}
+      className={cn(
+        // Mobile / Tablet: sticky bar under navbar (top-16)
+        'sticky top-16 z-30 w-full border-b border-slate-800/80 bg-slate-950/95 text-slate-100 shadow-lg backdrop-blur-md transition-all',
+        // Desktop (lg+): fixed right-side sidebar under navbar (top-16)
+        'lg:fixed lg:top-16 lg:right-0 lg:bottom-0 lg:h-[calc(100vh-4rem)] lg:w-64 lg:border-b-0 lg:border-l lg:border-slate-800/80 lg:shadow-2xl lg:overflow-y-auto lg:z-30',
+        className,
+      )}
     >
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-2 sm:px-6 lg:px-8">
-        {/* Left: Identity & Elevation Status */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-2 w-2" aria-hidden="true">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-            <div className="flex items-center gap-1.5 text-xs font-medium text-slate-200">
-              <Shield className="h-3.5 w-3.5 text-brand-400" />
-              <span className="hidden sm:inline font-semibold text-white">
-                {user.fullName || user.email}
+      <div className="mx-auto flex w-full flex-wrap items-center justify-between gap-3 px-4 py-2 sm:px-6 lg:flex-col lg:items-stretch lg:justify-start lg:gap-5 lg:p-5 lg:h-full lg:max-w-none">
+        {/* Section 1: Identity & Elevation Status */}
+        <div className="flex items-center gap-3 lg:flex-col lg:items-stretch lg:gap-2 lg:border-b lg:border-slate-800/80 lg:pb-4">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium text-slate-300">
+                {user.fullName || `${user.firstName || ''} ${user.lastName || ''}`.trim()}
               </span>
-              <span className="sm:hidden font-semibold text-white truncate max-w-[120px]">
-                {user.firstName || user.email}
-              </span>
+              <Badge
+                variant={user.isAdmin ? 'success' : 'info'}
+                size="sm"
+                className="font-mono text-[10px] tracking-wide uppercase px-2 py-0.5"
+              >
+                {roleLabel}
+              </Badge>
             </div>
-            <Badge
-              variant={user.isAdmin ? 'success' : 'info'}
-              size="sm"
-              className="font-mono text-[10px] tracking-wide uppercase px-2 py-0.5"
+            {/* Desktop Minimize Button */}
+            <button
+              type="button"
+              onClick={() => setIsMinimized(true)}
+              aria-label="Minimize administrative bar"
+              className="hidden lg:inline-flex rounded-md px-2 py-0.5 text-[11px] font-medium text-slate-400 hover:bg-slate-800 hover:text-white transition-colors focus:outline-none focus:ring-1 focus:ring-brand-500 cursor-pointer"
+              title="Minimize Bar"
             >
-              {roleLabel}
-            </Badge>
+              Minimize
+            </button>
           </div>
         </div>
 
-        {/* Center: Inline Edit & View Mode Toggles */}
-        <div className="flex items-center gap-2 sm:gap-4">
+        {/* Section 2: Inline Edit & View Mode Toggles */}
+        <div className="flex items-center gap-2 sm:gap-4 lg:flex-col lg:items-stretch lg:gap-3 lg:border-b lg:border-slate-800/80 lg:pb-4">
+          <div className="hidden lg:block text-[10px] font-bold uppercase tracking-wider text-slate-400">
+            Mode Controls
+          </div>
           {/* Edit Mode Toggle */}
           <button
             type="button"
             onClick={toggleEditMode}
             aria-pressed={isEditMode}
-            className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
+            className={cn(
+              'flex items-center justify-center rounded-lg px-3 py-1.5 text-xs font-semibold transition-all lg:w-full lg:py-2 cursor-pointer',
               isEditMode
                 ? 'bg-amber-500/20 text-amber-300 ring-1 ring-amber-500/50 shadow-inner'
-                : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white'
-            }`}
+                : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white',
+            )}
             title={isEditMode ? 'Exit inline edit mode' : 'Enable inline edit mode'}
           >
             {isEditMode ? (
-              <>
-                <Edit3 className="h-3.5 w-3.5 text-amber-400 animate-pulse" />
-                <span>Edit Mode: <strong className="text-amber-300">ON</strong></span>
-              </>
+              <span>
+                Edit Mode: <strong className="text-amber-300">ON</strong>
+              </span>
             ) : (
-              <>
-                <Eye className="h-3.5 w-3.5 text-slate-400" />
-                <span>Edit Mode: <span className="text-slate-400">OFF</span></span>
-              </>
+              <span>
+                Edit Mode: <span className="text-slate-400">OFF</span>
+              </span>
             )}
           </button>
 
@@ -140,104 +153,67 @@ export function AdminBar({ className = '' }: AdminBarProps) {
           <div
             role="group"
             aria-label="View format switcher"
-            className="hidden items-center rounded-lg bg-slate-900 p-0.5 ring-1 ring-slate-800 md:flex"
+            className="flex items-center rounded-lg bg-slate-900 p-0.5 ring-1 ring-slate-800 lg:w-full lg:grid lg:grid-cols-2"
           >
             <button
               type="button"
               onClick={() => setViewMode('grid')}
               aria-pressed={viewMode === 'grid'}
-              className={`flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+              className={cn(
+                'flex items-center justify-center rounded-md px-2.5 py-1 text-xs font-medium transition-colors lg:w-full lg:py-1.5 cursor-pointer',
                 viewMode === 'grid'
                   ? 'bg-slate-800 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
+                  : 'text-slate-400 hover:text-slate-200',
+              )}
               title="Showcase Grid Layout"
             >
-              <LayoutGrid className="h-3 w-3" />
               <span>Showcase</span>
             </button>
             <button
               type="button"
               onClick={() => setViewMode('table')}
               aria-pressed={viewMode === 'table'}
-              className={`flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+              className={cn(
+                'flex items-center justify-center rounded-md px-2.5 py-1 text-xs font-medium transition-colors lg:w-full lg:py-1.5 cursor-pointer',
                 viewMode === 'table'
                   ? 'bg-slate-800 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
+                  : 'text-slate-400 hover:text-slate-200',
+              )}
               title="Management Table Layout"
             >
-              <TableIcon className="h-3 w-3" />
               <span>Manage</span>
             </button>
           </div>
         </div>
 
-        {/* Right: Quick Action Links & Collapse */}
-        <div className="flex items-center gap-1 sm:gap-2">
-          <Link
-            to="/dashboard"
-            className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
-            title="Open Executive Dashboard"
-          >
-            <LayoutDashboard className="h-3.5 w-3.5 text-slate-400" />
-            <span className="hidden md:inline">Dashboard</span>
-          </Link>
+        {/* Section 3: Quick Action Links & Mobile Minimize */}
+        <div className="flex items-center gap-1 sm:gap-2 lg:flex-col lg:items-stretch lg:gap-1.5 lg:w-full">
+          <div className="hidden lg:block text-[10px] font-bold uppercase tracking-wider text-slate-400 lg:mb-1">
+            Quick Access
+          </div>
 
-          <Link
-            to="/leads"
-            className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
-            title="CRM Leads Pipeline"
-          >
-            <Layers className="h-3.5 w-3.5 text-indigo-400" />
-            <span className="hidden xl:inline">Leads</span>
-          </Link>
+          <div className="flex items-center gap-1 sm:gap-1.5 flex-wrap lg:flex-col lg:items-stretch lg:gap-1">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="flex items-center justify-center lg:justify-start rounded-md px-2.5 py-1 lg:py-2 lg:px-3 text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
+                title={link.title}
+              >
+                <span>{link.label}</span>
+              </Link>
+            ))}
+          </div>
 
-          <Link
-            to="/applications"
-            className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
-            title="Recruitment & Applications"
-          >
-            <Briefcase className="h-3.5 w-3.5 text-amber-400" />
-            <span className="hidden xl:inline">Recruiting</span>
-          </Link>
-
-          <Link
-            to="/media"
-            className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
-            title="Open Media Library"
-          >
-            <ImageIcon className="h-3.5 w-3.5 text-slate-400" />
-            <span className="hidden lg:inline">Media</span>
-          </Link>
-
-          <Link
-            to="/users"
-            className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
-            title="Manage Team & Permissions"
-          >
-            <Users className="h-3.5 w-3.5 text-slate-400" />
-            <span className="hidden lg:inline">Users</span>
-          </Link>
-
-          <Link
-            to="/settings"
-            className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
-            title="System Settings"
-          >
-            <SettingsIcon className="h-3.5 w-3.5 text-slate-400" />
-            <span className="hidden lg:inline">Settings</span>
-          </Link>
-
-          {/* Minimize toggle */}
+          {/* Mobile Minimize Toggle (< lg) */}
           <button
             type="button"
             onClick={() => setIsMinimized(true)}
             aria-label="Minimize administrative bar"
-            className="ml-1 rounded-md p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition-colors focus:outline-none focus:ring-1 focus:ring-brand-500"
+            className="lg:hidden ml-1 rounded-md px-2 py-1 text-xs font-medium text-slate-400 hover:bg-slate-800 hover:text-white transition-colors focus:outline-none focus:ring-1 focus:ring-brand-500 cursor-pointer"
             title="Minimize Bar"
           >
-            <ChevronUp className="h-3.5 w-3.5" />
+            Minimize
           </button>
         </div>
       </div>

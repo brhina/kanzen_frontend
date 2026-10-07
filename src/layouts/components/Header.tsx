@@ -8,7 +8,6 @@ import {
   Settings as SettingsIcon,
   LogOut,
   Edit3,
-  Sparkles,
   Calendar,
   Layers,
   Shield,
@@ -19,6 +18,7 @@ import { useUIStore } from '@/core/stores/ui.store';
 import { Avatar } from '@/shared/ui/avatar';
 import { Button } from '@/shared/ui/button';
 import { Dropdown, type DropdownItem } from '@/shared/ui/dropdown';
+import { NotificationBell } from '@/domains/notifications/presentation/components/NotificationBell';
 import { cn } from '@/shared/utils/cn';
 
 export interface HeaderProps {
@@ -144,7 +144,7 @@ export function Header({ className = '' }: HeaderProps) {
         className,
       )}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 w-full items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand Logo & Name */}
         <div className="flex items-center gap-8">
           <Link
@@ -219,13 +219,16 @@ export function Header({ className = '' }: HeaderProps) {
             )}
           </button>
 
+          {/* Notification bell for authenticated users */}
+          {isAuthenticated && <NotificationBell />}
+
           {/* User authentication status */}
           {isAuthenticated && user ? (
             <Dropdown
               trigger={
                 <button
                   type="button"
-                  className="flex items-center gap-2 rounded-full p-0.5 ring-1 ring-slate-200 hover:ring-brand-500/60 dark:ring-slate-800 dark:hover:ring-brand-400/60 transition-all focus:outline-none"
+                  className="flex items-center gap-2 rounded-full py-1 pl-1 pr-3 text-xs font-semibold text-slate-800 hover:bg-slate-100 ring-1 ring-slate-200 hover:ring-brand-500/60 dark:text-slate-100 dark:hover:bg-slate-800/80 dark:ring-slate-800 dark:hover:ring-brand-400/60 transition-all focus:outline-none cursor-pointer"
                   aria-label="Open user profile menu"
                 >
                   <Avatar
@@ -233,6 +236,9 @@ export function Header({ className = '' }: HeaderProps) {
                     src={user.avatar}
                     size="sm"
                   />
+                  <span className="font-medium text-slate-700 dark:text-slate-200 truncate max-w-[120px] sm:max-w-[160px]">
+                    {user.fullName || user.firstName || user.email}
+                  </span>
                 </button>
               }
               items={userDropdownItems}
@@ -250,9 +256,8 @@ export function Header({ className = '' }: HeaderProps) {
                 <Button
                   variant="primary"
                   size="sm"
-                  className="hidden sm:inline-flex items-center gap-1.5 shadow-sm shadow-brand-500/20"
+                  className="hidden sm:inline-flex items-center shadow-sm shadow-brand-500/20"
                 >
-                  <Sparkles className="h-3.5 w-3.5" />
                   <span>Start Project</span>
                 </Button>
               </Link>

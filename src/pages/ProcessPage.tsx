@@ -1,6 +1,5 @@
 import { Link } from 'react-router';
-import { Search, Compass, Code2, Rocket, ArrowRight } from 'lucide-react';
-import { Badge } from '@/shared/ui/badge';
+import { Search, Compass, Code2, Rocket, Sparkles } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
 
 const STEPS = [
@@ -32,35 +31,45 @@ const STEPS = [
 
 export function ProcessPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 space-y-16">
-      <section className="text-center max-w-3xl mx-auto space-y-4">
-        <Badge variant="brand" size="md">Our Methodology</Badge>
-        <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white sm:text-5xl">
-          The Kanzen Delivery Framework
-        </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-300">
-          A predictable, milestone-driven engineering cycle designed to eliminate architectural debt and deliver high-velocity stability.
-        </p>
-      </section>
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-12">
+      {/* Hero Banner */}
+      <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16 border border-slate-800">
+        <div className="relative z-10 max-w-3xl space-y-4">
+          <div className="inline-flex items-center gap-2 rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
+            <Sparkles className="h-3.5 w-3.5 text-brand-400" />
+            <span>Engineering Discipline</span>
+          </div>
+
+          <h1 className="text-3xl font-black tracking-tight sm:text-5xl text-white">
+            The Kanzen Delivery Framework
+          </h1>
+
+          <p className="text-sm text-slate-300 sm:text-base leading-relaxed">
+            A predictable, milestone-driven engineering cycle designed to eliminate architectural debt and deliver high-velocity stability.
+          </p>
+        </div>
+      </div>
 
       {/* Steps List */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {STEPS.map((s) => {
           const IconComp = s.icon;
           return (
             <div
               key={s.step}
-              className="flex gap-4 p-6 rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900"
+              className="group relative flex gap-5 overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700"
             >
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 font-mono font-bold text-lg">
                 {s.step}
               </div>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <IconComp className="h-5 w-5 text-slate-500" />
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">{s.title}</h3>
+                  <IconComp className="h-5 w-5 text-brand-500" />
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                    {s.title}
+                  </h3>
                 </div>
-                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                   {s.description}
                 </p>
               </div>
@@ -70,14 +79,17 @@ export function ProcessPage() {
       </section>
 
       {/* Bottom CTA */}
-      <div className="text-center pt-8">
+      <section className="rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 p-8 sm:p-12 text-white text-center space-y-6 border border-slate-800 shadow-2xl">
+        <h2 className="text-3xl font-bold tracking-tight">Ready to initiate your architecture cycle?</h2>
+        <p className="max-w-xl mx-auto text-slate-300 text-sm sm:text-base">
+          Our engineering leadership is ready to analyze your platform requirements and scope.
+        </p>
         <Link to="/contact">
-          <Button variant="primary" size="lg">
-            <span>Initiate Your Discovery Phase</span>
-            <ArrowRight className="h-4 w-4 ml-1.5" />
+          <Button variant="primary" size="lg" className="shadow-lg shadow-brand-500/25">
+            <span>Initiate Discovery Phase</span>
           </Button>
         </Link>
-      </div>
+      </section>
     </div>
   );
 }
