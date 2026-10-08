@@ -17,6 +17,7 @@ describe('AdminBar', () => {
     useUIStore.setState({
       isEditMode: false,
       viewMode: 'grid',
+      adminBarMinimized: false,
     });
   });
 
@@ -74,7 +75,8 @@ describe('AdminBar', () => {
     );
 
     expect(html).toContain('Super Admin');
-    expect(html).toContain('Jane Admin');
+    expect(html).not.toContain('Jane Admin');
+    expect(html).not.toContain('admin@kanzen.tech');
     expect(html).toContain('Edit Mode:');
     expect(html).toContain('/dashboard');
     expect(html).toContain('/leads');
@@ -103,7 +105,8 @@ describe('AdminBar', () => {
     );
 
     expect(html).toContain('Staff Editor');
-    expect(html).toContain('Editor One');
+    expect(html).not.toContain('Editor One');
+    expect(html).not.toContain('editor@kanzen.tech');
   });
 
   it('reflects active Edit Mode ON state', () => {
@@ -185,12 +188,13 @@ describe('AdminBar', () => {
     expect(html).toContain('Media');
     expect(html).toContain('Users');
     expect(html).toContain('Settings');
-    expect(html).toContain('Showcase');
-    expect(html).toContain('Manage');
+    expect(html).not.toContain('View format switcher');
+    expect(html).not.toContain('Showcase');
+    expect(html).not.toContain('<span>Manage</span>');
     expect(html).toContain('Minimize');
   });
 
-  it('renders minimized trigger pill without any icons', () => {
+  it('renders minimized trigger pill at the top without any icons', () => {
     useAuthStore.setState({
       isAuthenticated: true,
       user: {
@@ -212,6 +216,60 @@ describe('AdminBar', () => {
     );
 
     expect(html).toContain('Admin Bar');
+    expect(html).toContain('top-20');
+    expect(html).not.toContain('bottom-4');
     expect(html).not.toContain('<svg');
+  });
+
+  it('renders Quick Access links stacked vertically and not side-by-side', () => {
+    useAuthStore.setState({
+      isAuthenticated: true,
+      user: {
+        firstName: 'Jane',
+        lastName: 'Admin',
+        fullName: 'Jane Admin',
+        email: 'admin@kanzen.tech',
+        isAdmin: true,
+        permissions: [],
+        status: 'active',
+      },
+    });
+
+    const html = renderToStaticMarkup(
+      <MemoryRouter>
+        <AdminBar />
+      </MemoryRouter>
+    );
+
+    expect(html).toContain('Quick Access');
+    // Verify vertical column stacking and full width links (no horizontal flex-wrap)
+    expect(html).toContain('flex flex-col items-stretch w-full gap-1');
+    expect(html).not.toContain('flex items-center gap-1 sm:gap-1.5 flex-wrap');
+  });
+
+  it('styles active tab with header nav tab styling (text-brand-600 dark:text-brand-400 font-semibold)', () => {
+    useAuthStore.setState({
+      isAuthenticated: true,
+      user: {
+        firstName: 'Jane',
+        lastName: 'Admin',
+        fullName: 'Jane Admin',
+        email: 'admin@kanzen.tech',
+        isAdmin: true,
+        permissions: [],
+        status: 'active',
+      },
+    });
+
+    const html = renderToStaticMarkup(
+      <MemoryRouter initialEntries={['/dashboard']}>
+        <AdminBar />
+      </MemoryRouter>
+    );
+
+    // Verify active link has header nav tab styling
+    expect(html).toContain('text-brand-600');
+    expect(html).toContain('dark:text-brand-400');
+    expect(html).toContain('font-semibold');
   });
 });

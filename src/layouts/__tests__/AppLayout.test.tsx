@@ -1,10 +1,29 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { MemoryRouter } from 'react-router';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AppLayout } from '../AppLayout';
 import { AuthLayout } from '../AuthLayout';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useUIStore } from '@/core/stores/ui.store';
+
+function renderWithProviders(ui: React.ReactElement) {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
+
+  return renderToStaticMarkup(
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter initialEntries={['/']}>
+        {ui}
+      </MemoryRouter>
+    </QueryClientProvider>,
+  );
+}
 
 describe('Layouts', () => {
   beforeEach(() => {
@@ -22,11 +41,7 @@ describe('Layouts', () => {
 
   describe('AppLayout', () => {
     it('renders header, main outlet, and footer for public visitors without AdminBar', () => {
-      const html = renderToStaticMarkup(
-        <MemoryRouter initialEntries={['/']}>
-          <AppLayout />
-        </MemoryRouter>
-      );
+      const html = renderWithProviders(<AppLayout />);
 
       expect(html).toContain('KANZEN');
       expect(html).toContain('TECH');
@@ -49,11 +64,7 @@ describe('Layouts', () => {
         },
       });
 
-      const html = renderToStaticMarkup(
-        <MemoryRouter initialEntries={['/']}>
-          <AppLayout />
-        </MemoryRouter>
-      );
+      const html = renderWithProviders(<AppLayout />);
 
       expect(html).toContain('Super Admin');
       expect(html).toContain('Edit Mode:');
@@ -76,11 +87,7 @@ describe('Layouts', () => {
       });
       useUIStore.setState({ adminBarMinimized: true });
 
-      const html = renderToStaticMarkup(
-        <MemoryRouter initialEntries={['/']}>
-          <AppLayout />
-        </MemoryRouter>
-      );
+      const html = renderWithProviders(<AppLayout />);
 
       expect(html).not.toContain('lg:pr-64');
     });
@@ -99,11 +106,7 @@ describe('Layouts', () => {
         },
       });
 
-      const html = renderToStaticMarkup(
-        <MemoryRouter initialEntries={['/']}>
-          <AppLayout />
-        </MemoryRouter>
-      );
+      const html = renderWithProviders(<AppLayout />);
 
       const headerTagMatch = html.match(/<header[^>]*>/);
       expect(headerTagMatch).not.toBeNull();
