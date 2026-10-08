@@ -8,9 +8,6 @@ import {
   Clock,
   ShieldCheck,
   Video,
-  LayoutGrid,
-  ListFilter,
-  Sparkles,
 } from 'lucide-react';
 
 export function ConsultationsPage() {
@@ -45,26 +42,24 @@ export function ConsultationsPage() {
                   <button
                     type="button"
                     onClick={() => setActiveView('table')}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                    className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
                       activeView === 'table'
                         ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
                         : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
-                    <ListFilter className="w-3.5 h-3.5" />
-                    <span>Table</span>
+                    Table
                   </button>
                   <button
                     type="button"
                     onClick={() => setActiveView('wizard')}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                    className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
                       (activeView as string) === 'wizard'
                         ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
                         : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
-                    <LayoutGrid className="w-3.5 h-3.5" />
-                    <span>Wizard Preview</span>
+                    Wizard Preview
                   </button>
                 </div>
               }
@@ -89,8 +84,7 @@ export function ConsultationsPage() {
           {/* Header Banner */}
           <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16 border border-slate-800">
             <div className="relative z-10 max-w-3xl space-y-4">
-              <div className="inline-flex items-center gap-2 rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
-                <Sparkles className="h-3.5 w-3.5 text-brand-400" />
+              <div className="inline-flex items-center rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
                 <span>Direct Technical Discovery</span>
               </div>
 

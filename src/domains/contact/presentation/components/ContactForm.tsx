@@ -7,7 +7,7 @@ import { ContactTypePicker } from './ContactTypePicker';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { Textarea } from '@/shared/ui/textarea';
-import { CheckCircle2, Send } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 interface ContactFormProps {
   onSuccess?: () => void;
@@ -141,7 +141,6 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
           variant="primary"
           size="lg"
           isLoading={sendContact.isPending}
-          leftIcon={<Send className="w-4 h-4" />}
           className="w-full sm:w-auto"
         >
           Send Inquiry

@@ -154,17 +154,6 @@ export function BlogCategoryPage() {
 
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
-      {/* Back button */}
-      <div>
-        <Link
-          to="/blog"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <span>Back to All Articles</span>
-        </Link>
-      </div>
-
       {/* Category Header Hero */}
       <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-8 dark:border-slate-800 dark:bg-slate-900/60 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-3 max-w-2xl">

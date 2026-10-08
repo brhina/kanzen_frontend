@@ -49,14 +49,28 @@ export function AuditPage() {
   });
 
   return (
-    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-6">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
-        <div>
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+      {/* Header Banner */}
+      <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16 border border-slate-800">
+        <div className="relative z-10 max-w-3xl space-y-4">
+          <div className="inline-flex items-center rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
+            <span>Compliance Trail &amp; Operational Governance</span>
+          </div>
+
+          <h1 className="text-3xl font-black tracking-tight sm:text-5xl text-white">
+            System Audit Inspector
+          </h1>
+
+          <p className="text-sm text-slate-300 sm:text-base leading-relaxed">
+            Tamper-evident record of administrative operations, authorization attempts, and database entity mutations.
+          </p>
+        </div>
+      </div>
+
+      {/* Filter Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+        <div className="flex flex-wrap items-center gap-4 text-xs">
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              System Audit Inspector
-            </h1>
             <Badge variant="brand" size="sm">
               Compliance Trail
             </Badge>
@@ -66,27 +80,7 @@ export function AuditPage() {
               </Badge>
             )}
           </div>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Tamper-evident record of administrative operations, authorization attempts, and database entity mutations.
-          </p>
-        </div>
 
-        <div className="flex items-center gap-3">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => refetch()}
-            className="text-xs"
-          >
-            Refresh Logs
-          </Button>
-        </div>
-      </div>
-
-      {/* Filter Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">
-        <div className="flex flex-wrap items-center gap-4 text-xs">
           <div className="flex items-center gap-2">
             <label htmlFor="audit-resource-select" className="font-semibold text-slate-700 dark:text-slate-300">
               Resource:
@@ -149,8 +143,19 @@ export function AuditPage() {
           </div>
         </div>
 
-        <div className="text-xs font-mono text-slate-500 dark:text-slate-400">
-          {data?.total ?? 0} total events
+        <div className="flex items-center gap-3 shrink-0">
+          <div className="text-xs font-mono text-slate-500 dark:text-slate-400">
+            {data?.total ?? 0} total events
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => refetch()}
+            className="text-xs"
+          >
+            Refresh Logs
+          </Button>
         </div>
       </div>
 

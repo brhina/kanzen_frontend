@@ -81,17 +81,6 @@ export function JobPostingPage() {
 
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
-      {/* Navigation Breadcrumb */}
-      <div>
-        <Link
-          to="/careers"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <span>Back to All Open Positions</span>
-        </Link>
-      </div>
-
       {/* Staff Inline Control Header */}
       {canManage && (
         <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-amber-200 bg-amber-50/70 p-4 dark:border-amber-900/40 dark:bg-amber-950/20">

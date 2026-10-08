@@ -5,7 +5,7 @@ import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { Textarea } from '@/shared/ui/textarea';
 import { slugify } from '@/shared/utils/string';
-import { X, Loader2, Sparkles, Check } from 'lucide-react';
+import { X } from 'lucide-react';
 import type { JobPostingEntity } from '../../domain/entities/job-posting.entity';
 import type {
   ExperienceLevel,
@@ -632,22 +632,11 @@ export const JobPostingForm: React.FC<JobPostingFormProps> = ({
           disabled={isPending}
           className="bg-indigo-600 hover:bg-indigo-700 min-w-32"
         >
-          {isPending ? (
-            <>
-              <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              <span>Saving...</span>
-            </>
-          ) : isEditing ? (
-            <>
-              <Check className="h-4 w-4 mr-1.5" />
-              <span>Update Role</span>
-            </>
-          ) : (
-            <>
-              <Sparkles className="h-4 w-4 mr-1.5" />
-              <span>Publish Role</span>
-            </>
-          )}
+          {isPending
+            ? 'Saving...'
+            : isEditing
+              ? 'Update Role'
+              : 'Publish Role'}
         </Button>
       </div>
     </form>

@@ -1,5 +1,3 @@
-import { Sparkles } from 'lucide-react';
-
 export interface BlogHeroProps {
   searchQuery?: string;
   onSearchChange?: (query: string) => void;
@@ -14,12 +12,11 @@ export function BlogHero({ totalArticles = 0 }: BlogHeroProps) {
       <div className="pointer-events-none absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl" />
 
       <div className="relative z-10 max-w-3xl space-y-6">
-        <div className="inline-flex items-center gap-2 rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
-          <Sparkles className="h-3.5 w-3.5 text-brand-400" />
+        <div className="inline-flex items-center rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
           <span>Engineering Insights &amp; Architecture</span>
           {totalArticles > 0 && (
             <>
-              <span className="text-brand-500">&bull;</span>
+              <span className="text-brand-500 mx-1.5">&bull;</span>
               <span>{totalArticles} Articles Published</span>
             </>
           )}

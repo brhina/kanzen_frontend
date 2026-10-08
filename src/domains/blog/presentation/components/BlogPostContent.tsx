@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Calendar, Clock, Eye, Heart, Share2, Check, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router';
+import { Calendar, Clock, Eye, Heart, Share2, Check } from 'lucide-react';
 import type { BlogPostEntity } from '../../domain/entities/blog-post.entity';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
@@ -40,17 +39,6 @@ export function BlogPostContent({ post, onLike, isLiking = false }: BlogPostCont
 
   return (
     <div className="mx-auto max-w-4xl space-y-10">
-      {/* Back button */}
-      <div>
-        <Link
-          to="/blog"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <span>Back to All Articles</span>
-        </Link>
-      </div>
-
       {/* Header section */}
       <header className="space-y-6">
         <div className="flex flex-wrap items-center gap-2">

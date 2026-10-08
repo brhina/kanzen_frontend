@@ -23,7 +23,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Inbox,
-  Reply,
 } from 'lucide-react';
 
 const STATUS_TABS = [
@@ -302,7 +301,7 @@ export function ContactTable() {
                 href={`mailto:${selectedContact.email}?subject=Re: ${encodeURIComponent(selectedContact.subject)}`}
                 className="inline-flex"
               >
-                <Button variant="primary" size="sm" leftIcon={<Reply className="w-4 h-4" />}>
+                <Button variant="primary" size="sm">
                   Reply via Email
                 </Button>
               </a>

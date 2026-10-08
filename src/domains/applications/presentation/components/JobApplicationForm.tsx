@@ -8,7 +8,6 @@ import {
   UploadCloud,
   CheckCircle2,
   Loader2,
-  Sparkles,
   User,
   Briefcase,
   FileCheck,
@@ -582,10 +581,7 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
                   <span>Submitting...</span>
                 </>
               ) : (
-                <>
-                  <Sparkles className="h-4 w-4" />
-                  <span>Submit Application</span>
-                </>
+                <span>Submit Application</span>
               )}
             </Button>
           )}

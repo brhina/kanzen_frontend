@@ -107,14 +107,8 @@ export function LeadDetailPage() {
 
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
-      {/* Navigation Breadcrumb & Back */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
-        <Link to="/leads">
-          <Button variant="ghost" size="sm" leftIcon={<ArrowLeft className="w-4 h-4" />}>
-            Back to Pipeline
-          </Button>
-        </Link>
-
+      {/* Top Action Header */}
+      <div className="flex items-center justify-end pb-4 border-b border-slate-200 dark:border-slate-800">
         <div className="flex items-center gap-2">
           {lead.status !== LeadStatus.CONVERTED && (
             <Button
