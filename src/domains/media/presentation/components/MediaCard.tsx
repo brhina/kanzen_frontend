@@ -78,7 +78,7 @@ export function MediaCard({
 
         {/* Folder tag */}
         <div className="absolute top-2 left-2">
-          <Badge variant="outline" size="sm" className="bg-slate-900/80 text-[10px] text-white border-0 backdrop-blur-xs font-mono">
+          <Badge styleVariant="outline" size="sm" className="bg-slate-900/80 text-[10px] text-white border-0 backdrop-blur-xs font-mono">
             {media.folder || 'general'}
           </Badge>
         </div>

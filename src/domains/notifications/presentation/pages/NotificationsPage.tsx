@@ -70,55 +70,27 @@ export function NotificationsPage() {
   const unreadCount = notifications.filter((n) => n.status !== 'read').length;
 
   return (
-    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              Notifications & Alerts
-            </h1>
-            <NotificationBadge count={unreadCount} />
-            {isEditMode && (
-              <Badge variant="warning" size="sm">
-                Edit Mode
-              </Badge>
-            )}
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+      {/* Header Banner */}
+      <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16 border border-slate-800">
+        <div className="relative z-10 max-w-3xl space-y-4">
+          <div className="inline-flex items-center rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
+            <span>Real-Time Broadcasts &amp; Operational Alerts</span>
           </div>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            System announcements, administrative security notices, and platform updates.
+
+          <h1 className="text-3xl font-black tracking-tight sm:text-5xl text-white">
+            Notifications &amp; Alerts Center
+          </h1>
+
+          <p className="text-sm text-slate-300 sm:text-base leading-relaxed">
+            System announcements, administrative security notices, and platform updates dispatch console.
           </p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          {canBroadcast && (
-            <Button
-              type="button"
-              variant="primary"
-              size="sm"
-              onClick={() => setIsBroadcastModalOpen(true)}
-            >
-              Broadcast Notice
-            </Button>
-          )}
-
-          {unreadCount > 0 && (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => markAllMutation.mutate()}
-              disabled={markAllMutation.isPending}
-            >
-              Mark all as read
-            </Button>
-          )}
         </div>
       </div>
 
-      {/* Filter Tabs & Admin Feed Switcher */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
+      {/* Filter Toolbar & Actions */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+        <div className="flex flex-wrap items-center gap-1.5">
           <button
             type="button"
             onClick={() => {
@@ -126,10 +98,10 @@ export function NotificationsPage() {
               setPage(1);
             }}
             className={cn(
-              'rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors cursor-pointer',
+              'rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer',
               activeFilter === 'all'
-                ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700',
+                ? 'bg-slate-900 text-white shadow-xs dark:bg-white dark:text-slate-900'
+                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white',
             )}
           >
             All Alerts
@@ -141,13 +113,13 @@ export function NotificationsPage() {
               setPage(1);
             }}
             className={cn(
-              'rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors cursor-pointer',
+              'rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer',
               activeFilter === 'unread'
-                ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700',
+                ? 'bg-slate-900 text-white shadow-xs dark:bg-white dark:text-slate-900'
+                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white',
             )}
           >
-            Unread Only
+            Unread ({unreadCount})
           </button>
           <button
             type="button"
@@ -156,19 +128,16 @@ export function NotificationsPage() {
               setPage(1);
             }}
             className={cn(
-              'rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors cursor-pointer',
+              'rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer',
               activeFilter === 'system'
-                ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700',
+                ? 'bg-slate-900 text-white shadow-xs dark:bg-white dark:text-slate-900'
+                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white',
             )}
           >
             System Notices
           </button>
-        </div>
 
-        {canBroadcast && (
-          <div className="flex items-center gap-2 text-xs">
-            <span className="text-slate-500 dark:text-slate-400">Stream Source:</span>
+          {canBroadcast && (
             <button
               type="button"
               onClick={() => {
@@ -176,16 +145,49 @@ export function NotificationsPage() {
                 setPage(1);
               }}
               className={cn(
-                'rounded-lg px-2.5 py-1 font-semibold transition-colors cursor-pointer',
+                'rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ml-1',
                 isAdminView
                   ? 'bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300 ring-1 ring-purple-500/30'
-                  : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
+                  : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800',
               )}
             >
-              {isAdminView ? 'System-Wide Feed (Admin)' : 'My Notifications'}
+              {isAdminView ? 'System-Wide Feed (Admin)' : 'My Feed'}
             </button>
-          </div>
-        )}
+          )}
+        </div>
+
+        <div className="flex items-center gap-2.5 shrink-0">
+          <NotificationBadge count={unreadCount} />
+          {isEditMode && (
+            <Badge variant="warning" size="sm">
+              Edit Mode
+            </Badge>
+          )}
+          {unreadCount > 0 && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => markAllMutation.mutate()}
+              disabled={markAllMutation.isPending}
+              className="text-xs"
+            >
+              Mark all as read
+            </Button>
+          )}
+
+          {canBroadcast && (
+            <Button
+              type="button"
+              variant="primary"
+              size="sm"
+              onClick={() => setIsBroadcastModalOpen(true)}
+              className="text-xs"
+            >
+              Broadcast Notice
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Notifications List Stream */}

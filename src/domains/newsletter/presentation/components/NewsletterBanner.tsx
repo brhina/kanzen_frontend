@@ -1,5 +1,4 @@
 import { NewsletterSignupForm } from './NewsletterSignupForm';
-import { Sparkles } from 'lucide-react';
 
 interface NewsletterBannerProps {
   title?: string;
@@ -20,8 +19,7 @@ export function NewsletterBanner({
     >
       <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 rounded-full bg-brand-600/15 blur-3xl pointer-events-none" />
       <div className="relative z-10 max-w-3xl space-y-4">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-xs font-semibold text-brand-300">
-          <Sparkles className="w-3.5 h-3.5" />
+        <div className="inline-flex items-center px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-xs font-semibold text-brand-300">
           The Kanzen Architecture Dispatch
         </div>
         <h2 className="text-2xl sm:text-3xl font-black tracking-tight">

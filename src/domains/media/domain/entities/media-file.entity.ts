@@ -1,13 +1,14 @@
-import { MediaFolderType } from '../enums/media-folder.enum';
-import { MediaStatusType } from '../enums/media-status.enum';
-import { StorageDriverType } from '../enums/storage-driver.enum';
+import type { MediaFolderType } from '../enums/media-folder.enum';
+import type { MediaStatusType } from '../enums/media-status.enum';
+import type { StorageDriverType } from '../enums/storage-driver.enum';
 
 export interface MediaFileEntity {
   id: string;
   filename: string;
-  storedName: string;
+  originalName?: string;
+  storedName?: string;
   mimeType: string;
-  extension: string;
+  extension?: string;
   size: number;
   url: string;
   thumbnailUrl?: string;
@@ -17,6 +18,7 @@ export interface MediaFileEntity {
   caption?: string;
   folder: MediaFolderType | string;
   uploadedBy?: string;
+  driver?: StorageDriverType;
   storageDriver?: StorageDriverType;
   status?: MediaStatusType;
   createdAt?: string | Date;

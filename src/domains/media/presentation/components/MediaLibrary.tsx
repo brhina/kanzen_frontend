@@ -163,7 +163,9 @@ export function MediaLibrary({
       {data && data.totalPages > 1 && (
         <div className="flex justify-center pt-4">
           <Pagination
-            currentPage={page}
+            page={page}
+            limit={data.limit || 20}
+            total={data.total || 0}
             totalPages={data.totalPages}
             onPageChange={(newPage) => setPage(newPage)}
           />

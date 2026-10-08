@@ -13,6 +13,7 @@ import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 import { Modal } from '@/shared/ui/modal';
 import { Pagination } from '@/shared/ui/pagination';
+import { LayoutGrid, Table as TableIcon } from 'lucide-react';
 import { cn } from '@/shared/utils/cn';
 
 const FOLDER_TABS = [
@@ -101,60 +102,93 @@ export function MediaPage() {
   };
 
   return (
-    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              Digital Media Library
-            </h1>
-            <Badge variant="brand" size="sm">
-              CDN Assets
-            </Badge>
-            {isEditMode && (
-              <Badge variant="warning" size="sm">
-                Edit Mode
-              </Badge>
-            )}
+      <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16 border border-slate-800">
+        <div className="relative z-10 max-w-3xl space-y-4">
+          <div className="inline-flex items-center rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
+            <span>Digital Asset Management &amp; Global CDN</span>
           </div>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+
+          <h1 className="text-3xl font-black tracking-tight sm:text-5xl text-white">
+            Digital Media Library
+          </h1>
+
+          <p className="text-sm text-slate-300 sm:text-base leading-relaxed">
             Centralized digital asset repository for client case studies, engineering blogs, team profiles, and brand imagery.
           </p>
         </div>
+      </div>
 
-        <div className="flex items-center gap-3">
+      {/* Media Toolbar & Controls */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+        {/* Folder Navigation */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          {FOLDER_TABS.map((tab) => {
+            const isActive = activeFolder === tab.key;
+            return (
+              <button
+                key={tab.key}
+                type="button"
+                onClick={() => {
+                  setActiveFolder(tab.key);
+                  setPage(1);
+                }}
+                className={cn(
+                  'rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer',
+                  isActive
+                    ? 'bg-slate-900 text-white shadow-xs dark:bg-white dark:text-slate-900'
+                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white',
+                )}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="flex items-center gap-3 shrink-0">
           {/* View mode toggle (Showcase vs Table) */}
           <div
             role="group"
             aria-label="Media layout switcher"
-            className="flex items-center rounded-lg bg-slate-100 p-0.5 dark:bg-slate-800"
+            className="flex items-center rounded-xl bg-slate-100 p-0.5 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
           >
             <button
               type="button"
               onClick={() => setViewMode('grid')}
               className={cn(
-                'rounded-md px-3 py-1 text-xs font-semibold transition-colors cursor-pointer',
+                'flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors cursor-pointer',
                 viewMode === 'grid'
-                  ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-900 dark:text-white'
-                  : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200',
+                  ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white',
               )}
+              title="Grid layout"
             >
-              Showcase
+              <LayoutGrid className="h-3.5 w-3.5" />
+              <span>Showcase</span>
             </button>
             <button
               type="button"
               onClick={() => setViewMode('table')}
               className={cn(
-                'rounded-md px-3 py-1 text-xs font-semibold transition-colors cursor-pointer',
+                'flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors cursor-pointer',
                 viewMode === 'table'
-                  ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-900 dark:text-white'
-                  : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200',
+                  ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white',
               )}
+              title="Table layout"
             >
-              Manage
+              <TableIcon className="h-3.5 w-3.5" />
+              <span>Manage</span>
             </button>
           </div>
+
+          {isEditMode && (
+            <Badge variant="warning" size="sm">
+              Edit Mode
+            </Badge>
+          )}
 
           {(canWrite || isAuthenticated) && (
             <Button
@@ -162,6 +196,7 @@ export function MediaPage() {
               variant={showUploadZone ? 'secondary' : 'primary'}
               size="sm"
               onClick={() => setShowUploadZone((prev) => !prev)}
+              className="shrink-0"
             >
               {showUploadZone ? 'Close Uploader' : 'Upload Assets'}
             </Button>

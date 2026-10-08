@@ -1,4 +1,4 @@
-import { useState, ImgHTMLAttributes } from 'react';
+import { useState, type ImgHTMLAttributes } from 'react';
 import { cn } from '@/shared/utils/cn';
 
 export interface ImageWithFallbackProps extends ImgHTMLAttributes<HTMLImageElement> {

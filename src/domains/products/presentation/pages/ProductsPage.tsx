@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Sparkles, Box } from 'lucide-react';
+import { Box } from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useProducts } from '../../application/use-cases/useProducts';
 import { useCreateProduct } from '../../application/use-cases/useCreateProduct';
@@ -161,8 +161,7 @@ export function ProductsPage() {
       {/* Hero Banner */}
       <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16 border border-slate-800">
         <div className="relative z-10 max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
-            <Sparkles className="h-3.5 w-3.5 text-brand-400" />
+          <div className="inline-flex items-center rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
             <span>Proprietary Software &amp; Open Source</span>
           </div>
 
