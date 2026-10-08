@@ -10,11 +10,15 @@ export type SettingType = (typeof SettingType)[keyof typeof SettingType];
 export type SettingTypeValue = SettingType;
 
 export const SettingGroupEnum = {
-  GENERAL: 'general',
+  COMPANY: 'company',
   SEO: 'seo',
   SOCIAL: 'social',
+  CONTACT: 'contact',
   EMAIL: 'email',
   INTEGRATIONS: 'integrations',
+  SYSTEM: 'system',
+  // Backward compatibility alias:
+  GENERAL: 'company',
 } as const;
 
 export type SettingGroupEnum = (typeof SettingGroupEnum)[keyof typeof SettingGroupEnum];

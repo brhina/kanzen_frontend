@@ -10,6 +10,9 @@ export interface SettingsFormProps {
   categoryDescription?: string;
   settings: SettingEntity[];
   onSave: (updates: Record<string, unknown>) => Promise<void>;
+  onDelete?: (key: string) => void;
+  canDelete?: boolean;
+  onAddNew?: () => void;
   isSaving?: boolean;
   className?: string;
 }
@@ -19,6 +22,9 @@ export function SettingsForm({
   categoryDescription,
   settings,
   onSave,
+  onDelete,
+  canDelete = false,
+  onAddNew,
   isSaving = false,
   className = '',
 }: SettingsFormProps) {
@@ -38,11 +44,46 @@ export function SettingsForm({
 
   const handleFieldChange = (key: string, newValue: unknown) => {
     setFormValues((prev) => ({ ...prev, [key]: newValue }));
-    setDirtyKeys((prev) => new Set(prev).add(key));
+
+    const originalSetting = settings.find((s) => s.key === key);
+    const isActuallyDifferent = (() => {
+      if (!originalSetting) return true;
+      if (typeof newValue === 'object') {
+        try {
+          return JSON.stringify(newValue) !== JSON.stringify(originalSetting.value);
+        } catch {
+          return newValue !== originalSetting.value;
+        }
+      }
+      return newValue !== originalSetting.value;
+    })();
+
+    setDirtyKeys((prev) => {
+      const next = new Set(prev);
+      if (isActuallyDifferent) {
+        next.add(key);
+      } else {
+        next.delete(key);
+      }
+      return next;
+    });
+
     setSaveSuccess(false);
   };
 
-  const handleReset = () => {
+  const handleSingleReset = (key: string) => {
+    const originalSetting = settings.find((s) => s.key === key);
+    if (!originalSetting) return;
+
+    setFormValues((prev) => ({ ...prev, [key]: originalSetting.value }));
+    setDirtyKeys((prev) => {
+      const next = new Set(prev);
+      next.delete(key);
+      return next;
+    });
+  };
+
+  const handleResetAll = () => {
     const initialMap: Record<string, unknown> = {};
     for (const s of settings) {
       initialMap[s.key] = s.value;
@@ -60,10 +101,14 @@ export function SettingsForm({
       updates[k] = formValues[k];
     });
 
-    await onSave(updates);
-    setDirtyKeys(new Set());
-    setSaveSuccess(true);
-    setTimeout(() => setSaveSuccess(false), 3000);
+    try {
+      await onSave(updates);
+      setDirtyKeys(new Set());
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 4000);
+    } catch {
+      // Handled in parent / query mutation
+    }
   };
 
   const isDirty = dirtyKeys.size > 0;
@@ -76,33 +121,50 @@ export function SettingsForm({
         settings={settings}
         values={formValues}
         onChange={handleFieldChange}
+        onReset={handleSingleReset}
+        onDelete={onDelete}
+        canDelete={canDelete}
+        onAddNew={onAddNew}
       />
 
-      {/* Floating or bottom Action Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">
-        <div className="flex items-center gap-2 text-xs">
+      {/* Floating Sticky Action Bar */}
+      <div
+        className={cn(
+          'sticky bottom-4 z-20 flex flex-wrap items-center justify-between gap-3 rounded-2xl border p-4 shadow-xl backdrop-blur-md transition-all duration-300',
+          isDirty
+            ? 'border-brand-500/40 bg-white/95 dark:border-brand-500/30 dark:bg-slate-900/95 ring-2 ring-brand-500/20'
+            : 'border-slate-200/90 bg-white/90 dark:border-slate-800 dark:bg-slate-900/90',
+        )}
+      >
+        <div className="flex items-center gap-2.5 text-xs">
           {isDirty ? (
-            <span className="font-semibold text-amber-600 dark:text-amber-400">
-              ● {dirtyKeys.size} unsaved change{dirtyKeys.size === 1 ? '' : 's'}
-            </span>
+            <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400 font-semibold">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
+              </span>
+              <span>
+                {dirtyKeys.size} modified setting{dirtyKeys.size === 1 ? '' : 's'} awaiting deployment
+              </span>
+            </div>
           ) : saveSuccess ? (
-            <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-              ✓ All configurations saved successfully
-            </span>
+            <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold">
+              <span>All changes saved and synchronized across services</span>
+            </div>
           ) : (
-            <span className="text-slate-400">
-              All settings synchronized with production
-            </span>
+            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+              <span>All configurations active and in sync</span>
+            </div>
           )}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           {isDirty && (
             <Button
               type="button"
-              variant="ghost"
+              variant="outline"
               size="sm"
-              onClick={handleReset}
+              onClick={handleResetAll}
               disabled={isSaving}
               className="text-xs"
             >
@@ -115,7 +177,8 @@ export function SettingsForm({
             variant="primary"
             size="sm"
             disabled={!isDirty || isSaving}
-            className="text-xs"
+            isLoading={isSaving}
+            className="text-xs shadow-sm"
           >
             {isSaving ? 'Saving Configurations...' : 'Save Changes'}
           </Button>
@@ -124,3 +187,5 @@ export function SettingsForm({
     </form>
   );
 }
+
+export default SettingsForm;

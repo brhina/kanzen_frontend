@@ -33,6 +33,7 @@ export const settingsApi = {
     const searchParams = new URLSearchParams();
     if (filter.group && filter.group !== 'all') searchParams.set('group', filter.group);
     if (filter.isPublic !== undefined) searchParams.set('isPublic', String(filter.isPublic));
+    if (filter.search) searchParams.set('search', filter.search);
 
     const res = await apiClient
       .get(API_ENDPOINTS.settings.adminAll, {

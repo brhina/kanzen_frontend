@@ -56,17 +56,6 @@ export function UserDetailPage() {
 
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
-      {/* Navigation Breadcrumb Action */}
-      <div>
-        <Link
-          to="/users"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <span>Back to Team Directory</span>
-        </Link>
-      </div>
-
       {/* User Header Profile Card */}
       <Card className="border-slate-200 dark:border-slate-800 shadow-md">
         <CardContent className="p-6 sm:p-8">

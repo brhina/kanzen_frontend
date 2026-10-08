@@ -1,6 +1,7 @@
 export interface FilterSettingsDto {
   group?: string;
   isPublic?: boolean;
+  search?: string;
 }
 
 export interface CreateSettingDto {
@@ -14,7 +15,9 @@ export interface CreateSettingDto {
 }
 
 export interface UpdateSettingDto {
-  value: unknown;
+  value?: unknown;
+  type?: string;
+  group?: string;
   label?: string;
   description?: string;
   isPublic?: boolean;
