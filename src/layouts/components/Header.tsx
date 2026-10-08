@@ -4,14 +4,9 @@ import {
   Sun,
   Moon,
   Laptop,
-  LayoutDashboard,
-  Settings as SettingsIcon,
   LogOut,
-  Edit3,
-  Calendar,
-  Layers,
-  Shield,
   Briefcase,
+  Bell,
 } from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useUIStore } from '@/core/stores/ui.store';
@@ -19,6 +14,7 @@ import { Avatar } from '@/shared/ui/avatar';
 import { Button } from '@/shared/ui/button';
 import { Dropdown, type DropdownItem } from '@/shared/ui/dropdown';
 import { NotificationBell } from '@/domains/notifications/presentation/components/NotificationBell';
+import { useCompanySettings } from '@/domains/settings/application/use-cases/usePublicSettings';
 import { cn } from '@/shared/utils/cn';
 
 export interface HeaderProps {
@@ -37,16 +33,43 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Products', href: '/products' },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Case Studies', href: '/case-studies' },
+  { label: 'Consultations', href: '/consultations' },
+  { label: 'Leads', href: '/leads' },
+  { label: 'Process', href: '/process' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Careers', href: '/careers', badge: 'Hiring' },
+  { label: 'Careers', href: '/careers' },
   { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/contact' },
 ];
+
+const ADMIN_BAR_PATHS = new Set([
+  '/dashboard',
+  '/leads',
+  '/consultations',
+  '/applications',
+  '/media',
+  '/analytics',
+  '/audit',
+  '/health',
+  '/users',
+  '/settings',
+]);
 
 export function Header({ className = '' }: HeaderProps) {
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuthStore();
-  const { theme, setTheme, toggleSidebar, isEditMode, toggleEditMode } = useUIStore();
+  const { theme, setTheme, toggleSidebar } = useUIStore();
+  const { company } = useCompanySettings();
+
+  const isElevated = Boolean(
+    isAuthenticated &&
+      user &&
+      (user.isAdmin || (Array.isArray(user.permissions) && user.permissions.length > 0)),
+  );
+
+  // If a route is in the Admin Bar, it should not appear in the header navigation for admins
+  const visibleNavItems = isElevated
+    ? NAV_ITEMS.filter((item) => !ADMIN_BAR_PATHS.has(item.href))
+    : NAV_ITEMS;
 
   const handleLogout = () => {
     logout();
@@ -63,6 +86,8 @@ export function Header({ className = '' }: HeaderProps) {
     }
   };
 
+  // User menu in header: For admins, all management routes are accessed directly in the AdminBar,
+  // so the header dropdown does not duplicate AdminBar routes.
   const userDropdownItems: DropdownItem[] = [
     {
       id: 'header-info',
@@ -78,52 +103,22 @@ export function Header({ className = '' }: HeaderProps) {
       ),
       disabled: true,
     },
-    {
-      id: 'dashboard',
-      label: 'Executive Dashboard',
-      icon: <LayoutDashboard className="h-4 w-4 text-slate-500" />,
-      onClick: () => navigate('/dashboard'),
-    },
-    {
-      id: 'leads',
-      label: 'CRM Leads Pipeline',
-      icon: <Layers className="h-4 w-4 text-indigo-500" />,
-      onClick: () => navigate('/leads'),
-    },
-    {
-      id: 'consultations',
-      label: 'Appointments & Consultations',
-      icon: <Calendar className="h-4 w-4 text-cyan-500" />,
-      onClick: () => navigate('/consultations'),
-    },
-    {
-      id: 'applications',
-      label: 'Talent & Applications',
-      icon: <Briefcase className="h-4 w-4 text-amber-500" />,
-      onClick: () => navigate('/applications'),
-    },
-    {
-      id: 'users',
-      label: 'Team & RBAC Users',
-      icon: <Shield className="h-4 w-4 text-emerald-500" />,
-      onClick: () => navigate('/users'),
-    },
-    {
-      id: 'settings',
-      label: 'Account & Settings',
-      icon: <SettingsIcon className="h-4 w-4 text-slate-500" />,
-      onClick: () => navigate('/settings'),
-    },
-    ...(user?.isAdmin || (user?.permissions && user.permissions.length > 0)
+    ...(!isElevated
       ? [
           {
-            id: 'edit-mode',
-            label: isEditMode ? 'Exit Edit Mode' : 'Enable Edit Mode',
-            icon: <Edit3 className="h-4 w-4 text-amber-500" />,
-            onClick: () => toggleEditMode(),
+            id: 'applications',
+            label: 'Candidate Status Portal',
+            icon: <Briefcase className="h-4 w-4 text-amber-500" />,
+            onClick: () => navigate('/applications'),
           },
         ]
       : []),
+    {
+      id: 'notifications',
+      label: 'Notifications Center',
+      icon: <Bell className="h-4 w-4 text-amber-500" />,
+      onClick: () => navigate('/notifications'),
+    },
     {
       divider: true,
       label: '',
@@ -146,10 +141,10 @@ export function Header({ className = '' }: HeaderProps) {
     >
       <div className="mx-auto flex h-16 w-full items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand Logo & Name */}
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-4 xl:gap-6 2xl:gap-8 min-w-0 flex-1">
           <Link
             to="/"
-            className="group flex items-center gap-2.5 transition-transform hover:scale-[1.01]"
+            className="group flex items-center gap-2.5 transition-transform hover:scale-[1.01] shrink-0"
             aria-label="Kanzen Tech Homepage"
           >
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-600 via-brand-500 to-amber-500 text-white shadow-md shadow-brand-500/20 group-hover:shadow-brand-500/40 transition-shadow">
@@ -170,8 +165,8 @@ export function Header({ className = '' }: HeaderProps) {
               <span className="text-base font-black tracking-tight text-slate-900 dark:text-white leading-none">
                 KANZEN<span className="text-brand-500 ml-1">TECH</span>
               </span>
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">
-                Enterprise Engineering
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5 truncate max-w-[150px]">
+                {company?.tagline || 'Enterprise Engineering'}
               </span>
             </div>
           </Link>
@@ -179,29 +174,34 @@ export function Header({ className = '' }: HeaderProps) {
           {/* Desktop Navigation Links */}
           <nav
             aria-label="Primary navigation"
-            className="hidden items-center gap-6 lg:flex"
+            className="hidden items-center gap-2 xl:gap-3.5 2xl:gap-5 lg:flex min-w-0 overflow-x-auto no-scrollbar py-1"
           >
-            {NAV_ITEMS.map((item) => (
+            {visibleNavItems.map((item) => (
               <NavLink
                 key={item.href}
                 to={item.href}
                 className={({ isActive }) =>
                   cn(
-                    'text-sm font-medium transition-colors hover:text-brand-600 dark:hover:text-brand-400',
+                    'text-xs xl:text-sm font-medium whitespace-nowrap transition-colors hover:text-brand-600 dark:hover:text-brand-400 inline-flex items-center gap-1 shrink-0',
                     isActive
                       ? 'text-brand-600 dark:text-brand-400 font-semibold'
                       : 'text-slate-600 dark:text-slate-300',
                   )
                 }
               >
-                {item.label}
+                <span>{item.label}</span>
+                {item.badge && (
+                  <span className="rounded-full bg-brand-500/10 px-1.5 py-0.5 text-[9px] font-semibold text-brand-600 dark:text-brand-400">
+                    {item.badge}
+                  </span>
+                )}
               </NavLink>
             ))}
           </nav>
         </div>
 
         {/* Right Action Cluster */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0 ml-3">
           {/* Theme switcher */}
           <button
             type="button"

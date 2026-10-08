@@ -22,6 +22,8 @@ import {
   Calendar,
   Shield,
   FileCheck,
+  BarChart2,
+  Activity,
 } from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useUIStore } from '@/core/stores/ui.store';
@@ -58,7 +60,7 @@ const NAV_GROUPS: NavGroup[] = [
   {
     title: 'Inbound & Consultation',
     items: [
-      { label: 'Technical Consultations', href: '/consultations', icon: Calendar, badge: 'Book' },
+      { label: 'Technical Consultations', href: '/consultations', icon: Calendar },
       { label: 'Scope & Estimator', href: '/leads', icon: Sparkles },
       { label: 'Tech Radar Newsletter', href: '/newsletter', icon: Mail },
       { label: 'Direct Inquiry', href: '/contact', icon: Mail },
@@ -69,7 +71,7 @@ const NAV_GROUPS: NavGroup[] = [
     items: [
       { label: 'About Us', href: '/about', icon: Info },
       { label: 'Engineering Process', href: '/process', icon: Workflow },
-      { label: 'Careers', href: '/careers', icon: Users2, badge: 'Hiring' },
+      { label: 'Careers', href: '/careers', icon: Users2 },
       { label: 'Candidate Portal', href: '/applications', icon: FileCheck },
       { label: 'Engineering Blog', href: '/blog', icon: BookOpen },
       { label: 'Client Testimonials', href: '/testimonials', icon: MessageSquareQuote },
@@ -221,6 +223,30 @@ export function Navigation({ className = '' }: NavigationProps) {
               </button>
               <button
                 type="button"
+                onClick={() => handleNavigate('/analytics')}
+                className="flex items-center gap-1.5 rounded-lg p-2 text-slate-700 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-800 transition-colors text-left"
+              >
+                <BarChart2 className="h-3.5 w-3.5 text-violet-500" />
+                <span>Analytics</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleNavigate('/audit')}
+                className="flex items-center gap-1.5 rounded-lg p-2 text-slate-700 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-800 transition-colors text-left"
+              >
+                <FileText className="h-3.5 w-3.5 text-emerald-500" />
+                <span>Audit Log</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleNavigate('/health')}
+                className="flex items-center gap-1.5 rounded-lg p-2 text-slate-700 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-800 transition-colors text-left"
+              >
+                <Activity className="h-3.5 w-3.5 text-teal-500" />
+                <span>Health</span>
+              </button>
+              <button
+                type="button"
                 onClick={() => handleNavigate('/settings')}
                 className="flex items-center gap-1.5 rounded-lg p-2 text-slate-700 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-800 transition-colors text-left"
               >
@@ -298,7 +324,6 @@ export function Navigation({ className = '' }: NavigationProps) {
           <div className="space-y-2 pt-2">
             <Link to="/contact" onClick={handleClose} className="block">
               <Button variant="primary" size="md" className="w-full justify-center">
-                <Sparkles className="h-4 w-4 mr-1.5" />
                 <span>Start a Project</span>
               </Button>
             </Link>

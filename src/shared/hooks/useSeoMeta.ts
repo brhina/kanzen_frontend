@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { APP_CONFIG } from '../../core/config/constants';
+import { usePublicSettings } from '@/domains/settings/application/use-cases/usePublicSettings';
 
 export interface SeoMetaOptions {
   title?: string;
@@ -11,22 +12,31 @@ export interface SeoMetaOptions {
 }
 
 /**
- * Dynamically updates document metadata, OpenGraph tags, and canonical link.
+ * Dynamically updates document metadata, OpenGraph tags, and canonical link,
+ * falling back to live administrative SEO & Company settings when available.
  */
 export function useSeoMeta({
   title,
-  description = APP_CONFIG.tagline,
+  description,
   keywords,
   ogImage,
   canonicalUrl,
   type = 'website',
 }: SeoMetaOptions = {}): void {
+  const { seo, company } = usePublicSettings();
+
+  const companyName = company.name || APP_CONFIG.name;
+  const defaultFullTitle =
+    seo.defaultTitle || `${companyName} — ${company.tagline || APP_CONFIG.tagline}`;
+  const effectiveDescription =
+    description || seo.defaultDescription || company.tagline || APP_CONFIG.tagline;
+
   useEffect(() => {
     if (typeof document === 'undefined') return;
 
     // 1. Update Title
-    const baseTitle = APP_CONFIG.name;
-    document.title = title ? `${title} | ${baseTitle}` : `${baseTitle} — ${APP_CONFIG.tagline}`;
+    const baseTitle = companyName;
+    document.title = title ? `${title} | ${baseTitle}` : defaultFullTitle;
 
     // Helper to update or create meta tags
     const setMetaTag = (attrName: 'name' | 'property', attrValue: string, content?: string) => {
@@ -41,14 +51,14 @@ export function useSeoMeta({
     };
 
     // 2. Standard Metadata
-    setMetaTag('name', 'description', description);
+    setMetaTag('name', 'description', effectiveDescription);
     if (keywords && keywords.length > 0) {
       setMetaTag('name', 'keywords', keywords.join(', '));
     }
 
     // 3. Open Graph Tags
     setMetaTag('property', 'og:title', title || baseTitle);
-    setMetaTag('property', 'og:description', description);
+    setMetaTag('property', 'og:description', effectiveDescription);
     setMetaTag('property', 'og:type', type);
     if (ogImage) {
       setMetaTag('property', 'og:image', ogImage);
@@ -64,5 +74,14 @@ export function useSeoMeta({
       }
       link.setAttribute('href', canonicalUrl);
     }
-  }, [title, description, keywords, ogImage, canonicalUrl, type]);
+  }, [
+    title,
+    effectiveDescription,
+    companyName,
+    defaultFullTitle,
+    keywords,
+    ogImage,
+    canonicalUrl,
+    type,
+  ]);
 }
