@@ -429,7 +429,7 @@ export function ApplicationsPage() {
               <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                 Our Engineering Hiring Pipeline
               </h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Respecting candidate time with transparent evaluation criteria and zero algorithmic ghosting.
               </p>
             </div>
@@ -442,7 +442,7 @@ export function ApplicationsPage() {
                 <h4 className="font-bold text-slate-900 dark:text-white">
                   Resume & Work Review
                 </h4>
-                <p className="text-slate-500 leading-relaxed">
+                <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
                   Screening of your code artifacts, GitHub repositories, and system design background.
                 </p>
               </div>
@@ -454,7 +454,7 @@ export function ApplicationsPage() {
                 <h4 className="font-bold text-slate-900 dark:text-white">
                   Technical Chat
                 </h4>
-                <p className="text-slate-500 leading-relaxed">
+                <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
                   30-minute discussion on distributed systems trade-offs, architecture patterns, and team fit.
                 </p>
               </div>
@@ -466,7 +466,7 @@ export function ApplicationsPage() {
                 <h4 className="font-bold text-slate-900 dark:text-white">
                   Real-World Pairing
                 </h4>
-                <p className="text-slate-500 leading-relaxed">
+                <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
                   Hands-on pair programming solving an actual engineering issue or designing an API schema.
                 </p>
               </div>
@@ -478,7 +478,7 @@ export function ApplicationsPage() {
                 <h4 className="font-bold text-slate-900 dark:text-white">
                   Offer & Onboarding
                 </h4>
-                <p className="text-slate-500 leading-relaxed">
+                <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
                   Competitive USD compensation proposal, equity grant details, and equipment ordering.
                 </p>
               </div>

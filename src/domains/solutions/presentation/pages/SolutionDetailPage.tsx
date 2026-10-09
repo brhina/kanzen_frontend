@@ -223,7 +223,7 @@ export function SolutionDetailPage() {
                 </Link>
               </div>
 
-              <div className="rounded-lg bg-slate-50 p-3 text-[11px] text-slate-500 dark:bg-slate-800/50">
+              <div className="rounded-lg bg-slate-50 p-3 text-[11px] text-slate-500 dark:text-slate-400 dark:bg-slate-800/50">
                 Typical implementation: 6 - 12 weeks with zero legacy regression guarantees.
               </div>
             </CardContent>

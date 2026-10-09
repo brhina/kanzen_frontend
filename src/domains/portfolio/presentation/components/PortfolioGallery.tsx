@@ -30,7 +30,7 @@ export function PortfolioGallery({
   return (
     <div className="space-y-4">
       {/* Featured Main Image Preview */}
-      <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 shadow-lg group">
+      <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 shadow-lg group">
         <img
           src={allMedia[selectedIndex] || coverImage}
           alt={`${title} Preview ${selectedIndex + 1}`}

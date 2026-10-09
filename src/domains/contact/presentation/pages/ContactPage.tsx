@@ -3,6 +3,7 @@ import { useAuthStore } from '@/core/auth/auth.store';
 import { ContactForm } from '../components/ContactForm';
 import { ContactTable } from '../components/ContactTable';
 import { Badge } from '@/shared/ui/badge';
+import { HeaderBanner } from '@/layouts/components';
 import {
   useSocialLinks,
   useCompanySettings,
@@ -35,23 +36,15 @@ export function ContactPage() {
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16">
-        <div className="relative z-10 max-w-3xl mx-auto text-center space-y-4">
-          <div className="inline-flex items-center rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
-            <span>{canManage ? 'Inquiries & Support Desk' : 'Direct Communication & Inquiries'}</span>
-          </div>
-
-          <h1 className="text-3xl font-black tracking-tight sm:text-5xl text-white">
-            {canManage ? 'Inquiries & Support Desk' : `Get in Touch with ${companyName}`}
-          </h1>
-
-          <p className="text-sm text-slate-300 sm:text-base leading-relaxed max-w-2xl mx-auto">
-            {canManage
-              ? 'Triage incoming partnership requests, technical inquiries, and client collaborations with live status workflows.'
-              : 'Have questions about our engineering capabilities, consulting engagements, or partnership programs? We are here to help.'}
-          </p>
-        </div>
-      </div>
+      <HeaderBanner
+        badge={canManage ? 'Inquiries & Support Desk' : 'Direct Communication & Inquiries'}
+        title={canManage ? 'Inquiries & Support Desk' : `Get in Touch with ${companyName}`}
+        description={
+          canManage
+            ? 'Triage incoming partnership requests, technical inquiries, and client collaborations with live status workflows.'
+            : 'Have questions about our engineering capabilities, consulting engagements, or partnership programs? We are here to help.'
+        }
+      />
 
       {/* AUTHORIZED STAFF INBOX CONTROLS */}
       {canManage && (

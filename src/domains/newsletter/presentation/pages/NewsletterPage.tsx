@@ -69,7 +69,7 @@ export function NewsletterPage() {
                   className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                     activeAdminView === 'table'
                       ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   <ListFilter className="w-3.5 h-3.5" />
@@ -81,7 +81,7 @@ export function NewsletterPage() {
                   className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                     activeAdminView === 'public'
                       ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   <LayoutGrid className="w-3.5 h-3.5" />
@@ -130,28 +130,28 @@ export function NewsletterPage() {
                 <Server className="w-4 h-4" />
               </div>
               <h3 className="font-bold text-xs text-slate-900 dark:text-white">Distributed Core</h3>
-              <p className="text-[11px] text-slate-500">Event brokers & consensus</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">Event brokers & consensus</p>
             </div>
             <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center space-y-2">
               <div className="w-9 h-9 mx-auto rounded-xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 flex items-center justify-center">
                 <Layers className="w-4 h-4" />
               </div>
               <h3 className="font-bold text-xs text-slate-900 dark:text-white">Multi-Tenancy</h3>
-              <p className="text-[11px] text-slate-500">SaaS isolation models</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">SaaS isolation models</p>
             </div>
             <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center space-y-2">
               <div className="w-9 h-9 mx-auto rounded-xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 flex items-center justify-center">
                 <Cpu className="w-4 h-4" />
               </div>
               <h3 className="font-bold text-xs text-slate-900 dark:text-white">AI Systems</h3>
-              <p className="text-[11px] text-slate-500">Low-latency agent flows</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">Low-latency agent flows</p>
             </div>
             <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center space-y-2">
               <div className="w-9 h-9 mx-auto rounded-xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 flex items-center justify-center">
                 <BookOpen className="w-4 h-4" />
               </div>
               <h3 className="font-bold text-xs text-slate-900 dark:text-white">Post-Mortems</h3>
-              <p className="text-[11px] text-slate-500">Real outage teardowns</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">Real outage teardowns</p>
             </div>
           </div>
 
@@ -164,8 +164,8 @@ export function NewsletterPage() {
                 onClick={() => setPublicTab('subscribe')}
                 className={`pb-1 text-sm font-bold transition-all border-b-2 ${
                   publicTab === 'subscribe'
-                    ? 'border-brand-600 text-brand-600'
-                    : 'border-transparent text-slate-500 hover:text-slate-900'
+                    ? 'border-brand-600 text-brand-600 dark:border-brand-400 dark:text-brand-400'
+                    : 'border-transparent text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                 }`}
               >
                 Join Architecture Dispatch
@@ -175,8 +175,8 @@ export function NewsletterPage() {
                 onClick={() => setPublicTab('unsubscribe')}
                 className={`pb-1 text-sm font-bold transition-all border-b-2 ${
                   publicTab === 'unsubscribe'
-                    ? 'border-brand-600 text-brand-600'
-                    : 'border-transparent text-slate-500 hover:text-slate-900'
+                    ? 'border-brand-600 text-brand-600 dark:border-brand-400 dark:text-brand-400'
+                    : 'border-transparent text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                 }`}
               >
                 Manage Preferences / Unsubscribe

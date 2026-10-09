@@ -262,11 +262,11 @@ export function HomePage() {
       {/* Bottom CTA Section */}
       <section className="py-20">
         <div className="w-full px-4 sm:px-6 lg:px-8">
-          <div className="rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 p-8 sm:p-16 text-white text-center space-y-6 border border-slate-800 shadow-2xl">
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+          <div className="rounded-3xl border border-slate-200/90 bg-gradient-to-b from-slate-50 via-white to-slate-100/60 p-8 sm:p-16 text-slate-900 text-center space-y-6 shadow-xl shadow-slate-200/50 dark:border-slate-800 dark:bg-radial dark:from-slate-900 dark:via-slate-950 dark:to-slate-950 dark:text-white dark:shadow-2xl">
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
               Ready to Build Scalable, Resilient Software?
             </h2>
-            <p className="max-w-2xl mx-auto text-slate-300 text-sm sm:text-base leading-relaxed">
+            <p className="max-w-2xl mx-auto text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
               Schedule an architecture consultation with our principal engineering team to evaluate your roadmap and system bottlenecks.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 pt-2">

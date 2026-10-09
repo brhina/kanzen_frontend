@@ -218,7 +218,7 @@ export function JobPostingPage() {
                   onSuccess={() => refetch()}
                 />
               ) : (
-                <div className="text-xs text-slate-500">
+                <div className="text-xs text-slate-500 dark:text-slate-400">
                   Applications are currently unavailable for this role.
                 </div>
               )}
@@ -228,28 +228,28 @@ export function JobPostingPage() {
           {/* Job Overview Metadata */}
           <Card className="border-slate-200 dark:border-slate-800">
             <CardContent className="p-5 space-y-3 text-xs">
-              <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-2xs text-slate-500">
+              <h4 className="font-bold uppercase tracking-wider text-2xs text-slate-500 dark:text-slate-400">
                 Position Snapshot
               </h4>
               <div className="space-y-2.5 divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
                 <div className="flex justify-between pt-2">
-                  <span className="text-slate-500">Department</span>
+                  <span className="text-slate-500 dark:text-slate-400">Department</span>
                   <span className="font-semibold">{job.department}</span>
                 </div>
                 <div className="flex justify-between pt-2">
-                  <span className="text-slate-500">Employment Type</span>
+                  <span className="text-slate-500 dark:text-slate-400">Employment Type</span>
                   <span className="font-semibold capitalize">{job.type}</span>
                 </div>
                 <div className="flex justify-between pt-2">
-                  <span className="text-slate-500">Work Setup</span>
+                  <span className="text-slate-500 dark:text-slate-400">Work Setup</span>
                   <span className="font-semibold capitalize">{job.mode}</span>
                 </div>
                 <div className="flex justify-between pt-2">
-                  <span className="text-slate-500">Level</span>
+                  <span className="text-slate-500 dark:text-slate-400">Level</span>
                   <span className="font-semibold capitalize">{job.experienceLevel}</span>
                 </div>
                 <div className="flex justify-between pt-2">
-                  <span className="text-slate-500">Salary Band</span>
+                  <span className="text-slate-500 dark:text-slate-400">Salary Band</span>
                   <span className="font-semibold">{job.salaryRangeFormatted}</span>
                 </div>
               </div>

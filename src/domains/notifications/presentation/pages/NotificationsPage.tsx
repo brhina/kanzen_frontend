@@ -14,6 +14,7 @@ import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 import { Modal } from '@/shared/ui/modal';
 import { Pagination } from '@/shared/ui/pagination';
+import { HeaderBanner } from '@/layouts/components';
 import { cn } from '@/shared/utils/cn';
 
 export function NotificationsPage() {
@@ -72,21 +73,11 @@ export function NotificationsPage() {
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16">
-        <div className="relative z-10 max-w-3xl mx-auto text-center space-y-4">
-          <div className="inline-flex items-center rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
-            <span>Real-Time Broadcasts &amp; Operational Alerts</span>
-          </div>
-
-          <h1 className="text-3xl font-black tracking-tight sm:text-5xl text-white">
-            Notifications &amp; Alerts Center
-          </h1>
-
-          <p className="text-sm text-slate-300 sm:text-base leading-relaxed max-w-2xl mx-auto">
-            System announcements, administrative security notices, and platform updates dispatch console.
-          </p>
-        </div>
-      </div>
+      <HeaderBanner
+        badge="Real-Time Broadcasts & Operational Alerts"
+        title="Notifications & Alerts Center"
+        description="System announcements, administrative security notices, and platform updates dispatch console."
+      />
 
       {/* Filter Toolbar & Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">

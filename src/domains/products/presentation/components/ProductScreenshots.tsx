@@ -27,7 +27,7 @@ export function ProductScreenshots({ screenshots, productName }: ProductScreensh
           <div
             key={index}
             onClick={() => setActiveImage(src)}
-            className="group relative cursor-pointer overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-900 aspect-16/10 shadow-xs hover:shadow-md transition"
+            className="group relative cursor-pointer overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 aspect-16/10 shadow-xs hover:shadow-md transition"
           >
             <img
               src={src}

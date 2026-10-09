@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { Target, Users, Shield, Award } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
+import { HeaderBanner } from '@/layouts/components';
 import { useCompanySettings } from '@/domains/settings/application/use-cases/usePublicSettings';
 
 export function AboutPage() {
@@ -12,21 +13,11 @@ export function AboutPage() {
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-12">
       {/* Hero Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16">
-        <div className="relative z-10 max-w-3xl mx-auto text-center space-y-4">
-          <div className="inline-flex items-center rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
-            <span>Our Principles &amp; Mission</span>
-          </div>
-
-          <h1 className="text-3xl font-black tracking-tight sm:text-5xl text-white">
-            Engineering Perfection at Enterprise Scale
-          </h1>
-
-          <p className="text-sm text-slate-300 sm:text-base leading-relaxed max-w-2xl mx-auto">
-            "{companyName}" stands for completeness, perfection, and wholeness. {tagline}. We approach digital systems engineering not as ad-hoc software development, but as enduring enterprise craft.
-          </p>
-        </div>
-      </div>
+      <HeaderBanner
+        badge="Our Principles & Mission"
+        title="Engineering Perfection at Enterprise Scale"
+        description={`"${companyName}" stands for completeness, perfection, and wholeness. ${tagline}. We approach digital systems engineering not as ad-hoc software development, but as enduring enterprise craft.`}
+      />
 
       {/* Values Grid */}
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -88,9 +79,9 @@ export function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 p-8 sm:p-12 text-white text-center space-y-6 border border-slate-800 shadow-2xl">
-        <h2 className="text-3xl font-bold tracking-tight">Ready to elevate your engineering standard?</h2>
-        <p className="max-w-xl mx-auto text-slate-300 text-sm sm:text-base">
+      <section className="rounded-3xl border border-slate-200/90 bg-gradient-to-b from-slate-50 via-white to-slate-100/60 p-8 sm:p-12 text-slate-900 text-center space-y-6 shadow-xl shadow-slate-200/50 dark:border-slate-800 dark:bg-radial dark:from-slate-900 dark:via-slate-950 dark:to-slate-950 dark:text-white dark:shadow-2xl">
+        <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Ready to elevate your engineering standard?</h2>
+        <p className="max-w-xl mx-auto text-slate-600 dark:text-slate-300 text-sm sm:text-base">
           Schedule an architectural deep dive with our principal engineering team.
         </p>
         <Link to="/contact">

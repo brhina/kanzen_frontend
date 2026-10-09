@@ -13,6 +13,7 @@ import { ProductForm } from '../components/ProductForm';
 import { Drawer } from '@/shared/ui/drawer';
 import { Modal } from '@/shared/ui/modal';
 import { Button } from '@/shared/ui/button';
+import { HeaderBanner } from '@/layouts/components';
 import {
   SearchFilterBar,
   FilterGroup,
@@ -159,21 +160,11 @@ export function ProductsPage() {
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Hero Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16">
-        <div className="relative z-10 max-w-3xl mx-auto text-center space-y-4">
-          <div className="inline-flex items-center rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
-            <span>Proprietary Software &amp; Open Source</span>
-          </div>
-
-          <h1 className="text-3xl font-black tracking-tight sm:text-5xl text-white">
-            Developer Platforms &amp; Software
-          </h1>
-
-          <p className="text-sm text-slate-300 sm:text-base leading-relaxed max-w-2xl mx-auto">
-            Production tools, open-source libraries, and SaaS engines engineered internally by Kanzen to solve distributed data challenges and developer velocity bottlenecks.
-          </p>
-        </div>
-      </div>
+      <HeaderBanner
+        badge="Proprietary Software & Open Source"
+        title="Developer Platforms & Software"
+        description="Production tools, open-source libraries, and SaaS engines engineered internally by Kanzen to solve distributed data challenges and developer velocity bottlenecks."
+      />
 
       {/* Unified Search & Advanced Filters Bar */}
       <SearchFilterBar

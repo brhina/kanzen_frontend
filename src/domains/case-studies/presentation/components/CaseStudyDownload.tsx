@@ -47,16 +47,16 @@ export function CaseStudyDownload({
   }
 
   return (
-    <div className="rounded-2xl bg-gradient-to-r from-primary-900 to-indigo-950 text-white p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-xl">
+    <div className="rounded-2xl border border-slate-200/90 bg-gradient-to-r from-brand-50/50 via-white to-slate-50 text-slate-900 p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-xl shadow-slate-200/50 dark:border-slate-800 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-950 dark:text-white dark:shadow-2xl">
       <div className="space-y-2">
-        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary-300">
+        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-700 dark:text-brand-300">
           <FileText className="h-4 w-4" />
           <span>Complete Technical Whitepaper</span>
         </div>
-        <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+        <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
           Download Enterprise Architecture Report
         </h3>
-        <p className="text-sm text-slate-300 max-w-xl">
+        <p className="text-sm text-slate-600 dark:text-slate-300 max-w-xl">
           Get the complete breakdown including telemetry graphs, database schemas, and performance benchmarks for this deployment.
         </p>
       </div>

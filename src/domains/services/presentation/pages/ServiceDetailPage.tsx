@@ -232,7 +232,7 @@ export function ServiceDetailPage() {
             <CardContent className="space-y-6">
               {/* Pricing breakdown */}
               <div className="rounded-xl bg-slate-50 p-4 dark:bg-slate-800/60 space-y-2">
-                <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">
+                <span className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
                   Investment
                 </span>
                 <div className="text-2xl font-black text-slate-900 dark:text-white">
@@ -240,7 +240,7 @@ export function ServiceDetailPage() {
                     ? `$${service.startingPrice.toLocaleString()}`
                     : 'Custom Quote'}
                 </div>
-                <div className="text-xs text-slate-500">
+                <div className="text-xs text-slate-500 dark:text-slate-400">
                   Model: <span className="capitalize font-semibold text-slate-700 dark:text-slate-300">{service.pricingModel || 'Fixed or Milestone-based'}</span>
                 </div>
               </div>
@@ -270,7 +270,7 @@ export function ServiceDetailPage() {
                 </Link>
               </div>
 
-              <p className="text-[11px] text-center text-slate-400">
+              <p className="text-[11px] text-center text-slate-500 dark:text-slate-400">
                 100% IP ownership transferred upon completion &bull; Production SLA guarantees
               </p>
             </CardContent>

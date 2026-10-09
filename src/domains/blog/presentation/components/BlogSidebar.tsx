@@ -68,7 +68,7 @@ export function BlogSidebar({ featuredPosts = [], categories = [] }: BlogSidebar
       )}
 
       {/* Newsletter Mini CTA */}
-      <div className="rounded-2xl border border-brand-500/20 bg-gradient-to-br from-brand-900/10 via-slate-900/10 to-indigo-900/10 p-5 dark:border-brand-500/30 dark:bg-slate-900/70 space-y-3">
+      <div className="rounded-2xl border border-brand-200/80 bg-gradient-to-br from-brand-50/70 via-white to-indigo-50/40 p-5 dark:border-brand-500/30 dark:bg-slate-900/70 space-y-3">
         <div className="flex items-center gap-2 text-brand-600 dark:text-brand-400 font-bold text-xs uppercase tracking-wider">
           <Mail className="h-4 w-4" />
           <span>Engineering Dispatch</span>

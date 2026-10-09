@@ -15,9 +15,6 @@ import {
   Settings as SettingsIcon,
   LogOut,
   Sparkles,
-  Sun,
-  Moon,
-  Laptop,
   Image as ImageIcon,
   Calendar,
   Shield,
@@ -30,6 +27,7 @@ import { useUIStore } from '@/core/stores/ui.store';
 import { Drawer } from '@/shared/ui/drawer';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
+import { ThemeToggle } from './ThemeToggle';
 import { cn } from '@/shared/utils/cn';
 
 export interface NavigationProps {
@@ -82,7 +80,7 @@ const NAV_GROUPS: NavGroup[] = [
 export function Navigation({ className = '' }: NavigationProps) {
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuthStore();
-  const { sidebarOpen, setSidebarOpen, theme, setTheme, isEditMode, toggleEditMode } =
+  const { sidebarOpen, setSidebarOpen, isEditMode, toggleEditMode } =
     useUIStore();
 
   const handleClose = () => {
@@ -98,16 +96,6 @@ export function Navigation({ className = '' }: NavigationProps) {
   const handleNavigate = (path: string) => {
     handleClose();
     navigate(path);
-  };
-
-  const cycleTheme = () => {
-    if (theme === 'light') {
-      setTheme('dark');
-    } else if (theme === 'dark') {
-      setTheme('system');
-    } else {
-      setTheme('light');
-    }
   };
 
   return (
@@ -138,25 +126,15 @@ export function Navigation({ className = '' }: NavigationProps) {
         </div>
       }
       footer={
-        <div className="flex w-full items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
-          <div className="flex items-center gap-2">
-            <span>Theme:</span>
-            <button
-              type="button"
-              onClick={cycleTheme}
-              className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-medium capitalize"
-            >
-              {theme === 'light' ? (
-                <Sun className="h-3 w-3" />
-              ) : theme === 'dark' ? (
-                <Moon className="h-3 w-3" />
-              ) : (
-                <Laptop className="h-3 w-3" />
-              )}
-              {theme}
-            </button>
+        <div className="flex w-full flex-col gap-2.5 pt-2 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
+          <div className="flex items-center justify-between">
+            <span className="font-semibold text-slate-700 dark:text-slate-300">Theme</span>
+            <ThemeToggle variant="segmented" />
           </div>
-          <span className="text-[11px]">&copy; 2026 Kanzen</span>
+          <div className="flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500 pt-0.5">
+            <span>Enterprise Engineering</span>
+            <span>&copy; 2026 Kanzen</span>
+          </div>
         </div>
       }
     >

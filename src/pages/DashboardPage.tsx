@@ -12,6 +12,7 @@ import { HealthStatusBadge } from '@/domains/health/presentation/components/Heal
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/shared/ui/card';
+import { HeaderBanner } from '@/layouts/components';
 
 export function DashboardPage() {
   const { user, isAuthenticated } = useAuthStore();
@@ -37,24 +38,15 @@ export function DashboardPage() {
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16">
-        <div className="relative z-10 max-w-3xl mx-auto text-center space-y-4">
-          <div className="inline-flex items-center rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
-            <span>Mission Control &amp; Operations Hub</span>
-          </div>
-
-          <h1 className="text-3xl font-black tracking-tight sm:text-5xl text-white">
-            {isStaff ? 'Executive Operations Console' : 'Member Workspace'}
-          </h1>
-
-          <p className="text-sm text-slate-300 sm:text-base leading-relaxed max-w-2xl mx-auto">
-            Welcome back, {user?.fullName || user?.firstName || (isStaff ? 'Operator' : 'Member')}.{' '}
-            {isStaff
-              ? 'Unified operational overview, live telemetry metrics, and platform administration.'
-              : 'Track your application status, saved bookings, and project collaborations.'}
-          </p>
-        </div>
-      </div>
+      <HeaderBanner
+        badge="Mission Control & Operations Hub"
+        title={isStaff ? 'Executive Operations Console' : 'Member Workspace'}
+        description={`Welcome back, ${user?.fullName || user?.firstName || (isStaff ? 'Operator' : 'Member')}. ${
+          isStaff
+            ? 'Unified operational overview, live telemetry metrics, and platform administration.'
+            : 'Track your application status, saved bookings, and project collaborations.'
+        }`}
+      />
 
       {/* Action Toolbar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">

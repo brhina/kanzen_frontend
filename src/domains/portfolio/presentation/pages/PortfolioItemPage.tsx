@@ -292,7 +292,7 @@ export function PortfolioItemPage() {
             <div className="space-y-3 text-xs">
               {item.duration && (
                 <div className="flex items-center justify-between py-1 border-b border-slate-100 dark:border-slate-800">
-                  <span className="text-slate-500 flex items-center gap-1.5">
+                  <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                     <Clock className="h-3.5 w-3.5" />
                     <span>Duration</span>
                   </span>
@@ -304,7 +304,7 @@ export function PortfolioItemPage() {
 
               {item.teamSize && (
                 <div className="flex items-center justify-between py-1 border-b border-slate-100 dark:border-slate-800">
-                  <span className="text-slate-500 flex items-center gap-1.5">
+                  <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                     <Users className="h-3.5 w-3.5" />
                     <span>Engineers Assigned</span>
                   </span>
@@ -316,7 +316,7 @@ export function PortfolioItemPage() {
 
               {item.completedAt && (
                 <div className="flex items-center justify-between py-1 border-b border-slate-100 dark:border-slate-800">
-                  <span className="text-slate-500 flex items-center gap-1.5">
+                  <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                     <Calendar className="h-3.5 w-3.5" />
                     <span>Delivered</span>
                   </span>
@@ -328,7 +328,7 @@ export function PortfolioItemPage() {
 
               {item.services && item.services.length > 0 && (
                 <div className="pt-2">
-                  <span className="text-slate-500 block mb-2">Scope of Services:</span>
+                  <span className="text-slate-500 dark:text-slate-400 block mb-2">Scope of Services:</span>
                   <div className="space-y-1.5">
                     {item.services.map((srv, idx) => (
                       <div key={idx} className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">

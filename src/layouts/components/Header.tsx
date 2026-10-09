@@ -1,9 +1,6 @@
 import { Link, NavLink, useNavigate } from 'react-router';
 import {
   Menu,
-  Sun,
-  Moon,
-  Laptop,
   LogOut,
   Briefcase,
   Bell,
@@ -15,6 +12,7 @@ import { Dropdown, type DropdownItem } from '@/shared/ui/dropdown';
 import { NotificationBell } from '@/domains/notifications/presentation/components/NotificationBell';
 import { useCompanySettings } from '@/domains/settings/application/use-cases/usePublicSettings';
 import { PublicContactDropdown } from './PublicContactDropdown';
+import { ThemeToggle } from './ThemeToggle';
 import { cn } from '@/shared/utils/cn';
 
 export interface HeaderProps {
@@ -55,7 +53,7 @@ const ADMIN_BAR_PATHS = new Set([
 export function Header({ className = '' }: HeaderProps) {
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuthStore();
-  const { theme, setTheme, toggleSidebar } = useUIStore();
+  const { toggleSidebar } = useUIStore();
   const { company } = useCompanySettings();
 
   const isElevated = Boolean(
@@ -72,16 +70,6 @@ export function Header({ className = '' }: HeaderProps) {
   const handleLogout = () => {
     logout();
     navigate('/');
-  };
-
-  const cycleTheme = () => {
-    if (theme === 'light') {
-      setTheme('dark');
-    } else if (theme === 'dark') {
-      setTheme('system');
-    } else {
-      setTheme('light');
-    }
   };
 
   // User menu in header: For admins, all management routes are accessed directly in the AdminBar,
@@ -201,21 +189,7 @@ export function Header({ className = '' }: HeaderProps) {
         {/* Right Action Cluster */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0 ml-3">
           {/* Theme switcher */}
-          <button
-            type="button"
-            onClick={cycleTheme}
-            className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-800/80 dark:hover:text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500"
-            title={`Current theme: ${theme}. Click to switch.`}
-            aria-label={`Toggle color theme. Active mode: ${theme}`}
-          >
-            {theme === 'light' ? (
-              <Sun className="h-4 w-4" />
-            ) : theme === 'dark' ? (
-              <Moon className="h-4 w-4" />
-            ) : (
-              <Laptop className="h-4 w-4" />
-            )}
-          </button>
+          <ThemeToggle />
 
           {/* Notification bell for authenticated users */}
           {isAuthenticated && <NotificationBell />}

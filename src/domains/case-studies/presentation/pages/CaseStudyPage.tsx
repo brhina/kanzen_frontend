@@ -179,7 +179,7 @@ export function CaseStudyPage() {
         </div>
 
       {/* Hero Cover Image */}
-      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl bg-slate-900">
+      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl bg-slate-100 dark:bg-slate-900">
         <img
           src={study.coverImage}
           alt={study.title}
@@ -270,7 +270,7 @@ export function CaseStudyPage() {
                   {study.images.map((img, idx) => (
                     <div
                       key={idx}
-                      className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-950"
+                      className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950"
                     >
                       <img
                         src={img}

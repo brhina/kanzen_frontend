@@ -242,7 +242,7 @@ export function ProductDetailPage() {
                 )}
               </div>
 
-              <div className="rounded-lg bg-slate-50 p-3 text-[11px] text-slate-500 dark:bg-slate-800/50">
+              <div className="rounded-lg bg-slate-50 p-3 text-[11px] text-slate-500 dark:text-slate-400 dark:bg-slate-800/50">
                 Maintained &amp; engineered with enterprise security adherence by Kanzen Tech.
               </div>
             </CardContent>

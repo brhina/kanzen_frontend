@@ -20,6 +20,7 @@ import { TestimonialCard } from '../components/TestimonialCard';
 import { TestimonialCarousel } from '../components/TestimonialCarousel';
 import { TestimonialForm } from '../components/TestimonialForm';
 import { Button } from '@/shared/ui/button';
+import { HeaderBanner } from '@/layouts/components';
 import {
   SearchFilterBar,
   FilterGroup,
@@ -225,30 +226,20 @@ export function TestimonialsPage() {
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-10">
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16">
-        <div className="relative z-10 max-w-3xl mx-auto text-center space-y-4">
-          <div className="inline-flex items-center rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
-            <span>Client Endorsements &amp; Proof</span>
-          </div>
-
-          <h1 className="text-3xl font-black tracking-tight sm:text-5xl text-white">
-            Wall of Verified Client Love
-          </h1>
-
-          <p className="text-sm text-slate-300 sm:text-base leading-relaxed max-w-2xl mx-auto">
-            Honest assessments, technical feedback, and engineering endorsements from leadership teams across the globe.
-          </p>
-
-          <div className="flex items-center justify-center gap-3 pt-2">
-            <div className="inline-flex items-center gap-2 bg-slate-800/80 backdrop-blur-md px-4 py-2 rounded-2xl border border-slate-700">
-              <StarRating rating={5} size="sm" />
-              <span className="text-sm font-bold text-white">
-                {avgRating} / 5.0
-              </span>
-            </div>
+      <HeaderBanner
+        badge="Client Endorsements & Proof"
+        title="Wall of Verified Client Love"
+        description="Honest assessments, technical feedback, and engineering endorsements from leadership teams across the globe."
+      >
+        <div className="flex items-center justify-center gap-3 pt-2">
+          <div className="inline-flex items-center gap-2 bg-white/90 dark:bg-slate-800/80 backdrop-blur-md px-4 py-2 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs">
+            <StarRating rating={5} size="sm" />
+            <span className="text-sm font-bold text-slate-900 dark:text-white">
+              {avgRating} / 5.0
+            </span>
           </div>
         </div>
-      </div>
+      </HeaderBanner>
 
       {/* Featured Testimonials Carousel */}
       {featuredList.length > 0 && activeTab === 'wall' && (
