@@ -11,10 +11,10 @@ import {
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useUIStore } from '@/core/stores/ui.store';
 import { Avatar } from '@/shared/ui/avatar';
-import { Button } from '@/shared/ui/button';
 import { Dropdown, type DropdownItem } from '@/shared/ui/dropdown';
 import { NotificationBell } from '@/domains/notifications/presentation/components/NotificationBell';
 import { useCompanySettings } from '@/domains/settings/application/use-cases/usePublicSettings';
+import { PublicContactDropdown } from './PublicContactDropdown';
 import { cn } from '@/shared/utils/cn';
 
 export interface HeaderProps {
@@ -33,8 +33,6 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Products', href: '/products' },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Case Studies', href: '/case-studies' },
-  { label: 'Consultations', href: '/consultations' },
-  { label: 'Leads', href: '/leads' },
   { label: 'Process', href: '/process' },
   { label: 'Blog', href: '/blog' },
   { label: 'Careers', href: '/careers' },
@@ -224,26 +222,29 @@ export function Header({ className = '' }: HeaderProps) {
 
           {/* User authentication status */}
           {isAuthenticated && user ? (
-            <Dropdown
-              trigger={
-                <button
-                  type="button"
-                  className="flex items-center gap-2 rounded-full py-1 pl-1 pr-3 text-xs font-semibold text-slate-800 hover:bg-slate-100 ring-1 ring-slate-200 hover:ring-brand-500/60 dark:text-slate-100 dark:hover:bg-slate-800/80 dark:ring-slate-800 dark:hover:ring-brand-400/60 transition-all focus:outline-none cursor-pointer"
-                  aria-label="Open user profile menu"
-                >
-                  <Avatar
-                    name={user.fullName || user.email}
-                    src={user.avatar}
-                    size="sm"
-                  />
-                  <span className="font-medium text-slate-700 dark:text-slate-200 truncate max-w-[120px] sm:max-w-[160px]">
-                    {user.fullName || user.firstName || user.email}
-                  </span>
-                </button>
-              }
-              items={userDropdownItems}
-              align="right"
-            />
+            <div className="flex items-center gap-2">
+              {!isElevated && <PublicContactDropdown />}
+              <Dropdown
+                trigger={
+                  <button
+                    type="button"
+                    className="flex items-center gap-2 rounded-full py-1 pl-1 pr-3 text-xs font-semibold text-slate-800 hover:bg-slate-100 ring-1 ring-slate-200 hover:ring-brand-500/60 dark:text-slate-100 dark:hover:bg-slate-800/80 dark:ring-slate-800 dark:hover:ring-brand-400/60 transition-all focus:outline-none cursor-pointer"
+                    aria-label="Open user profile menu"
+                  >
+                    <Avatar
+                      name={user.fullName || user.email}
+                      src={user.avatar}
+                      size="sm"
+                    />
+                    <span className="font-medium text-slate-700 dark:text-slate-200 truncate max-w-[120px] sm:max-w-[160px]">
+                      {user.fullName || user.firstName || user.email}
+                    </span>
+                  </button>
+                }
+                items={userDropdownItems}
+                align="right"
+              />
+            </div>
           ) : (
             <div className="flex items-center gap-2">
               <Link
@@ -252,15 +253,7 @@ export function Header({ className = '' }: HeaderProps) {
               >
                 Sign In
               </Link>
-              <Link to="/contact">
-                <Button
-                  variant="primary"
-                  size="sm"
-                  className="hidden sm:inline-flex items-center shadow-sm shadow-brand-500/20"
-                >
-                  <span>Start Project</span>
-                </Button>
-              </Link>
+              <PublicContactDropdown />
             </div>
           )}
 

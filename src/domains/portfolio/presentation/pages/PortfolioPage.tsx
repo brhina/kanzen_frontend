@@ -168,8 +168,8 @@ export function PortfolioPage() {
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16 border border-slate-800">
-        <div className="relative z-10 max-w-3xl space-y-4">
+      <div className="relative overflow-hidden rounded-3xl bg-radial from-slate-900 via-slate-950 to-slate-950 px-6 py-12 text-white shadow-2xl sm:px-12 sm:py-16">
+        <div className="relative z-10 max-w-3xl mx-auto text-center space-y-4">
           <div className="inline-flex items-center rounded-full bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-300 ring-1 ring-brand-500/30">
             <span>Proven Engineering Outcomes</span>
           </div>
@@ -178,7 +178,7 @@ export function PortfolioPage() {
             Engineering Portfolio
           </h1>
 
-          <p className="text-sm text-slate-300 sm:text-base leading-relaxed">
+          <p className="text-sm text-slate-300 sm:text-base leading-relaxed max-w-2xl mx-auto">
             A showcase of mission-critical systems, distributed architectures, and high-performance digital platforms engineered by Kanzen Tech.
           </p>
         </div>
