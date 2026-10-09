@@ -272,4 +272,46 @@ describe('AdminBar', () => {
     expect(html).toContain('dark:text-brand-400');
     expect(html).toContain('font-semibold');
   });
+
+  it('supports both light and dark themes across full and minimized states', () => {
+    useAuthStore.setState({
+      isAuthenticated: true,
+      user: {
+        firstName: 'Jane',
+        lastName: 'Admin',
+        fullName: 'Jane Admin',
+        email: 'admin@kanzen.tech',
+        isAdmin: true,
+        permissions: [],
+        status: 'active',
+      },
+    });
+
+    const fullHtml = renderToStaticMarkup(
+      <MemoryRouter>
+        <AdminBar />
+      </MemoryRouter>
+    );
+
+    // Full state has light mode and dark mode classes
+    expect(fullHtml).toContain('bg-white/95');
+    expect(fullHtml).toContain('text-slate-900');
+    expect(fullHtml).toContain('dark:bg-slate-950/95');
+    expect(fullHtml).toContain('dark:text-slate-100');
+    expect(fullHtml).toContain('border-slate-200');
+    expect(fullHtml).toContain('dark:border-slate-800/80');
+
+    // Minimized state has light mode and dark mode classes
+    useUIStore.setState({ adminBarMinimized: true });
+    const minHtml = renderToStaticMarkup(
+      <MemoryRouter>
+        <AdminBar />
+      </MemoryRouter>
+    );
+
+    expect(minHtml).toContain('bg-white/95');
+    expect(minHtml).toContain('text-slate-800');
+    expect(minHtml).toContain('dark:bg-slate-900/95');
+    expect(minHtml).toContain('dark:text-slate-100');
+  });
 });
