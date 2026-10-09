@@ -44,25 +44,33 @@ describe('Header', () => {
     expect(html).toContain('Products');
     expect(html).toContain('Portfolio');
     expect(html).toContain('Case Studies');
-    expect(html).toContain('Consultations');
-    expect(html).toContain('Leads');
+    expect(html).toContain('Process');
     expect(html).toContain('Blog');
     expect(html).toContain('Careers');
     expect(html).toContain('About');
     expect(html).not.toContain('Book');
     expect(html).not.toContain('Hiring');
-    expect(html).not.toContain('>Contact<');
     expect(html).not.toContain('Testimonials');
   });
 
-  it('renders Sign In and Start Project CTA for public visitors', () => {
+  it('renders unified Contact dropdown button with consultation, leads, and contact options for public visitors', () => {
     const html = renderWithProviders(<Header />);
 
     expect(html).toContain('Sign In');
-    expect(html).toContain('Start Project');
+    // Unified contact dropdown trigger button
+    expect(html).toContain('>Contact<');
+    // Dropdown options
+    expect(html).toContain('/consultations');
+    expect(html).toContain('Consultation');
+    expect(html).toContain('45m Advisory');
+    expect(html).toContain('/leads');
+    expect(html).toContain('Leads');
+    expect(html).toContain('Project Scoping');
+    expect(html).toContain('/contact');
+    expect(html).toContain('Contact Us');
   });
 
-  it('renders user avatar when authenticated', () => {
+  it('renders user avatar and contact dropdown for authenticated non-elevated users', () => {
     useAuthStore.setState({
       isAuthenticated: true,
       user: {
@@ -81,18 +89,18 @@ describe('Header', () => {
     expect(html).toContain('AM'); // Initials on Avatar
     expect(html).toContain('Alex Morgan'); // User name displayed with profile image
     expect(html).not.toContain('Sign In');
+    // Contact dropdown is still accessible to non-elevated authenticated users
+    expect(html).toContain('>Contact<');
   });
 
-  it('renders navbar at increased full width with w-full and no icon in Start Project button', () => {
+  it('renders navbar at increased full width with w-full', () => {
     const html = renderWithProviders(<Header />);
 
     expect(html).toContain('w-full');
     expect(html).not.toContain('max-w-7xl');
-    // Start Project button exists without any icons inside
-    expect(html).toContain('Start Project');
   });
 
-  it('omits admin bar routes from header navigation tabs for elevated administrators', () => {
+  it('omits admin bar routes and public contact dropdown for elevated administrators', () => {
     useAuthStore.setState({
       isAuthenticated: true,
       user: {
@@ -115,8 +123,7 @@ describe('Header', () => {
     expect(html).toContain('Case Studies');
     expect(html).toContain('Blog');
 
-    // Admin bar routes must NOT be in header tabs for admins
-    expect(html).not.toContain('Consultations');
-    expect(html).not.toContain('Leads');
+    // For elevated admins, public intake button is omitted (accessed via AdminBar)
+    expect(html).not.toContain('>Contact<');
   });
 });
