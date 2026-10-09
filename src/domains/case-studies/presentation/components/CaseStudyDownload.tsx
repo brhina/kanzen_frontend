@@ -47,7 +47,7 @@ export function CaseStudyDownload({
   }
 
   return (
-    <div className="rounded-2xl border border-slate-200/90 bg-gradient-to-r from-brand-50/50 via-white to-slate-50 text-slate-900 p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-xl shadow-slate-200/50 dark:border-slate-800 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-950 dark:text-white dark:shadow-2xl">
+    <div className="rounded-2xl border border-slate-200/90 bg-gradient-to-r from-brand-50/50 via-white to-slate-50 text-slate-900 p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 dark:border-slate-800 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-950 dark:text-white">
       <div className="space-y-2">
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-700 dark:text-brand-300">
           <FileText className="h-4 w-4" />
@@ -67,7 +67,7 @@ export function CaseStudyDownload({
           size="lg"
           onClick={handleDownload}
           isLoading={isDownloading}
-          className="flex items-center gap-2 shadow-lg"
+          className="flex items-center gap-2"
         >
           {isDownloading ? (
             <span>Generating PDF...</span>

@@ -151,7 +151,7 @@ export function ServiceDetailPage() {
         {/* Left Specification (2 Columns) */}
         <div className="lg:col-span-2 space-y-8">
           {/* Overview */}
-          <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+          <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
             <h2 className="text-base font-bold text-slate-900 dark:text-white">
               Overview &amp; Architecture Approach
             </h2>
@@ -162,7 +162,7 @@ export function ServiceDetailPage() {
 
           {/* Scope & Capabilities (Features) */}
           {service.features && service.features.length > 0 && (
-            <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+            <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
               <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <CheckCircle2 className="h-5 w-5 text-emerald-500" />
                 <span>Scope of Work &amp; Capabilities</span>
@@ -183,7 +183,7 @@ export function ServiceDetailPage() {
 
           {/* Deliverables */}
           {service.deliverables && service.deliverables.length > 0 && (
-            <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+            <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
               <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <Package className="h-5 w-5 text-indigo-500" />
                 <span>Concrete Deliverables</span>
@@ -204,7 +204,7 @@ export function ServiceDetailPage() {
 
           {/* Tech Stack */}
           {service.technologies && service.technologies.length > 0 && (
-            <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+            <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
               <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <Code2 className="h-5 w-5 text-brand-500" />
                 <span>Recommended Stack &amp; Technologies</span>

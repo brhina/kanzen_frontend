@@ -79,7 +79,7 @@ export function ConsultationsPage() {
                   Back to Table
                 </Button>
               </div>
-              <div className="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+              <div className="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800">
                 <ConsultationBookingForm />
               </div>
             </div>
@@ -126,7 +126,7 @@ export function ConsultationsPage() {
           </div>
 
           {/* Form Card */}
-          <div className="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+          <div className="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800">
             <ConsultationBookingForm />
           </div>
         </div>

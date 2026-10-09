@@ -27,7 +27,7 @@ export function ProductScreenshots({ screenshots, productName }: ProductScreensh
           <div
             key={index}
             onClick={() => setActiveImage(src)}
-            className="group relative cursor-pointer overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 aspect-16/10 shadow-xs hover:shadow-md transition"
+            className="group relative cursor-pointer overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 aspect-16/10 transition-colors hover:border-slate-300 dark:hover:border-slate-700"
           >
             <img
               src={src}
@@ -36,7 +36,7 @@ export function ProductScreenshots({ screenshots, productName }: ProductScreensh
               loading="lazy"
             />
             <div className="absolute inset-0 flex items-center justify-center bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity">
-              <span className="flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-md">
+              <span className="flex items-center gap-1.5 rounded-full bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-900 dark:text-white">
                 <Eye className="h-3.5 w-3.5" />
                 <span>Zoom</span>
               </span>

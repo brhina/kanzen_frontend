@@ -56,7 +56,7 @@ export function Table<TData extends Record<string, any>>({
   return (
     <div
       className={cn(
-        'w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-900',
+        'w-full overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900',
         className,
       )}
     >

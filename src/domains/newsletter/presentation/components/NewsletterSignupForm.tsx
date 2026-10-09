@@ -103,7 +103,8 @@ export function NewsletterSignupForm({
             type="email"
             {...register('email', { required: 'Email is required' })}
             error={errors.email?.message}
-            className="flex-1"
+            wrapperClassName="flex-1"
+            className="dark:bg-slate-800/80 dark:border-slate-700"
           />
           <Button
             type="submit"
@@ -142,7 +143,7 @@ export function NewsletterSignupForm({
                 onClick={() => toggleTag(t.id)}
                 className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all border ${
                   isSelected
-                    ? 'bg-brand-600 text-white border-brand-600 shadow-sm'
+                    ? 'bg-brand-600 text-white border-brand-600'
                     : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-brand-500'
                 }`}
               >

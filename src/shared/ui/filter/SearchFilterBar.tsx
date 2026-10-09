@@ -105,14 +105,14 @@ export const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
   return (
     <div className={cn('space-y-3 w-full', className)}>
       {/* Primary Toolbar Container */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-2.5 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-xs backdrop-blur-xs transition-colors">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-2.5 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 backdrop-blur-xs transition-colors">
         {/* Left Side: Search & Filter Toggle */}
         <div className="flex flex-1 flex-wrap sm:flex-nowrap items-center gap-2.5 min-w-0">
           {showSearch && showFilterToggle ? (
             /* Seamlessly Joined End-to-End Input Group */
             <div
               className={cn(
-                'inline-flex items-center w-full sm:w-auto rounded-xl border border-slate-200/90 dark:border-slate-700/90 bg-slate-50 dark:bg-slate-800/70 shadow-2xs transition-all duration-150',
+                'inline-flex items-center w-full sm:w-auto rounded-xl border border-slate-200/90 dark:border-slate-700/90 bg-slate-50 dark:bg-slate-800/70 transition-all duration-150',
                 'focus-within:bg-white dark:focus-within:bg-slate-900 focus-within:border-brand-500 dark:focus-within:border-brand-400 focus-within:ring-2 focus-within:ring-brand-500/20',
                 searchClassName,
               )}
@@ -162,7 +162,7 @@ export const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
 
                 {/* Active Filter Count Badge */}
                 {activeFilterCount > 0 && (
-                  <span className="inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full text-[11px] font-bold bg-brand-600 text-white shadow-xs animate-scaleIn">
+                  <span className="inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full text-[11px] font-bold bg-brand-600 text-white animate-scaleIn">
                     {activeFilterCount}
                   </span>
                 )}
@@ -216,14 +216,14 @@ export const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
                   className={cn(
                     'inline-flex items-center gap-2 h-10 px-3.5 rounded-xl text-xs font-semibold select-none transition-all duration-150 cursor-pointer shrink-0 border',
                     isExpanded
-                      ? 'bg-brand-50 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300 border-brand-300 dark:border-brand-700 shadow-xs ring-2 ring-brand-500/15'
+                      ? 'bg-brand-50 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300 border-brand-300 dark:border-brand-700 ring-2 ring-brand-500/15'
                       : 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border-slate-200/80 dark:border-slate-700',
                   )}
                 >
                   <SlidersHorizontal className="h-4 w-4 text-brand-600 dark:text-brand-400 shrink-0" />
                   <span>{filterButtonLabel}</span>
                   {activeFilterCount > 0 && (
-                    <span className="inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full text-[11px] font-bold bg-brand-600 text-white shadow-xs animate-scaleIn">
+                    <span className="inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full text-[11px] font-bold bg-brand-600 text-white animate-scaleIn">
                       {activeFilterCount}
                     </span>
                   )}
@@ -290,7 +290,7 @@ export const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
           >
             <div
               className={cn(
-                'rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/70 p-4 sm:p-5 shadow-xs backdrop-blur-xs space-y-4',
+                'rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/70 p-4 sm:p-5 backdrop-blur-xs space-y-4',
                 panelClassName,
               )}
             >

@@ -24,7 +24,7 @@ export function ServiceHealthCard({
   return (
     <Card
       className={cn(
-        'rounded-2xl border bg-white p-5 shadow-xs transition-all dark:bg-slate-900',
+        'rounded-2xl border bg-white p-5 transition-all dark:bg-slate-900',
         isHealthy
           ? 'border-slate-200 dark:border-slate-800'
           : 'border-rose-300 dark:border-rose-900/60 ring-1 ring-rose-500/20',

@@ -72,7 +72,7 @@ export function HealthPage() {
       />
 
       {/* Controls Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
         <div className="flex items-center gap-2">
           <HealthStatusBadge status={currentStatus} />
           {isEditMode && (
@@ -129,7 +129,7 @@ export function HealthPage() {
 
       {/* Main Status Hero Card */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <Card className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+        <Card className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               System State
@@ -144,7 +144,7 @@ export function HealthPage() {
           </div>
         </Card>
 
-        <Card className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+        <Card className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Service Uptime
@@ -161,7 +161,7 @@ export function HealthPage() {
           </div>
         </Card>
 
-        <Card className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+        <Card className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Subsystems Managed
@@ -231,7 +231,7 @@ export function HealthPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Memory Card */}
-            <Card className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-4">
+            <Card className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 space-y-4">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-sm font-bold text-slate-900 dark:text-white">
                   Node.js Memory Footprint
@@ -266,7 +266,7 @@ export function HealthPage() {
             </Card>
 
             {/* Process Info Card */}
-            <Card className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-4">
+            <Card className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 space-y-4">
               <CardTitle className="text-sm font-bold text-slate-900 dark:text-white">
                 Process Environment
               </CardTitle>

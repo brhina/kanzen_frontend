@@ -193,7 +193,6 @@ export function CaseStudiesPage() {
               variant="primary"
               size="sm"
               onClick={handleOpenCreate}
-              className="shadow-sm"
             >
               Create Case Study
             </Button>

@@ -71,4 +71,26 @@ describe('HomePage', () => {
 
     expect(html).toContain('Inline Editing Mode Active');
   });
+
+  it('renders delivery process framework section with steps for public visitors', () => {
+    const html = renderHome();
+
+    expect(html).toContain('The Kanzen Delivery Framework');
+    expect(html).toContain('Engineering Discipline');
+    expect(html).toContain('Architectural Discovery');
+    expect(html).toContain('Domain Modeling &amp; Blueprinting');
+    expect(html).toContain('Precision Implementation');
+    expect(html).toContain('Observability &amp; Global Deployment');
+    expect(html).toContain('Explore Full Delivery Process');
+    expect(html).toContain('/process');
+  });
+
+  it('renders newsletter subscription section for public visitors', () => {
+    const html = renderHome();
+
+    expect(html).toContain('The Kanzen Architecture Dispatch');
+    expect(html).toContain('Stay Ahead of Architectural Shifts');
+    expect(html).toContain('Subscribe');
+    expect(html).toContain('engineering-lead@company.com');
+  });
 });

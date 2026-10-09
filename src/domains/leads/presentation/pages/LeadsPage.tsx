@@ -50,7 +50,7 @@ export function LeadsPage() {
                   onClick={() => setActiveView('crm')}
                   className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                     activeView === 'crm'
-                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm'
+                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
@@ -62,7 +62,7 @@ export function LeadsPage() {
                   onClick={() => setActiveView('form')}
                   className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                     activeView === 'form'
-                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm'
+                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
@@ -95,7 +95,7 @@ export function LeadsPage() {
                   Back to Table
                 </Button>
               </div>
-              <div className="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+              <div className="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800">
                 <LeadForm />
               </div>
             </div>
@@ -142,7 +142,7 @@ export function LeadsPage() {
           </div>
 
           {/* Form Card */}
-          <div className="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+          <div className="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800">
             <LeadForm />
           </div>
         </div>

@@ -80,7 +80,7 @@ export function NotificationsPage() {
       />
 
       {/* Filter Toolbar & Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
         <div className="flex flex-wrap items-center gap-1.5">
           <button
             type="button"
@@ -91,7 +91,7 @@ export function NotificationsPage() {
             className={cn(
               'rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer',
               activeFilter === 'all'
-                ? 'bg-slate-900 text-white shadow-xs dark:bg-white dark:text-slate-900'
+                ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
                 : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white',
             )}
           >
@@ -106,7 +106,7 @@ export function NotificationsPage() {
             className={cn(
               'rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer',
               activeFilter === 'unread'
-                ? 'bg-slate-900 text-white shadow-xs dark:bg-white dark:text-slate-900'
+                ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
                 : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white',
             )}
           >
@@ -121,7 +121,7 @@ export function NotificationsPage() {
             className={cn(
               'rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer',
               activeFilter === 'system'
-                ? 'bg-slate-900 text-white shadow-xs dark:bg-white dark:text-slate-900'
+                ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
                 : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white',
             )}
           >

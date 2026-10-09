@@ -41,7 +41,7 @@ export function TestimonialCarousel({
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       className={cn(
-        'relative overflow-hidden rounded-3xl border border-slate-200/90 bg-gradient-to-br from-brand-50/40 via-white to-slate-50 text-slate-900 p-8 sm:p-12 shadow-xl shadow-slate-200/50 dark:border-slate-800/80 dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-white dark:shadow-2xl w-full transition-all',
+        'relative overflow-hidden rounded-3xl border border-slate-200/90 bg-gradient-to-br from-brand-50/40 via-white to-slate-50 text-slate-900 p-8 sm:p-12 dark:border-slate-800/80 dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-white w-full transition-all',
         className,
       )}
     >
@@ -103,7 +103,7 @@ export function TestimonialCarousel({
             <button
               type="button"
               onClick={handlePrev}
-              className="p-2 rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 shadow-xs dark:border-slate-700/80 dark:bg-white/10 dark:text-white dark:hover:bg-white/20 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand-400"
+              className="p-2 rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 dark:border-slate-700/80 dark:bg-white/10 dark:text-white dark:hover:bg-white/20 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand-400"
               title="Previous Testimonial"
               aria-label="Previous Testimonial"
             >
@@ -112,7 +112,7 @@ export function TestimonialCarousel({
             <button
               type="button"
               onClick={handleNext}
-              className="p-2 rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 shadow-xs dark:border-slate-700/80 dark:bg-white/10 dark:text-white dark:hover:bg-white/20 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand-400"
+              className="p-2 rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 dark:border-slate-700/80 dark:bg-white/10 dark:text-white dark:hover:bg-white/20 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand-400"
               title="Next Testimonial"
               aria-label="Next Testimonial"
             >

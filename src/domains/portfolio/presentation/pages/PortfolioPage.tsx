@@ -195,7 +195,6 @@ export function PortfolioPage() {
               variant="primary"
               size="sm"
               onClick={handleOpenCreate}
-              className="shadow-sm"
             >
               Add Project
             </Button>

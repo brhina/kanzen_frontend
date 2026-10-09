@@ -59,7 +59,7 @@ export function AuditPage() {
       />
 
       {/* Filter Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
         <div className="flex flex-wrap items-center gap-4 text-xs">
           <div className="flex items-center gap-2">
             <Badge variant="brand" size="sm">

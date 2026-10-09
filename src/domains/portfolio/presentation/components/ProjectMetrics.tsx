@@ -66,7 +66,7 @@ export function ProjectMetrics({
       {metrics.map((metric, idx) => (
         <div
           key={idx}
-          className="relative overflow-hidden rounded-xl bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800/80 p-5 border border-slate-200 dark:border-slate-800 shadow-sm"
+          className="relative overflow-hidden rounded-xl bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800/80 p-5 border border-slate-200 dark:border-slate-800"
         >
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">

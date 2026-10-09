@@ -38,7 +38,7 @@ export function TestimonialCard({
 
   return (
     <div
-      className={`group relative flex flex-col justify-between overflow-hidden rounded-2xl p-6 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+      className={`group relative flex flex-col justify-between overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 ${
         isPending
           ? 'bg-amber-50/30 border-2 border-amber-400/60 dark:bg-amber-950/20 dark:border-amber-500/50'
           : isRejected

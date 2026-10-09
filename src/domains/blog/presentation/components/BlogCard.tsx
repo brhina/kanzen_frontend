@@ -36,7 +36,7 @@ export function BlogCard({ post, onEdit, showAdminActions = true }: BlogCardProp
       : 'Unpublished';
 
   return (
-    <article className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700">
+    <article className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700">
       {/* Top Media / Thumbnail */}
       <div className="relative aspect-16/9 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
         {post.coverImage ? (
@@ -81,7 +81,7 @@ export function BlogCard({ post, onEdit, showAdminActions = true }: BlogCardProp
                   e.stopPropagation();
                   onEdit(post);
                 }}
-                className="shadow-md bg-white/90 dark:bg-slate-900/90 backdrop-blur-xs flex items-center gap-1"
+                className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xs flex items-center gap-1"
                 title="Edit Post"
               >
                 <Edit3 className="h-3 w-3" />

@@ -62,7 +62,7 @@ export function BlogEditor({
   return (
     <div
       className={cn(
-        'rounded-xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-900 overflow-hidden flex flex-col',
+        'rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 overflow-hidden flex flex-col',
         className,
       )}
     >

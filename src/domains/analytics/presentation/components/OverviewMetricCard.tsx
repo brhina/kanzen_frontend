@@ -24,7 +24,7 @@ export function OverviewMetricCard({
   return (
     <Card
       className={cn(
-        'relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900',
+        'relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900',
         className,
       )}
     >

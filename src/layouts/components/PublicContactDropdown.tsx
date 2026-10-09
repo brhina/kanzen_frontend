@@ -109,10 +109,10 @@ export function PublicContactDropdown({
         aria-haspopup="true"
         aria-label="Contact and consultation options"
         className={cn(
-          'hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white transition-all duration-200 shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900',
+          'hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900',
           isAnyActive
-            ? 'bg-brand-700 ring-2 ring-brand-400/80 shadow-brand-500/30'
-            : 'bg-brand-600 hover:bg-brand-500 shadow-brand-500/20 hover:shadow-brand-500/40',
+            ? 'bg-brand-700 ring-2 ring-brand-400/80'
+            : 'bg-brand-600 hover:bg-brand-500',
         )}
       >
         <span>Contact</span>

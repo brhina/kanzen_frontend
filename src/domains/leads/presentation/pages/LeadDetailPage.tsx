@@ -133,7 +133,7 @@ export function LeadDetailPage() {
       </div>
 
       {/* Hero Overview */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="flex items-center gap-3">
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
@@ -169,7 +169,7 @@ export function LeadDetailPage() {
         {/* Left 2 Cols: Technical Scope & Discussion Notes */}
         <div className="lg:col-span-2 space-y-6">
           {/* Brief Card */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
             <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-brand-600" />
               Project Brief & Requirements
@@ -194,7 +194,7 @@ export function LeadDetailPage() {
           </div>
 
           {/* Internal Notes Editor */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-base font-bold text-slate-900 dark:text-white">
                 Sales Engineer Notes & Next Actions
@@ -220,7 +220,7 @@ export function LeadDetailPage() {
         {/* Right 1 Col: Contact Info & Pipeline Controls */}
         <div className="space-y-6">
           {/* Contact Card */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
             <h3 className="text-base font-bold text-slate-900 dark:text-white">
               Contact Dossier
             </h3>
@@ -278,7 +278,7 @@ export function LeadDetailPage() {
           </div>
 
           {/* Pipeline Stage Buttons */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-3">
             <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">
               Change Pipeline Stage
             </h3>
@@ -299,7 +299,7 @@ export function LeadDetailPage() {
           </div>
 
           {/* Score Slider */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-3">
             <div className="flex items-center justify-between">
               <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
                 <Sliders className="w-3.5 h-3.5 text-brand-600" /> Score ({qualifyScore}/100)

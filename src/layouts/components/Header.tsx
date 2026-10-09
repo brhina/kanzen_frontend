@@ -42,6 +42,7 @@ const ADMIN_BAR_PATHS = new Set([
   '/leads',
   '/consultations',
   '/applications',
+  '/newsletter',
   '/media',
   '/analytics',
   '/audit',
@@ -133,7 +134,7 @@ export function Header({ className = '' }: HeaderProps) {
             className="group flex items-center gap-2.5 transition-transform hover:scale-[1.01] shrink-0"
             aria-label="Kanzen Tech Homepage"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-600 via-brand-500 to-amber-500 text-white shadow-md shadow-brand-500/20 group-hover:shadow-brand-500/40 transition-shadow">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-600 via-brand-500 to-amber-500 text-white">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"

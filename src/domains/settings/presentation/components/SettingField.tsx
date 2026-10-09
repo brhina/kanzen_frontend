@@ -90,7 +90,7 @@ export function SettingField({
       className={cn(
         'group relative rounded-2xl border transition-all duration-200 p-4 sm:p-5',
         isDirty
-          ? 'border-brand-500/50 bg-brand-50/20 dark:border-brand-500/40 dark:bg-brand-950/10 shadow-xs'
+          ? 'border-brand-500/50 bg-brand-50/20 dark:border-brand-500/40 dark:bg-brand-950/10'
           : 'border-slate-200/80 bg-white hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700',
         className,
       )}

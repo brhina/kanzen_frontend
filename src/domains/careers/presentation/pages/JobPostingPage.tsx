@@ -177,7 +177,7 @@ export function JobPostingPage() {
         {/* Left Column (8 cols): Description, Requirements, Perks */}
         <div className="lg:col-span-7 space-y-8">
           {/* Overview */}
-          <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+          <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-800 dark:bg-slate-900">
             <h2 className="text-lg font-bold text-slate-900 dark:text-white">
               Role Overview &amp; Mission
             </h2>
@@ -198,7 +198,7 @@ export function JobPostingPage() {
         {/* Right Column (5 cols): Quick Apply Box & Role Metadata */}
         <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-20">
           {/* Quick Apply Card */}
-          <Card className="border-slate-200 dark:border-slate-800 rounded-2xl shadow-xs">
+          <Card className="border-slate-200 dark:border-slate-800 rounded-2xl">
             <CardHeader className="pb-3">
               <div className="flex items-center gap-2 text-brand-600 dark:text-brand-400 font-bold text-xs uppercase tracking-wider">
                 <FileText className="h-4 w-4" />

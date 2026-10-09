@@ -232,7 +232,7 @@ export function TestimonialsPage() {
         description="Honest assessments, technical feedback, and engineering endorsements from leadership teams across the globe."
       >
         <div className="flex items-center justify-center gap-3 pt-2">
-          <div className="inline-flex items-center gap-2 bg-white/90 dark:bg-slate-800/80 backdrop-blur-md px-4 py-2 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs">
+          <div className="inline-flex items-center gap-2 bg-white/90 dark:bg-slate-800/80 backdrop-blur-md px-4 py-2 rounded-2xl border border-slate-200 dark:border-slate-700">
             <StarRating rating={5} size="sm" />
             <span className="text-sm font-bold text-slate-900 dark:text-white">
               {avgRating} / 5.0
@@ -313,7 +313,7 @@ export function TestimonialsPage() {
             variant="primary"
             size="sm"
             onClick={() => setIsSubmitModalOpen(true)}
-            className="flex items-center gap-2 shadow-xs"
+            className="flex items-center gap-2"
           >
             <MessageSquare className="h-4 w-4" />
             <span>Submit Review</span>

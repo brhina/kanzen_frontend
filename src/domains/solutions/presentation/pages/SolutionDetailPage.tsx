@@ -151,7 +151,7 @@ export function SolutionDetailPage() {
         <div className="lg:col-span-2 space-y-8">
           {/* Architectural Diagram if present */}
           {solution.coverImage && (
-            <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
               <img
                 src={solution.coverImage}
                 alt={solution.name}
@@ -161,7 +161,7 @@ export function SolutionDetailPage() {
           )}
 
           {/* Overview */}
-          <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+          <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
             <h2 className="text-base font-bold text-slate-900 dark:text-white">
               Architectural Breakdown &amp; System Design
             </h2>
@@ -172,7 +172,7 @@ export function SolutionDetailPage() {
 
           {/* Key Components & Features */}
           {solution.features && solution.features.length > 0 && (
-            <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+            <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
               <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <CheckCircle2 className="h-5 w-5 text-emerald-500" />
                 <span>Components &amp; Architectural Guarantees</span>

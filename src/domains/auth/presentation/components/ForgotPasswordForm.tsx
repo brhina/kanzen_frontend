@@ -113,7 +113,7 @@ export function ForgotPasswordForm({
           variant="primary"
           size="lg"
           isLoading={isPending}
-          className="w-full justify-center shadow-md shadow-brand-500/20"
+          className="w-full justify-center"
         >
           <span>Send Recovery Instructions</span>
         </Button>

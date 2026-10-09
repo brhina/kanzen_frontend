@@ -112,7 +112,7 @@ export function MediaPage() {
       />
 
       {/* Media Toolbar & Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
         {/* Folder Navigation */}
         <div className="flex flex-wrap items-center gap-1.5">
           {FOLDER_TABS.map((tab) => {
@@ -128,7 +128,7 @@ export function MediaPage() {
                 className={cn(
                   'rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer',
                   isActive
-                    ? 'bg-slate-900 text-white shadow-xs dark:bg-white dark:text-slate-900'
+                    ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
                     : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white',
                 )}
               >
@@ -151,7 +151,7 @@ export function MediaPage() {
               className={cn(
                 'flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors cursor-pointer',
                 viewMode === 'grid'
-                  ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                  ? 'bg-white text-slate-900 dark:bg-slate-700 dark:text-white'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white',
               )}
               title="Grid layout"
@@ -165,7 +165,7 @@ export function MediaPage() {
               className={cn(
                 'flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors cursor-pointer',
                 viewMode === 'table'
-                  ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                  ? 'bg-white text-slate-900 dark:bg-slate-700 dark:text-white'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white',
               )}
               title="Table layout"
@@ -257,7 +257,7 @@ export function MediaPage() {
 
       {/* Management Table Mode */}
       {viewMode === 'table' && (
-        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-900">
+        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead className="border-b border-slate-100 bg-slate-50/75 text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:border-slate-800 dark:bg-slate-850 dark:text-slate-400">

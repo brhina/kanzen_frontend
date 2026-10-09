@@ -129,7 +129,7 @@ export function BlogPostContent({ post, onLike, isLiking = false }: BlogPostCont
 
       {/* Hero Cover Image */}
       {post.coverImage && (
-        <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
           <img
             src={post.coverImage}
             alt={post.title}

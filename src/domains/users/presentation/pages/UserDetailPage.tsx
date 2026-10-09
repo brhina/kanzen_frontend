@@ -57,7 +57,7 @@ export function UserDetailPage() {
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* User Header Profile Card */}
-      <Card className="border-slate-200 dark:border-slate-800 shadow-md">
+      <Card className="border-slate-200 dark:border-slate-800">
         <CardContent className="p-6 sm:p-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div className="flex items-center gap-5">
@@ -94,7 +94,7 @@ export function UserDetailPage() {
                 variant="primary"
                 size="md"
                 onClick={() => setIsDrawerOpen(true)}
-                className="flex items-center gap-2 shadow-sm"
+                className="flex items-center gap-2"
               >
                 <Edit2 className="h-4 w-4" />
                 <span>Configure Account</span>

@@ -22,7 +22,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    'bg-brand-500 text-white hover:bg-brand-600 active:bg-brand-700 focus-visible:ring-brand-500 shadow-sm border border-transparent dark:bg-brand-500 dark:hover:bg-brand-600',
+    'bg-brand-500 text-white hover:bg-brand-600 active:bg-brand-700 focus-visible:ring-brand-500 border border-transparent dark:bg-brand-500 dark:hover:bg-brand-600',
   secondary:
     'bg-slate-100 text-slate-800 hover:bg-slate-200 active:bg-slate-300 focus-visible:ring-slate-400 border border-transparent dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700',
   outline:
@@ -30,9 +30,9 @@ const variantClasses: Record<ButtonVariant, string> = {
   ghost:
     'bg-transparent text-slate-700 hover:bg-slate-100 active:bg-slate-200 focus-visible:ring-slate-400 border border-transparent dark:text-slate-300 dark:hover:bg-slate-800 dark:active:bg-slate-700',
   danger:
-    'bg-red-600 text-white hover:bg-red-700 active:bg-red-800 focus-visible:ring-red-500 shadow-sm border border-transparent dark:bg-red-600 dark:hover:bg-red-700',
+    'bg-red-600 text-white hover:bg-red-700 active:bg-red-800 focus-visible:ring-red-500 border border-transparent dark:bg-red-600 dark:hover:bg-red-700',
   success:
-    'bg-emerald-600 text-white hover:bg-emerald-700 active:bg-emerald-800 focus-visible:ring-emerald-500 shadow-sm border border-transparent dark:bg-emerald-600 dark:hover:bg-emerald-700',
+    'bg-emerald-600 text-white hover:bg-emerald-700 active:bg-emerald-800 focus-visible:ring-emerald-500 border border-transparent dark:bg-emerald-600 dark:hover:bg-emerald-700',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {

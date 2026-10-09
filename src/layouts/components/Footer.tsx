@@ -29,7 +29,7 @@ export function Footer({ className = '' }: FooterProps) {
               className="flex items-center gap-2.5"
               aria-label={`${company?.name || 'Kanzen Tech'} Homepage`}
             >
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-white shadow-sm">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-white">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"

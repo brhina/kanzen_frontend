@@ -130,7 +130,7 @@ export function SettingsForm({
       {/* Floating Sticky Action Bar */}
       <div
         className={cn(
-          'sticky bottom-4 z-20 flex flex-wrap items-center justify-between gap-3 rounded-2xl border p-4 shadow-xl backdrop-blur-md transition-all duration-300',
+          'sticky bottom-4 z-20 flex flex-wrap items-center justify-between gap-3 rounded-2xl border p-4 backdrop-blur-md transition-all duration-300',
           isDirty
             ? 'border-brand-500/40 bg-white/95 dark:border-brand-500/30 dark:bg-slate-900/95 ring-2 ring-brand-500/20'
             : 'border-slate-200/90 bg-white/90 dark:border-slate-800 dark:bg-slate-900/90',
@@ -178,7 +178,7 @@ export function SettingsForm({
             size="sm"
             disabled={!isDirty || isSaving}
             isLoading={isSaving}
-            className="text-xs shadow-sm"
+            className="text-xs"
           >
             {isSaving ? 'Saving Configurations...' : 'Save Changes'}
           </Button>

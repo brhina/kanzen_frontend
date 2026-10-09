@@ -151,7 +151,7 @@ export function MediaUploadZone({
     queue.length > 0 ? Math.round((completedCount / queue.length) * 100) : 0;
 
   return (
-    <div className={cn('space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900', className)}>
+    <div className={cn('space-y-4 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900', className)}>
       {/* Top Configuration Bar */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4 dark:border-slate-800">
         <div className="flex items-center gap-3">

@@ -25,7 +25,7 @@ export const FilterPill: React.FC<FilterPillProps> = ({
       className={cn(
         'inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all duration-150 cursor-pointer select-none',
         selected
-          ? 'bg-brand-600 text-white shadow-xs dark:bg-brand-500'
+          ? 'bg-brand-600 text-white dark:bg-brand-500'
           : 'bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 border border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 dark:hover:bg-slate-700/80 dark:hover:text-white',
         className,
       )}

@@ -68,7 +68,7 @@ export function NewsletterPage() {
                   onClick={() => setActiveAdminView('table')}
                   className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                     activeAdminView === 'table'
-                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm'
+                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
@@ -80,7 +80,7 @@ export function NewsletterPage() {
                   onClick={() => setActiveAdminView('public')}
                   className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                     activeAdminView === 'public'
-                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm'
+                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
@@ -101,7 +101,7 @@ export function NewsletterPage() {
                   Back to Table
                 </Button>
               </div>
-              <div className="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+              <div className="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800">
                 <NewsletterSignupForm />
               </div>
             </div>
@@ -156,7 +156,7 @@ export function NewsletterPage() {
           </div>
 
           {/* Preference Center Container */}
-          <div className="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none space-y-6">
+          <div className="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-6">
             {/* Tab switch between Subscribe vs Unsubscribe */}
             <div className="flex border-b border-slate-200 dark:border-slate-800 pb-3 gap-6">
               <button

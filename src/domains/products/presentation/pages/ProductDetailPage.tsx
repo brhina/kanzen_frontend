@@ -146,7 +146,7 @@ export function ProductDetailPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           {/* Overview */}
-          <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+          <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
             <h2 className="text-base font-bold text-slate-900 dark:text-white">
               Product Overview &amp; Capabilities
             </h2>
@@ -156,7 +156,7 @@ export function ProductDetailPage() {
           </section>
 
           {/* Interactive Screenshots */}
-          <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+          <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
             <h2 className="text-base font-bold text-slate-900 dark:text-white">
               Interface &amp; Visual Tour
             </h2>
@@ -168,7 +168,7 @@ export function ProductDetailPage() {
 
           {/* Tech Stack */}
           {product.techStack && product.techStack.length > 0 && (
-            <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+            <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
               <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <Code2 className="h-5 w-5 text-brand-500" />
                 <span>Architecture &amp; Core Dependencies</span>

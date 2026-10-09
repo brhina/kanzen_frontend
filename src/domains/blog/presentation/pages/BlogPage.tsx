@@ -244,7 +244,6 @@ export function BlogPage() {
                 variant="primary"
                 size="sm"
                 onClick={handleOpenCreate}
-                className="shadow-sm"
               >
                 New Article
               </Button>

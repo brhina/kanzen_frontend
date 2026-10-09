@@ -199,7 +199,7 @@ export function UsersPage() {
                   variant="primary"
                   size="sm"
                   onClick={handleOpenCreate}
-                  className="shadow-sm shadow-brand-500/20 shrink-0"
+                  className="shrink-0"
                 >
                   Add Team Member
                 </Button>

@@ -81,6 +81,7 @@ describe('AdminBar', () => {
     expect(html).toContain('/dashboard');
     expect(html).toContain('/leads');
     expect(html).toContain('/applications');
+    expect(html).toContain('/newsletter');
     expect(html).toContain('/settings');
   });
 
@@ -185,6 +186,7 @@ describe('AdminBar', () => {
     expect(html).toContain('Dashboard');
     expect(html).toContain('Leads');
     expect(html).toContain('Recruiting');
+    expect(html).toContain('Newsletter');
     expect(html).toContain('Media');
     expect(html).toContain('Users');
     expect(html).toContain('Settings');

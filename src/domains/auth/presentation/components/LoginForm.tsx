@@ -139,7 +139,7 @@ export function LoginForm({ onForgotPasswordClick, className = '' }: LoginFormPr
         variant="primary"
         size="lg"
         isLoading={isPending}
-        className="w-full justify-center shadow-md shadow-brand-500/20"
+        className="w-full justify-center"
       >
         <span>Sign In to Console</span>
       </Button>

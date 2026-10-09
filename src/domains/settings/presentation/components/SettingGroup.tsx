@@ -31,7 +31,7 @@ export function SettingGroup({
   className = '',
 }: SettingGroupProps) {
   return (
-    <Card className={cn('border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-900', className)}>
+    <Card className={cn('border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900', className)}>
       <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
         <div>
           <div className="flex items-center gap-2.5">

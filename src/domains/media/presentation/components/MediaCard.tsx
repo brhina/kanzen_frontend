@@ -48,10 +48,10 @@ export function MediaCard({
     <div
       onClick={() => onSelect?.(media)}
       className={cn(
-        'group relative flex flex-col overflow-hidden rounded-xl border bg-white shadow-xs transition-all duration-200 dark:bg-slate-900',
+        'group relative flex flex-col overflow-hidden rounded-xl border bg-white transition-all duration-200 dark:bg-slate-900',
         isSelected
           ? 'border-brand-500 ring-2 ring-brand-500/30 dark:border-brand-400'
-          : 'border-slate-200 hover:border-slate-300 hover:shadow-md dark:border-slate-800 dark:hover:border-slate-700',
+          : 'border-slate-200 hover:border-slate-300 dark:border-slate-800 dark:hover:border-slate-700',
         onSelect ? 'cursor-pointer' : '',
         className,
       )}

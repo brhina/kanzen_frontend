@@ -39,7 +39,7 @@ export function PortfolioCategoryFilter({
             onClick={() => onSelectCategory(tab.id)}
             className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
               isActive
-                ? 'bg-primary-600 text-white shadow-sm ring-2 ring-primary-500/20'
+                ? 'bg-primary-600 text-white ring-2 ring-primary-500/20'
                 : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
             }`}
           >

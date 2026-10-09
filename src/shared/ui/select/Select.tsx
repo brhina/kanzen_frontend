@@ -51,7 +51,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           </label>
         )}
 
-        <div className="relative rounded-lg shadow-xs">
+        <div className="relative rounded-lg">
           <select
             ref={ref}
             id={id}

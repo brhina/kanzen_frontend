@@ -236,7 +236,7 @@ export function LeadForm({ onSuccess, className = '' }: LeadFormProps) {
                     onClick={() => field.onChange(opt.value)}
                     className={`py-2 px-3 text-xs font-semibold rounded-lg border text-center transition-all ${
                       field.value === opt.value
-                        ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-sm'
+                        ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white'
                         : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-400'
                     }`}
                   >

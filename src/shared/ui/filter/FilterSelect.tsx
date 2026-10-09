@@ -61,7 +61,7 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({
           }}
           disabled={disabled}
           className={cn(
-            'w-full appearance-none rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 py-2 text-xs font-medium text-slate-900 dark:text-slate-100 shadow-2xs transition-colors duration-150',
+            'w-full appearance-none rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 py-2 text-xs font-medium text-slate-900 dark:text-slate-100 transition-colors duration-150',
             'focus:border-brand-500 focus:outline-hidden focus:ring-2 focus:ring-brand-500/20 dark:focus:border-brand-400',
             'disabled:cursor-not-allowed disabled:opacity-60',
             icon ? 'pl-9 pr-9' : 'pl-3.5 pr-9',

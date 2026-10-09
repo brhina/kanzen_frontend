@@ -33,7 +33,7 @@ export function AuthLayout({ className = '' }: AuthLayoutProps) {
           className="group flex items-center gap-2.5 transition-transform hover:scale-[1.01]"
           aria-label="Kanzen Tech Homepage"
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-white shadow-sm">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-white">
             <svg
               viewBox="0 0 24 24"
               fill="none"

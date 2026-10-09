@@ -1,4 +1,5 @@
 import { NewsletterSignupForm } from './NewsletterSignupForm';
+import { cn } from '@/shared/utils/cn';
 
 interface NewsletterBannerProps {
   title?: string;
@@ -15,7 +16,10 @@ export function NewsletterBanner({
 }: NewsletterBannerProps) {
   return (
     <div
-      className={`relative overflow-hidden rounded-3xl border border-slate-200/90 bg-gradient-to-b from-slate-50 via-white to-slate-100/60 p-8 sm:p-12 text-slate-900 shadow-xl shadow-slate-200/50 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:shadow-2xl ${className}`}
+      className={cn(
+        'relative overflow-hidden rounded-3xl border border-slate-200/90 bg-gradient-to-b from-slate-50 via-white to-slate-100/60 p-8 sm:p-12 text-slate-900 dark:border-slate-800 dark:bg-radial dark:from-slate-900 dark:via-slate-950 dark:to-slate-950 dark:text-white',
+        className,
+      )}
     >
       <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 rounded-full bg-brand-500/10 dark:bg-brand-600/15 blur-3xl pointer-events-none" />
       <div className="relative z-10 max-w-3xl space-y-4">

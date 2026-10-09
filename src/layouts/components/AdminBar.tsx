@@ -13,6 +13,7 @@ const NAV_LINKS = [
   { to: '/leads', label: 'Leads', title: 'CRM Leads Pipeline' },
   { to: '/consultations', label: 'Consultations', title: 'Appointments & Consultations' },
   { to: '/applications', label: 'Recruiting', title: 'Recruitment & Applications' },
+  { to: '/newsletter', label: 'Newsletter', title: 'Audience & Newsletter Engine' },
   { to: '/media', label: 'Media', title: 'Open Media Library' },
   { to: '/analytics', label: 'Analytics', title: 'Performance Analytics' },
   { to: '/audit', label: 'Audit', title: 'Security Audit Log' },

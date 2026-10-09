@@ -7,7 +7,7 @@ export function LoginPage() {
   const [view, setView] = useState<'login' | 'forgot-password'>('login');
 
   return (
-    <Card className="w-full shadow-2xl border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md">
+    <Card className="w-full border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md">
       <CardHeader className="text-center pb-4">
         <CardTitle className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">
           {view === 'login' ? 'Console Authentication' : 'Account Recovery'}

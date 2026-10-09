@@ -218,7 +218,7 @@ export function ApplicationsPage() {
         <div className="space-y-6">
           {/* Pipeline Stage Summary Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+            <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
               <span className="text-2xs font-semibold text-slate-500 uppercase tracking-wider">
                 Total Pipeline
               </span>
@@ -227,7 +227,7 @@ export function ApplicationsPage() {
               </p>
             </div>
 
-            <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+            <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
               <span className="text-2xs font-semibold text-slate-500 uppercase tracking-wider">
                 New Applied
               </span>
@@ -236,7 +236,7 @@ export function ApplicationsPage() {
               </p>
             </div>
 
-            <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+            <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
               <span className="text-2xs font-semibold text-slate-500 uppercase tracking-wider">
                 Screening
               </span>
@@ -245,7 +245,7 @@ export function ApplicationsPage() {
               </p>
             </div>
 
-            <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+            <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
               <span className="text-2xs font-semibold text-slate-500 uppercase tracking-wider">
                 Interviewing
               </span>
@@ -254,7 +254,7 @@ export function ApplicationsPage() {
               </p>
             </div>
 
-            <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+            <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
               <span className="text-2xs font-semibold text-slate-500 uppercase tracking-wider">
                 Offers Out
               </span>
@@ -263,7 +263,7 @@ export function ApplicationsPage() {
               </p>
             </div>
 
-            <div className="p-4 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/40 dark:bg-emerald-950/20 shadow-xs">
+            <div className="p-4 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/40 dark:bg-emerald-950/20">
               <span className="text-2xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">
                 Hired
               </span>
@@ -357,7 +357,7 @@ export function ApplicationsPage() {
         /* ================= CANDIDATE PUBLIC PORTAL ================= */
         <div className="space-y-12">
           {/* Status Lookup Card */}
-          <Card className="border-indigo-200 dark:border-indigo-900 shadow-md max-w-2xl mx-auto">
+          <Card className="border-indigo-200 dark:border-indigo-900 max-w-2xl mx-auto">
             <CardHeader className="text-center pb-2">
               <div className="h-12 w-12 rounded-full bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center mx-auto text-indigo-600 dark:text-indigo-400 mb-2">
                 <FileCheck2 className="h-6 w-6" />

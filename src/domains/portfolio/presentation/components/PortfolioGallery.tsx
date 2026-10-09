@@ -30,7 +30,7 @@ export function PortfolioGallery({
   return (
     <div className="space-y-4">
       {/* Featured Main Image Preview */}
-      <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 shadow-lg group">
+      <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 group">
         <img
           src={allMedia[selectedIndex] || coverImage}
           alt={`${title} Preview ${selectedIndex + 1}`}
@@ -45,7 +45,7 @@ export function PortfolioGallery({
             <button
               type="button"
               onClick={() => setIsVideoModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-semibold shadow-md transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-semibold transition-colors cursor-pointer"
             >
               <Play className="h-3.5 w-3.5 fill-current" />
               <span>Watch Video</span>
@@ -55,7 +55,7 @@ export function PortfolioGallery({
           <button
             type="button"
             onClick={() => setIsLightboxOpen(true)}
-            className="p-2 rounded-lg bg-slate-900/80 hover:bg-slate-900 text-white text-xs backdrop-blur shadow-md transition-colors cursor-pointer"
+            className="p-2 rounded-lg bg-slate-900/80 hover:bg-slate-900 text-white text-xs backdrop-blur transition-colors cursor-pointer"
             title="Expand Fullscreen"
           >
             <Maximize2 className="h-4 w-4" />

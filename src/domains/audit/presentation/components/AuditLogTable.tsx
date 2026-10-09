@@ -40,7 +40,7 @@ export function AuditLogTable({
   }
 
   return (
-    <div className={cn('overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-900', className)}>
+    <div className={cn('overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900', className)}>
       <div className="overflow-x-auto">
         <table className="w-full text-left text-xs">
           <thead className="border-b border-slate-100 bg-slate-50/75 text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:border-slate-800 dark:bg-slate-850 dark:text-slate-400">

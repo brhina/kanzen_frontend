@@ -102,7 +102,7 @@ export function Tabs({
             className={cn(
               'flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-medium transition-all select-none cursor-pointer',
               isSelected
-                ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-900 dark:text-slate-100'
+                ? 'bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100 font-semibold'
                 : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200',
               tab.disabled && 'pointer-events-none opacity-40',
             )}

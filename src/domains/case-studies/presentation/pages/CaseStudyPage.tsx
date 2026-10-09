@@ -179,7 +179,7 @@ export function CaseStudyPage() {
         </div>
 
       {/* Hero Cover Image */}
-      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl bg-slate-100 dark:bg-slate-900">
+      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
         <img
           src={study.coverImage}
           alt={study.title}
@@ -202,7 +202,7 @@ export function CaseStudyPage() {
         {/* Left Narrative (2 Columns) */}
         <div className="lg:col-span-2 space-y-8">
           {/* Executive Summary */}
-          <section className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 space-y-3 shadow-xs">
+          <section className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 space-y-3">
             <h2 className="text-lg font-bold text-slate-900 dark:text-white">
               Executive Summary
             </h2>
@@ -304,7 +304,7 @@ export function CaseStudyPage() {
         <div className="space-y-6 lg:sticky lg:top-20">
           {/* Tech Stack Chips */}
           {study.technologies && study.technologies.length > 0 && (
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 p-6 bg-white dark:bg-slate-900 shadow-xs space-y-3">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 p-6 bg-white dark:bg-slate-900 space-y-3">
               <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                 <Layers className="h-4 w-4 text-brand-500" />
                 <span>Technologies &amp; Distributed Stack</span>
