@@ -40,6 +40,37 @@ export interface ContactSettings {
   headquarters: string;
 }
 
+export interface ProofPointItem {
+  label: string;
+  icon?: string;
+}
+
+export interface CompanyValueItem {
+  title: string;
+  description: string;
+  icon?: string;
+}
+
+export interface ProcessStepItem {
+  step: string;
+  title: string;
+  description: string;
+  icon?: string;
+}
+
+function parseJsonSetting<T>(value: unknown, fallback: T): T {
+  if (!value) return fallback;
+  if (typeof value === 'object' && value !== null) return value as T;
+  if (typeof value === 'string') {
+    try {
+      return JSON.parse(value) as T;
+    } catch {
+      return fallback;
+    }
+  }
+  return fallback;
+}
+
 const DEFAULT_COMPANY_SETTINGS: CompanySettings = {
   name: 'Kanzen Tech',
   tagline: 'Engineering Digital Mastery',
@@ -200,6 +231,68 @@ export function usePublicSettings() {
     return links;
   }, [rawSettings]);
 
+  const proofPoints = useMemo<ProofPointItem[]>(() => {
+    return parseJsonSetting<ProofPointItem[]>(rawSettings['company.proof_points'], [
+      { label: '99.99% Guaranteed SLA', icon: 'CheckCircle2' },
+      { label: 'Zero-Trust Security', icon: 'ShieldCheck' },
+      { label: 'Sub-50ms Global Latency', icon: 'Zap' },
+    ]);
+  }, [rawSettings]);
+
+  const values = useMemo<CompanyValueItem[]>(() => {
+    return parseJsonSetting<CompanyValueItem[]>(rawSettings['company.values'], [
+      {
+        title: 'Architectural Rigor',
+        description: 'We favor deterministic, type-safe, and formally verified patterns over fragile abstractions.',
+        icon: 'Target',
+      },
+      {
+        title: 'Zero-Trust Security',
+        description: 'Every API, data store, and network boundary is audited with end-to-end RBAC and encryption.',
+        icon: 'Shield',
+      },
+      {
+        title: 'Senior Engineers Only',
+        description: 'Our engagements are executed exclusively by principal architects and staff software engineers.',
+        icon: 'Users',
+      },
+      {
+        title: 'Measured Outcomes',
+        description: 'We tie engineering deliverables directly to measurable business KPIs, SLA benchmarks, and ROI.',
+        icon: 'Award',
+      },
+    ]);
+  }, [rawSettings]);
+
+  const processSteps = useMemo<ProcessStepItem[]>(() => {
+    return parseJsonSetting<ProcessStepItem[]>(rawSettings['company.process_steps'], [
+      {
+        step: '01',
+        title: 'Architectural Discovery',
+        description: 'We audit domain constraints, concurrency bottlenecks, threat models, and latency requirements.',
+        icon: 'Search',
+      },
+      {
+        step: '02',
+        title: 'Domain Modeling & Blueprinting',
+        description: 'We draft formal DDD models, bounded contexts, API contracts, and infrastructure topologies.',
+        icon: 'Compass',
+      },
+      {
+        step: '03',
+        title: 'Precision Implementation',
+        description: 'Iterative delivery in production-grade TypeScript/NestJS, clean architecture, and exhaustive test coverage.',
+        icon: 'Code2',
+      },
+      {
+        step: '04',
+        title: 'Observability & Global Deployment',
+        description: 'Zero-downtime rolling deploys, distributed tracing, telemetry alerts, and automated autoscaling.',
+        icon: 'Rocket',
+      },
+    ]);
+  }, [rawSettings]);
+
   const getSetting = <T = unknown>(key: string, defaultValue?: T): T => {
     if (rawSettings[key] !== undefined && rawSettings[key] !== null) {
       return rawSettings[key] as T;
@@ -214,6 +307,9 @@ export function usePublicSettings() {
     seo,
     contact,
     socialLinks,
+    proofPoints,
+    values,
+    processSteps,
     getSetting,
   };
 }
@@ -237,4 +333,19 @@ export function useContactSettings(): ContactSettings & { contact: ContactSettin
     ...contact,
     contact,
   };
+}
+
+export function useProofPoints(): ProofPointItem[] {
+  const { proofPoints } = usePublicSettings();
+  return proofPoints;
+}
+
+export function useCompanyValues(): CompanyValueItem[] {
+  const { values } = usePublicSettings();
+  return values;
+}
+
+export function useProcessSteps(): ProcessStepItem[] {
+  const { processSteps } = usePublicSettings();
+  return processSteps;
 }

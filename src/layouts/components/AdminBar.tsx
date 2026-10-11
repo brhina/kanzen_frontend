@@ -151,10 +151,9 @@ export function AdminBar({ className = '' }: AdminBarProps) {
 
         {/* Section 3: Quick Action Links (Stacked vertically, never side-by-side) */}
         <div className="flex flex-col items-stretch gap-1.5 w-full">
-          <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+          <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
             Quick Access
           </div>
-
           <div className="flex flex-col items-stretch w-full gap-1">
             {NAV_LINKS.map((link) => (
               <NavLink

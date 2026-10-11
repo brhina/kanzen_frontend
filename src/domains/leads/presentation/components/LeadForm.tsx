@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useSubmitLead } from '../../application/use-cases/useSubmitLead';
+import { useServices } from '@/domains/services/application/use-cases/useServices';
 import type { CreateLeadDto } from '../../infrastructure/leads.dto';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { Textarea } from '@/shared/ui/textarea';
 import { CheckCircle2, Send, Sparkles } from 'lucide-react';
 
-const SERVICE_OPTIONS = [
+const FALLBACK_SERVICE_OPTIONS = [
   { id: 'custom-software', label: 'Custom Software' },
   { id: 'saas-engineering', label: 'SaaS Platforms' },
   { id: 'cloud-devops', label: 'Cloud & DevOps' },
@@ -38,6 +39,15 @@ interface LeadFormProps {
 export function LeadForm({ onSuccess, className = '' }: LeadFormProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const submitLead = useSubmitLead();
+  const { data: servicesData } = useServices();
+
+  const serviceOptions =
+    (servicesData?.services || []).length > 0
+      ? (servicesData?.services || []).map((s) => ({
+          id: s.slug || s.id,
+          label: s.name,
+        }))
+      : FALLBACK_SERVICE_OPTIONS;
 
   const {
     register,
@@ -118,7 +128,7 @@ export function LeadForm({ onSuccess, className = '' }: LeadFormProps) {
           name="serviceInterest"
           render={({ field }) => (
             <div className="flex flex-wrap gap-2 pt-1">
-              {SERVICE_OPTIONS.map((srv) => {
+              {serviceOptions.map((srv) => {
                 const isSelected = (field.value || []).includes(srv.id);
                 return (
                   <button

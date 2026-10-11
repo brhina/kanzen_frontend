@@ -1,76 +1,62 @@
 import { Link } from 'react-router';
-import {
-  ShieldCheck,
-  Zap,
-  Cpu,
-  Layers,
-  CheckCircle2,
-  Edit3,
-} from 'lucide-react';
+import { Edit3 } from 'lucide-react';
 import { useUIStore } from '@/core/stores/ui.store';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
-import { DELIVERY_PROCESS_STEPS } from '@/shared/constants/process.constants';
 import { NewsletterBanner } from '@/domains/newsletter';
 import { useTestimonials } from '@/domains/testimonials/application/use-cases/useTestimonials';
 import { useFeaturedTestimonials } from '@/domains/testimonials/application/use-cases/useFeaturedTestimonials';
+import { useFeaturedSolutions } from '@/domains/solutions/application/use-cases/useFeaturedSolutions';
+import {
+  useProofPoints,
+  useProcessSteps,
+} from '@/domains/settings/application/use-cases/usePublicSettings';
 import { TestimonialCarousel } from '@/domains/testimonials/presentation/components/TestimonialCarousel';
-import { TestimonialStatus } from '@/domains/testimonials/domain/enums/testimonial-status.enum';
-import type { TestimonialEntity } from '@/domains/testimonials/domain/entities/testimonial.entity';
-
-const DEFAULT_TESTIMONIALS: TestimonialEntity[] = [
-  {
-    id: 'home-t1',
-    author: 'Sarah Connor',
-    role: 'VP of Platform Engineering',
-    company: 'Apex Distributed Systems',
-    content:
-      'Kanzen Tech redesigned our core high-concurrency event bus, bringing p99 latency down from 420ms to 28ms while cutting cluster infrastructure costs by 45%.',
-    rating: 5,
-    isFeatured: true,
-    isVerified: true,
-    status: TestimonialStatus.APPROVED,
-    order: 1,
-  },
-  {
-    id: 'home-t2',
-    author: 'Marcus Vance',
-    role: 'Chief Technology Officer',
-    company: 'FinScale Global',
-    content:
-      'The engineering rigor and architectural precision they brought to our banking microservices migration was exceptional. Flawless zero-downtime cutover.',
-    rating: 5,
-    isFeatured: true,
-    isVerified: true,
-    status: TestimonialStatus.APPROVED,
-    order: 2,
-  },
-  {
-    id: 'home-t3',
-    author: 'Elena Rostova',
-    role: 'Head of AI Infrastructure',
-    company: 'Cognitive Matrix',
-    content:
-      'Their autonomous agent pipelines and GPU orchestration infrastructure unlocked real-time inference for our enterprise models with uncompromising reliability.',
-    rating: 5,
-    isFeatured: true,
-    isVerified: true,
-    status: TestimonialStatus.APPROVED,
-    order: 3,
-  },
-];
+import { DynamicIcon } from '@/shared/ui/icon/DynamicIcon';
 
 export function HomePage() {
   const { isEditMode } = useUIStore();
-  const { data: featuredTestimonials } = useFeaturedTestimonials();
-  const { data: publicTestimonials } = useTestimonials();
+  const { data: featuredTestimonials, isLoading: isLoadingFeatured } = useFeaturedTestimonials();
+  const { data: publicTestimonials, isLoading: isLoadingPublic } = useTestimonials();
+  const { data: featuredSolutions } = useFeaturedSolutions();
+  const proofPoints = useProofPoints();
+  const processSteps = useProcessSteps();
 
   const testimonials =
     featuredTestimonials && featuredTestimonials.length > 0
       ? featuredTestimonials
       : publicTestimonials && publicTestimonials.length > 0
         ? publicTestimonials
-        : DEFAULT_TESTIMONIALS;
+        : [];
+
+  const competencies =
+    featuredSolutions && featuredSolutions.length > 0
+      ? featuredSolutions.slice(0, 3).map((sol) => ({
+          title: sol.name,
+          description: sol.tagline || sol.description,
+          icon: sol.icon || 'Layers',
+          href: `/solutions/${sol.slug || sol.id}`,
+        }))
+      : [
+          {
+            title: 'Enterprise Solutions',
+            description: 'Custom domain platforms, scalable ERP/CRM backends, and multi-tenant architectures.',
+            icon: 'Layers',
+            href: '/solutions',
+          },
+          {
+            title: 'AI & Deep Learning',
+            description: 'Autonomous agents, LLM orchestration pipelines, vector embeddings, and on-prem inference.',
+            icon: 'Cpu',
+            href: '/services',
+          },
+          {
+            title: 'High-Performance Cloud',
+            description: 'Kubernetes cluster automation, microservice optimization, and sub-second edge computing.',
+            icon: 'Zap',
+            href: '/portfolio',
+          },
+        ];
 
   return (
     <div className="flex flex-col w-full">
@@ -122,18 +108,12 @@ export function HomePage() {
 
             {/* Technical Proof Points */}
             <div className="pt-8 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-medium text-slate-500 dark:text-slate-400">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-brand-500" />
-                <span>99.99% Guaranteed SLA</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-brand-500" />
-                <span>Zero-Trust Security</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Zap className="h-4 w-4 text-brand-500" />
-                <span>Sub-50ms Global Latency</span>
-              </div>
+              {proofPoints.map((item, idx) => (
+                <div key={idx} className="flex items-center gap-2">
+                  <DynamicIcon name={item.icon || 'CheckCircle2'} className="h-4 w-4 text-brand-500" />
+                  <span>{item.label}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -153,74 +133,33 @@ export function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700">
-              <div className="space-y-4">
-                <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center">
-                  <Layers className="h-5 w-5" />
+            {competencies.map((comp, idx) => (
+              <div
+                key={idx}
+                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700"
+              >
+                <div className="space-y-4">
+                  <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center">
+                    <DynamicIcon name={comp.icon} className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                      {comp.title}
+                    </h3>
+                    <p className="mt-1 text-xs text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3">
+                      {comp.description}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
-                    Enterprise Solutions
-                  </h3>
-                  <p className="mt-1 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Custom domain platforms, scalable ERP/CRM backends, and multi-tenant architectures.
-                  </p>
-                </div>
-              </div>
-              <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end">
-                <Link to="/solutions">
-                  <Button variant="outline" size="xs" className="group-hover:border-brand-500 group-hover:text-brand-600 dark:group-hover:text-brand-400">
-                    <span>Learn more</span>
-                  </Button>
-                </Link>
-              </div>
-            </div>
-
-            <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700">
-              <div className="space-y-4">
-                <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center">
-                  <Cpu className="h-5 w-5" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
-                    AI & Deep Learning
-                  </h3>
-                  <p className="mt-1 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Autonomous agents, LLM orchestration pipelines, vector embeddings, and on-prem inference.
-                  </p>
+                <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end">
+                  <Link to={comp.href}>
+                    <Button variant="outline" size="xs" className="group-hover:border-brand-500 group-hover:text-brand-600 dark:group-hover:text-brand-400">
+                      <span>Learn more</span>
+                    </Button>
+                  </Link>
                 </div>
               </div>
-              <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end">
-                <Link to="/services">
-                  <Button variant="outline" size="xs" className="group-hover:border-brand-500 group-hover:text-brand-600 dark:group-hover:text-brand-400">
-                    <span>Learn more</span>
-                  </Button>
-                </Link>
-              </div>
-            </div>
-
-            <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700">
-              <div className="space-y-4">
-                <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center">
-                  <Zap className="h-5 w-5" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
-                    High-Performance Cloud
-                  </h3>
-                  <p className="mt-1 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Kubernetes cluster automation, microservice optimization, and sub-second edge computing.
-                  </p>
-                </div>
-              </div>
-              <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end">
-                <Link to="/portfolio">
-                  <Button variant="outline" size="xs" className="group-hover:border-brand-500 group-hover:text-brand-600 dark:group-hover:text-brand-400">
-                    <span>Learn more</span>
-                  </Button>
-                </Link>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -241,32 +180,29 @@ export function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {DELIVERY_PROCESS_STEPS.map((s) => {
-              const IconComp = s.icon;
-              return (
-                <div
-                  key={s.step}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700"
-                >
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 font-mono font-bold text-sm">
-                        {s.step}
-                      </span>
-                      <IconComp className="h-5 w-5 text-brand-500" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
-                        {s.title}
-                      </h3>
-                      <p className="mt-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                        {s.description}
-                      </p>
-                    </div>
+            {processSteps.map((s) => (
+              <div
+                key={s.step}
+                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700"
+              >
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 font-mono font-bold text-sm">
+                      {s.step}
+                    </span>
+                    <DynamicIcon name={s.icon || 'Rocket'} className="h-5 w-5 text-brand-500" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                      {s.title}
+                    </h3>
+                    <p className="mt-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                      {s.description}
+                    </p>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
 
           <div className="flex justify-center pt-2">
@@ -300,9 +236,21 @@ export function HomePage() {
             </p>
           </div>
 
-          {/* Full-width Single Testimonial Carousel (one by one, auto-advancing / horizontal scroll) */}
+          {/* Full-width Single Testimonial Carousel or Empty State */}
           <div className="w-full">
-            <TestimonialCarousel testimonials={testimonials} autoPlayInterval={5000} />
+            {testimonials.length > 0 ? (
+              <TestimonialCarousel testimonials={testimonials} autoPlayInterval={5000} />
+            ) : isLoadingFeatured || isLoadingPublic ? (
+              <div className="w-full h-48 rounded-3xl border border-slate-200/80 bg-slate-100/60 dark:border-slate-800 dark:bg-slate-900/60 animate-pulse flex items-center justify-center">
+                <span className="text-xs text-slate-400">Loading client endorsements...</span>
+              </div>
+            ) : (
+              <div className="text-center py-12 px-4 rounded-3xl border border-slate-200/80 bg-white dark:border-slate-800 dark:bg-slate-900/60">
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  Client endorsements and partner reviews will appear here once published.
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="flex justify-center pt-2">

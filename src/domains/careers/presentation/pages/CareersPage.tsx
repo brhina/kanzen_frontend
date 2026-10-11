@@ -89,18 +89,16 @@ export function CareersPage() {
 
   const jobs = data?.items || [];
 
-  // Distinct departments
+  // Distinct departments computed dynamically from backend job postings
   const availableDepts = useMemo(() => {
-    const defaultDepts = [
-      'All',
-      'Engineering',
-      'Design',
-      'DevOps',
-      'Product',
-      'Operations',
-    ];
-    return defaultDepts;
-  }, []);
+    const set = new Set<string>();
+    jobs.forEach((j) => {
+      if (j.department?.trim()) {
+        set.add(j.department.trim());
+      }
+    });
+    return ['All', ...Array.from(set)];
+  }, [jobs]);
 
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-10">

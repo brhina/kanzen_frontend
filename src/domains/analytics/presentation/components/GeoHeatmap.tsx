@@ -7,16 +7,8 @@ export interface GeoHeatmapProps {
   className?: string;
 }
 
-const DEFAULT_COUNTRIES = [
-  { country: 'United States', count: 1420 },
-  { country: 'Germany', count: 680 },
-  { country: 'United Kingdom', count: 540 },
-  { country: 'Japan', count: 320 },
-  { country: 'Canada', count: 210 },
-];
-
 export function GeoHeatmap({ countries, className = '' }: GeoHeatmapProps) {
-  const data = countries && countries.length > 0 ? countries : DEFAULT_COUNTRIES;
+  const data = countries || [];
   const maxCount = Math.max(...data.map((c) => c.count), 1);
 
   return (
@@ -31,24 +23,32 @@ export function GeoHeatmap({ countries, className = '' }: GeoHeatmapProps) {
       </CardHeader>
 
       <CardContent>
-        <div className="space-y-3.5">
-          {data.slice(0, 6).map((item, idx) => {
-            const pct = Math.round((item.count / maxCount) * 100);
-            return (
-              <div key={idx} className="space-y-1">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-medium text-slate-700 dark:text-slate-300">
-                    {item.country}
-                  </span>
-                  <span className="font-mono text-slate-500 dark:text-slate-400">
-                    {item.count.toLocaleString()} sessions
-                  </span>
+        {data.length === 0 ? (
+          <div className="h-48 flex flex-col items-center justify-center text-center p-6 text-slate-400">
+            <p className="text-xs">
+              No geographic demographic data recorded for this period.
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-3.5">
+            {data.slice(0, 6).map((item, idx) => {
+              const pct = Math.round((item.count / maxCount) * 100);
+              return (
+                <div key={idx} className="space-y-1">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-medium text-slate-700 dark:text-slate-300">
+                      {item.country}
+                    </span>
+                    <span className="font-mono text-slate-500 dark:text-slate-400">
+                      {item.count.toLocaleString()} sessions
+                    </span>
+                  </div>
+                  <Progress value={pct} />
                 </div>
-                <Progress value={pct} />
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

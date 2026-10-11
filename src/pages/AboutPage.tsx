@@ -1,11 +1,15 @@
 import { Link } from 'react-router';
-import { Target, Users, Shield, Award } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
 import { HeaderBanner } from '@/layouts/components';
-import { useCompanySettings } from '@/domains/settings/application/use-cases/usePublicSettings';
+import {
+  useCompanySettings,
+  useCompanyValues,
+} from '@/domains/settings/application/use-cases/usePublicSettings';
+import { DynamicIcon } from '@/shared/ui/icon/DynamicIcon';
 
 export function AboutPage() {
   const { company } = useCompanySettings();
+  const values = useCompanyValues();
 
   const companyName = company?.name || 'Kanzen Tech';
   const tagline = company?.tagline || 'Engineering Digital Mastery';
@@ -21,61 +25,24 @@ export function AboutPage() {
 
       {/* Values Grid */}
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700">
-          <div className="space-y-3">
-            <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center">
-              <Target className="h-5 w-5" />
+        {values.map((val, idx) => (
+          <div
+            key={idx}
+            className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700"
+          >
+            <div className="space-y-3">
+              <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center">
+                <DynamicIcon name={val.icon || 'Award'} className="h-5 w-5" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                {val.title}
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                {val.description}
+              </p>
             </div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
-              Architectural Rigor
-            </h3>
-            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-              We favor deterministic, type-safe, and formally verified patterns over fragile abstractions.
-            </p>
           </div>
-        </div>
-
-        <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700">
-          <div className="space-y-3">
-            <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center">
-              <Shield className="h-5 w-5" />
-            </div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
-              Zero-Trust Security
-            </h3>
-            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-              Every API, data store, and network boundary is audited with end-to-end RBAC and encryption.
-            </p>
-          </div>
-        </div>
-
-        <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700">
-          <div className="space-y-3">
-            <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center">
-              <Users className="h-5 w-5" />
-            </div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
-              Senior Engineers Only
-            </h3>
-            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-              Our engagements are executed exclusively by principal architects and staff software engineers.
-            </p>
-          </div>
-        </div>
-
-        <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700">
-          <div className="space-y-3">
-            <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center">
-              <Award className="h-5 w-5" />
-            </div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
-              Measured Outcomes
-            </h3>
-            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-              We tie engineering deliverables directly to measurable business KPIs, SLA benchmarks, and ROI.
-            </p>
-          </div>
-        </div>
+        ))}
       </section>
 
       {/* CTA */}

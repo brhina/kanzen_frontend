@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSubscribeNewsletter } from '../../application/use-cases/useSubscribeNewsletter';
+import { useBlogCategories } from '@/domains/blog/application/use-cases/useBlogCategories';
 import type { SubscribeNewsletterDto } from '../../infrastructure/newsletter.dto';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { CheckCircle2, Mail, Sparkles } from 'lucide-react';
 
-const TOPIC_TAGS = [
+const FALLBACK_TOPIC_TAGS = [
   { id: 'architecture', label: 'Distributed Systems' },
   { id: 'cloud-devops', label: 'Cloud & Kubernetes' },
   { id: 'fintech', label: 'FinTech & Banking' },
@@ -29,6 +30,15 @@ export function NewsletterSignupForm({
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>(['architecture']);
   const subscribe = useSubscribeNewsletter();
+  const { data: blogCategories } = useBlogCategories();
+
+  const availableTags =
+    blogCategories && blogCategories.length > 0
+      ? blogCategories.map((c) => ({
+          id: c.slug || c.id,
+          label: c.name,
+        }))
+      : FALLBACK_TOPIC_TAGS;
 
   const {
     register,
@@ -134,7 +144,7 @@ export function NewsletterSignupForm({
           Technical Focus Areas
         </label>
         <div className="flex flex-wrap gap-2 pt-1">
-          {TOPIC_TAGS.map((t) => {
+          {availableTags.map((t) => {
             const isSelected = selectedTags.includes(t.id);
             return (
               <button

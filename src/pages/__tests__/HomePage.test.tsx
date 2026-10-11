@@ -18,6 +18,34 @@ describe('HomePage', () => {
       },
     });
 
+    queryClient.setQueryData(['testimonials', 'featured'], [
+      {
+        id: 'home-t1',
+        author: 'Sarah Connor',
+        role: 'VP of Platform Engineering',
+        company: 'Apex Distributed Systems',
+        content:
+          'Kanzen Tech redesigned our core high-concurrency event bus, bringing p99 latency down from 420ms to 28ms while cutting cluster infrastructure costs by 45%.',
+        rating: 5,
+        isFeatured: true,
+        isVerified: true,
+        status: 'approved',
+        order: 1,
+      },
+      {
+        id: 'home-t2',
+        author: 'Marcus Vance',
+        role: 'Chief Technology Officer',
+        company: 'FinScale Global',
+        content: 'The engineering rigor and architectural precision they brought was exceptional.',
+        rating: 5,
+        isFeatured: true,
+        isVerified: true,
+        status: 'approved',
+        order: 2,
+      },
+    ]);
+
     useUIStore.setState({
       isEditMode: false,
     });

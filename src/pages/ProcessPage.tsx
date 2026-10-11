@@ -1,9 +1,12 @@
 import { Link } from 'react-router';
 import { Button } from '@/shared/ui/button';
 import { HeaderBanner } from '@/layouts/components';
-import { DELIVERY_PROCESS_STEPS } from '@/shared/constants/process.constants';
+import { useProcessSteps } from '@/domains/settings/application/use-cases/usePublicSettings';
+import { DynamicIcon } from '@/shared/ui/icon/DynamicIcon';
 
 export function ProcessPage() {
+  const processSteps = useProcessSteps();
+
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-12">
       {/* Hero Banner */}
@@ -15,30 +18,27 @@ export function ProcessPage() {
 
       {/* Steps List */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {DELIVERY_PROCESS_STEPS.map((s) => {
-          const IconComp = s.icon;
-          return (
-            <div
-              key={s.step}
-              className="group relative flex gap-5 overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700"
-            >
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 font-mono font-bold text-lg">
-                {s.step}
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <IconComp className="h-5 w-5 text-brand-500" />
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
-                    {s.title}
-                  </h3>
-                </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  {s.description}
-                </p>
-              </div>
+        {processSteps.map((s) => (
+          <div
+            key={s.step}
+            className="group relative flex gap-5 overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700"
+          >
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 font-mono font-bold text-lg">
+              {s.step}
             </div>
-          );
-        })}
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <DynamicIcon name={s.icon || 'Rocket'} className="h-5 w-5 text-brand-500" />
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                  {s.title}
+                </h3>
+              </div>
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                {s.description}
+              </p>
+            </div>
+          </div>
+        ))}
       </section>
 
       {/* Bottom CTA */}

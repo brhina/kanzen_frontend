@@ -30,10 +30,10 @@ export function DashboardPage() {
   const { data: analyticsData } = usePageViews(30);
   const { data: recentAudit } = useAuditLogs({ limit: 5 });
 
-  const activeLeadsCount = leadsData?.total ?? 24;
-  const pendingAppsCount = appsData?.total ?? 8;
+  const activeLeadsCount = leadsData?.total ?? 0;
+  const pendingAppsCount = appsData?.total ?? 0;
   const healthStatus = healthData?.status ?? 'healthy';
-  const pageViews = analyticsData?.totalPageViews ?? 1280;
+  const pageViews = analyticsData?.totalPageViews ?? 0;
 
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">

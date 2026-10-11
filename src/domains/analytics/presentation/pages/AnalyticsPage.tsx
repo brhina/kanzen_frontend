@@ -114,8 +114,8 @@ export function AnalyticsPage() {
 
       {/* Main Charts Row: Area Traffic Velocity */}
       <PageViewsChart
-        totalViews={overview?.totalPageViews ?? 1200}
-        uniqueVisitors={overview?.uniqueVisitors ?? 450}
+        totalViews={overview?.totalPageViews ?? 0}
+        uniqueVisitors={overview?.uniqueVisitors ?? 0}
         days={rangeDays}
       />
 
@@ -141,11 +141,11 @@ export function AnalyticsPage() {
           <CardContent className="space-y-4">
             <div className="space-y-3">
               {[
-                { stage: '1. Total Visitors', count: funnel?.visitors ?? overview?.uniqueVisitors ?? 450, color: 'bg-brand-500' },
-                { stage: '2. Page Views Explored', count: funnel?.pageViews ?? overview?.totalPageViews ?? 1200, color: 'bg-sky-500' },
-                { stage: '3. CTA Button Interactions', count: funnel?.ctaClicks ?? 180, color: 'bg-indigo-500' },
-                { stage: '4. Form Inquiries Submitted', count: funnel?.leads ?? overview?.totalLeads ?? 34, color: 'bg-amber-500' },
-                { stage: '5. Consultations Booked', count: funnel?.consultations ?? overview?.totalConsultations ?? 14, color: 'bg-emerald-500' },
+                { stage: '1. Total Visitors', count: funnel?.visitors ?? overview?.uniqueVisitors ?? 0, color: 'bg-brand-500' },
+                { stage: '2. Page Views Explored', count: funnel?.pageViews ?? overview?.totalPageViews ?? 0, color: 'bg-sky-500' },
+                { stage: '3. CTA Button Interactions', count: funnel?.ctaClicks ?? 0, color: 'bg-indigo-500' },
+                { stage: '4. Form Inquiries Submitted', count: funnel?.leads ?? overview?.totalLeads ?? 0, color: 'bg-amber-500' },
+                { stage: '5. Consultations Booked', count: funnel?.consultations ?? overview?.totalConsultations ?? 0, color: 'bg-emerald-500' },
               ].map((step, idx) => (
                 <div key={idx} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
                   <div className="flex items-center gap-2.5">
