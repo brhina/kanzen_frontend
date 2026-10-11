@@ -126,4 +126,26 @@ describe('Header', () => {
     // For elevated admins, public intake button is omitted (accessed via AdminBar)
     expect(html).not.toContain('>Contact<');
   });
+
+  it('hides theme switcher and notification bell in mobile view with hidden lg:inline-block', () => {
+    useAuthStore.setState({
+      isAuthenticated: true,
+      user: {
+        firstName: 'Jane',
+        lastName: 'Admin',
+        fullName: 'Jane Admin',
+        email: 'admin@kanzen.tech',
+        isAdmin: true,
+        permissions: [],
+        status: 'active',
+      },
+    });
+
+    const html = renderWithProviders(<Header />);
+
+    // Theme toggle container should contain hidden lg:inline-block
+    expect(html).toContain('hidden lg:inline-block');
+    // Notification bell container should contain hidden lg:inline-block
+    expect(html).toContain('View notifications');
+  });
 });

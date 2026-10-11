@@ -154,6 +154,7 @@ describe('AdminBar', () => {
       </MemoryRouter>
     );
 
+    expect(html).toContain('hidden lg:block');
     expect(html).toContain('lg:fixed');
     expect(html).toContain('lg:top-16');
     expect(html).toContain('lg:right-0');
@@ -217,6 +218,7 @@ describe('AdminBar', () => {
       </MemoryRouter>
     );
 
+    expect(html).toContain('hidden lg:block');
     expect(html).toContain('Admin Bar');
     expect(html).toContain('top-20');
     expect(html).not.toContain('bottom-4');
