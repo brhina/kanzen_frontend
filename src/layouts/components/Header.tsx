@@ -189,11 +189,11 @@ export function Header({ className = '' }: HeaderProps) {
 
         {/* Right Action Cluster */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0 ml-3">
-          {/* Theme switcher */}
-          <ThemeToggle />
+          {/* Theme switcher (hidden in mobile view, visible on desktop) */}
+          <ThemeToggle className="hidden lg:inline-block" />
 
-          {/* Notification bell for authenticated users */}
-          {isAuthenticated && <NotificationBell />}
+          {/* Notification bell for authenticated users (hidden in mobile view, visible on desktop) */}
+          {isAuthenticated && <NotificationBell className="hidden lg:inline-block" />}
 
           {/* User authentication status */}
           {isAuthenticated && user ? (
@@ -211,7 +211,7 @@ export function Header({ className = '' }: HeaderProps) {
                       src={user.avatar}
                       size="sm"
                     />
-                    <span className="font-medium text-slate-700 dark:text-slate-200 truncate max-w-[120px] sm:max-w-[160px]">
+                    <span className="hidden lg:inline-block font-medium text-slate-700 dark:text-slate-200 truncate max-w-[120px] sm:max-w-[160px]">
                       {user.fullName || user.firstName || user.email}
                     </span>
                   </button>

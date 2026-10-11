@@ -26,7 +26,7 @@ const NAV_LINKS = [
  * Administrative Control Toolbar & Sidebar.
  * Automatically mounts when an authenticated user has elevated privileges
  * (isAdmin or at least one explicit permission).
- * - On mobile/tablet (< lg): Renders as a top sticky administrative bar.
+ * - On mobile/tablet (< lg): Hidden to eliminate viewport clutter (mobile drawer provides all admin actions).
  * - On desktop (lg+): Renders as a dedicated right-side sidebar.
  * All icons beside and within buttons have been removed for a clean, typographic interface.
  */
@@ -54,12 +54,12 @@ export function AdminBar({ className = '' }: AdminBarProps) {
 
   const roleLabel = user.isAdmin ? 'Super Admin' : 'Staff Editor';
 
-  // Minimized floating trigger pill
+  // Minimized floating trigger pill (hidden on mobile, visible on lg+)
   if (isMinimized) {
     return (
       <aside
         aria-label="Administrative controls collapsed"
-        className="fixed top-20 right-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200"
+        className="hidden lg:block fixed top-20 right-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200"
       >
         <button
           type="button"
@@ -87,10 +87,8 @@ export function AdminBar({ className = '' }: AdminBarProps) {
     <aside
       aria-label="Administrative toolbar"
       className={cn(
-        // Mobile / Tablet: sticky bar under navbar (top-16)
-        'sticky top-16 z-30 w-full max-h-[calc(100vh-4rem)] overflow-y-auto border-b border-slate-200 bg-white/95 text-slate-900 shadow-lg backdrop-blur-md transition-all dark:border-slate-800/80 dark:bg-slate-950/95 dark:text-slate-100',
-        // Desktop (lg+): fixed right-side sidebar under navbar (top-16)
-        'lg:fixed lg:top-16 lg:right-0 lg:bottom-0 lg:h-[calc(100vh-4rem)] lg:max-h-none lg:w-64 lg:border-b-0 lg:border-l lg:border-slate-200 lg:shadow-xl lg:overflow-y-auto lg:z-30 dark:lg:border-slate-800/80 dark:lg:shadow-2xl',
+        // Hidden in mobile view (< lg), fixed right-side sidebar on desktop (lg+)
+        'hidden lg:block lg:fixed lg:top-16 lg:right-0 lg:bottom-0 lg:h-[calc(100vh-4rem)] lg:w-64 lg:border-l border-slate-200 bg-white/95 text-slate-900 shadow-xl backdrop-blur-md overflow-y-auto z-30 dark:border-slate-800/80 dark:bg-slate-950/95 dark:text-slate-100 dark:shadow-2xl',
         className,
       )}
     >
