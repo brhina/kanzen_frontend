@@ -10,8 +10,8 @@ describe('MediaMapper', () => {
       mimeType: 'image/png',
       extension: '.png',
       size: 1048576,
-      url: 'https://cdn.kanzen.tech/uuid-123.png',
-      thumbnailUrl: 'https://cdn.kanzen.tech/uuid-123-thumb.png',
+      url: 'https://cdn.veyroo.tech/uuid-123.png',
+      thumbnailUrl: 'https://cdn.veyroo.tech/uuid-123-thumb.png',
       width: 1920,
       height: 1080,
       alt: 'Architecture Diagram',
@@ -30,7 +30,7 @@ describe('MediaMapper', () => {
     expect(entity.filename).toBe('architecture-diagram.png');
     expect(entity.mimeType).toBe('image/png');
     expect(entity.size).toBe(1048576);
-    expect(entity.url).toBe('https://cdn.kanzen.tech/uuid-123.png');
+    expect(entity.url).toBe('https://cdn.veyroo.tech/uuid-123.png');
     expect(entity.folder).toBe('blog');
     expect(entity.width).toBe(1920);
     expect(entity.height).toBe(1080);
@@ -45,7 +45,7 @@ describe('MediaMapper', () => {
         mimeType: 'image/jpeg',
         extension: '.jpg',
         size: 50000,
-        url: 'https://cdn.kanzen.tech/f1.jpg',
+        url: 'https://cdn.veyroo.tech/f1.jpg',
         folder: 'portfolio',
       },
       {
@@ -55,7 +55,7 @@ describe('MediaMapper', () => {
         mimeType: 'application/pdf',
         extension: '.pdf',
         size: 80000,
-        url: 'https://cdn.kanzen.tech/f2.pdf',
+        url: 'https://cdn.veyroo.tech/f2.pdf',
         folder: 'resumes',
       },
     ];

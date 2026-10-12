@@ -19,7 +19,7 @@ describe('PortfolioMapper', () => {
     images: ['https://images.unsplash.com/screen1.jpg'],
     videoUrl: 'https://youtube.com/watch?v=mock',
     liveUrl: 'https://apex.io',
-    githubUrl: 'https://github.com/kanzen/apex',
+    githubUrl: 'https://github.com/veyroo/apex',
     category: PortfolioCategory.SAAS,
     services: ['Cloud Architecture', 'Frontend Engineering'],
     technologies: ['React', 'TypeScript', 'NestJS', 'Redis'],
