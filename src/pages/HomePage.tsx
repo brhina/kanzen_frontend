@@ -89,7 +89,7 @@ export function HomePage() {
             </h1>
 
             <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-              Kanzen Tech designs and scales mission-critical distributed systems,
+              Veyroo Tech designs and scales mission-critical distributed systems,
               enterprise cloud microservices, and specialized AI infrastructure built for maximum concurrency.
             </p>
 
@@ -172,7 +172,7 @@ export function HomePage() {
               Engineering Discipline
             </Badge>
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
-              The Kanzen Delivery Framework
+              The Veyroo Delivery Framework
             </h2>
             <p className="text-base text-slate-600 dark:text-slate-400">
               A predictable, milestone-driven engineering cycle designed to eliminate architectural debt and deliver high-velocity stability.
@@ -232,7 +232,7 @@ export function HomePage() {
               Trusted by High-Velocity Engineering Teams
             </h2>
             <p className="text-base text-slate-600 dark:text-slate-400">
-              Read how engineering leadership and architectural teams partner with Kanzen Tech to design, modernize, and scale mission-critical systems.
+              Read how engineering leadership and architectural teams partner with Veyroo Tech to design, modernize, and scale mission-critical systems.
             </p>
           </div>
 

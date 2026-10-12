@@ -105,7 +105,7 @@ export function CareersPage() {
       {/* Header Banner */}
       <HeaderBanner
         badge="Autonomous Engineering & High Agency"
-        title="Engineering Careers at Kanzen"
+        title="Engineering Careers at Veyroo Tech"
         description="Join a global team designing, architecting, and scaling high-throughput distributed systems. We prioritize async autonomy, clean code, and zero legacy bloat."
       />
 
@@ -291,7 +291,7 @@ export function CareersPage() {
       <div className="pt-12 border-t border-slate-200 dark:border-slate-800 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-            Why Engineer at Kanzen Tech?
+            Why Engineer at Veyroo Tech?
           </h2>
           <p className="text-sm text-slate-600 dark:text-slate-400">
             We operate like an elite open-source core team: minimal meetings, high agency, continuous automated verification, and deep respect for developer time.

@@ -27,8 +27,8 @@ export function ContactPage() {
   const { contact } = useContactSettings();
   const socialLinks = useSocialLinks();
 
-  const companyName = company?.name || 'Kanzen Tech';
-  const supportEmail = contact?.supportEmail || company?.email || 'hello@kanzen.tech';
+  const companyName = company?.name || 'Veyroo Tech';
+  const supportEmail = contact?.supportEmail || company?.email || 'hello@veyroo.tech';
   const headquarters = contact?.headquarters || company?.address || 'Nairobi, Kenya · Silicon Savannah';
   const businessHours = contact?.businessHours || 'Monday – Friday: 08:00 – 18:00 EAT';
   const phoneNumber = company?.phone;

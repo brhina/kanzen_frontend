@@ -1,9 +1,9 @@
 export const APP_CONFIG = {
-  name: 'KANZEN TECH',
+  name: 'VEYROO TECH',
   tagline: 'High-Impact Engineering, Enterprise Architecture & AI Solutions',
   version: '1.0.0',
   defaultLocale: 'en',
-  supportEmail: 'contact@kanzen.tech',
+  supportEmail: 'contact@veyroo.tech',
 } as const;
 
 export const STORAGE_KEYS = {

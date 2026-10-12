@@ -169,7 +169,7 @@ export function SolutionForm({
           <Input
             value={coverImage}
             onChange={(e) => setCoverImage(e.target.value)}
-            placeholder="https://cdn.kanzen.tech/architecture/ledger.png"
+            placeholder="https://cdn.veyroo.tech/architecture/ledger.png"
           />
         </div>
 

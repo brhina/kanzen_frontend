@@ -430,7 +430,7 @@ export function CaseStudyForm({
             <Input
               value={pdfUrl}
               onChange={(e) => setPdfUrl(e.target.value)}
-              placeholder="https://downloads.kanzen.tech/case-studies/study.pdf"
+              placeholder="https://downloads.veyroo.tech/case-studies/study.pdf"
             />
           </div>
 
@@ -454,7 +454,7 @@ export function CaseStudyForm({
             rows={2}
             value={imagesStr}
             onChange={(e) => setImagesStr(e.target.value)}
-            placeholder="https://images.kanzen.tech/diagram1.png&#10;https://images.kanzen.tech/diagram2.png"
+            placeholder="https://images.veyroo.tech/diagram1.png&#10;https://images.veyroo.tech/diagram2.png"
           />
         </div>
       </div>

@@ -172,7 +172,7 @@ export function PortfolioPage() {
       <HeaderBanner
         badge="Proven Engineering Outcomes"
         title="Engineering Portfolio"
-        description="A showcase of mission-critical systems, distributed architectures, and high-performance digital platforms engineered by Kanzen Tech."
+        description="A showcase of mission-critical systems, distributed architectures, and high-performance digital platforms engineered by Veyroo Tech."
       />
 
       {/* Unified Search & Advanced Filters Bar */}

@@ -83,7 +83,7 @@ export function NewsletterSignupForm({
           Check Your Inbox!
         </h4>
         <p className="text-xs text-slate-600 dark:text-slate-300 max-w-sm mx-auto">
-          We have sent a confirmation link to your email. Click it to confirm your subscription to the Kanzen Architecture Dispatch.
+          We have sent a confirmation link to your email. Click it to confirm your subscription to the Veyroo Architecture Dispatch.
         </p>
         <Button
           variant="outline"

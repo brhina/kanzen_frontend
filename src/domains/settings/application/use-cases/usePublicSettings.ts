@@ -72,29 +72,29 @@ function parseJsonSetting<T>(value: unknown, fallback: T): T {
 }
 
 const DEFAULT_COMPANY_SETTINGS: CompanySettings = {
-  name: 'Kanzen Tech',
+  name: 'Veyroo Tech',
   tagline: 'Engineering Digital Mastery',
-  email: 'contact@kanzen.tech',
+  email: 'contact@veyroo.tech',
   phone: '+254 700 000 000',
   address: 'Nairobi, Kenya',
 };
 
 const DEFAULT_SEO_SETTINGS: SeoSettings = {
-  defaultTitle: 'Kanzen Tech | Premium Product Engineering & SaaS Solutions',
+  defaultTitle: 'Veyroo Tech | Premium Product Engineering & SaaS Solutions',
   defaultDescription:
-    'Kanzen Tech engineers high-performance web systems, cloud architectures, and modern product experiences.',
+    'Veyroo Tech engineers high-performance web systems, cloud architectures, and modern product experiences.',
 };
 
 const DEFAULT_CONTACT_SETTINGS: ContactSettings = {
-  supportEmail: 'contact@kanzen.tech',
+  supportEmail: 'contact@veyroo.tech',
   businessHours: 'Monday – Friday: 08:00 – 18:00 EAT',
   headquarters: 'Nairobi, Kenya',
 };
 
 const DEFAULT_SOCIAL_PRESETS: Array<{ key: string; url: string }> = [
-  { key: 'social.github', url: 'https://github.com/kanzen-tech' },
-  { key: 'social.linkedin', url: 'https://linkedin.com/company/kanzen-tech' },
-  { key: 'social.twitter', url: 'https://twitter.com/kanzentech' },
+  { key: 'social.github', url: 'https://github.com/veyroo-tech' },
+  { key: 'social.linkedin', url: 'https://linkedin.com/company/veyroo-tech' },
+  { key: 'social.twitter', url: 'https://twitter.com/veyrootech' },
 ];
 
 export function detectSocialPlatform(key: string, url: string): {

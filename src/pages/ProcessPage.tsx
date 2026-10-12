@@ -12,7 +12,7 @@ export function ProcessPage() {
       {/* Hero Banner */}
       <HeaderBanner
         badge="Engineering Discipline"
-        title="The Kanzen Delivery Framework"
+        title="The Veyroo Delivery Framework"
         description="A predictable, milestone-driven engineering cycle designed to eliminate architectural debt and deliver high-velocity stability."
       />
 

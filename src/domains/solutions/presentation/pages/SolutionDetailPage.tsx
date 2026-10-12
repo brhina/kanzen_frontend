@@ -205,7 +205,7 @@ export function SolutionDetailPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                Work with Kanzen's principal systems architects to adapt, customize, and deploy this blueprint inside your cloud environment.
+                Work with Veyroo's principal systems architects to adapt, customize, and deploy this blueprint inside your cloud environment.
               </p>
 
               <div className="space-y-2 pt-2">

@@ -99,7 +99,7 @@ export function ForgotPasswordForm({
         <Input
           id="forgot-email"
           type="email"
-          placeholder="engineer@kanzen.tech"
+          placeholder="engineer@veyroo.tech"
           autoComplete="email"
           error={errors.email?.message}
           {...register('email')}

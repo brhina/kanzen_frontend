@@ -75,7 +75,7 @@ export function SeoMetaForm({ value = {}, onChange }: SeoMetaFormProps) {
             <Input
               value={value.canonicalUrl || ''}
               onChange={(e) => handleChange('canonicalUrl', e.target.value)}
-              placeholder="https://kanzen.tech/blog/..."
+              placeholder="https://veyroo.tech/blog/..."
               className="text-xs"
             />
           </div>
@@ -87,7 +87,7 @@ export function SeoMetaForm({ value = {}, onChange }: SeoMetaFormProps) {
             <Input
               value={value.ogImage || ''}
               onChange={(e) => handleChange('ogImage', e.target.value)}
-              placeholder="https://cdn.kanzen.tech/og/..."
+              placeholder="https://cdn.veyroo.tech/og/..."
               className="text-xs"
             />
           </div>

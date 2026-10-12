@@ -78,7 +78,7 @@ export function LoginForm({ onForgotPasswordClick, className = '' }: LoginFormPr
           <Input
             id="login-email"
             type="email"
-            placeholder="engineer@kanzen.tech"
+            placeholder="engineer@veyroo.tech"
             autoComplete="email"
             error={errors.email?.message}
             {...register('email')}

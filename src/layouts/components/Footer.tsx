@@ -27,7 +27,7 @@ export function Footer({ className = '' }: FooterProps) {
             <Link
               to="/"
               className="flex items-center gap-2.5"
-              aria-label={`${company?.name || 'Kanzen Tech'} Homepage`}
+              aria-label={`${company?.name || 'Veyroo Tech'} Homepage`}
             >
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-white">
                 <svg
@@ -44,7 +44,7 @@ export function Footer({ className = '' }: FooterProps) {
                 </svg>
               </div>
               <span className="text-lg font-black tracking-tight text-slate-900 dark:text-white">
-                KANZEN<span className="text-brand-500 ml-1">TECH</span>
+                VEYROO<span className="text-brand-500 ml-1">TECH</span>
               </span>
             </Link>
 
@@ -111,7 +111,7 @@ export function Footer({ className = '' }: FooterProps) {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/about" className="hover:text-slate-900 dark:hover:text-white transition-colors">
-                  About Kanzen
+                  About Veyroo Tech
                 </Link>
               </li>
               <li>
@@ -176,7 +176,7 @@ export function Footer({ className = '' }: FooterProps) {
         {/* Bottom Bar: Legal & Dynamic Social Icons */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 dark:border-slate-800 md:flex-row">
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            &copy; {CURRENT_YEAR} {company?.name || 'Kanzen Tech'}. All rights reserved.
+            &copy; {CURRENT_YEAR} {company?.name || 'Veyroo Tech'}. All rights reserved.
           </p>
 
           {/* Dynamically configured social links from settings */}

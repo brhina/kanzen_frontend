@@ -109,7 +109,7 @@ export function LeadsPage() {
               Engineering Scoping & Partnership
             </Badge>
             <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-              Start Your Project with Kanzen Tech
+              Start Your Project with Veyroo Tech
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
               Tell us about your technical requirements, architectural goals, and timelines. We analyze your scope and respond with a structured proposal within 24 hours.

@@ -122,7 +122,7 @@ export function TestimonialForm({
           rows={4}
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="Share your experience working with Kanzen Tech's engineering teams..."
+          placeholder="Share your experience working with Veyroo Tech's engineering teams..."
           error={errors.content}
         />
       </div>

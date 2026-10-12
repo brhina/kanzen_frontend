@@ -256,7 +256,7 @@ export function PublicContactDropdown({
               <span>Mutual NDA Protected</span>
             </span>
             <span className="font-medium text-slate-600 dark:text-slate-300">
-              hello@kanzen.tech
+              hello@veyroo.tech
             </span>
           </div>
         </div>

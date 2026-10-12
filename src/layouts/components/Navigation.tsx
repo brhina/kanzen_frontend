@@ -121,7 +121,7 @@ export function Navigation({ className = '' }: NavigationProps) {
             </svg>
           </div>
           <span className="font-black text-slate-900 dark:text-white">
-            KANZEN<span className="text-brand-500 ml-1">TECH</span>
+            VEYROO<span className="text-brand-500 ml-1">TECH</span>
           </span>
         </div>
       }
@@ -133,7 +133,7 @@ export function Navigation({ className = '' }: NavigationProps) {
           </div>
           <div className="flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500 pt-0.5">
             <span>Enterprise Engineering</span>
-            <span>&copy; 2026 Kanzen</span>
+            <span>&copy; 2026 Veyroo Tech</span>
           </div>
         </div>
       }

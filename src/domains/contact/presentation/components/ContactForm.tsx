@@ -55,7 +55,7 @@ export function ContactForm({ onSuccess, className = '' }: ContactFormProps) {
           Message Sent Successfully!
         </h3>
         <p className="text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto">
-          Thank you for reaching out to Kanzen Tech. Our team has received your message and will get back to you promptly.
+          Thank you for reaching out to Veyroo Tech. Our team has received your message and will get back to you promptly.
         </p>
         <div className="pt-2">
           <Button

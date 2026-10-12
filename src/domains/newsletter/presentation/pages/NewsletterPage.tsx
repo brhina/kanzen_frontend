@@ -116,7 +116,7 @@ export function NewsletterPage() {
               Weekly Technical Publication
             </Badge>
             <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-              The Kanzen Architecture Dispatch
+              The Veyroo Architecture Dispatch
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
               Curated engineering analysis, distributed systems patterns, database performance reviews, and cloud cost optimization delivered straight to your inbox.

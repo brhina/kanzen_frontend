@@ -204,7 +204,7 @@ export function BlogPostForm({
           <Input
             value={authorAvatar}
             onChange={(e) => setAuthorAvatar(e.target.value)}
-            placeholder="https://cdn.kanzen.tech/avatars/..."
+            placeholder="https://cdn.veyroo.tech/avatars/..."
           />
         </div>
       </div>

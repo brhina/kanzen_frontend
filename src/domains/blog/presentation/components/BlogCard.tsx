@@ -49,7 +49,7 @@ export function BlogCard({ post, onEdit, showAdminActions = true }: BlogCardProp
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gradient-to-tr from-brand-900/20 via-slate-900/40 to-cyan-900/20 p-6 text-center text-slate-400">
             <span className="text-sm font-semibold tracking-wide uppercase text-brand-600 dark:text-brand-400">
-              Kanzen Engineering
+              Veyroo Engineering
             </span>
           </div>
         )}
@@ -135,7 +135,7 @@ export function BlogCard({ post, onEdit, showAdminActions = true }: BlogCardProp
               </div>
             )}
             <span className="font-medium text-slate-800 dark:text-slate-200">
-              {post.authorName || 'Kanzen Team'}
+              {post.authorName || 'Veyroo Team'}
             </span>
           </div>
 

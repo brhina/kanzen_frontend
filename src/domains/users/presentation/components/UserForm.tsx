@@ -164,7 +164,7 @@ export function UserForm({ user, onSuccess, onCancel }: UserFormProps) {
             </label>
             <Input
               type="email"
-              placeholder="email@kanzen.tech"
+              placeholder="email@veyroo.tech"
               error={errors.email?.message}
               {...register('email')}
             />

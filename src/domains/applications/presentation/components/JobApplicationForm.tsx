@@ -78,7 +78,7 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
         setResumeUrl(fileUrl);
       } catch {
         // Fallback
-        setResumeUrl(`https://storage.kanzen.tech/resumes/${file.name}`);
+        setResumeUrl(`https://storage.veyroo.tech/resumes/${file.name}`);
       }
     }
   };
@@ -140,8 +140,8 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
     const finalResumeUrl =
       resumeUrl ||
       (resumeFile
-        ? `https://storage.kanzen.tech/resumes/${encodeURIComponent(resumeFile.name)}`
-        : 'https://cdn.kanzen.tech/resumes/applicant-resume.pdf');
+        ? `https://storage.veyroo.tech/resumes/${encodeURIComponent(resumeFile.name)}`
+        : 'https://cdn.veyroo.tech/resumes/applicant-resume.pdf');
 
     const payload: CreateJobApplicationDto = {
       jobId,
@@ -184,7 +184,7 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
             Application Received!
           </h3>
           <p className="text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
-            Thank you for applying to {jobTitle || 'Kanzen Tech'}. Our engineering leadership reviews applications continuously and will reach out via email.
+            Thank you for applying to {jobTitle || 'Veyroo Tech'}. Our engineering leadership reviews applications continuously and will reach out via email.
           </p>
         </div>
         <div className="pt-2">
@@ -397,7 +397,7 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
               <Input
                 value={referredBy}
                 onChange={(e) => setReferredBy(e.target.value)}
-                placeholder="Colleague or friend at Kanzen"
+                placeholder="Colleague or friend at Veyroo Tech"
               />
             </div>
           </div>
@@ -529,7 +529,7 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
           </div>
 
           <p className="text-2xs text-slate-500 dark:text-slate-400 leading-relaxed">
-            By submitting this application, you confirm that the information provided is accurate and consent to Kanzen Tech evaluating your profile for open opportunities.
+            By submitting this application, you confirm that the information provided is accurate and consent to Veyroo Tech evaluating your profile for open opportunities.
           </p>
         </div>
       )}

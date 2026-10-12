@@ -78,7 +78,7 @@ export function ResetPasswordPage() {
           Reset Password
         </CardTitle>
         <CardDescription className="text-xs text-slate-500 dark:text-slate-400">
-          Choose a secure, strong password for your Kanzen Tech account.
+          Choose a secure, strong password for your Veyroo Tech account.
         </CardDescription>
       </CardHeader>
 

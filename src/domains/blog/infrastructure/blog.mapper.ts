@@ -47,7 +47,7 @@ export const blogMapper = {
       content: raw.content || '',
       coverImage: raw.coverImage,
       author: raw.author || '',
-      authorName: raw.authorName || 'Kanzen Editorial',
+      authorName: raw.authorName || 'Veyroo Editorial',
       authorAvatar: raw.authorAvatar,
       categoryId: raw.categoryId,
       categoryName: raw.categoryName,

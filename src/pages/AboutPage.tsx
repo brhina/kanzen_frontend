@@ -11,7 +11,7 @@ export function AboutPage() {
   const { company } = useCompanySettings();
   const values = useCompanyValues();
 
-  const companyName = company?.name || 'Kanzen Tech';
+  const companyName = company?.name || 'Veyroo Tech';
   const tagline = company?.tagline || 'Engineering Digital Mastery';
 
   return (

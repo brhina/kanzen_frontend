@@ -78,7 +78,7 @@ export function BlogPostContent({ post, onLike, isLiking = false }: BlogPostCont
             )}
             <div>
               <div className="font-semibold text-sm text-slate-900 dark:text-white">
-                {post.authorName || 'Kanzen Engineering'}
+                {post.authorName || 'Veyroo Engineering'}
               </div>
               <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
                 <span className="flex items-center gap-1">
@@ -179,10 +179,10 @@ export function BlogPostContent({ post, onLike, isLiking = false }: BlogPostCont
           )}
           <div className="space-y-1">
             <h4 className="font-bold text-slate-900 dark:text-white">
-              Written by {post.authorName || 'Kanzen Engineering'}
+              Written by {post.authorName || 'Veyroo Engineering'}
             </h4>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              Staff Architect &bull; Kanzen Technology Solutions. Delivering resilient distributed architectures and AI systems.
+              Staff Architect &bull; Veyroo Technology Solutions. Delivering resilient distributed architectures and AI systems.
             </p>
           </div>
         </div>

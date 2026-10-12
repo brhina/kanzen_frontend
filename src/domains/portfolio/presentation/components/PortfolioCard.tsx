@@ -35,7 +35,7 @@ export function PortfolioCard({
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gradient-to-tr from-brand-900/20 via-slate-900/40 to-indigo-900/20 p-6 text-center text-slate-400">
             <span className="text-sm font-semibold tracking-wide uppercase text-brand-600 dark:text-brand-400">
-              Kanzen Portfolio
+              Veyroo Portfolio
             </span>
           </div>
         )}

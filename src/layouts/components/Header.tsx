@@ -132,7 +132,7 @@ export function Header({ className = '' }: HeaderProps) {
           <Link
             to="/"
             className="group flex items-center gap-2.5 transition-transform hover:scale-[1.01] shrink-0"
-            aria-label="Kanzen Tech Homepage"
+            aria-label="Veyroo Tech Homepage"
           >
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-600 via-brand-500 to-amber-500 text-white">
               <svg
@@ -150,7 +150,7 @@ export function Header({ className = '' }: HeaderProps) {
             </div>
             <div className="flex flex-col">
               <span className="text-base font-black tracking-tight text-slate-900 dark:text-white leading-none">
-                KANZEN<span className="text-brand-500 ml-1">TECH</span>
+                VEYROO<span className="text-brand-500 ml-1">TECH</span>
               </span>
               <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5 truncate max-w-[150px]">
                 {company?.tagline || 'Enterprise Engineering'}

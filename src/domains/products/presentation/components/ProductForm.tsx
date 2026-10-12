@@ -96,7 +96,7 @@ export function ProductForm({
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="e.g. Kanzen Radar CLI"
+            placeholder="e.g. Veyroo Radar CLI"
             required
           />
           {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
@@ -126,7 +126,7 @@ export function ProductForm({
             <Input
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
-              placeholder="e.g. kanzen-radar"
+              placeholder="e.g. veyroo-radar"
             />
           </div>
         </div>
@@ -170,7 +170,7 @@ export function ProductForm({
           <Input
             value={demoUrl}
             onChange={(e) => setDemoUrl(e.target.value)}
-            placeholder="https://demo.kanzen.tech"
+            placeholder="https://demo.veyroo.tech"
           />
         </div>
 
@@ -181,7 +181,7 @@ export function ProductForm({
           <Input
             value={productUrl}
             onChange={(e) => setProductUrl(e.target.value)}
-            placeholder="https://radar.kanzen.tech"
+            placeholder="https://radar.veyroo.tech"
           />
         </div>
 
@@ -192,7 +192,7 @@ export function ProductForm({
           <Input
             value={pricingUrl}
             onChange={(e) => setPricingUrl(e.target.value)}
-            placeholder="https://radar.kanzen.tech/pricing"
+            placeholder="https://radar.veyroo.tech/pricing"
           />
         </div>
       </div>
@@ -217,7 +217,7 @@ export function ProductForm({
           <Textarea
             value={screenshotsStr}
             onChange={(e) => setScreenshotsStr(e.target.value)}
-            placeholder="https://cdn.kanzen.tech/products/radar-1.png&#10;https://cdn.kanzen.tech/products/radar-2.png"
+            placeholder="https://cdn.veyroo.tech/products/radar-1.png&#10;https://cdn.veyroo.tech/products/radar-2.png"
             rows={3}
           />
         </div>

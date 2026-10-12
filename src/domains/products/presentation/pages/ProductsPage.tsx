@@ -163,7 +163,7 @@ export function ProductsPage() {
       <HeaderBanner
         badge="Proprietary Software & Open Source"
         title="Developer Platforms & Software"
-        description="Production tools, open-source libraries, and SaaS engines engineered internally by Kanzen to solve distributed data challenges and developer velocity bottlenecks."
+        description="Production tools, open-source libraries, and SaaS engines engineered internally by Veyroo Tech to solve distributed data challenges and developer velocity bottlenecks."
       />
 
       {/* Unified Search & Advanced Filters Bar */}
