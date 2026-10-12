@@ -6,13 +6,13 @@ describe('AuditMapper', () => {
     const dto = {
       id: 'audit-999',
       userId: 'admin-1',
-      userEmail: 'admin@kanzen.tech',
+      userEmail: 'admin@veyroo.tech',
       action: 'update',
       resource: 'setting',
       resourceId: 'company.name',
       changes: {
         before: { name: 'Old Name' },
-        after: { name: 'Kanzen Tech' },
+        after: { name: 'Veyroo Tech' },
       },
       ipAddress: '127.0.0.1',
       status: 'success',
@@ -22,10 +22,10 @@ describe('AuditMapper', () => {
     const entity = AuditMapper.toDomain(dto);
 
     expect(entity.id).toBe('audit-999');
-    expect(entity.userEmail).toBe('admin@kanzen.tech');
+    expect(entity.userEmail).toBe('admin@veyroo.tech');
     expect(entity.action).toBe('update');
     expect(entity.resource).toBe('setting');
-    expect(entity.changes?.after).toEqual({ name: 'Kanzen Tech' });
+    expect(entity.changes?.after).toEqual({ name: 'Veyroo Tech' });
     expect(entity.status).toBe('success');
   });
 });

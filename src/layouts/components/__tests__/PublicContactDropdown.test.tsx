@@ -51,7 +51,7 @@ describe('PublicContactDropdown', () => {
     const html = renderDropdown();
 
     expect(html).toContain('Mutual NDA Protected');
-    expect(html).toContain('hello@kanzen.tech');
+    expect(html).toContain('hello@veyroo.tech');
     expect(html).toContain('Fast Response');
   });
 

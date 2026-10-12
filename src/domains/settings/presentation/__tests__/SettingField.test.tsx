@@ -8,7 +8,7 @@ describe('SettingField', () => {
   const baseSetting: SettingEntity = {
     id: 's-1',
     key: 'company.name',
-    value: 'Kanzen Tech',
+    value: 'Veyroo Tech',
     type: SettingType.STRING,
     group: SettingGroupEnum.COMPANY,
     label: 'Company Name',
@@ -20,7 +20,7 @@ describe('SettingField', () => {
     const html = renderToStaticMarkup(
       <SettingField
         setting={baseSetting}
-        value="Kanzen Tech"
+        value="Veyroo Tech"
         onChange={vi.fn()}
       />,
     );
@@ -29,7 +29,7 @@ describe('SettingField', () => {
     expect(html).toContain('company.name');
     expect(html).toContain('string');
     expect(html).toContain('Public API');
-    expect(html).toContain('Kanzen Tech');
+    expect(html).toContain('Veyroo Tech');
   });
 
   it('renders boolean setting field with toggle label', () => {
@@ -86,7 +86,7 @@ describe('SettingField', () => {
     const html = renderToStaticMarkup(
       <SettingField
         setting={baseSetting}
-        value="Kanzen Digital Ltd"
+        value="Veyroo Digital Ltd"
         onChange={vi.fn()}
       />,
     );

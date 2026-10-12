@@ -27,7 +27,7 @@ describe('Footer', () => {
   it('renders default company name, offerings, and operational status', () => {
     const html = renderWithProviders(<Footer />);
 
-    expect(html).toContain('KANZEN');
+    expect(html).toContain('VEYROO');
     expect(html).toContain('TECH');
     expect(html).toContain('Engineering Services');
     expect(html).toContain('Enterprise Solutions');
@@ -42,18 +42,18 @@ describe('Footer', () => {
   it('renders dynamic social links and copyright derived from public settings', () => {
     vi.spyOn(usePublicSettingsModule, 'usePublicSettings').mockReturnValue({
       company: {
-        name: 'Kanzen Global Technologies Ltd',
+        name: 'Veyroo Global Technologies Ltd',
         tagline: 'High-Scale Distributed Systems Architecture',
-        email: 'ops@kanzen.tech',
+        email: 'ops@veyroo.tech',
         phone: '+254 700 000 001',
         address: 'Nairobi Silicon Savannah',
       },
       seo: {
-        defaultTitle: 'Kanzen Tech | Enterprise',
+        defaultTitle: 'Veyroo Tech | Enterprise',
         defaultDescription: 'Architecting high-concurrency systems',
       },
       contact: {
-        supportEmail: 'support@kanzen.tech',
+        supportEmail: 'support@veyroo.tech',
         headquarters: 'Nairobi, Kenya',
         businessHours: '24/7 Operations',
       },
@@ -62,21 +62,21 @@ describe('Footer', () => {
           id: '1',
           key: 'social.github',
           platform: 'github',
-          url: 'https://github.com/kanzen-tech',
+          url: 'https://github.com/veyroo-tech',
           label: 'GitHub',
         },
         {
           id: '2',
           key: 'social.linkedin',
           platform: 'linkedin',
-          url: 'https://linkedin.com/company/kanzen-tech',
+          url: 'https://linkedin.com/company/veyroo-tech',
           label: 'LinkedIn',
         },
         {
           id: '3',
           key: 'social.youtube',
           platform: 'youtube',
-          url: 'https://youtube.com/@kanzentech',
+          url: 'https://youtube.com/@veyrootech',
           label: 'YouTube',
         },
       ],
@@ -88,13 +88,13 @@ describe('Footer', () => {
     const html = renderWithProviders(<Footer />);
 
     // Verify dynamic company name in copyright
-    expect(html).toContain('Kanzen Global Technologies Ltd');
+    expect(html).toContain('Veyroo Global Technologies Ltd');
     // Verify dynamic tagline
     expect(html).toContain('High-Scale Distributed Systems Architecture');
     // Verify dynamic social links are rendered
-    expect(html).toContain('href="https://github.com/kanzen-tech"');
-    expect(html).toContain('href="https://linkedin.com/company/kanzen-tech"');
-    expect(html).toContain('href="https://youtube.com/@kanzentech"');
+    expect(html).toContain('href="https://github.com/veyroo-tech"');
+    expect(html).toContain('href="https://linkedin.com/company/veyroo-tech"');
+    expect(html).toContain('href="https://youtube.com/@veyrootech"');
     expect(html).toContain('aria-label="GitHub"');
     expect(html).toContain('aria-label="LinkedIn"');
     expect(html).toContain('aria-label="YouTube"');

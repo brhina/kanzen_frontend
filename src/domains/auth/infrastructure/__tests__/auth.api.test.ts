@@ -22,7 +22,7 @@ describe('authApi', () => {
         expiresIn: 900,
         user: {
           id: 'cly123456',
-          email: 'engineer@kanzen.tech',
+          email: 'engineer@veyroo.tech',
           firstName: 'Kanzen',
           lastName: 'Engineer',
           fullName: 'Kanzen Engineer',
@@ -43,7 +43,7 @@ describe('authApi', () => {
     );
 
     const result = await authApi.login({
-      email: 'engineer@kanzen.tech',
+      email: 'engineer@veyroo.tech',
       password: 'StrongPassword123!',
     });
 
@@ -51,7 +51,7 @@ describe('authApi', () => {
     expect(result.refreshToken).toBe('refresh-jwt-token');
     expect(result.user).toBeDefined();
     expect(result.user.id).toBe('cly123456');
-    expect(result.user.email).toBe('engineer@kanzen.tech');
+    expect(result.user.email).toBe('engineer@veyroo.tech');
   });
 
   it('correctly handles raw AuthResponseDto if already unwrapped', async () => {
@@ -62,7 +62,7 @@ describe('authApi', () => {
       expiresIn: 900,
       user: {
         id: 'cly999',
-        email: 'raw@kanzen.tech',
+        email: 'raw@veyroo.tech',
         firstName: 'Raw',
         lastName: 'User',
         fullName: 'Raw User',
@@ -80,7 +80,7 @@ describe('authApi', () => {
     );
 
     const result = await authApi.login({
-      email: 'raw@kanzen.tech',
+      email: 'raw@veyroo.tech',
       password: 'StrongPassword123!',
     });
 

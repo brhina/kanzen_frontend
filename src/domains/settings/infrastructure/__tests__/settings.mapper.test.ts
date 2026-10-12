@@ -7,7 +7,7 @@ describe('SettingsMapper', () => {
     const dto = {
       id: 'sett-1',
       key: 'site_name',
-      value: 'Kanzen Tech',
+      value: 'Veyroo Tech',
       type: SettingType.STRING,
       group: 'general',
       label: 'Site Name',
@@ -22,7 +22,7 @@ describe('SettingsMapper', () => {
 
     expect(entity.id).toBe('sett-1');
     expect(entity.key).toBe('site_name');
-    expect(entity.value).toBe('Kanzen Tech');
+    expect(entity.value).toBe('Veyroo Tech');
     expect(entity.type).toBe(SettingType.STRING);
     expect(entity.group).toBe('general');
     expect(entity.label).toBe('Site Name');

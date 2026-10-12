@@ -23,7 +23,7 @@ describe('authMapper', () => {
         firstName: 'Jane',
         lastName: 'Doe',
         fullName: 'Jane Doe',
-        email: 'jane@kanzen.tech',
+        email: 'jane@veyroo.tech',
         isAdmin: true,
         permissions: [],
         status: 'active',
@@ -40,7 +40,7 @@ describe('authMapper', () => {
     const entity = authMapper.toUserEntity({
       firstName: 'Alice',
       lastName: 'Smith',
-      email: 'alice@kanzen.tech',
+      email: 'alice@veyroo.tech',
       isAdmin: false,
     });
 
@@ -59,7 +59,7 @@ describe('authMapper', () => {
         firstName: 'Bob',
         lastName: 'Admin',
         fullName: 'Bob Admin',
-        email: 'bob@kanzen.tech',
+        email: 'bob@veyroo.tech',
         isAdmin: true,
         permissions: ['users:read', 'users:write'],
         status: 'active',
@@ -70,7 +70,7 @@ describe('authMapper', () => {
     expect(state.isAuthenticated).toBe(true);
     expect(state.accessToken).toBe('acc-jwt');
     expect(state.refreshToken).toBe('ref-jwt');
-    expect(state.user?.email).toBe('bob@kanzen.tech');
+    expect(state.user?.email).toBe('bob@veyroo.tech');
     expect(state.user?.isAdmin).toBe(true);
     expect(state.hasPermission('users:read')).toBe(true);
   });
@@ -95,7 +95,7 @@ describe('authMapper', () => {
           firstName: 'Backend',
           lastName: 'User',
           fullName: 'Backend User',
-          email: 'backend@kanzen.tech',
+          email: 'backend@veyroo.tech',
           isAdmin: false,
           permissions: ['portfolio:read'],
           status: 'active',
@@ -108,6 +108,6 @@ describe('authMapper', () => {
     expect(state.accessToken).toBe('envelope-acc-jwt');
     expect(state.refreshToken).toBe('envelope-ref-jwt');
     expect(state.user?.id).toBe('u-100');
-    expect(state.user?.email).toBe('backend@kanzen.tech');
+    expect(state.user?.email).toBe('backend@veyroo.tech');
   });
 });

@@ -25,7 +25,7 @@ describe('HomePage', () => {
         role: 'VP of Platform Engineering',
         company: 'Apex Distributed Systems',
         content:
-          'Kanzen Tech redesigned our core high-concurrency event bus, bringing p99 latency down from 420ms to 28ms while cutting cluster infrastructure costs by 45%.',
+          'Veyroo Tech redesigned our core high-concurrency event bus, bringing p99 latency down from 420ms to 28ms while cutting cluster infrastructure costs by 45%.',
         rating: 5,
         isFeatured: true,
         isVerified: true,
@@ -103,7 +103,7 @@ describe('HomePage', () => {
   it('renders delivery process framework section with steps for public visitors', () => {
     const html = renderHome();
 
-    expect(html).toContain('The Kanzen Delivery Framework');
+    expect(html).toContain('The Veyroo Delivery Framework');
     expect(html).toContain('Engineering Discipline');
     expect(html).toContain('Architectural Discovery');
     expect(html).toContain('Domain Modeling &amp; Blueprinting');
@@ -116,7 +116,7 @@ describe('HomePage', () => {
   it('renders newsletter subscription section for public visitors', () => {
     const html = renderHome();
 
-    expect(html).toContain('The Kanzen Architecture Dispatch');
+    expect(html).toContain('The Veyroo Architecture Dispatch');
     expect(html).toContain('Stay Ahead of Architectural Shifts');
     expect(html).toContain('Subscribe');
     expect(html).toContain('engineering-lead@company.com');

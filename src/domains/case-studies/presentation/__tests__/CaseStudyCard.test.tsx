@@ -23,7 +23,7 @@ describe('CaseStudyCard', () => {
     technologies: ['TypeScript', 'Redis', 'Docker'],
     servicesUsed: ['Custom Software'],
     downloadable: true,
-    pdfUrl: 'https://downloads.kanzen.tech/study.pdf',
+    pdfUrl: 'https://downloads.veyroo.tech/study.pdf',
     isFeatured: true,
     status: CaseStudyStatus.PUBLISHED,
     metrics: [

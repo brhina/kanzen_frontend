@@ -37,7 +37,7 @@ describe('Header', () => {
   it('renders brand identity and primary navigation items', () => {
     const html = renderWithProviders(<Header />);
 
-    expect(html).toContain('KANZEN');
+    expect(html).toContain('VEYROO');
     expect(html).toContain('TECH');
     expect(html).toContain('Services');
     expect(html).toContain('Solutions');
@@ -77,7 +77,7 @@ describe('Header', () => {
         firstName: 'Alex',
         lastName: 'Morgan',
         fullName: 'Alex Morgan',
-        email: 'alex@kanzen.tech',
+        email: 'alex@veyroo.tech',
         isAdmin: false,
         permissions: [],
         status: 'active',
@@ -107,7 +107,7 @@ describe('Header', () => {
         firstName: 'Jane',
         lastName: 'Admin',
         fullName: 'Jane Admin',
-        email: 'admin@kanzen.tech',
+        email: 'admin@veyroo.tech',
         isAdmin: true,
         permissions: [],
         status: 'active',
@@ -134,7 +134,7 @@ describe('Header', () => {
         firstName: 'Jane',
         lastName: 'Admin',
         fullName: 'Jane Admin',
-        email: 'admin@kanzen.tech',
+        email: 'admin@veyroo.tech',
         isAdmin: true,
         permissions: [],
         status: 'active',

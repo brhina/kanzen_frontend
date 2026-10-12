@@ -10,7 +10,7 @@ describe('TestimonialCard', () => {
     author: 'Sarah Connor',
     role: 'Head of Engineering',
     company: 'Skynet Security',
-    content: 'Kanzen Tech engineered an infallible resilient mesh network.',
+    content: 'Veyroo Tech engineered an infallible resilient mesh network.',
     rating: 5,
     isFeatured: true,
     isVerified: true,
@@ -24,7 +24,7 @@ describe('TestimonialCard', () => {
     expect(html).toContain('Sarah Connor');
     expect(html).toContain('Head of Engineering');
     expect(html).toContain('Skynet Security');
-    expect(html).toContain('Kanzen Tech engineered an infallible resilient mesh network.');
+    expect(html).toContain('Veyroo Tech engineered an infallible resilient mesh network.');
     expect(html).toContain('Verified Client');
   });
 

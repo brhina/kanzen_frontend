@@ -23,7 +23,7 @@ describe('CaseStudyMapper', () => {
     duration: '8 months',
     teamSize: 5,
     downloadable: true,
-    pdfUrl: 'https://downloads.kanzen.tech/payswift.pdf',
+    pdfUrl: 'https://downloads.veyroo.tech/payswift.pdf',
     isFeatured: true,
     status: CaseStudyStatus.PUBLISHED,
     metrics: [
@@ -40,7 +40,7 @@ describe('CaseStudyMapper', () => {
     expect(entity.clientIndustry).toBe('FinTech');
     expect(entity.status).toBe(CaseStudyStatus.PUBLISHED);
     expect(entity.downloadable).toBe(true);
-    expect(entity.pdfUrl).toBe('https://downloads.kanzen.tech/payswift.pdf');
+    expect(entity.pdfUrl).toBe('https://downloads.veyroo.tech/payswift.pdf');
     expect(entity.metrics).toHaveLength(1);
     expect(entity.metrics[0].value).toBe('12,000 TPS');
   });

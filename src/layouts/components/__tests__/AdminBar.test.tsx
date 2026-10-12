@@ -38,7 +38,7 @@ describe('AdminBar', () => {
         firstName: 'Public',
         lastName: 'User',
         fullName: 'Public User',
-        email: 'public@kanzen.tech',
+        email: 'public@veyroo.tech',
         isAdmin: false,
         permissions: [],
         status: 'active',
@@ -61,7 +61,7 @@ describe('AdminBar', () => {
         firstName: 'Jane',
         lastName: 'Admin',
         fullName: 'Jane Admin',
-        email: 'admin@kanzen.tech',
+        email: 'admin@veyroo.tech',
         isAdmin: true,
         permissions: [],
         status: 'active',
@@ -76,7 +76,7 @@ describe('AdminBar', () => {
 
     expect(html).toContain('Super Admin');
     expect(html).not.toContain('Jane Admin');
-    expect(html).not.toContain('admin@kanzen.tech');
+    expect(html).not.toContain('admin@veyroo.tech');
     expect(html).toContain('Edit Mode:');
     expect(html).toContain('/dashboard');
     expect(html).toContain('/leads');
@@ -92,7 +92,7 @@ describe('AdminBar', () => {
         firstName: 'Editor',
         lastName: 'One',
         fullName: 'Editor One',
-        email: 'editor@kanzen.tech',
+        email: 'editor@veyroo.tech',
         isAdmin: false,
         permissions: ['blog:write'],
         status: 'active',
@@ -107,7 +107,7 @@ describe('AdminBar', () => {
 
     expect(html).toContain('Staff Editor');
     expect(html).not.toContain('Editor One');
-    expect(html).not.toContain('editor@kanzen.tech');
+    expect(html).not.toContain('editor@veyroo.tech');
   });
 
   it('reflects active Edit Mode ON state', () => {
@@ -117,7 +117,7 @@ describe('AdminBar', () => {
         firstName: 'Jane',
         lastName: 'Admin',
         fullName: 'Jane Admin',
-        email: 'admin@kanzen.tech',
+        email: 'admin@veyroo.tech',
         isAdmin: true,
         permissions: [],
         status: 'active',
@@ -141,7 +141,7 @@ describe('AdminBar', () => {
         firstName: 'Jane',
         lastName: 'Admin',
         fullName: 'Jane Admin',
-        email: 'admin@kanzen.tech',
+        email: 'admin@veyroo.tech',
         isAdmin: true,
         permissions: [],
         status: 'active',
@@ -168,7 +168,7 @@ describe('AdminBar', () => {
         firstName: 'Jane',
         lastName: 'Admin',
         fullName: 'Jane Admin',
-        email: 'admin@kanzen.tech',
+        email: 'admin@veyroo.tech',
         isAdmin: true,
         permissions: [],
         status: 'active',
@@ -204,7 +204,7 @@ describe('AdminBar', () => {
         firstName: 'Jane',
         lastName: 'Admin',
         fullName: 'Jane Admin',
-        email: 'admin@kanzen.tech',
+        email: 'admin@veyroo.tech',
         isAdmin: true,
         permissions: [],
         status: 'active',
@@ -232,7 +232,7 @@ describe('AdminBar', () => {
         firstName: 'Jane',
         lastName: 'Admin',
         fullName: 'Jane Admin',
-        email: 'admin@kanzen.tech',
+        email: 'admin@veyroo.tech',
         isAdmin: true,
         permissions: [],
         status: 'active',
@@ -258,7 +258,7 @@ describe('AdminBar', () => {
         firstName: 'Jane',
         lastName: 'Admin',
         fullName: 'Jane Admin',
-        email: 'admin@kanzen.tech',
+        email: 'admin@veyroo.tech',
         isAdmin: true,
         permissions: [],
         status: 'active',
@@ -284,7 +284,7 @@ describe('AdminBar', () => {
         firstName: 'Jane',
         lastName: 'Admin',
         fullName: 'Jane Admin',
-        email: 'admin@kanzen.tech',
+        email: 'admin@veyroo.tech',
         isAdmin: true,
         permissions: [],
         status: 'active',

@@ -31,7 +31,7 @@ describe('URL Utilities', () => {
 
   it('identifies external and internal URLs', () => {
     expect(isExternalUrl('https://google.com')).toBe(true);
-    expect(isExternalUrl('http://kanzen.tech')).toBe(true);
+    expect(isExternalUrl('http://veyroo.tech')).toBe(true);
     expect(isExternalUrl('/blog/post-1')).toBe(false);
     expect(isExternalUrl('blog/post-1')).toBe(false);
   });

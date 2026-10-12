@@ -8,21 +8,21 @@ describe('productsMapper', () => {
   it('maps ProductResponseDto to ProductEntity', () => {
     const dto: ProductResponseDto = {
       id: 'prod-1',
-      name: 'Kanzen Sentinel Daemon',
-      slug: 'kanzen-sentinel-daemon',
+      name: 'Veyroo Sentinel Daemon',
+      slug: 'veyroo-sentinel-daemon',
       tagline: 'Autonomous distributed tracing and failure injection agent',
       description: 'Ultra-low overhead eBPF monitoring agent',
-      screenshots: ['https://cdn.kanzen.tech/img1.png'],
+      screenshots: ['https://cdn.veyroo.tech/img1.png'],
       category: ProductCategory.TOOL,
       techStack: ['Rust', 'eBPF', 'Tokio'],
       status: ProductStatus.LIVE,
       isFeatured: true,
-      demoUrl: 'https://sentinel.kanzen.tech/demo',
+      demoUrl: 'https://sentinel.veyroo.tech/demo',
     };
 
     const entity = productsMapper.toEntity(dto);
     expect(entity.id).toBe('prod-1');
-    expect(entity.name).toBe('Kanzen Sentinel Daemon');
+    expect(entity.name).toBe('Veyroo Sentinel Daemon');
     expect(entity.category).toBe(ProductCategory.TOOL);
     expect(entity.status).toBe(ProductStatus.LIVE);
     expect(entity.techStack).toEqual(['Rust', 'eBPF', 'Tokio']);

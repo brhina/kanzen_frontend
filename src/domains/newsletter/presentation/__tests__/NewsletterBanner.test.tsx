@@ -13,7 +13,7 @@ describe('NewsletterBanner', () => {
     );
 
     expect(html).toContain('Stay Ahead of Architectural Shifts');
-    expect(html).toContain('The Kanzen Architecture Dispatch');
+    expect(html).toContain('The Veyroo Architecture Dispatch');
     expect(html).toContain('Subscribe');
   });
 

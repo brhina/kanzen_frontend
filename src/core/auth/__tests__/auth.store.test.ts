@@ -30,7 +30,7 @@ describe('authStore & Permission Matrix', () => {
       firstName: 'Jane',
       lastName: 'Doe',
       fullName: 'Jane Doe',
-      email: 'jane@kanzen.tech',
+      email: 'jane@veyroo.tech',
       isAdmin: false,
       permissions: [PERMISSIONS.BLOG_READ, PERMISSIONS.BLOG_WRITE],
       status: 'active',
@@ -45,7 +45,7 @@ describe('authStore & Permission Matrix', () => {
     expect(state.isAuthenticated).toBe(true);
     expect(state.accessToken).toBe('mock_access_token');
     expect(state.refreshToken).toBe('mock_refresh_token');
-    expect(state.user?.email).toBe('jane@kanzen.tech');
+    expect(state.user?.email).toBe('jane@veyroo.tech');
   });
 
   describe('hasPermission resolution & Admin Bypass', () => {
@@ -60,7 +60,7 @@ describe('authStore & Permission Matrix', () => {
         firstName: 'Root',
         lastName: 'Admin',
         fullName: 'Root Admin',
-        email: 'admin@kanzen.tech',
+        email: 'admin@veyroo.tech',
         isAdmin: true,
         permissions: [], // Empty permissions array, but isAdmin is true
         status: 'active',
@@ -81,7 +81,7 @@ describe('authStore & Permission Matrix', () => {
         firstName: 'Content',
         lastName: 'Editor',
         fullName: 'Content Editor',
-        email: 'editor@kanzen.tech',
+        email: 'editor@veyroo.tech',
         isAdmin: false,
         permissions: [PERMISSIONS.BLOG_READ, PERMISSIONS.BLOG_WRITE],
         status: 'active',
@@ -105,7 +105,7 @@ describe('authStore & Permission Matrix', () => {
         firstName: 'Alex',
         lastName: 'Morgan',
         fullName: 'Alex Morgan',
-        email: 'alex@kanzen.tech',
+        email: 'alex@veyroo.tech',
         isAdmin: false,
         permissions: [PERMISSIONS.BLOG_READ, PERMISSIONS.BLOG_WRITE],
         status: 'active',

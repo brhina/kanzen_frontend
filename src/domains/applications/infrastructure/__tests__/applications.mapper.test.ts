@@ -15,7 +15,7 @@ describe('ApplicationsMapper', () => {
     githubUrl: 'https://github.com/torvalds',
     portfolioUrl: 'https://kernel.org',
     coverLetter: 'I wrote Linux and Git.',
-    resumeUrl: 'https://storage.kanzen.tech/resumes/linus.pdf',
+    resumeUrl: 'https://storage.veyroo.tech/resumes/linus.pdf',
     yearsOfExperience: 25,
     currentCompany: 'Linux Foundation',
     expectedSalary: 15000,
@@ -41,7 +41,7 @@ describe('ApplicationsMapper', () => {
     expect(entity.fullName).toBe('Linus Torvalds');
     expect(entity.email).toBe('linus@example.com');
     expect(entity.yearsOfExperience).toBe(25);
-    expect(entity.resumeUrl).toBe('https://storage.kanzen.tech/resumes/linus.pdf');
+    expect(entity.resumeUrl).toBe('https://storage.veyroo.tech/resumes/linus.pdf');
     expect(entity.status).toBe('interview');
     expect(entity.rating).toBe(5);
     expect(entity.interviewDate).toEqual(new Date('2026-10-15T10:00:00.000Z'));
@@ -66,6 +66,6 @@ describe('ApplicationsMapper', () => {
     expect(dto.email).toBe('linus@example.com');
     expect(dto.status).toBe('interview');
     expect(dto.rating).toBe(5);
-    expect(dto.resumeUrl).toBe('https://storage.kanzen.tech/resumes/linus.pdf');
+    expect(dto.resumeUrl).toBe('https://storage.veyroo.tech/resumes/linus.pdf');
   });
 });

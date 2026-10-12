@@ -10,7 +10,7 @@ describe('UserCard', () => {
     firstName: 'Marcus',
     lastName: 'Aurelius',
     fullName: 'Marcus Aurelius',
-    email: 'marcus@kanzen.tech',
+    email: 'marcus@veyroo.tech',
     isAdmin: true,
     permissions: [],
     status: 'active',
@@ -24,7 +24,7 @@ describe('UserCard', () => {
     );
 
     expect(html).toContain('Marcus Aurelius');
-    expect(html).toContain('marcus@kanzen.tech');
+    expect(html).toContain('marcus@veyroo.tech');
     expect(html).toContain('Admin');
     expect(html).toContain('Full System Authority');
   });

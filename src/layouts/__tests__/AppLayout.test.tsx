@@ -43,7 +43,7 @@ describe('Layouts', () => {
     it('renders header, main outlet, and footer for public visitors without AdminBar', () => {
       const html = renderWithProviders(<AppLayout />);
 
-      expect(html).toContain('KANZEN');
+      expect(html).toContain('VEYROO');
       expect(html).toContain('TECH');
       expect(html).toContain('All Systems Operational');
       expect(html).not.toContain('Super Admin');
@@ -57,7 +57,7 @@ describe('Layouts', () => {
           firstName: 'Admin',
           lastName: 'User',
           fullName: 'Admin User',
-          email: 'admin@kanzen.tech',
+          email: 'admin@veyroo.tech',
           isAdmin: true,
           permissions: [],
           status: 'active',
@@ -79,7 +79,7 @@ describe('Layouts', () => {
           firstName: 'Admin',
           lastName: 'User',
           fullName: 'Admin User',
-          email: 'admin@kanzen.tech',
+          email: 'admin@veyroo.tech',
           isAdmin: true,
           permissions: [],
           status: 'active',
@@ -99,7 +99,7 @@ describe('Layouts', () => {
           firstName: 'Admin',
           lastName: 'User',
           fullName: 'Admin User',
-          email: 'admin@kanzen.tech',
+          email: 'admin@veyroo.tech',
           isAdmin: true,
           permissions: [],
           status: 'active',

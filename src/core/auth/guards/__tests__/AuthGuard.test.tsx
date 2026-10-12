@@ -55,7 +55,7 @@ describe('AuthGuard', () => {
         firstName: 'Jane',
         lastName: 'Doe',
         fullName: 'Jane Doe',
-        email: 'jane@kanzen.tech',
+        email: 'jane@veyroo.tech',
         isAdmin: false,
         permissions: [],
         status: 'active',

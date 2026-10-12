@@ -214,11 +214,11 @@ describe('Shared Kernel UI Primitives Rendering', () => {
   it('renders Accordion, Breadcrumb, Progress, Separator, Skeleton, Dropdown', () => {
     const htmlAccordion = renderToStaticMarkup(
       <Accordion
-        items={[{ id: '1', title: 'What is Kanzen?', content: 'Engineering excellence.' }]}
+        items={[{ id: '1', title: 'What is Veyroo Tech?', content: 'Engineering excellence.' }]}
         defaultOpenIds={['1']}
       />,
     );
-    expect(htmlAccordion).toContain('What is Kanzen?');
+    expect(htmlAccordion).toContain('What is Veyroo Tech?');
     expect(htmlAccordion).toContain('Engineering excellence.');
 
     const htmlBreadcrumb = renderToStaticMarkup(

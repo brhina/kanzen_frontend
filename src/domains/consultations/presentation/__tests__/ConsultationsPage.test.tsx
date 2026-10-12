@@ -60,7 +60,7 @@ describe('ConsultationsPage', () => {
         firstName: 'Staff',
         lastName: 'Manager',
         fullName: 'Staff Manager',
-        email: 'staff@kanzen.tech',
+        email: 'staff@veyroo.tech',
         isAdmin: true,
         permissions: ['consultations:read'],
         status: 'active',

@@ -3,8 +3,8 @@ import { EmailVO } from '../value-objects/email.vo';
 
 describe('EmailVO', () => {
   it('creates valid email VO and normalizes casing', () => {
-    const email = new EmailVO('Engineer@Kanzen.Tech');
-    expect(email.getValue()).toBe('engineer@kanzen.tech');
+    const email = new EmailVO('Engineer@Veyroo.Tech');
+    expect(email.getValue()).toBe('engineer@veyroo.tech');
   });
 
   it('throws for invalid email formats', () => {
@@ -14,9 +14,9 @@ describe('EmailVO', () => {
   });
 
   it('compares equality correctly', () => {
-    const a = new EmailVO('test@kanzen.tech');
-    const b = new EmailVO('TEST@kanzen.tech');
-    const c = new EmailVO('other@kanzen.tech');
+    const a = new EmailVO('test@veyroo.tech');
+    const b = new EmailVO('TEST@veyroo.tech');
+    const c = new EmailVO('other@veyroo.tech');
 
     expect(a.equals(b)).toBe(true);
     expect(a.equals(c)).toBe(false);
