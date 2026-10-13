@@ -1,0 +1,14 @@
+node_modules
+dist
+.git
+.github
+.env*
+!.env.example
+coverage
+*.log
+.DS_Store
+.oxlintrc.json
+.vscode
+.claude
+.windsurf
+.agents

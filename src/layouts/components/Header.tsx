@@ -134,20 +134,13 @@ export function Header({ className = '' }: HeaderProps) {
             className="group flex items-center gap-2.5 transition-transform hover:scale-[1.01] shrink-0"
             aria-label="Veyroo Tech Homepage"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-600 via-brand-500 to-amber-500 text-white">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-5 w-5"
-                aria-hidden="true"
-              >
-                <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
-              </svg>
-            </div>
+            <img
+              src="/veyroo.png"
+              alt="Veyroo Tech Logo"
+              className="h-9 w-9 object-contain shrink-0 transition-transform group-hover:scale-105"
+              width={36}
+              height={36}
+            />
             <div className="flex flex-col">
               <span className="text-base font-black tracking-tight text-slate-900 dark:text-white leading-none">
                 VEYROO<span className="text-brand-500 ml-1">TECH</span>

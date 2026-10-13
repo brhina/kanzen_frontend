@@ -106,20 +106,13 @@ export function Navigation({ className = '' }: NavigationProps) {
       className={className}
       title={
         <div className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-500 text-white">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-4 w-4"
-              aria-hidden="true"
-            >
-              <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
-            </svg>
-          </div>
+          <img
+            src="/veyroo.png"
+            alt="Veyroo Tech Logo"
+            className="h-7 w-7 object-contain shrink-0"
+            width={28}
+            height={28}
+          />
           <span className="font-black text-slate-900 dark:text-white">
             VEYROO<span className="text-brand-500 ml-1">TECH</span>
           </span>

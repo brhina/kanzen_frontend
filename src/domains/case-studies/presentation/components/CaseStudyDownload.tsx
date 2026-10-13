@@ -47,7 +47,7 @@ export function CaseStudyDownload({
   }
 
   return (
-    <div className="rounded-2xl border border-slate-200/90 bg-gradient-to-r from-brand-50/50 via-white to-slate-50 text-slate-900 p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 dark:border-slate-800 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-950 dark:text-white">
+    <div className="rounded-2xl border border-slate-200/90 bg-gradient-to-r from-brand-50/50 via-white to-slate-50 text-slate-900 p-6 sm:p-8 flex flex-col items-start gap-6 dark:border-slate-800 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-950 dark:text-white">
       <div className="space-y-2">
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-700 dark:text-brand-300">
           <FileText className="h-4 w-4" />
@@ -56,12 +56,12 @@ export function CaseStudyDownload({
         <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
           Download Enterprise Architecture Report
         </h3>
-        <p className="text-sm text-slate-600 dark:text-slate-300 max-w-xl">
+        <p className="text-sm text-slate-600 dark:text-slate-300 max-w-2xl">
           Get the complete breakdown including telemetry graphs, database schemas, and performance benchmarks for this deployment.
         </p>
       </div>
 
-      <div className="flex-shrink-0">
+      <div className="pt-1">
         <Button
           variant="secondary"
           size="lg"

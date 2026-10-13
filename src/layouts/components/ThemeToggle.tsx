@@ -13,7 +13,6 @@ export interface ThemeToggleProps {
 interface ThemeOption {
   value: ThemeMode;
   label: string;
-  description: string;
   icon: ReactNode;
 }
 
@@ -32,19 +31,16 @@ export function ThemeToggle({
     {
       value: 'light',
       label: 'Light',
-      description: 'Clean, high-clarity daylight theme',
       icon: <Sun className="h-4 w-4" />,
     },
     {
       value: 'dark',
       label: 'Dark',
-      description: 'Deep contrast, reduced eye fatigue',
       icon: <Moon className="h-4 w-4" />,
     },
     {
       value: 'system',
       label: 'System',
-      description: `Follows your OS appearance (currently ${resolvedTheme === 'dark' ? 'Dark' : 'Light'})`,
       icon: <Laptop className="h-4 w-4" />,
     },
   ];
@@ -73,7 +69,7 @@ export function ThemeToggle({
                   ? 'bg-white text-brand-600 shadow-xs dark:bg-slate-900 dark:text-brand-400 font-semibold ring-1 ring-slate-200/60 dark:ring-slate-700/60'
                   : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-white/50 dark:hover:bg-slate-700/40',
               )}
-              title={`${option.label}: ${option.description}`}
+              title={option.label}
             >
               <span className={cn('shrink-0', isActive ? 'text-brand-500' : 'text-slate-400 dark:text-slate-500')}>
                 {option.icon}
@@ -123,28 +119,11 @@ export function ThemeToggle({
           role="menu"
           aria-label="Theme options"
           className={cn(
-            'absolute z-50 mt-2 w-64 rounded-2xl border border-slate-200/90 bg-white/95 p-2 shadow-2xl backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95 transition-all animate-in fade-in-0 zoom-in-95',
+            'absolute z-50 mt-2 w-36 rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl dark:border-slate-800 dark:bg-slate-900',
             align === 'right' ? 'right-0' : 'left-0',
           )}
         >
-          <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800/80 mb-1">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Appearance &amp; Theme
-            </p>
-            <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
-              Active mode:{' '}
-              <span className="font-semibold text-brand-600 dark:text-brand-400 capitalize">
-                {theme}
-              </span>{' '}
-              {theme === 'system' && (
-                <span className="text-[11px] text-slate-400 dark:text-slate-500">
-                  ({resolvedTheme} rendered)
-                </span>
-              )}
-            </p>
-          </div>
-
-          <div className="space-y-1">
+          <div className="space-y-0.5">
             {themeOptions.map((option) => {
               const isSelected = theme === option.value;
               return (
@@ -157,33 +136,21 @@ export function ThemeToggle({
                     setIsOpen(false);
                   }}
                   className={cn(
-                    'group flex w-full items-start gap-3 rounded-xl px-3 py-2.5 text-left transition-all cursor-pointer',
+                    'flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors cursor-pointer',
                     isSelected
-                      ? 'bg-brand-50/80 text-brand-900 dark:bg-brand-950/40 dark:text-brand-200 ring-1 ring-brand-500/20'
-                      : 'text-slate-700 hover:bg-slate-100/80 dark:text-slate-300 dark:hover:bg-slate-800/70',
+                      ? 'bg-brand-50 text-brand-700 dark:bg-brand-950/50 dark:text-brand-300 font-semibold'
+                      : 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800',
                   )}
                 >
-                  <div
-                    className={cn(
-                      'mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-colors',
-                      isSelected
-                        ? 'bg-brand-500 text-white shadow-xs'
-                        : 'bg-slate-100 text-slate-600 group-hover:bg-slate-200 group-hover:text-slate-900 dark:bg-slate-800 dark:text-slate-400 dark:group-hover:bg-slate-700 dark:group-hover:text-white',
-                    )}
-                  >
-                    {option.icon}
+                  <div className="flex items-center gap-2">
+                    <span className={cn('shrink-0', isSelected ? 'text-brand-500' : 'text-slate-500 dark:text-slate-400')}>
+                      {option.icon}
+                    </span>
+                    <span>{option.label}</span>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold">{option.label}</span>
-                      {isSelected && (
-                        <Check className="h-3.5 w-3.5 text-brand-600 dark:text-brand-400" />
-                      )}
-                    </div>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">
-                      {option.description}
-                    </p>
-                  </div>
+                  {isSelected && (
+                    <Check className="h-3.5 w-3.5 text-brand-600 dark:text-brand-400 shrink-0" />
+                  )}
                 </button>
               );
             })}

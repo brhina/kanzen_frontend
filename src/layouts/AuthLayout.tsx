@@ -33,20 +33,13 @@ export function AuthLayout({ className = '' }: AuthLayoutProps) {
           className="group flex items-center gap-2.5 transition-transform hover:scale-[1.01]"
           aria-label="Veyroo Tech Homepage"
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-white">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-4 w-4"
-              aria-hidden="true"
-            >
-              <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
-            </svg>
-          </div>
+          <img
+            src="/veyroo.png"
+            alt="Veyroo Tech Logo"
+            className="h-8 w-8 object-contain shrink-0"
+            width={32}
+            height={32}
+          />
           <span className="text-base font-black tracking-tight text-slate-900 dark:text-white">
             VEYROO<span className="text-brand-500 ml-1">TECH</span>
           </span>
