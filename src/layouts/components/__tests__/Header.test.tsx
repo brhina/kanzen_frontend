@@ -62,7 +62,6 @@ describe('Header', () => {
     // Dropdown options
     expect(html).toContain('/consultations');
     expect(html).toContain('Consultation');
-    expect(html).toContain('45m Advisory');
     expect(html).toContain('/leads');
     expect(html).toContain('Leads');
     expect(html).toContain('Project Scoping');

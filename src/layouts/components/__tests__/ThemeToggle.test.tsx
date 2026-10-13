@@ -37,4 +37,10 @@ describe('ThemeToggle', () => {
     const htmlLight = renderToStaticMarkup(<ThemeToggle variant="segmented" />);
     expect(htmlLight).toContain('aria-pressed="true"');
   });
+
+  it('does not include verbose descriptions in themeOptions', () => {
+    const html = renderToStaticMarkup(<ThemeToggle variant="segmented" />);
+    expect(html).not.toContain('Clean, high-clarity daylight theme');
+    expect(html).not.toContain('Deep contrast, reduced eye fatigue');
+  });
 });
