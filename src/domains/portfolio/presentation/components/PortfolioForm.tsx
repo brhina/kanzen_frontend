@@ -8,7 +8,10 @@ import { Textarea } from '@/shared/ui/textarea';
 import { Select } from '@/shared/ui/select';
 import { Button } from '@/shared/ui/button';
 import { Checkbox } from '@/shared/ui/checkbox';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Image as ImageIcon } from 'lucide-react';
+import { MediaImageUpload } from '@/domains/media/presentation/components/MediaImageUpload';
+import { MediaPicker } from '@/domains/media/presentation/components/MediaPicker';
+import { MediaFolder } from '@/domains/media/domain/enums/media-folder.enum';
 
 export interface PortfolioFormProps {
   initialData?: PortfolioItemEntity | null;
@@ -55,6 +58,7 @@ export function PortfolioForm({
   );
   const [isFeatured, setIsFeatured] = useState(initialData?.isFeatured || false);
   const [isConfidential, setIsConfidential] = useState(initialData?.isConfidential || false);
+  const [isGalleryPickerOpen, setIsGalleryPickerOpen] = useState(false);
 
   // Dynamic metrics state
   const [metrics, setMetrics] = useState<ProjectMetric[]>(
@@ -413,26 +417,52 @@ export function PortfolioForm({
         </h3>
 
         <div>
-          <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
-            Cover Image URL *
-          </label>
-          <Input
+          <MediaImageUpload
             value={coverImage}
-            onChange={(e) => setCoverImage(e.target.value)}
-            placeholder="https://images.unsplash.com/..."
+            onChange={(url) => {
+              setCoverImage(url);
+              if (errors.coverImage) setErrors((prev) => ({ ...prev, coverImage: '' }));
+            }}
+            folder={MediaFolder.PORTFOLIO}
+            label="Project Showcase Cover Image *"
+            description="Hero thumbnail displayed in project cards and gallery header (16:9 recommended)"
             error={errors.coverImage}
+            aspectRatio="video"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
-            Gallery Images (one URL per line)
-          </label>
+          <div className="flex items-center justify-between mb-1">
+            <label className="block text-xs font-medium text-slate-700 dark:text-slate-300">
+              Gallery Images (one URL per line)
+            </label>
+            <Button
+              type="button"
+              variant="ghost"
+              size="xs"
+              onClick={() => setIsGalleryPickerOpen(true)}
+              className="flex items-center gap-1 text-xs text-brand-600 hover:text-brand-700 dark:text-brand-400"
+            >
+              <ImageIcon className="h-3.5 w-3.5" />
+              <span>Add from Media Library</span>
+            </Button>
+          </div>
           <Textarea
-            rows={2}
+            rows={3}
             value={imagesStr}
             onChange={(e) => setImagesStr(e.target.value)}
             placeholder="https://images.unsplash.com/photo-1...&#10;https://images.unsplash.com/photo-2..."
+          />
+          <MediaPicker
+            isOpen={isGalleryPickerOpen}
+            onClose={() => setIsGalleryPickerOpen(false)}
+            onSelect={(media) => {
+              if (media.url) {
+                setImagesStr((prev) => (prev ? `${prev}\n${media.url}` : media.url));
+              }
+            }}
+            defaultFolder={MediaFolder.PORTFOLIO}
+            title="Select Gallery Screenshot from Media Library"
           />
         </div>
 

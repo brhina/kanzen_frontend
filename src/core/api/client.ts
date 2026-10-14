@@ -20,7 +20,13 @@ export const apiClient: KyInstance = ky.create({
   },
   hooks: {
     beforeRequest: [
-      ({ request }) => {
+      ({ request, options }) => {
+        // If uploading FormData, delete default 'Content-Type: application/json'
+        // so the runtime / browser sets 'multipart/form-data; boundary=...' with proper boundary
+        if (typeof FormData !== 'undefined' && options?.body instanceof FormData) {
+          request.headers.delete('content-type');
+        }
+
         // Automatically attach Bearer token if not already manually set
         if (!request.headers.has('Authorization')) {
           const token = authStore.getState().accessToken;

@@ -42,6 +42,25 @@ export const applicationsApi = {
   },
 
   /**
+   * Upload resume document (PDF, DOC, DOCX up to 10MB) (Public)
+   */
+  async uploadResume(
+    file: File,
+  ): Promise<{ url: string; filename: string; size: number; id: string }> {
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = await apiClient
+      .post(API_ENDPOINTS.applications.uploadResume, {
+        body: formData,
+      })
+      .json<
+        | ApiResponse<{ url: string; filename: string; size: number; id: string }>
+        | { url: string; filename: string; size: number; id: string }
+      >();
+    return unwrapResponse(res);
+  },
+
+  /**
    * List all candidate job applications with filters (Admin)
    */
   async adminList(

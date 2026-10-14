@@ -143,6 +143,7 @@ export const API_ENDPOINTS = {
   applications: {
     submit: 'applications',
     submitForJob: (jobId: string) => `applications/job/${jobId}`,
+    uploadResume: 'applications/upload-resume',
     adminList: 'admin/applications',
     adminDetail: (id: string) => `admin/applications/${id}`,
     adminUpdate: (id: string) => `admin/applications/${id}`,
@@ -161,8 +162,12 @@ export const API_ENDPOINTS = {
   },
   media: {
     adminList: 'admin/media',
+    list: 'media',
     upload: 'admin/media/upload',
+    uploadBulk: 'admin/media/bulk',
+    userUpload: 'media/upload',
     detail: (id: string) => `admin/media/${id}`,
+    publicDetail: (id: string) => `media/${id}`,
     update: (id: string) => `admin/media/${id}`,
     delete: (id: string) => `admin/media/${id}`,
   },

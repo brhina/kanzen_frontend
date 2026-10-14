@@ -8,6 +8,8 @@ import { Textarea } from '@/shared/ui/textarea';
 import { Select } from '@/shared/ui/select';
 import { Button } from '@/shared/ui/button';
 import { Checkbox } from '@/shared/ui/checkbox';
+import { MediaImageUpload } from '@/domains/media/presentation/components/MediaImageUpload';
+import { MediaFolder } from '@/domains/media/domain/enums/media-folder.enum';
 
 export interface TestimonialFormProps {
   initialData?: TestimonialEntity | null;
@@ -166,24 +168,24 @@ export function TestimonialForm({
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
-            Company Logo URL
-          </label>
-          <Input
+          <MediaImageUpload
             value={companyLogo}
-            onChange={(e) => setCompanyLogo(e.target.value)}
-            placeholder="https://.../logo.svg"
+            onChange={setCompanyLogo}
+            folder={MediaFolder.CLIENTS}
+            label="Client Company Logo"
+            description="Brand mark or SVG/PNG vector icon"
+            aspectRatio="auto"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
-            Avatar Image URL
-          </label>
-          <Input
+          <MediaImageUpload
             value={avatar}
-            onChange={(e) => setAvatar(e.target.value)}
-            placeholder="https://images.unsplash.com/..."
+            onChange={setAvatar}
+            folder={MediaFolder.CLIENTS}
+            label="Client Author Avatar"
+            description="Client portrait photo (square aspect recommended)"
+            aspectRatio="square"
           />
         </div>
       </div>

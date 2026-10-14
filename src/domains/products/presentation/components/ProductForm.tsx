@@ -8,6 +8,9 @@ import { Textarea } from '@/shared/ui/textarea';
 import { Select } from '@/shared/ui/select';
 import { Button } from '@/shared/ui/button';
 import { Checkbox } from '@/shared/ui/checkbox';
+import { Image as ImageIcon } from 'lucide-react';
+import { MediaPicker } from '@/domains/media/presentation/components/MediaPicker';
+import { MediaFolder } from '@/domains/media/domain/enums/media-folder.enum';
 
 export interface ProductFormProps {
   initialData?: ProductEntity | null;
@@ -42,6 +45,7 @@ export function ProductForm({
     (initialData?.screenshots || []).join('\n'),
   );
   const [isFeatured, setIsFeatured] = useState(initialData?.isFeatured || false);
+  const [isMediaPickerOpen, setIsMediaPickerOpen] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = (e: FormEvent) => {
@@ -211,14 +215,37 @@ export function ProductForm({
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-            Screenshot URLs (one per line)
-          </label>
+          <div className="flex items-center justify-between mb-1">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
+              Screenshot URLs (one per line)
+            </label>
+            <Button
+              type="button"
+              variant="ghost"
+              size="xs"
+              onClick={() => setIsMediaPickerOpen(true)}
+              className="flex items-center gap-1 text-xs text-brand-600 hover:text-brand-700 dark:text-brand-400"
+            >
+              <ImageIcon className="h-3.5 w-3.5" />
+              <span>Add from Media Library</span>
+            </Button>
+          </div>
           <Textarea
             value={screenshotsStr}
             onChange={(e) => setScreenshotsStr(e.target.value)}
             placeholder="https://cdn.veyroo.tech/products/radar-1.png&#10;https://cdn.veyroo.tech/products/radar-2.png"
             rows={3}
+          />
+          <MediaPicker
+            isOpen={isMediaPickerOpen}
+            onClose={() => setIsMediaPickerOpen(false)}
+            onSelect={(media) => {
+              if (media.url) {
+                setScreenshotsStr((prev) => (prev ? `${prev}\n${media.url}` : media.url));
+              }
+            }}
+            defaultFolder={MediaFolder.PORTFOLIO}
+            title="Select Product Screenshot from Media Library"
           />
         </div>
       </div>

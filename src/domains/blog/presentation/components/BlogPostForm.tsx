@@ -10,6 +10,8 @@ import { Textarea } from '@/shared/ui/textarea';
 import { Button } from '@/shared/ui/button';
 import { Select } from '@/shared/ui/select';
 import { Checkbox } from '@/shared/ui/checkbox';
+import { MediaImageUpload } from '@/domains/media/presentation/components/MediaImageUpload';
+import { MediaFolder } from '@/domains/media/domain/enums/media-folder.enum';
 import type { SeoMeta } from '../../domain/value-objects/seo-meta.vo';
 
 export interface BlogPostFormProps {
@@ -160,17 +162,15 @@ export function BlogPostForm({
       </div>
 
       {/* Visual & Metadata */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-            Cover Image URL
-          </label>
-          <Input
-            value={coverImage}
-            onChange={(e) => setCoverImage(e.target.value)}
-            placeholder="https://images.unsplash.com/photo-..."
-          />
-        </div>
+      <div className="space-y-4">
+        <MediaImageUpload
+          value={coverImage}
+          onChange={setCoverImage}
+          folder={MediaFolder.BLOG}
+          label="Featured Article Cover Image"
+          description="Upload or pick a high-resolution hero image (16:9 recommended)"
+          aspectRatio="video"
+        />
 
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">

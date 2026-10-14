@@ -14,5 +14,6 @@ export * from './presentation/components/MediaGrid';
 export * from './presentation/components/MediaUploadZone';
 export * from './presentation/components/MediaLibrary';
 export * from './presentation/components/MediaPicker';
+export * from './presentation/components/MediaImageUpload';
 export * from './presentation/components/ImageWithFallback';
 export * from './presentation/pages/MediaPage';

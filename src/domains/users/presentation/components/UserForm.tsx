@@ -10,6 +10,8 @@ import { Input } from '@/shared/ui/input';
 import { Select } from '@/shared/ui/select';
 import { Checkbox } from '@/shared/ui/checkbox';
 import { Button } from '@/shared/ui/button';
+import { MediaImageUpload } from '@/domains/media/presentation/components/MediaImageUpload';
+import { MediaFolder } from '@/domains/media/domain/enums/media-folder.enum';
 
 const userFormSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
@@ -17,6 +19,7 @@ const userFormSchema = z.object({
   email: z.string().min(1, 'Email is required').email('Invalid email address'),
   password: z.string().optional(),
   phone: z.string().optional(),
+  avatar: z.string().optional(),
   isAdmin: z.boolean(),
   status: z.enum(['active', 'inactive', 'suspended']),
   permissions: z.array(z.string()),
@@ -61,6 +64,7 @@ export function UserForm({ user, onSuccess, onCancel }: UserFormProps) {
       email: user?.email || '',
       password: '',
       phone: user?.phone || '',
+      avatar: user?.avatar || '',
       isAdmin: user?.isAdmin || false,
       status: (user?.status as 'active' | 'inactive' | 'suspended') || 'active',
       permissions: user?.permissions || [],
@@ -70,6 +74,7 @@ export function UserForm({ user, onSuccess, onCancel }: UserFormProps) {
   const selectedPermissions = useWatch({ control, name: 'permissions' }) || [];
   const isAdmin = useWatch({ control, name: 'isAdmin' });
   const status = useWatch({ control, name: 'status' });
+  const avatar = useWatch({ control, name: 'avatar' }) || '';
 
   const handlePermissionToggle = (perm: string, checked: boolean) => {
     if (checked) {
@@ -103,6 +108,7 @@ export function UserForm({ user, onSuccess, onCancel }: UserFormProps) {
           lastName: data.lastName,
           email: data.email,
           phone: data.phone || undefined,
+          avatar: data.avatar || undefined,
           isAdmin: data.isAdmin,
           status: data.status,
           permissions: data.permissions,
@@ -119,6 +125,7 @@ export function UserForm({ user, onSuccess, onCancel }: UserFormProps) {
         email: data.email,
         password: data.password,
         phone: data.phone || undefined,
+        avatar: data.avatar || undefined,
         isAdmin: data.isAdmin,
         status: data.status,
         permissions: data.permissions,
@@ -133,6 +140,17 @@ export function UserForm({ user, onSuccess, onCancel }: UserFormProps) {
         <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
           Account Information
         </h4>
+
+        <div>
+          <MediaImageUpload
+            value={avatar}
+            onChange={(url) => setValue('avatar', url, { shouldDirty: true })}
+            folder={MediaFolder.TEAM}
+            label="Profile Avatar"
+            description="Upload or choose a team portrait photo (square aspect recommended)"
+            aspectRatio="square"
+          />
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>

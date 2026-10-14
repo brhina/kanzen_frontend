@@ -7,6 +7,8 @@ import { Textarea } from '@/shared/ui/textarea';
 import { Select } from '@/shared/ui/select';
 import { Button } from '@/shared/ui/button';
 import { Checkbox } from '@/shared/ui/checkbox';
+import { MediaImageUpload } from '@/domains/media/presentation/components/MediaImageUpload';
+import { MediaFolder } from '@/domains/media/domain/enums/media-folder.enum';
 
 export interface SolutionFormProps {
   initialData?: SolutionEntity | null;
@@ -161,17 +163,15 @@ export function SolutionForm({
       </div>
 
       {/* Visual & Status */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-            Cover Diagram URL
-          </label>
-          <Input
-            value={coverImage}
-            onChange={(e) => setCoverImage(e.target.value)}
-            placeholder="https://cdn.veyroo.tech/architecture/ledger.png"
-          />
-        </div>
+      <div className="space-y-4">
+        <MediaImageUpload
+          value={coverImage}
+          onChange={setCoverImage}
+          folder={MediaFolder.PORTFOLIO}
+          label="Architectural Blueprint / Diagram"
+          description="System architecture blueprint or topology diagram displayed in solution overview"
+          aspectRatio="video"
+        />
 
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">

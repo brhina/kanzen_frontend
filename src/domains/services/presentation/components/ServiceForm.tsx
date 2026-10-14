@@ -9,6 +9,8 @@ import { Textarea } from '@/shared/ui/textarea';
 import { Select } from '@/shared/ui/select';
 import { Button } from '@/shared/ui/button';
 import { Checkbox } from '@/shared/ui/checkbox';
+import { MediaImageUpload } from '@/domains/media/presentation/components/MediaImageUpload';
+import { MediaFolder } from '@/domains/media/domain/enums/media-folder.enum';
 
 export interface ServiceFormProps {
   initialData?: ServiceEntity | null;
@@ -55,6 +57,7 @@ export function ServiceForm({
     (initialData?.status as ServiceItemStatus) || ServiceItemStatus.ACTIVE,
   );
   const [isFeatured, setIsFeatured] = useState(initialData?.isFeatured || false);
+  const [coverImage, setCoverImage] = useState(initialData?.coverImage || '');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = (e: FormEvent) => {
@@ -99,6 +102,7 @@ export function ServiceForm({
       startingPrice: startingPrice ? Number(startingPrice) : undefined,
       pricingModel: pricingModel || undefined,
       estimatedTimeline: estimatedTimeline.trim() || undefined,
+      coverImage: coverImage.trim() || undefined,
       status,
       isFeatured,
     };
@@ -200,6 +204,17 @@ export function ServiceForm({
           {errors.description && (
             <p className="text-xs text-red-500 mt-1">{errors.description}</p>
           )}
+        </div>
+
+        <div>
+          <MediaImageUpload
+            value={coverImage}
+            onChange={setCoverImage}
+            folder={MediaFolder.PORTFOLIO}
+            label="Service Offering Cover Image"
+            description="Visual graphic or banner representing this engineering service (16:9 recommended)"
+            aspectRatio="video"
+          />
         </div>
       </div>
 

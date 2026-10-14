@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import { Node } from '@tiptap/core';
 import {
   Bold,
   Italic,
@@ -16,9 +17,33 @@ import {
   Redo,
   FileCode,
   Eye,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { cn } from '@/shared/utils/cn';
 import { Button } from '@/shared/ui/button';
+import { MediaPicker } from '@/domains/media/presentation/components/MediaPicker';
+import { MediaFolder } from '@/domains/media/domain/enums/media-folder.enum';
+
+export const ImageExtension = Node.create({
+  name: 'image',
+  group: 'block',
+  selectable: true,
+  draggable: true,
+  atom: true,
+  addAttributes() {
+    return {
+      src: { default: null },
+      alt: { default: null },
+      title: { default: null },
+    };
+  },
+  parseHTML() {
+    return [{ tag: 'img[src]' }];
+  },
+  renderHTML({ HTMLAttributes }) {
+    return ['img', HTMLAttributes];
+  },
+});
 
 export interface BlogEditorProps {
   value: string;
@@ -33,9 +58,10 @@ export function BlogEditor({
   className,
 }: BlogEditorProps) {
   const [isRawMode, setIsRawMode] = useState(false);
+  const [isMediaPickerOpen, setIsMediaPickerOpen] = useState(false);
 
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [StarterKit, ImageExtension],
     content: value || '',
     onUpdate: ({ editor: ed }) => {
       const html = ed.getHTML();
@@ -207,6 +233,17 @@ export function BlogEditor({
             <Minus className="h-4 w-4" />
           </button>
 
+          {/* Insert Image from Media */}
+          <button
+            type="button"
+            onClick={() => setIsMediaPickerOpen(true)}
+            disabled={isRawMode}
+            className="rounded p-1.5 text-xs text-slate-700 transition hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800"
+            title="Insert Image from Media Library"
+          >
+            <ImageIcon className="h-4 w-4 text-brand-600 dark:text-brand-400" />
+          </button>
+
           <div className="mx-1 h-4 w-px bg-slate-300 dark:bg-slate-700" />
 
           {/* Undo / Redo */}
@@ -277,6 +314,29 @@ export function BlogEditor({
         <span className="font-mono">{wordCount} words &bull; ~{readingTime} min read</span>
         <span className="text-[11px] text-slate-400 dark:text-slate-500">TipTap Rich Text Engine</span>
       </div>
+
+      {/* Media Picker Modal */}
+      <MediaPicker
+        isOpen={isMediaPickerOpen}
+        onClose={() => setIsMediaPickerOpen(false)}
+        onSelect={(media) => {
+          if (editor && media.url) {
+            editor
+              .chain()
+              .focus()
+              .insertContent({
+                type: 'image',
+                attrs: {
+                  src: media.url,
+                  alt: media.alt || media.filename || 'Blog image',
+                },
+              })
+              .run();
+          }
+        }}
+        defaultFolder={MediaFolder.BLOG}
+        title="Insert Image into Article Body"
+      />
     </div>
   );
 }

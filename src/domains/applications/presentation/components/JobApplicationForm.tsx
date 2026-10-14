@@ -5,15 +5,15 @@ import { Input } from '@/shared/ui/input';
 import { Textarea } from '@/shared/ui/textarea';
 import {
   FileText,
-  UploadCloud,
   CheckCircle2,
   Loader2,
   User,
   Briefcase,
   FileCheck,
   AlertCircle,
-  X,
 } from 'lucide-react';
+import { DocumentUpload } from '@/shared/ui/upload';
+import { applicationsApi } from '../../infrastructure/applications.api';
 import type { CreateJobApplicationDto } from '../../infrastructure/applications.dto';
 
 interface JobApplicationFormProps {
@@ -52,41 +52,11 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
 
   // Resume & Cover Letter
   const [resumeUrl, setResumeUrl] = useState('');
-  const [resumeFile, setResumeFile] = useState<File | null>(null);
+  const [resumeFileName, setResumeFileName] = useState('');
+  const [resumeFileSize, setResumeFileSize] = useState<number | undefined>(undefined);
   const [coverLetter, setCoverLetter] = useState('');
 
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  // File drop handler for PDF
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.type !== 'application/pdf' && !file.name.endsWith('.pdf')) {
-        setErrorMsg('Please upload a PDF file for your resume.');
-        return;
-      }
-      if (file.size > 10 * 1024 * 1024) {
-        setErrorMsg('Resume file size must not exceed 10MB.');
-        return;
-      }
-      setErrorMsg(null);
-      setResumeFile(file);
-
-      // Create a local blob/data URL or cloud link
-      try {
-        const fileUrl = URL.createObjectURL(file);
-        setResumeUrl(fileUrl);
-      } catch {
-        // Fallback
-        setResumeUrl(`https://storage.veyroo.tech/resumes/${file.name}`);
-      }
-    }
-  };
-
-  const removeResumeFile = () => {
-    setResumeFile(null);
-    setResumeUrl('');
-  };
 
   // Step Validation
   const validateStep1 = () => {
@@ -108,8 +78,8 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
   };
 
   const validateStep3 = () => {
-    if (!resumeUrl.trim() && !resumeFile) {
-      setErrorMsg('Please upload your resume PDF or provide a direct link.');
+    if (!resumeUrl.trim()) {
+      setErrorMsg('Please upload your resume before proceeding.');
       return false;
     }
     setErrorMsg(null);
@@ -137,11 +107,10 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
     e.preventDefault();
     setErrorMsg(null);
 
-    const finalResumeUrl =
-      resumeUrl ||
-      (resumeFile
-        ? `https://storage.veyroo.tech/resumes/${encodeURIComponent(resumeFile.name)}`
-        : 'https://cdn.veyroo.tech/resumes/applicant-resume.pdf');
+    if (!resumeUrl.trim()) {
+      setErrorMsg('Resume upload is required to submit application.');
+      return;
+    }
 
     const payload: CreateJobApplicationDto = {
       jobId,
@@ -152,7 +121,7 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
       linkedinUrl: linkedinUrl.trim() || undefined,
       portfolioUrl: portfolioUrl.trim() || undefined,
       githubUrl: githubUrl.trim() || undefined,
-      resumeUrl: finalResumeUrl,
+      resumeUrl,
       coverLetter: coverLetter.trim() || undefined,
       yearsOfExperience: yearsOfExperience ? Number(yearsOfExperience) : 0,
       currentCompany: currentCompany.trim() || undefined,
@@ -407,61 +376,32 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
       {/* Step 3: Resume PDF & Cover Letter */}
       {currentStep === 3 && (
         <div className="space-y-5">
-          {/* Resume Upload Box */}
-          <div className="space-y-2">
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
-              Resume / Curriculum Vitae (PDF) *
-            </label>
-
-            {resumeFile ? (
-              <div className="flex items-center justify-between p-4 rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50/60 dark:bg-emerald-950/20">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-                    <FileText className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold text-slate-900 dark:text-white">
-                      {resumeFile.name}
-                    </p>
-                    <p className="text-2xs text-slate-500">
-                      {(resumeFile.size / 1024 / 1024).toFixed(2)} MB • PDF Document
-                    </p>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={removeResumeFile}
-                  className="text-slate-400 hover:text-rose-500 p-1"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
-            ) : (
-              <label className="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-400 rounded-xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-colors group bg-slate-50/50 dark:bg-slate-900/40">
-                <input
-                  type="file"
-                  accept="application/pdf,.pdf"
-                  onChange={handleFileChange}
-                  className="sr-only"
-                />
-                <div className="h-12 w-12 rounded-full bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform">
-                  <UploadCloud className="h-6 w-6" />
-                </div>
-                <div className="mt-3 space-y-1">
-                  <p className="text-xs font-semibold text-slate-900 dark:text-white">
-                    Click to upload or drag & drop your PDF resume
-                  </p>
-                  <p className="text-2xs text-slate-500 dark:text-slate-400">
-                    PDF files only, up to 10MB
-                  </p>
-                </div>
-              </label>
-            )}
+          {/* Resume Upload Component */}
+          <div>
+            <DocumentUpload
+              value={resumeUrl}
+              fileName={resumeFileName}
+              fileSize={resumeFileSize}
+              onChange={(url, meta) => {
+                setResumeUrl(url);
+                if (meta?.filename) setResumeFileName(meta.filename);
+                if (meta?.size) setResumeFileSize(meta.size);
+                setErrorMsg(null);
+              }}
+              onRemove={() => {
+                setResumeUrl('');
+                setResumeFileName('');
+                setResumeFileSize(undefined);
+              }}
+              uploadFn={applicationsApi.uploadResume}
+              label="Resume / Curriculum Vitae (PDF, DOC, DOCX) *"
+              description="Upload your latest resume document up to 10MB"
+            />
 
             {/* Alternative Direct URL option */}
-            <div className="pt-2">
+            <div className="pt-3">
               <label className="block text-2xs text-slate-500 dark:text-slate-400 mb-1">
-                Or provide a direct link to your hosted resume (e.g. Google Drive, Dropbox, Notion):
+                Or paste a direct URL to your hosted resume (e.g. Google Drive, Dropbox, Portfolio):
               </label>
               <Input
                 value={resumeUrl}
@@ -523,7 +463,7 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
             <div className="pt-2 border-t border-slate-200 dark:border-slate-800">
               <span className="text-slate-500">Resume Attached:</span>{' '}
               <span className="font-mono text-2xs text-indigo-600 dark:text-indigo-400">
-                {resumeFile ? resumeFile.name : resumeUrl}
+                {resumeFileName || resumeUrl}
               </span>
             </div>
           </div>

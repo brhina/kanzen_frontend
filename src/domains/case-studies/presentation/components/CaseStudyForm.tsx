@@ -8,6 +8,10 @@ import { Select } from '@/shared/ui/select';
 import { Button } from '@/shared/ui/button';
 import { Checkbox } from '@/shared/ui/checkbox';
 import { Trash2 } from 'lucide-react';
+import { MediaImageUpload } from '@/domains/media/presentation/components/MediaImageUpload';
+import { DocumentUpload } from '@/shared/ui/upload';
+import { MediaFolder } from '@/domains/media/domain/enums/media-folder.enum';
+import { mediaApi } from '@/domains/media/infrastructure/media.api';
 
 export interface CaseStudyFormProps {
   initialData?: CaseStudyEntity | null;
@@ -411,26 +415,31 @@ export function CaseStudyForm({
         </h3>
 
         <div>
-          <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
-            Cover Image URL *
-          </label>
-          <Input
+          <MediaImageUpload
             value={coverImage}
-            onChange={(e) => setCoverImage(e.target.value)}
-            placeholder="https://images.unsplash.com/..."
+            onChange={(url) => {
+              setCoverImage(url);
+              if (errors.coverImage) setErrors((prev) => ({ ...prev, coverImage: '' }));
+            }}
+            folder={MediaFolder.PORTFOLIO}
+            label="Case Study Cover Image *"
+            description="Hero imagery showcased on case study lists and header banner (16:9 recommended)"
             error={errors.coverImage}
+            aspectRatio="video"
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
-              Whitepaper PDF URL
-            </label>
-            <Input
+            <DocumentUpload
               value={pdfUrl}
-              onChange={(e) => setPdfUrl(e.target.value)}
-              placeholder="https://downloads.veyroo.tech/case-studies/study.pdf"
+              onChange={(url) => setPdfUrl(url)}
+              uploadFn={async (file) => {
+                const res = await mediaApi.upload(file, { folder: MediaFolder.GENERAL, alt: `Case Study Whitepaper - ${file.name}` });
+                return { url: res.url, filename: res.filename, size: res.size };
+              }}
+              label="Downloadable Whitepaper PDF"
+              description="Attach an in-depth whitepaper or report PDF for readers to download"
             />
           </div>
 
