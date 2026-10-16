@@ -40,7 +40,7 @@ export function MediaPage() {
   const { isEditMode, viewMode, setViewMode } = useUIStore();
 
   const [activeFolder, setActiveFolder] = useState<string>('all');
-  const [search, setSearch] = useState<string>('');
+  const [search] = useState<string>('');
   const [page, setPage] = useState<number>(1);
   const [showUploadZone, setShowUploadZone] = useState<boolean>(false);
   const [editingItem, setEditingItem] = useState<MediaFileEntity | null>(null);
@@ -206,7 +206,7 @@ export function MediaPage() {
       )}
 
       {/* Filter and search toolbar */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      {/* <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1">
           {FOLDER_TABS.map((tab) => (
             <button
@@ -243,7 +243,7 @@ export function MediaPage() {
             {data?.total ?? 0} assets
           </span>
         </div>
-      </div>
+      </div> */}
 
       {/* Showcase Grid Mode */}
       {viewMode === 'grid' && (
