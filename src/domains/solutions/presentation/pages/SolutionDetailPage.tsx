@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router';
 import {
-  ArrowLeft,
-  Edit3,
-  Trash2,
   CheckCircle2,
-  Calendar,
   Sparkles,
 } from 'lucide-react';
 import { useSolution } from '../../application/use-cases/useSolution';
@@ -66,8 +62,7 @@ export function SolutionDetailPage() {
         </p>
         <div className="mt-6">
           <Link to="/solutions">
-            <Button variant="primary" size="sm" className="inline-flex items-center gap-1.5">
-              <ArrowLeft className="h-4 w-4" />
+            <Button variant="primary" size="sm">
               <span>Back to Solutions</span>
             </Button>
           </Link>
@@ -100,9 +95,7 @@ export function SolutionDetailPage() {
               variant="outline"
               size="xs"
               onClick={() => setIsEditDrawerOpen(true)}
-              className="flex items-center gap-1"
             >
-              <Edit3 className="h-3.5 w-3.5" />
               <span>Edit Blueprint</span>
             </Button>
 
@@ -112,9 +105,7 @@ export function SolutionDetailPage() {
                 variant="danger"
                 size="xs"
                 onClick={() => setIsDeleteModalOpen(true)}
-                className="flex items-center gap-1"
               >
-                <Trash2 className="h-3.5 w-3.5" />
                 <span>Delete</span>
               </Button>
             </PermissionGate>
@@ -210,8 +201,7 @@ export function SolutionDetailPage() {
 
               <div className="space-y-2 pt-2">
                 <Link to="/consultations" className="w-full block">
-                  <Button variant="primary" size="md" className="w-full flex items-center justify-center gap-2">
-                    <Calendar className="h-4 w-4" />
+                  <Button variant="primary" size="md" className="w-full flex items-center justify-center">
                     <span>Schedule Architecture Review</span>
                   </Button>
                 </Link>

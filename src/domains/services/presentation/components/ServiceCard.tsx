@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Clock, Edit3 } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import type { ServiceEntity } from '../../domain/entities/service.entity';
 import { ServiceCategoryBadge } from './ServiceCategoryBadge';
 import { ServicePricingBadge } from './ServicePricingBadge';
@@ -41,10 +41,9 @@ export function ServiceCard({
                 variant="ghost"
                 size="xs"
                 onClick={() => onEdit(service)}
-                className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
                 title="Edit Service Offering"
               >
-                <Edit3 className="h-3 w-3" />
                 <span className="text-xs">Edit</span>
               </Button>
             </PermissionGate>

@@ -83,9 +83,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             className="shrink-0"
           />
         )}
-        {!isLoading && leftIcon && <span className="inline-flex shrink-0">{leftIcon}</span>}
         {children && <span>{children}</span>}
-        {!isLoading && rightIcon && <span className="inline-flex shrink-0">{rightIcon}</span>}
       </button>
     );
   },

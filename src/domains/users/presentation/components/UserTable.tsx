@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import { Link } from 'react-router';
-import { Edit2, Trash2, Shield, Eye, MoreHorizontal, UserCheck, UserX } from 'lucide-react';
+import { Edit2, Trash2, Eye, MoreHorizontal, UserCheck, UserX } from 'lucide-react';
 import type { UserEntity } from '../../domain/entities/user.entity';
 import { Table, type ColumnDef } from '@/shared/ui/table';
 import { Avatar } from '@/shared/ui/avatar';
@@ -78,7 +78,6 @@ export function UserTable({
           const user = row.original;
           return user.isAdmin ? (
             <Badge variant="brand" size="sm" className="font-mono text-[10px]">
-              <Shield className="h-3 w-3 mr-1 text-brand-500" />
               <span>Super Admin</span>
             </Badge>
           ) : (

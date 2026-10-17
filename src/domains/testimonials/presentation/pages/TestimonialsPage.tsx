@@ -1,9 +1,5 @@
 import { useState, useMemo } from 'react';
-import {
-  MessageSquare,
-  ShieldCheck,
-  Clock,
-} from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useTestimonials } from '../../application/use-cases/useTestimonials';
 import { useAdminTestimonials } from '../../application/use-cases/useAdminTestimonials';
@@ -258,7 +254,6 @@ export function TestimonialsPage() {
                 : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
             }`}
           >
-            <ShieldCheck className="h-4 w-4" />
             <span>Public Wall of Love</span>
           </button>
 
@@ -271,7 +266,6 @@ export function TestimonialsPage() {
                 : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
             }`}
           >
-            <Clock className="h-4 w-4" />
             <span>Pending Moderation Queue</span>
             {pendingCount > 0 && (
               <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-white text-amber-700">
@@ -313,9 +307,7 @@ export function TestimonialsPage() {
             variant="primary"
             size="sm"
             onClick={() => setIsSubmitModalOpen(true)}
-            className="flex items-center gap-2"
           >
-            <MessageSquare className="h-4 w-4" />
             <span>Submit Review</span>
           </Button>
         }

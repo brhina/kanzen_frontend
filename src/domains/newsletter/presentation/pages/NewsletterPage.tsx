@@ -7,8 +7,6 @@ import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import {
-  LayoutGrid,
-  ListFilter,
   CheckCircle2,
   BookOpen,
   Server,
@@ -66,25 +64,23 @@ export function NewsletterPage() {
                 <button
                   type="button"
                   onClick={() => setActiveAdminView('table')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                     activeAdminView === 'table'
                       ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
-                  <ListFilter className="w-3.5 h-3.5" />
                   Subscribers Table
                 </button>
                 <button
                   type="button"
                   onClick={() => setActiveAdminView('public')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                     activeAdminView === 'public'
                       ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
-                  <LayoutGrid className="w-3.5 h-3.5" />
                   Public Dispatch Preview
                 </button>
               </div>

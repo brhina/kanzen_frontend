@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router';
-import { Edit3, Trash2, Send, Clock, ArrowLeft } from 'lucide-react';
 import { useBlogPost } from '../../application/use-cases/useBlogPost';
 import { useLikeBlogPost } from '../../application/use-cases/useLikeBlogPost';
 import { useUpdateBlogPost } from '../../application/use-cases/useUpdateBlogPost';
@@ -84,8 +83,7 @@ export function BlogPostPage() {
         </p>
         <div className="mt-6">
           <Link to="/blog">
-            <Button variant="primary" size="sm" className="inline-flex items-center gap-1.5">
-              <ArrowLeft className="h-4 w-4" />
+            <Button variant="primary" size="sm">
               <span>Back to Articles</span>
             </Button>
           </Link>
@@ -122,18 +120,11 @@ export function BlogPostPage() {
                 size="xs"
                 onClick={handlePublishToggle}
                 isLoading={publishMutation.isPending}
-                className="flex items-center gap-1"
               >
                 {isPublished ? (
-                  <>
-                    <Clock className="h-3.5 w-3.5" />
-                    <span>Unpublish to Draft</span>
-                  </>
+                  <span>Unpublish to Draft</span>
                 ) : (
-                  <>
-                    <Send className="h-3.5 w-3.5" />
-                    <span>Publish Immediately</span>
-                  </>
+                  <span>Publish Immediately</span>
                 )}
               </Button>
             </PermissionGate>
@@ -143,9 +134,7 @@ export function BlogPostPage() {
               variant="outline"
               size="xs"
               onClick={() => setIsEditDrawerOpen(true)}
-              className="flex items-center gap-1"
             >
-              <Edit3 className="h-3.5 w-3.5" />
               <span>Edit Article</span>
             </Button>
 
@@ -155,9 +144,7 @@ export function BlogPostPage() {
                 variant="danger"
                 size="xs"
                 onClick={() => setIsDeleteModalOpen(true)}
-                className="flex items-center gap-1"
               >
-                <Trash2 className="h-3.5 w-3.5" />
                 <span>Delete</span>
               </Button>
             </PermissionGate>

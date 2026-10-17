@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Clock, Eye, Heart, Calendar, Edit3 } from 'lucide-react';
+import { Clock, Eye, Heart, Calendar } from 'lucide-react';
 import type { BlogPostEntity } from '../../domain/entities/blog-post.entity';
 import { BlogPostStatus } from '../../domain/enums/blog-post-status.enum';
 import { Badge } from '@/shared/ui/badge';
@@ -81,10 +81,9 @@ export function BlogCard({ post, onEdit, showAdminActions = true }: BlogCardProp
                   e.stopPropagation();
                   onEdit(post);
                 }}
-                className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xs flex items-center gap-1"
+                className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xs"
                 title="Edit Post"
               >
-                <Edit3 className="h-3 w-3" />
                 <span>Edit</span>
               </Button>
             </div>

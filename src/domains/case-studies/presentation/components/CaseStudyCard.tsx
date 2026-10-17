@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Building2, Download, Edit3, Trash2 } from 'lucide-react';
+import { Building2, Edit3, Trash2 } from 'lucide-react';
 import type { CaseStudyEntity } from '../../domain/entities/case-study.entity';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
@@ -150,10 +150,9 @@ export function CaseStudyCard({
               variant="ghost"
               size="xs"
               onClick={handlePdfClick}
-              className="inline-flex items-center gap-1.5 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+              className="text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
               title="Download Whitepaper"
             >
-              <Download className="h-3 w-3" />
               <span>PDF</span>
             </Button>
           ) : (

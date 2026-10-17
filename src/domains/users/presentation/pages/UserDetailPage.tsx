@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router';
 import {
-  ArrowLeft,
   Shield,
   Mail,
   Phone,
   Calendar,
   Clock,
-  CheckCircle2,
-  Edit2,
   Key,
 } from 'lucide-react';
 import { useUser } from '../../application/use-cases/useUser';
@@ -46,7 +43,6 @@ export function UserDetailPage() {
         </p>
         <Link to="/users">
           <Button variant="outline" size="sm">
-            <ArrowLeft className="h-4 w-4 mr-1.5" />
             <span>Return to Directory</span>
           </Button>
         </Link>
@@ -75,7 +71,6 @@ export function UserDetailPage() {
                   <UserStatusBadge status={user.status} size="md" />
                   {user.isAdmin && (
                     <Badge variant="brand" size="md" className="font-mono text-xs">
-                      <Shield className="h-3.5 w-3.5 mr-1 text-brand-500" />
                       <span>Super Admin</span>
                     </Badge>
                   )}
@@ -94,9 +89,7 @@ export function UserDetailPage() {
                 variant="primary"
                 size="md"
                 onClick={() => setIsDrawerOpen(true)}
-                className="flex items-center gap-2"
               >
-                <Edit2 className="h-4 w-4" />
                 <span>Configure Account</span>
               </Button>
             </PermissionGate>
@@ -172,7 +165,6 @@ export function UserDetailPage() {
                   size="md"
                   className="font-mono text-xs px-2.5 py-1"
                 >
-                  <CheckCircle2 className="h-3 w-3 mr-1.5 text-emerald-500" />
                   <span>{perm}</span>
                 </Badge>
               ))}

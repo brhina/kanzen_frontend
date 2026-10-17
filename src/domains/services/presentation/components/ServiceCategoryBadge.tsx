@@ -16,12 +16,13 @@ const categoryLabels: Record<string, string> = {
   [ServiceCategory.DESIGN]: 'Product & UI/UX',
   [ServiceCategory.CONSULTING]: 'Tech Consulting',
   [ServiceCategory.MAINTENANCE]: 'SRE & Maintenance',
+  [ServiceCategory.TRAINING]: 'Trainings & Workshops',
 };
 
 export function ServiceCategoryBadge({ category, className }: ServiceCategoryBadgeProps) {
   const label = categoryLabels[category] || category.replace('-', ' ');
   return (
-    <Badge variant="info" size="sm" className={className}>
+    <Badge variant={category === ServiceCategory.TRAINING ? 'brand' : 'info'} size="sm" className={className}>
       {label}
     </Badge>
   );

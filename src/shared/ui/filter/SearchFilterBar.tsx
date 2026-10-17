@@ -4,7 +4,6 @@ import {
   X,
   SlidersHorizontal,
   ChevronDown,
-  RotateCcw,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { cn } from '../../utils/cn';
@@ -157,7 +156,6 @@ export const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
                     : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60',
                 )}
               >
-                <SlidersHorizontal className="h-4 w-4 text-brand-600 dark:text-brand-400 shrink-0" />
                 <span>{filterButtonLabel}</span>
 
                 {/* Active Filter Count Badge */}
@@ -220,7 +218,6 @@ export const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
                       : 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border-slate-200/80 dark:border-slate-700',
                   )}
                 >
-                  <SlidersHorizontal className="h-4 w-4 text-brand-600 dark:text-brand-400 shrink-0" />
                   <span>{filterButtonLabel}</span>
                   {activeFilterCount > 0 && (
                     <span className="inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full text-[11px] font-bold bg-brand-600 text-white animate-scaleIn">
@@ -246,8 +243,7 @@ export const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
               className="inline-flex items-center gap-1.5 h-10 px-3 rounded-xl text-xs font-medium text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors cursor-pointer shrink-0"
               title="Reset all filters and search"
             >
-              <RotateCcw className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Reset</span>
+              <span>Reset</span>
             </button>
           )}
         </div>

@@ -20,8 +20,6 @@ import {
 } from '@/shared/ui/filter';
 import {
   Users,
-  Search,
-  Briefcase,
   FileCheck2,
 } from 'lucide-react';
 import type { JobApplicationEntity } from '../../domain/entities/job-application.entity';
@@ -290,8 +288,7 @@ export function ApplicationsPage() {
             }
             actions={
               <Link to="/careers">
-                <Button variant="outline" size="sm" className="flex items-center gap-1.5 shrink-0">
-                  <Briefcase className="h-4 w-4" />
+                <Button variant="outline" size="sm" className="shrink-0">
                   <span>Browse Open Roles</span>
                 </Button>
               </Link>
@@ -383,7 +380,6 @@ export function ApplicationsPage() {
                   variant="primary"
                   className="bg-indigo-600 hover:bg-indigo-700 text-white shrink-0"
                 >
-                  <Search className="h-4 w-4 mr-1.5" />
                   <span>Lookup</span>
                 </Button>
               </form>

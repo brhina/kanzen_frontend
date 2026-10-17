@@ -13,7 +13,6 @@ import {
   FilterSelect,
 } from '@/shared/ui/filter';
 import {
-  Download,
   Mail,
   CheckCircle,
   XCircle,
@@ -180,9 +179,8 @@ export function SubscriberTable() {
             size="sm"
             onClick={exportCsv}
             isLoading={isExporting}
-            className="flex items-center gap-1.5 h-10 px-3.5"
+            className="h-10 px-3.5"
           >
-            <Download className="w-4 h-4" />
             <span>Export CSV</span>
           </Button>
         }

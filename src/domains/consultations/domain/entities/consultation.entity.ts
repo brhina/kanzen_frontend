@@ -1,5 +1,7 @@
 import { ConsultationStatus } from '../enums/consultation-status.enum';
 import { MeetingType } from '../enums/meeting-type.enum';
+import { ConsultationType } from '../enums/consultation-type.enum';
+import { DeliveryFormat } from '../enums/delivery-format.enum';
 
 export interface ConsultationProps {
   id?: string;
@@ -16,6 +18,10 @@ export interface ConsultationProps {
   meetingType: MeetingType;
   meetingLink?: string;
   status?: ConsultationStatus;
+  type?: ConsultationType | 'consultation' | 'training';
+  attendeesCount?: number;
+  trainingTopic?: string;
+  deliveryFormat?: DeliveryFormat | string;
   confirmedAt?: Date;
   completedAt?: Date;
   notes?: string;
@@ -39,6 +45,10 @@ export class ConsultationEntity {
   public meetingType: MeetingType;
   public meetingLink?: string;
   public status: ConsultationStatus;
+  public type: ConsultationType;
+  public attendeesCount: number;
+  public trainingTopic?: string;
+  public deliveryFormat?: DeliveryFormat | string;
   public confirmedAt?: Date;
   public completedAt?: Date;
   public notes?: string;
@@ -61,6 +71,10 @@ export class ConsultationEntity {
     this.meetingType = props.meetingType ?? MeetingType.VIDEO;
     this.meetingLink = props.meetingLink;
     this.status = props.status ?? ConsultationStatus.PENDING;
+    this.type = (props.type as ConsultationType) ?? ConsultationType.CONSULTATION;
+    this.attendeesCount = props.attendeesCount ?? 1;
+    this.trainingTopic = props.trainingTopic;
+    this.deliveryFormat = props.deliveryFormat;
     this.confirmedAt = props.confirmedAt;
     this.completedAt = props.completedAt;
     this.notes = props.notes;

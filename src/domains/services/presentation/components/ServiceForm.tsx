@@ -145,6 +145,7 @@ export function ServiceForm({
                 { value: ServiceCategory.DESIGN, label: 'UI/UX Design' },
                 { value: ServiceCategory.CONSULTING, label: 'Technical Consulting' },
                 { value: ServiceCategory.MAINTENANCE, label: 'Maintenance & SRE' },
+                { value: ServiceCategory.TRAINING, label: 'Trainings & Corporate Workshops' },
               ]}
             />
           </div>

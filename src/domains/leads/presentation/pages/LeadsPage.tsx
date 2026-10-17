@@ -6,12 +6,9 @@ import { useExportLeads } from '../../application/use-cases/useExportLeads';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 import {
-  Download,
   ShieldCheck,
   Zap,
   Users,
-  LayoutGrid,
-  ListFilter,
 } from 'lucide-react';
 
 export function LeadsPage() {
@@ -48,25 +45,23 @@ export function LeadsPage() {
                 <button
                   type="button"
                   onClick={() => setActiveView('crm')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                     activeView === 'crm'
                       ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
-                  <ListFilter className="w-3.5 h-3.5" />
                   CRM Table
                 </button>
                 <button
                   type="button"
                   onClick={() => setActiveView('form')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                     activeView === 'form'
                       ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
-                  <LayoutGrid className="w-3.5 h-3.5" />
                   Public Intake Preview
                 </button>
               </div>
@@ -77,7 +72,6 @@ export function LeadsPage() {
                 size="sm"
                 onClick={exportCsv}
                 isLoading={isExporting}
-                leftIcon={<Download className="w-4 h-4" />}
               >
                 Export CSV
               </Button>

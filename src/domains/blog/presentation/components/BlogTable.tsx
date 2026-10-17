@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router';
-import { Edit3, Trash2, Send, Clock } from 'lucide-react';
+import { Trash2, Clock } from 'lucide-react';
 import type { BlogPostEntity } from '../../domain/entities/blog-post.entity';
 import { BlogPostStatus } from '../../domain/enums/blog-post-status.enum';
 import { Table, type ColumnDef } from '@/shared/ui/table';
@@ -127,13 +127,11 @@ export function BlogTable({
                   className="text-xs"
                 >
                   {isPublished ? (
-                    <span className="text-amber-600 dark:text-amber-400 flex items-center gap-1">
-                      <Clock className="h-3.5 w-3.5" />
+                    <span className="text-amber-600 dark:text-amber-400">
                       <span>Draft</span>
                     </span>
                   ) : (
-                    <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                      <Send className="h-3.5 w-3.5" />
+                    <span className="text-emerald-600 dark:text-emerald-400">
                       <span>Publish</span>
                     </span>
                   )}
@@ -146,10 +144,8 @@ export function BlogTable({
                   variant="outline"
                   size="xs"
                   onClick={() => onEdit(post)}
-                  className="flex items-center gap-1"
                   title="Edit Article"
                 >
-                  <Edit3 className="h-3 w-3" />
                   <span>Edit</span>
                 </Button>
               </PermissionGate>

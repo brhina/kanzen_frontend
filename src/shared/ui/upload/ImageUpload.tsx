@@ -1,8 +1,5 @@
 import { useState } from 'react';
 import {
-  Trash2,
-  RefreshCw,
-  FolderOpen,
   AlertCircle,
 } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
@@ -85,9 +82,8 @@ export function ImageUpload({
             size="xs"
             onClick={onBrowseLibrary}
             disabled={disabled}
-            className="flex items-center gap-1.5 text-xs text-brand-600 hover:text-brand-700 dark:text-brand-400"
+            className="text-xs text-brand-600 hover:text-brand-700 dark:text-brand-400"
           >
-            <FolderOpen className="h-3.5 w-3.5" />
             <span>Choose from Media Library</span>
           </Button>
         )}
@@ -117,9 +113,8 @@ export function ImageUpload({
                   type="button"
                   variant="outline"
                   size="xs"
-                  className="bg-white/90 text-slate-800 hover:bg-white border-none shadow-sm flex items-center gap-1"
+                  className="bg-white/90 text-slate-800 hover:bg-white border-none shadow-sm"
                 >
-                  <RefreshCw className="h-3 w-3" />
                   <span>Replace</span>
                 </Button>
               </FileUpload>
@@ -130,9 +125,7 @@ export function ImageUpload({
                 size="xs"
                 onClick={handleRemove}
                 disabled={disabled}
-                className="flex items-center gap-1"
               >
-                <Trash2 className="h-3 w-3" />
                 <span>Remove</span>
               </Button>
             </div>

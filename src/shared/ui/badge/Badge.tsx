@@ -95,7 +95,6 @@ export function Badge({
           aria-hidden="true"
         />
       )}
-      {icon && <span className="inline-flex shrink-0">{icon}</span>}
       {children && <span>{children}</span>}
     </span>
   );

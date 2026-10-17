@@ -12,7 +12,6 @@ import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 import { Textarea } from '@/shared/ui/textarea';
 import {
-  ArrowLeft,
   Building2,
   Mail,
   Phone,
@@ -20,7 +19,6 @@ import {
   DollarSign,
   Clock,
   Calendar,
-  CheckCircle2,
   Sliders,
   Trash2,
   Sparkles,
@@ -60,7 +58,7 @@ export function LeadDetailPage() {
         <h2 className="text-xl font-bold text-slate-900 dark:text-white">Lead Not Found</h2>
         <p className="text-sm text-slate-500">The requested lead record could not be located or has been archived.</p>
         <Link to="/leads">
-          <Button variant="outline" size="sm" leftIcon={<ArrowLeft className="w-4 h-4" />}>
+          <Button variant="outline" size="sm">
             Return to Pipeline
           </Button>
         </Link>
@@ -116,7 +114,6 @@ export function LeadDetailPage() {
               variant="success"
               onClick={handleConvert}
               isLoading={convertLead.isPending}
-              leftIcon={<CheckCircle2 className="w-4 h-4" />}
             >
               Convert to Customer
             </Button>

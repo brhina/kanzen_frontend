@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react';
-import { LayoutGrid, Table as TableIcon } from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useUIStore } from '@/core/stores/ui.store';
 import { useServices } from '../../application/use-cases/useServices';
@@ -30,6 +29,7 @@ const categoryTabs = [
   { id: ServiceCategory.CLOUD, label: 'Cloud & DevOps' },
   { id: ServiceCategory.AI, label: 'AI & Data Systems' },
   { id: ServiceCategory.CONSULTING, label: 'Advisory & Strategy' },
+  { id: ServiceCategory.TRAINING, label: 'Trainings & Workshops' },
 ];
 
 export function ServicesPage() {
@@ -192,26 +192,26 @@ export function ServicesPage() {
                 <button
                   type="button"
                   onClick={() => setViewMode('grid')}
-                  className={`rounded-lg p-1.5 text-xs cursor-pointer transition ${
+                  className={`rounded-lg px-2.5 py-1 text-xs font-semibold cursor-pointer transition ${
                     viewMode === 'grid'
                       ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
                       : 'text-slate-600 dark:text-slate-400'
                   }`}
                   title="Grid layout"
                 >
-                  <LayoutGrid className="h-4 w-4" />
+                  <span>Grid</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setViewMode('table')}
-                  className={`rounded-lg p-1.5 text-xs cursor-pointer transition ${
+                  className={`rounded-lg px-2.5 py-1 text-xs font-semibold cursor-pointer transition ${
                     viewMode === 'table'
                       ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
                       : 'text-slate-600 dark:text-slate-400'
                   }`}
                   title="Table layout"
                 >
-                  <TableIcon className="h-4 w-4" />
+                  <span>Table</span>
                 </button>
               </div>
             )}

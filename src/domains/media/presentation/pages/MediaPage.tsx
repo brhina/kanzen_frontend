@@ -13,7 +13,6 @@ import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 import { Modal } from '@/shared/ui/modal';
 import { Pagination } from '@/shared/ui/pagination';
-import { LayoutGrid, Table as TableIcon } from 'lucide-react';
 import { HeaderBanner } from '@/layouts/components';
 import { cn } from '@/shared/utils/cn';
 
@@ -149,28 +148,26 @@ export function MediaPage() {
               type="button"
               onClick={() => setViewMode('grid')}
               className={cn(
-                'flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors cursor-pointer',
+                'flex items-center rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors cursor-pointer',
                 viewMode === 'grid'
                   ? 'bg-white text-slate-900 dark:bg-slate-700 dark:text-white'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white',
               )}
               title="Grid layout"
             >
-              <LayoutGrid className="h-3.5 w-3.5" />
               <span>Showcase</span>
             </button>
             <button
               type="button"
               onClick={() => setViewMode('table')}
               className={cn(
-                'flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors cursor-pointer',
+                'flex items-center rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors cursor-pointer',
                 viewMode === 'table'
                   ? 'bg-white text-slate-900 dark:bg-slate-700 dark:text-white'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white',
               )}
               title="Table layout"
             >
-              <TableIcon className="h-3.5 w-3.5" />
               <span>Manage</span>
             </button>
           </div>

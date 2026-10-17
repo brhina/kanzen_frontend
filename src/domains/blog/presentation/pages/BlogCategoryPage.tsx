@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowLeft, Edit3, Tag } from 'lucide-react';
 import { blogApi } from '../../infrastructure/blog.api';
 import { blogMapper } from '../../infrastructure/blog.mapper';
 import { useUpdateBlogCategory } from '../../application/use-cases/useCategoryMutations';
@@ -140,8 +139,7 @@ export function BlogCategoryPage() {
         </p>
         <div className="mt-6">
           <Link to="/blog">
-            <Button variant="primary" size="sm" className="inline-flex items-center gap-1.5">
-              <ArrowLeft className="h-4 w-4" />
+            <Button variant="primary" size="sm">
               <span>Back to Articles</span>
             </Button>
           </Link>
@@ -157,8 +155,7 @@ export function BlogCategoryPage() {
       {/* Category Header Hero */}
       <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-8 dark:border-slate-800 dark:bg-slate-900/60 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-3 max-w-2xl">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-500/10 px-3 py-1 text-xs font-semibold text-brand-600 dark:text-brand-400">
-            <Tag className="h-3.5 w-3.5" />
+          <div className="inline-flex items-center rounded-full bg-brand-500/10 px-3 py-1 text-xs font-semibold text-brand-600 dark:text-brand-400">
             <span>Category Archive</span>
           </div>
 
@@ -184,9 +181,8 @@ export function BlogCategoryPage() {
             variant="outline"
             size="sm"
             onClick={handleOpenEdit}
-            className="self-start md:self-auto flex items-center gap-1.5"
+            className="self-start md:self-auto"
           >
-            <Edit3 className="h-3.5 w-3.5" />
             <span>Edit Category Details</span>
           </Button>
         </PermissionGate>

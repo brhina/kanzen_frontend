@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Mail, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { Mail, CheckCircle2 } from 'lucide-react';
 import { useForgotPassword } from '../../application/use-cases/useForgotPassword';
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
@@ -69,7 +69,6 @@ export function ForgotPasswordForm({
           onClick={onBackToLogin}
           className="w-full justify-center"
         >
-          <ArrowLeft className="h-4 w-4 mr-1.5" />
           <span>Return to Sign In</span>
         </Button>
       </div>
@@ -121,9 +120,8 @@ export function ForgotPasswordForm({
         <button
           type="button"
           onClick={onBackToLogin}
-          className="flex w-full items-center justify-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white py-1 transition-colors focus:outline-none"
+          className="flex w-full items-center justify-center text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white py-1 transition-colors focus:outline-none"
         >
-          <ArrowLeft className="h-3.5 w-3.5" />
           <span>Back to Sign In</span>
         </button>
       </div>

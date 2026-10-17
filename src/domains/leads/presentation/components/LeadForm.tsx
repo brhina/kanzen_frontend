@@ -6,7 +6,7 @@ import type { CreateLeadDto } from '../../infrastructure/leads.dto';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { Textarea } from '@/shared/ui/textarea';
-import { CheckCircle2, Send, Sparkles } from 'lucide-react';
+import { CheckCircle2, Sparkles } from 'lucide-react';
 
 const FALLBACK_SERVICE_OPTIONS = [
   { id: 'custom-software', label: 'Custom Software' },
@@ -276,7 +276,6 @@ export function LeadForm({ onSuccess, className = '' }: LeadFormProps) {
           variant="primary"
           size="lg"
           isLoading={submitLead.isPending}
-          leftIcon={<Send className="w-4 h-4" />}
           className="w-full sm:w-auto"
         >
           Request Proposal & Scoping Review

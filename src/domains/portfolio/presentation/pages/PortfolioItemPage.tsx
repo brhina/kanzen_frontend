@@ -1,15 +1,12 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router';
 import {
-  ArrowLeft,
   ExternalLink,
   Code2,
   Calendar,
   Users,
   Clock,
   Layers,
-  Edit3,
-  Lock,
   CheckCircle,
 } from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
@@ -70,8 +67,7 @@ export function PortfolioItemPage() {
         </p>
         <div className="pt-4">
           <Link to="/portfolio">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />
+            <Button variant="outline">
               <span>Back to Portfolio</span>
             </Button>
           </Link>
@@ -106,9 +102,7 @@ export function PortfolioItemPage() {
               variant="outline"
               size="xs"
               onClick={() => setIsEditDrawerOpen(true)}
-              className="flex items-center gap-1"
             >
-              <Edit3 className="h-3.5 w-3.5" />
               <span>Edit Project</span>
             </Button>
           </div>
@@ -123,8 +117,7 @@ export function PortfolioItemPage() {
           </Badge>
 
           {item.isConfidential && (
-            <Badge variant="warning" size="sm" className="flex items-center gap-1 font-mono text-xs">
-              <Lock className="h-3 w-3" />
+            <Badge variant="warning" size="sm" className="font-mono text-xs">
               <span>Confidential Client (NDA)</span>
             </Badge>
           )}

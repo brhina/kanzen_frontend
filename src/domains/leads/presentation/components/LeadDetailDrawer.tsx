@@ -17,7 +17,6 @@ import {
   Phone,
   Building2,
   Calendar,
-  CheckCircle,
   Sliders,
   DollarSign,
   Clock,
@@ -213,7 +212,6 @@ export function LeadDetailDrawer({ lead, isOpen, onClose }: LeadDetailDrawerProp
                 variant="success"
                 onClick={handleConvert}
                 isLoading={convertLead.isPending}
-                leftIcon={<CheckCircle className="w-3.5 h-3.5" />}
               >
                 Mark Converted
               </Button>

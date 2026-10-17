@@ -6,7 +6,6 @@ import { Textarea } from '@/shared/ui/textarea';
 import {
   FileText,
   CheckCircle2,
-  Loader2,
   User,
   Briefcase,
   FileCheck,
@@ -512,17 +511,11 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
               variant="primary"
               size="sm"
               onClick={handleSubmit}
+              isLoading={applyMutation.isPending}
               disabled={applyMutation.isPending}
               className="bg-emerald-600 hover:bg-emerald-700 text-white min-w-32 flex items-center justify-center gap-1.5"
             >
-              {applyMutation.isPending ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>Submitting...</span>
-                </>
-              ) : (
-                <span>Submit Application</span>
-              )}
+              <span>{applyMutation.isPending ? 'Submitting...' : 'Submit Application'}</span>
             </Button>
           )}
         </div>

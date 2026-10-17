@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { ExternalLink, Lock, Edit3, Trash2, Code2 } from 'lucide-react';
+import { ExternalLink, Edit3, Trash2, Code2 } from 'lucide-react';
 import type { PortfolioItemEntity } from '../../domain/entities/portfolio-item.entity';
 import { PORTFOLIO_CATEGORY_LABELS } from '../../domain/enums/portfolio-category.enum';
 import { Badge } from '@/shared/ui/badge';
@@ -49,8 +49,7 @@ export function PortfolioCard({
 
           <div className="flex items-center gap-1.5">
             {item.isConfidential && (
-              <Badge variant="warning" size="sm" className="flex items-center gap-1 font-mono text-[10px]">
-                <Lock className="h-2.5 w-2.5" />
+              <Badge variant="warning" size="sm" className="font-mono text-[10px]">
                 <span>NDA</span>
               </Badge>
             )}

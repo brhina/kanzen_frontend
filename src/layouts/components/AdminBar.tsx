@@ -11,7 +11,7 @@ export interface AdminBarProps {
 const NAV_LINKS = [
   { to: '/dashboard', label: 'Dashboard', title: 'Open Executive Dashboard' },
   { to: '/leads', label: 'Leads', title: 'CRM Leads Pipeline' },
-  { to: '/consultations', label: 'Consultations', title: 'Appointments & Consultations' },
+  { to: '/consultations', label: 'Consultations & Trainings', title: 'Appointments & Corporate Trainings' },
   { to: '/applications', label: 'Recruiting', title: 'Recruitment & Applications' },
   { to: '/newsletter', label: 'Newsletter', title: 'Audience & Newsletter Engine' },
   { to: '/media', label: 'Media', title: 'Open Media Library' },

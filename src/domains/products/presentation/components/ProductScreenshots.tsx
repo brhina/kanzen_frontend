@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Eye, Image as ImageIcon } from 'lucide-react';
+import { Image as ImageIcon } from 'lucide-react';
 import { Modal } from '@/shared/ui/modal';
 
 export interface ProductScreenshotsProps {
@@ -36,8 +36,7 @@ export function ProductScreenshots({ screenshots, productName }: ProductScreensh
               loading="lazy"
             />
             <div className="absolute inset-0 flex items-center justify-center bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity">
-              <span className="flex items-center gap-1.5 rounded-full bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-900 dark:text-white">
-                <Eye className="h-3.5 w-3.5" />
+              <span className="rounded-full bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-900 dark:text-white">
                 <span>Zoom</span>
               </span>
             </div>

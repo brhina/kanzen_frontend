@@ -28,6 +28,9 @@ export function ServiceInterestSelect({
           { id: 'fintech-core-banking', label: 'FinTech & Core Banking' },
           { id: 'ai-intelligent-automation', label: 'AI & Intelligent Automation' },
           { id: 'technical-consulting-architecture', label: 'Technical Architecture Review' },
+          { id: 'enterprise-cloud-kubernetes-training', label: 'Enterprise Kubernetes & Cloud Masterclass (Training)' },
+          { id: 'production-genai-llm-workshop', label: 'Production GenAI & LLM Architecture (Training)' },
+          { id: 'distributed-systems-bootcamp', label: 'Distributed Systems & Event Streams (Training)' },
           { id: 'legacy-modernization', label: 'Legacy Modernization' },
         ];
 

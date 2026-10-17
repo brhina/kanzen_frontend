@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Download, FileText } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
 import { toast } from '@/shared/ui/toast/toast.store';
 
@@ -38,9 +38,8 @@ export function CaseStudyDownload({
         size="sm"
         onClick={handleDownload}
         isLoading={isDownloading}
-        className="flex items-center gap-1.5 text-xs"
+        className="text-xs"
       >
-        <Download className="h-3.5 w-3.5" />
         <span>Download PDF</span>
       </Button>
     );
@@ -67,15 +66,11 @@ export function CaseStudyDownload({
           size="lg"
           onClick={handleDownload}
           isLoading={isDownloading}
-          className="flex items-center gap-2"
         >
           {isDownloading ? (
             <span>Generating PDF...</span>
           ) : (
-            <>
-              <Download className="h-4 w-4" />
-              <span>Download Full Case Study</span>
-            </>
+            <span>Download Full Case Study</span>
           )}
         </Button>
       </div>

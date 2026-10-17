@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Lock, Eye, EyeOff, AlertTriangle, ArrowLeft } from 'lucide-react';
+import { Lock, Eye, EyeOff, AlertTriangle } from 'lucide-react';
 import { useResetPassword } from '../../application/use-cases/useResetPassword';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/shared/ui/card';
 import { Input } from '@/shared/ui/input';
@@ -55,7 +55,6 @@ export function ResetPasswordPage() {
         <div className="pt-6">
           <Link to="/login">
             <Button variant="outline" size="md">
-              <ArrowLeft className="h-4 w-4 mr-1.5" />
               <span>Back to Login</span>
             </Button>
           </Link>

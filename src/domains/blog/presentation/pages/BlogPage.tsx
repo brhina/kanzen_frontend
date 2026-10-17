@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react';
-import { LayoutGrid, Table as TableIcon } from 'lucide-react';
 import { useAuthStore } from '@/core/auth/auth.store';
 import { useUIStore } from '@/core/stores/ui.store';
 import { useBlogPosts } from '../../application/use-cases/useBlogPosts';
@@ -211,28 +210,26 @@ export function BlogPage() {
                 <button
                   type="button"
                   onClick={() => setViewMode('grid')}
-                  className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold cursor-pointer transition ${
+                  className={`flex items-center rounded-lg px-2.5 py-1 text-xs font-semibold cursor-pointer transition ${
                     viewMode === 'grid'
                       ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
                       : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                   }`}
                   title="Grid Showcase"
                 >
-                  <LayoutGrid className="h-3.5 w-3.5" />
-                  <span className="hidden sm:inline">Grid</span>
+                  <span>Grid</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setViewMode('table')}
-                  className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold cursor-pointer transition ${
+                  className={`flex items-center rounded-lg px-2.5 py-1 text-xs font-semibold cursor-pointer transition ${
                     viewMode === 'table'
                       ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
                       : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                   }`}
                   title="Management Table"
                 >
-                  <TableIcon className="h-3.5 w-3.5" />
-                  <span className="hidden sm:inline">Table</span>
+                  <span>Table</span>
                 </button>
               </div>
             )}

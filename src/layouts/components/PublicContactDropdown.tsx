@@ -146,7 +146,7 @@ export function PublicContactDropdown({
               )}
             >
               <Calendar className="h-4 w-4 shrink-0 text-cyan-600 dark:text-cyan-400" />
-              <span>Consultation</span>
+              <span>Consultations &amp; Trainings</span>
             </Link>
 
             {/* 2. Leads & Project Scoping */}

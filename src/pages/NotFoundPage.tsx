@@ -1,5 +1,4 @@
 import { Link } from 'react-router';
-import { Home } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
 
 export function NotFoundPage() {
@@ -17,8 +16,7 @@ export function NotFoundPage() {
         </p>
         <div className="pt-4 flex items-center justify-center gap-3">
           <Link to="/">
-            <Button variant="primary" size="md" className="flex items-center gap-2">
-              <Home className="h-4 w-4" />
+            <Button variant="primary" size="md">
               <span>Back to Home</span>
             </Button>
           </Link>

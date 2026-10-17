@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { ExternalLink, Edit3 } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import type { ProductEntity } from '../../domain/entities/product.entity';
 import { ProductStatusBadge } from './ProductStatusBadge';
 import { Badge } from '@/shared/ui/badge';
@@ -37,10 +37,9 @@ export function ProductCard({
                 variant="ghost"
                 size="xs"
                 onClick={() => onEdit(product)}
-                className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
                 title="Edit Product"
               >
-                <Edit3 className="h-3 w-3" />
                 <span className="text-xs">Edit</span>
               </Button>
             </PermissionGate>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Play, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 
 export interface PortfolioGalleryProps {
   coverImage: string;
@@ -45,9 +45,8 @@ export function PortfolioGallery({
             <button
               type="button"
               onClick={() => setIsVideoModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-semibold transition-colors cursor-pointer"
+              className="inline-flex items-center px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-semibold transition-colors cursor-pointer"
             >
-              <Play className="h-3.5 w-3.5 fill-current" />
               <span>Watch Video</span>
             </button>
           )}

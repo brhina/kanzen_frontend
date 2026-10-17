@@ -12,17 +12,13 @@ import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 import { Card, CardHeader, CardTitle, CardContent } from '@/shared/ui/card';
 import {
-  ArrowLeft,
   MapPin,
   DollarSign,
   Calendar,
   Briefcase,
   Edit3,
-  Users,
-  Flame,
   FileText,
   Loader2,
-  Share2,
 } from 'lucide-react';
 
 export function JobPostingPage() {
@@ -70,7 +66,6 @@ export function JobPostingPage() {
         <div className="pt-2">
           <Link to="/careers">
             <Button variant="outline" size="sm">
-              <ArrowLeft className="h-4 w-4 mr-1.5" />
               <span>Back to Open Careers</span>
             </Button>
           </Link>
@@ -97,9 +92,7 @@ export function JobPostingPage() {
               variant="outline"
               size="xs"
               onClick={() => setIsEditDrawerOpen(true)}
-              className="flex items-center gap-1"
             >
-              <Edit3 className="h-3.5 w-3.5" />
               <span>Edit Role</span>
             </Button>
 
@@ -108,9 +101,7 @@ export function JobPostingPage() {
                 <Button
                   variant="outline"
                   size="xs"
-                  className="flex items-center gap-1"
                 >
-                  <Users className="h-3.5 w-3.5" />
                   <span>Candidates ({job.applicationCount})</span>
                 </Button>
               </Link>
@@ -130,8 +121,7 @@ export function JobPostingPage() {
             <JobTypeBadge type={job.type} />
             <JobTypeBadge level={job.experienceLevel} />
             {job.isUrgent && (
-              <Badge variant="danger" size="sm" className="flex items-center gap-1">
-                <Flame className="h-3.5 w-3.5 fill-rose-500" />
+              <Badge variant="danger" size="sm">
                 <span>Urgent Hiring</span>
               </Badge>
             )}
@@ -141,9 +131,8 @@ export function JobPostingPage() {
             variant="ghost"
             size="xs"
             onClick={handleShare}
-            className="text-xs flex items-center gap-1.5 text-slate-600 dark:text-slate-300"
+            className="text-xs text-slate-600 dark:text-slate-300"
           >
-            <Share2 className="h-3.5 w-3.5" />
             <span>{copiedLink ? 'Copied Link!' : 'Share Position'}</span>
           </Button>
         </div>

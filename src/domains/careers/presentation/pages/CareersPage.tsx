@@ -13,8 +13,6 @@ import { Card, CardContent } from '@/shared/ui/card';
 import { HeaderBanner } from '@/layouts/components';
 import {
   Briefcase,
-  LayoutGrid,
-  Table as TableIcon,
   Sparkles,
   Zap,
   Globe2,
@@ -136,8 +134,7 @@ export function CareersPage() {
                   }`}
                   title="Grid View"
                 >
-                  <LayoutGrid className="h-4 w-4" />
-                  <span className="hidden sm:inline">Grid</span>
+                  <span>Grid</span>
                 </button>
                 <button
                   type="button"
@@ -149,8 +146,7 @@ export function CareersPage() {
                   }`}
                   title="Recruiter Table View"
                 >
-                  <TableIcon className="h-4 w-4" />
-                  <span className="hidden sm:inline">Table</span>
+                  <span>Table</span>
                 </button>
               </div>
 

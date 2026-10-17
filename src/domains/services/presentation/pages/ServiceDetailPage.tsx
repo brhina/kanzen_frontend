@@ -1,15 +1,10 @@
 import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router';
 import {
-  ArrowLeft,
-  Edit3,
-  Trash2,
   Clock,
   CheckCircle2,
   Code2,
   Package,
-  Calendar,
-  MessageSquare,
 } from 'lucide-react';
 import { useService } from '../../application/use-cases/useService';
 import { useUpdateService } from '../../application/use-cases/useUpdateService';
@@ -70,8 +65,7 @@ export function ServiceDetailPage() {
         </p>
         <div className="mt-6">
           <Link to="/services">
-            <Button variant="primary" size="sm" className="inline-flex items-center gap-1.5">
-              <ArrowLeft className="h-4 w-4" />
+            <Button variant="primary" size="sm">
               <span>Back to Services</span>
             </Button>
           </Link>
@@ -104,9 +98,7 @@ export function ServiceDetailPage() {
               variant="outline"
               size="xs"
               onClick={() => setIsEditDrawerOpen(true)}
-              className="flex items-center gap-1"
             >
-              <Edit3 className="h-3.5 w-3.5" />
               <span>Edit Service</span>
             </Button>
 
@@ -116,9 +108,7 @@ export function ServiceDetailPage() {
                 variant="danger"
                 size="xs"
                 onClick={() => setIsDeleteModalOpen(true)}
-                className="flex items-center gap-1"
               >
-                <Trash2 className="h-3.5 w-3.5" />
                 <span>Delete</span>
               </Button>
             </PermissionGate>
@@ -255,23 +245,47 @@ export function ServiceDetailPage() {
 
               {/* CTAs */}
               <div className="space-y-2.5 pt-2">
-                <Link to="/consultations" className="w-full block">
-                  <Button variant="primary" size="md" className="w-full flex items-center justify-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    <span>Book Strategy Session</span>
-                  </Button>
-                </Link>
+                {service.category === 'training' ? (
+                  <>
+                    <Link
+                      to={`/consultations?type=training&topic=${encodeURIComponent(service.name)}&service=${service.slug}`}
+                      className="w-full block"
+                    >
+                      <Button variant="primary" size="md" className="w-full">
+                        <span>Book Team Training Workshop</span>
+                      </Button>
+                    </Link>
 
-                <Link to="/leads" className="w-full block">
-                  <Button variant="outline" size="md" className="w-full flex items-center justify-center gap-2">
-                    <MessageSquare className="h-4 w-4" />
-                    <span>Request Proposal</span>
-                  </Button>
-                </Link>
+                    <Link
+                      to={`/contact?subject=${encodeURIComponent('Corporate Training Syllabus: ' + service.name)}`}
+                      className="w-full block"
+                    >
+                      <Button variant="outline" size="md" className="w-full">
+                        <span>Request Custom Syllabus</span>
+                      </Button>
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/consultations" className="w-full block">
+                      <Button variant="primary" size="md" className="w-full">
+                        <span>Book Strategy Session</span>
+                      </Button>
+                    </Link>
+
+                    <Link to="/leads" className="w-full block">
+                      <Button variant="outline" size="md" className="w-full">
+                        <span>Request Proposal</span>
+                      </Button>
+                    </Link>
+                  </>
+                )}
               </div>
 
               <p className="text-[11px] text-center text-slate-500 dark:text-slate-400">
-                100% IP ownership transferred upon completion &bull; Production SLA guarantees
+                {service.category === 'training'
+                  ? 'Interactive sandbox labs &bull; Hands-on architecture reviews &bull; Post-training certification'
+                  : '100% IP ownership transferred upon completion &bull; Production SLA guarantees'}
               </p>
             </CardContent>
           </Card>

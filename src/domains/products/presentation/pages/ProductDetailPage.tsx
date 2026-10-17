@@ -1,13 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router';
 import {
-  ArrowLeft,
-  Edit3,
-  Trash2,
-  ExternalLink,
   Code2,
-  DollarSign,
-  Play,
 } from 'lucide-react';
 import { useProduct } from '../../application/use-cases/useProduct';
 import { useUpdateProduct } from '../../application/use-cases/useUpdateProduct';
@@ -69,8 +63,7 @@ export function ProductDetailPage() {
         </p>
         <div className="mt-6">
           <Link to="/products">
-            <Button variant="primary" size="sm" className="inline-flex items-center gap-1.5">
-              <ArrowLeft className="h-4 w-4" />
+            <Button variant="primary" size="sm">
               <span>Back to Products</span>
             </Button>
           </Link>
@@ -97,9 +90,7 @@ export function ProductDetailPage() {
               variant="outline"
               size="xs"
               onClick={() => setIsEditDrawerOpen(true)}
-              className="flex items-center gap-1"
             >
-              <Edit3 className="h-3.5 w-3.5" />
               <span>Edit Product</span>
             </Button>
 
@@ -109,9 +100,7 @@ export function ProductDetailPage() {
                 variant="danger"
                 size="xs"
                 onClick={() => setIsDeleteModalOpen(true)}
-                className="flex items-center gap-1"
               >
-                <Trash2 className="h-3.5 w-3.5" />
                 <span>Delete</span>
               </Button>
             </PermissionGate>
@@ -206,8 +195,7 @@ export function ProductDetailPage() {
                     rel="noopener noreferrer"
                     className="w-full block"
                   >
-                    <Button variant="primary" size="md" className="w-full flex items-center justify-center gap-2">
-                      <Play className="h-4 w-4 fill-current" />
+                    <Button variant="primary" size="md" className="w-full flex items-center justify-center">
                       <span>Launch Interactive Demo</span>
                     </Button>
                   </a>
@@ -220,8 +208,7 @@ export function ProductDetailPage() {
                     rel="noopener noreferrer"
                     className="w-full block"
                   >
-                    <Button variant="outline" size="md" className="w-full flex items-center justify-center gap-2">
-                      <ExternalLink className="h-4 w-4" />
+                    <Button variant="outline" size="md" className="w-full flex items-center justify-center">
                       <span>Visit Live Platform</span>
                     </Button>
                   </a>
@@ -234,8 +221,7 @@ export function ProductDetailPage() {
                     rel="noopener noreferrer"
                     className="w-full block"
                   >
-                    <Button variant="ghost" size="sm" className="w-full flex items-center justify-center gap-1.5 text-xs">
-                      <DollarSign className="h-3.5 w-3.5" />
+                    <Button variant="ghost" size="sm" className="w-full flex items-center justify-center text-xs">
                       <span>View Commercial Pricing</span>
                     </Button>
                   </a>

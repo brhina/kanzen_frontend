@@ -15,8 +15,6 @@ import {
   Minus,
   Undo,
   Redo,
-  FileCode,
-  Eye,
   Image as ImageIcon,
 } from 'lucide-react';
 import { cn } from '@/shared/utils/cn';
@@ -278,15 +276,9 @@ export function BlogEditor({
             className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
           >
             {isRawMode ? (
-              <>
-                <Eye className="h-3.5 w-3.5" />
-                <span>Visual</span>
-              </>
+              <span>Visual</span>
             ) : (
-              <>
-                <FileCode className="h-3.5 w-3.5" />
-                <span>HTML / Source</span>
-              </>
+              <span>HTML / Source</span>
             )}
           </Button>
         </div>

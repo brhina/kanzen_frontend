@@ -58,7 +58,7 @@ const NAV_GROUPS: NavGroup[] = [
   {
     title: 'Inbound & Consultation',
     items: [
-      { label: 'Technical Consultations', href: '/consultations', icon: Calendar },
+      { label: 'Consultations & Trainings', href: '/consultations', icon: Calendar },
       { label: 'Scope & Estimator', href: '/leads', icon: Sparkles },
       { label: 'Tech Radar Newsletter', href: '/newsletter', icon: Mail },
       { label: 'Direct Inquiry', href: '/contact', icon: Mail },
@@ -166,7 +166,7 @@ export function Navigation({ className = '' }: NavigationProps) {
                 className="flex items-center gap-1.5 rounded-lg p-2 text-slate-700 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-800 transition-colors text-left"
               >
                 <Calendar className="h-3.5 w-3.5 text-cyan-500" />
-                <span>Consultations</span>
+                <span>Consultations &amp; Trainings</span>
               </button>
               <button
                 type="button"

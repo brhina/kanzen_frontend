@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import {
   Quote,
-  CheckCircle,
-  Play,
-  Check,
-  X,
   Edit3,
   Trash2,
 } from 'lucide-react';
@@ -52,8 +48,7 @@ export function TestimonialCard({
 
         <div className="flex items-center gap-1.5">
           {testimonial.isVerified && (
-            <Badge variant="brand" size="sm" className="flex items-center gap-1 text-[11px] font-semibold">
-              <CheckCircle className="h-3 w-3" />
+            <Badge variant="brand" size="sm" className="text-[11px] font-semibold">
               <span>Verified Client</span>
             </Badge>
           )}
@@ -113,9 +108,7 @@ export function TestimonialCard({
             variant="outline"
             size="xs"
             onClick={() => setIsVideoOpen(true)}
-            className="inline-flex items-center gap-1.5"
           >
-            <Play className="h-3 w-3 fill-rose-600 text-rose-600" />
             <span>Watch Video Testimonial</span>
           </Button>
         </div>
@@ -167,18 +160,16 @@ export function TestimonialCard({
               variant="primary"
               size="sm"
               onClick={() => onApprove?.(testimonial)}
-              className="flex items-center gap-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="text-xs bg-emerald-600 hover:bg-emerald-700 text-white"
             >
-              <Check className="h-3 w-3" />
               <span>Approve</span>
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={() => onReject?.(testimonial)}
-              className="flex items-center gap-1 text-xs text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40"
+              className="text-xs text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40"
             >
-              <X className="h-3 w-3" />
               <span>Reject</span>
             </Button>
           </div>

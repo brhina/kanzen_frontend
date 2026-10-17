@@ -5,7 +5,7 @@ import { useBlogCategories } from '@/domains/blog/application/use-cases/useBlogC
 import type { SubscribeNewsletterDto } from '../../infrastructure/newsletter.dto';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
-import { CheckCircle2, Mail, Sparkles } from 'lucide-react';
+import { CheckCircle2, Sparkles } from 'lucide-react';
 
 const FALLBACK_TOPIC_TAGS = [
   { id: 'architecture', label: 'Distributed Systems' },
@@ -185,7 +185,6 @@ export function NewsletterSignupForm({
           variant="primary"
           size="lg"
           isLoading={subscribe.isPending}
-          leftIcon={<Mail className="w-4 h-4" />}
           className="w-full sm:w-auto"
         >
           Subscribe to Architecture Dispatch

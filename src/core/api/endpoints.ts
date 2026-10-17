@@ -117,8 +117,10 @@ export const API_ENDPOINTS = {
   },
   consultations: {
     book: 'consultations',
+    list: 'consultations',
     adminList: 'admin/consultations',
     adminDetail: (id: string) => `admin/consultations/${id}`,
+    adminCreate: 'admin/consultations',
     adminUpdate: (id: string) => `admin/consultations/${id}`,
     adminConfirm: (id: string) => `admin/consultations/${id}/confirm`,
     adminCancel: (id: string) => `admin/consultations/${id}/cancel`,

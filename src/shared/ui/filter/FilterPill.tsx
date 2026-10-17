@@ -14,7 +14,7 @@ export const FilterPill: React.FC<FilterPillProps> = ({
   isSelected,
   isActive,
   count,
-  icon,
+  icon: _icon,
   className,
   ...props
 }) => {
@@ -31,7 +31,6 @@ export const FilterPill: React.FC<FilterPillProps> = ({
       )}
       {...props}
     >
-      {icon && <span className="shrink-0">{icon}</span>}
       <span>{label}</span>
       {count !== undefined && (
         <span

@@ -27,6 +27,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { label: 'Services', href: '/services' },
+  { label: 'Consultations & Trainings', href: '/consultations' },
   { label: 'Solutions', href: '/solutions' },
   { label: 'Products', href: '/products' },
   { label: 'Portfolio', href: '/portfolio' },

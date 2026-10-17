@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router';
-import { Edit3, Trash2, ArrowUpRight } from 'lucide-react';
+import { Trash2, ArrowUpRight } from 'lucide-react';
 import type { ServiceEntity } from '../../domain/entities/service.entity';
 import { ServiceCategoryBadge } from './ServiceCategoryBadge';
 import { ServicePricingBadge } from './ServicePricingBadge';
@@ -103,10 +103,8 @@ export function ServiceTable({
                   variant="outline"
                   size="xs"
                   onClick={() => onEdit(service)}
-                  className="flex items-center gap-1"
                   title="Edit Service"
                 >
-                  <Edit3 className="h-3 w-3" />
                   <span>Edit</span>
                 </Button>
               </PermissionGate>

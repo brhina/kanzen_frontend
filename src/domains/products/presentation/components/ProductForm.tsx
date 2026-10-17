@@ -8,7 +8,6 @@ import { Textarea } from '@/shared/ui/textarea';
 import { Select } from '@/shared/ui/select';
 import { Button } from '@/shared/ui/button';
 import { Checkbox } from '@/shared/ui/checkbox';
-import { Image as ImageIcon } from 'lucide-react';
 import { MediaPicker } from '@/domains/media/presentation/components/MediaPicker';
 import { MediaFolder } from '@/domains/media/domain/enums/media-folder.enum';
 
@@ -224,9 +223,8 @@ export function ProductForm({
               variant="ghost"
               size="xs"
               onClick={() => setIsMediaPickerOpen(true)}
-              className="flex items-center gap-1 text-xs text-brand-600 hover:text-brand-700 dark:text-brand-400"
+              className="text-xs text-brand-600 hover:text-brand-700 dark:text-brand-400"
             >
-              <ImageIcon className="h-3.5 w-3.5" />
               <span>Add from Media Library</span>
             </Button>
           </div>

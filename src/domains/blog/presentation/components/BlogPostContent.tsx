@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, Clock, Eye, Heart, Share2, Check } from 'lucide-react';
+import { Calendar, Clock, Eye } from 'lucide-react';
 import type { BlogPostEntity } from '../../domain/entities/blog-post.entity';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
@@ -109,8 +109,7 @@ export function BlogPostContent({ post, onLike, isLiking = false }: BlogPostCont
               isLoading={isLiking}
               className="flex items-center gap-1.5 hover:text-red-500 hover:border-red-200 dark:hover:border-red-900/40"
             >
-              <Heart className="h-4 w-4 fill-current text-red-500" />
-              <span>{post.likeCount}</span>
+              <span>Like ({post.likeCount})</span>
             </Button>
 
             <Button
@@ -118,9 +117,7 @@ export function BlogPostContent({ post, onLike, isLiking = false }: BlogPostCont
               variant="outline"
               size="sm"
               onClick={handleShare}
-              className="flex items-center gap-1.5"
             >
-              {copied ? <Check className="h-4 w-4 text-emerald-500" /> : <Share2 className="h-4 w-4" />}
               <span>{copied ? 'Copied' : 'Share'}</span>
             </Button>
           </div>

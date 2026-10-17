@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Mail, Shield } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import type { UserEntity } from '../../domain/entities/user.entity';
 import { Avatar } from '@/shared/ui/avatar';
 import { Badge } from '@/shared/ui/badge';
@@ -34,7 +34,6 @@ export function UserCard({
           <div className="flex items-center gap-1.5 flex-wrap justify-end">
             {user.isAdmin && (
               <Badge variant="brand" size="sm" className="font-mono text-[10px]">
-                <Shield className="h-3 w-3 mr-1 text-brand-500" />
                 <span>Admin</span>
               </Badge>
             )}

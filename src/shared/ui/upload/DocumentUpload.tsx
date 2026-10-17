@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import {
   FileCheck,
-  Trash2,
-  RefreshCw,
   ExternalLink,
 } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
@@ -129,9 +127,8 @@ export function DocumentUpload({
                 variant="outline"
                 size="xs"
                 disabled={disabled}
-                className="flex items-center gap-1 text-xs"
+                className="text-xs"
               >
-                <RefreshCw className="h-3 w-3" />
                 <span>Replace</span>
               </Button>
             </FileUpload>
@@ -142,9 +139,8 @@ export function DocumentUpload({
               size="xs"
               onClick={handleRemove}
               disabled={disabled}
-              className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 flex items-center gap-1 text-xs"
+              className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 text-xs"
             >
-              <Trash2 className="h-3 w-3" />
               <span>Remove</span>
             </Button>
           </div>

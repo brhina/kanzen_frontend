@@ -1,8 +1,6 @@
 import { useState, useMemo } from 'react';
 import {
   Users as UsersIcon,
-  LayoutGrid,
-  Table as TableIcon,
   Shield,
 } from 'lucide-react';
 import { useUsers } from '../../application/use-cases/useUsers';
@@ -175,8 +173,7 @@ export function UsersPage() {
                   }`}
                   title="Card Grid Showcase"
                 >
-                  <LayoutGrid className="h-4 w-4" />
-                  <span className="hidden sm:inline">Grid</span>
+                  <span>Grid</span>
                 </button>
                 <button
                   type="button"
@@ -189,8 +186,7 @@ export function UsersPage() {
                   }`}
                   title="Management Table"
                 >
-                  <TableIcon className="h-4 w-4" />
-                  <span className="hidden sm:inline">Table</span>
+                  <span>Table</span>
                 </button>
               </div>
 

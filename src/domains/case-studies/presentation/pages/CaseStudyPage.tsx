@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router';
 import {
-  ArrowLeft,
   Building2,
   Users,
   Clock,
   Layers,
-  Edit3,
   AlertTriangle,
   Lightbulb,
   Cpu,
@@ -69,8 +67,7 @@ export function CaseStudyPage() {
         </p>
         <div className="pt-4">
           <Link to="/case-studies">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />
+            <Button variant="outline">
               <span>Back to Case Studies</span>
             </Button>
           </Link>
@@ -110,9 +107,7 @@ export function CaseStudyPage() {
               variant="outline"
               size="xs"
               onClick={() => setIsEditDrawerOpen(true)}
-              className="flex items-center gap-1"
             >
-              <Edit3 className="h-3.5 w-3.5" />
               <span>Edit Case Study</span>
             </Button>
           </div>

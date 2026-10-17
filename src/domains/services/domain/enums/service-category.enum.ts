@@ -8,6 +8,7 @@ export const ServiceCategory = {
   DESIGN: 'design',
   CONSULTING: 'consulting',
   MAINTENANCE: 'maintenance',
+  TRAINING: 'training',
 } as const;
 
 export type ServiceCategory = (typeof ServiceCategory)[keyof typeof ServiceCategory];

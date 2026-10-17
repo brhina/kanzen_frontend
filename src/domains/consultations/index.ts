@@ -1,6 +1,8 @@
 export * from './domain/entities/consultation.entity';
 export * from './domain/enums/consultation-status.enum';
 export * from './domain/enums/meeting-type.enum';
+export * from './domain/enums/consultation-type.enum';
+export * from './domain/enums/delivery-format.enum';
 export * from './infrastructure/consultations.dto';
 export * from './infrastructure/consultations.mapper';
 export * from './infrastructure/consultations.api';
@@ -17,4 +19,5 @@ export * from './presentation/components/ServiceInterestSelect';
 export * from './presentation/components/ConsultationCalendar';
 export * from './presentation/components/ConsultationBookingForm';
 export * from './presentation/components/ConsultationTable';
+export * from './presentation/components/ConsultationCard';
 export * from './presentation/pages/ConsultationsPage';

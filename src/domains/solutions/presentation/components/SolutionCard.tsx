@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { CheckCircle2, Edit3, Building2 } from 'lucide-react';
+import { CheckCircle2, Building2 } from 'lucide-react';
 import type { SolutionEntity } from '../../domain/entities/solution.entity';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
@@ -49,10 +49,9 @@ export function SolutionCard({
                 variant="ghost"
                 size="xs"
                 onClick={() => onEdit(solution)}
-                className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
                 title="Edit Solution"
               >
-                <Edit3 className="h-3 w-3" />
                 <span className="text-xs">Edit</span>
               </Button>
             </PermissionGate>

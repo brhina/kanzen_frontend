@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { MapPin, DollarSign, Users, Flame, Edit3, Trash2 } from 'lucide-react';
+import { MapPin, DollarSign, Users, Edit3, Trash2 } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 import { JobTypeBadge } from './JobTypeBadge';
@@ -36,8 +36,7 @@ export const JobCard: React.FC<JobCardProps> = ({
 
           <div className="flex items-center gap-2">
             {job.isUrgent && (
-              <Badge variant="danger" size="sm" className="flex items-center gap-1">
-                <Flame className="h-3 w-3 fill-rose-500" />
+              <Badge variant="danger" size="sm">
                 <span>Urgent Hiring</span>
               </Badge>
             )}

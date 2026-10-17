@@ -15,11 +15,9 @@ import {
   Star,
   CheckCircle2,
   ExternalLink,
-  Loader2,
   Clock,
   DollarSign,
   Building2,
-  UserCheck,
 } from 'lucide-react';
 import type { JobApplicationEntity } from '../../domain/entities/job-application.entity';
 import type { ApplicationStatus } from '../../domain/enums/application-status.enum';
@@ -190,10 +188,9 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
           <Button
             variant="primary"
             size="sm"
-            className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs flex items-center gap-1.5 shrink-0"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs shrink-0"
           >
             <span>Open Resume PDF</span>
-            <ExternalLink className="h-3.5 w-3.5" />
           </Button>
         </a>
       </div>
@@ -292,9 +289,8 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
             size="sm"
             onClick={() => handleStatusChange('hired')}
             disabled={isPending || application.status === 'hired'}
-            className="text-xs bg-emerald-600 hover:bg-emerald-700 text-white flex items-center gap-1"
+            className="text-xs bg-emerald-600 hover:bg-emerald-700 text-white"
           >
-            <UserCheck className="h-3.5 w-3.5" />
             <span>Hire</span>
           </Button>
 
@@ -381,17 +377,11 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
             variant="primary"
             size="sm"
             onClick={handleSaveEvaluation}
+            isLoading={updateMutation.isPending}
             disabled={isPending}
             className="bg-indigo-600 hover:bg-indigo-700 text-xs"
           >
-            {updateMutation.isPending ? (
-              <>
-                <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5" />
-                <span>Saving...</span>
-              </>
-            ) : (
-              <span>Save Evaluation</span>
-            )}
+            <span>{updateMutation.isPending ? 'Saving...' : 'Save Evaluation'}</span>
           </Button>
         </div>
       </div>

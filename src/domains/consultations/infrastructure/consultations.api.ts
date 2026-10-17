@@ -30,6 +30,33 @@ export const consultationsApi = {
   },
 
   /**
+   * Create / schedule a consultation or corporate training (Admin)
+   */
+  async adminCreate(data: CreateConsultationDto): Promise<ConsultationResponseDto> {
+    const res = await apiClient
+      .post(API_ENDPOINTS.consultations.adminCreate, { json: data })
+      .json<ApiResponse<ConsultationResponseDto> | ConsultationResponseDto>();
+    return unwrapResponse(res);
+  },
+
+  /**
+   * List public scheduled consultations and corporate trainings
+   */
+  async listPublic(
+    params: FilterConsultationsDto = {},
+  ): Promise<PaginatedConsultationResponseDto> {
+    const searchParams = new URLSearchParams();
+    if (params.type) searchParams.set('type', params.type);
+    if (params.search) searchParams.set('search', params.search);
+    if (params.page) searchParams.set('page', String(params.page));
+    if (params.limit) searchParams.set('limit', String(params.limit));
+
+    return apiClient
+      .get(API_ENDPOINTS.consultations.list, { searchParams })
+      .json<PaginatedConsultationResponseDto>();
+  },
+
+  /**
    * List consultations with filters & pagination (Admin)
    */
   async listAdmin(
@@ -38,6 +65,7 @@ export const consultationsApi = {
     const searchParams = new URLSearchParams();
     if (params.status) searchParams.set('status', params.status);
     if (params.meetingType) searchParams.set('meetingType', params.meetingType);
+    if (params.type) searchParams.set('type', params.type);
     if (params.search) searchParams.set('search', params.search);
     if (params.page) searchParams.set('page', String(params.page));
     if (params.limit) searchParams.set('limit', String(params.limit));
