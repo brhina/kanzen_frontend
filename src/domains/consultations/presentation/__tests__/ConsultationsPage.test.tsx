@@ -5,12 +5,66 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ConsultationsPage } from '../pages/ConsultationsPage';
 import { useAuthStore } from '@/core/auth/auth.store';
 
-function renderPage() {
+const MOCK_TEST_SESSIONS = {
+  items: [
+    {
+      id: 'session-apex',
+      name: 'Marcus Vance',
+      email: 'marcus.vance@apex-fin.tech',
+      company: 'Apex Financial Systems',
+      projectDescription: 'Corporate Kubernetes training for 18 staff engineers',
+      serviceInterest: ['cloud-architecture-devops'],
+      type: 'training',
+      attendeesCount: 18,
+      trainingTopic: 'Enterprise Cloud & Kubernetes Engineering Masterclass',
+      deliveryFormat: 'virtual_interactive',
+      meetingType: 'video',
+      status: 'scheduled',
+    },
+    {
+      id: 'session-datametric',
+      name: 'Sarah Jenkins',
+      email: 'sjenkins@datametric-labs.com',
+      company: 'DataMetric Labs',
+      projectDescription: 'Hands-on RAG and GenAI workshop',
+      serviceInterest: ['ai-intelligent-automation'],
+      type: 'training',
+      attendeesCount: 12,
+      trainingTopic: 'Production GenAI & LLM Systems Workshop',
+      deliveryFormat: 'virtual_interactive',
+      meetingType: 'video',
+      status: 'scheduled',
+    },
+    {
+      id: 'session-aurora',
+      name: 'Jonathan Sterling',
+      email: 'jsterling@aurora-logistics.io',
+      company: 'Aurora Logistics Inc.',
+      projectDescription: 'Architecture discovery session for fleet telematics',
+      serviceInterest: ['cloud-architecture-devops'],
+      type: 'consultation',
+      attendeesCount: 1,
+      meetingType: 'video',
+      status: 'scheduled',
+    },
+  ],
+  total: 3,
+  page: 1,
+  limit: 20,
+  totalPages: 1,
+};
+
+function renderPage(initialData: any = MOCK_TEST_SESSIONS) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: { retry: false },
     },
   });
+
+  if (initialData) {
+    queryClient.setQueryData(['consultations', 'public', {}], initialData);
+    queryClient.setQueryData(['consultations', 'admin', {}], initialData);
+  }
 
   return renderToStaticMarkup(
     <QueryClientProvider client={queryClient}>
@@ -32,7 +86,7 @@ describe('ConsultationsPage', () => {
     });
   });
 
-  it('renders public layout aligned with leads page style', () => {
+  it('renders public layout with scheduled trainings and consultations showcase', () => {
     const html = renderPage();
 
     // Centered header & badge
@@ -48,7 +102,28 @@ describe('ConsultationsPage', () => {
     expect(html).toContain('Mutual NDA Protected');
     expect(html).toContain('Full IP confidentiality');
 
-    // Consultation booking wizard form container
+    // Scheduled sessions showcase & drawer booking actions (like ServicesPage)
+    expect(html).toContain('Book a Session');
+    expect(html).toContain('Book Team Training');
+    expect(html).toContain('Enterprise Cloud &amp; Kubernetes Engineering Masterclass');
+    expect(html).toContain('Production GenAI &amp; LLM Systems Workshop');
+    expect(html).toContain('Corporate Workshop');
+    expect(html).toContain('1-on-1 Advisory');
+  });
+
+  it('renders booking wizard form inside drawer when requested', () => {
+    const queryClient = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    const html = renderToStaticMarkup(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter initialEntries={['/consultations?book=true']}>
+          <ConsultationsPage />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
     expect(html).toContain('Who will be joining the session?');
     expect(html).toContain('Your Full Name');
   });

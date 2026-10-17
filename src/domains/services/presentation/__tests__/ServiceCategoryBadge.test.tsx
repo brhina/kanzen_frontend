@@ -24,4 +24,11 @@ describe('ServiceCategoryBadge', () => {
     );
     expect(html).toContain('Cloud &amp; DevOps');
   });
+
+  it('renders Trainings & Workshops label correctly', () => {
+    const html = renderToStaticMarkup(
+      <ServiceCategoryBadge category={ServiceCategory.TRAINING} />,
+    );
+    expect(html).toContain('Trainings &amp; Workshops');
+  });
 });

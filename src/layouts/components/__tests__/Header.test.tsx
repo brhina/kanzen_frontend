@@ -40,6 +40,7 @@ describe('Header', () => {
     expect(html).toContain('VEYROO');
     expect(html).toContain('TECH');
     expect(html).toContain('Services');
+    expect(html).toContain('Consultations &amp; Trainings');
     expect(html).toContain('Solutions');
     expect(html).toContain('Products');
     expect(html).toContain('Portfolio');
