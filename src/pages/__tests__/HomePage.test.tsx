@@ -71,6 +71,40 @@ describe('HomePage', () => {
     expect(html).toContain('AI &amp; Deep Learning');
   });
 
+  it('renders hero section with full-width horizontal latest updates feed from blogs, portfolio, consultations, products, solutions, and services', () => {
+    queryClient.setQueryData(['blog', 'public', { limit: 5 }], {
+      posts: [
+        {
+          id: 'blog-post-1',
+          title: 'Quantum-Resistant Distributed Ciphers in High-Throughput Pipelines',
+          slug: 'quantum-resistant-ciphers',
+          coverImage: '/images/blog/quantum-ciphers.png',
+          status: 'published',
+          publishedAt: '2026-10-19T08:00:00.000Z',
+        },
+      ],
+      total: 1,
+      page: 1,
+      limit: 5,
+      totalPages: 1,
+    });
+
+    const html = renderHome();
+
+    expect(html).toContain('Next-Generation Digital Infrastructure');
+    expect(html).toContain('High-Impact Engineering, Architecture &amp; AI');
+    expect(html).toContain('Start an Engagement');
+    expect(html).toContain('Explore Solutions');
+
+    // Full-width horizontal latest updates feed with dynamic post and background image
+    expect(html).toContain('Latest engineering dispatches and system updates');
+    expect(html).toContain('Quantum-Resistant Distributed Ciphers in High-Throughput Pipelines');
+    expect(html).toContain('/images/blog/quantum-ciphers.png');
+    expect(html).toContain('Previous update');
+    expect(html).toContain('Next update');
+    expect(html).not.toContain('Horizontal Dispatch Rail');
+  });
+
   it('renders single testimonial carousel in full width with horizontal controls on the home page', () => {
     const html = renderHome();
 

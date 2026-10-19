@@ -57,8 +57,8 @@ describe('Shared Kernel UI Primitives Rendering', () => {
       </Badge>,
     );
     expect(html).toContain('Published');
-    expect(html).toContain('bg-emerald-50');
-    expect(html).toContain('bg-emerald-500'); // dot
+    expect(html).toContain('bg-brand-50');
+    expect(html).toContain('bg-brand-500'); // dot
   });
 
   it('renders Table with columns and data rows', () => {
