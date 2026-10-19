@@ -66,7 +66,7 @@ export function AuditPage() {
               Compliance Trail
             </Badge>
             {isEditMode && (
-              <Badge variant="warning" size="sm">
+              <Badge variant="brand" size="sm">
                 Edit Mode
               </Badge>
             )}

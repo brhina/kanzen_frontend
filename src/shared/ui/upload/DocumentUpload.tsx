@@ -93,7 +93,7 @@ export function DocumentUpload({
                 <p className="truncate text-xs font-semibold text-slate-900 dark:text-white">
                   {displayName}
                 </p>
-                <Badge variant="success" size="sm" className="font-mono text-[10px]">
+                <Badge variant="brand" size="sm" className="font-mono text-[10px]">
                   Uploaded
                 </Badge>
               </div>
@@ -104,7 +104,7 @@ export function DocumentUpload({
                   href={value}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-1 text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 hover:underline"
+                  className="flex items-center gap-1 text-brand-600 hover:text-brand-700 dark:text-brand-400 hover:underline"
                 >
                   <span>View Document</span>
                   <ExternalLink className="h-3 w-3" />

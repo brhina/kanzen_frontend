@@ -11,25 +11,25 @@ function getMetricIcon(iconName?: string) {
   switch (iconName?.toLowerCase()) {
     case 'bolt':
     case 'zap':
-      return <Zap className="h-4 w-4 text-amber-500" />;
+      return <Zap className="h-4 w-4 text-brand-500" />;
     case 'speed':
     case 'trending':
     case 'chart':
-      return <TrendingUp className="h-4 w-4 text-emerald-500" />;
+      return <TrendingUp className="h-4 w-4 text-brand-500" />;
     case 'clock':
     case 'time':
-      return <Clock className="h-4 w-4 text-blue-500" />;
+      return <Clock className="h-4 w-4 text-brand-500" />;
     case 'shield':
     case 'security':
-      return <ShieldCheck className="h-4 w-4 text-indigo-500" />;
+      return <ShieldCheck className="h-4 w-4 text-brand-500" />;
     case 'cpu':
     case 'compute':
-      return <Cpu className="h-4 w-4 text-purple-500" />;
+      return <Cpu className="h-4 w-4 text-brand-500" />;
     case 'database':
     case 'storage':
-      return <Database className="h-4 w-4 text-cyan-500" />;
+      return <Database className="h-4 w-4 text-brand-500" />;
     default:
-      return <BarChart2 className="h-4 w-4 text-primary-500" />;
+      return <BarChart2 className="h-4 w-4 text-brand-500" />;
   }
 }
 

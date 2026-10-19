@@ -154,7 +154,7 @@ export function CareersPage() {
                 variant="primary"
                 size="sm"
                 onClick={openCreateDrawer}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white shrink-0"
+                className="shrink-0"
               >
                 Post New Role
               </Button>
@@ -166,13 +166,13 @@ export function CareersPage() {
       {/* Main Content Area */}
       {isLoading ? (
         <div className="py-20 flex flex-col items-center justify-center gap-3">
-          <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+          <Loader2 className="h-8 w-8 animate-spin text-brand-500" />
           <p className="text-sm text-slate-500">Loading open positions...</p>
         </div>
       ) : jobs.length === 0 ? (
         <Card className="border-dashed border-slate-300 dark:border-slate-800 p-12 text-center">
           <CardContent className="space-y-4">
-            <div className="mx-auto h-12 w-12 rounded-full bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+            <div className="mx-auto h-12 w-12 rounded-full bg-brand-500/10 dark:bg-brand-950/60 flex items-center justify-center text-brand-600 dark:text-brand-400">
               <Search className="h-6 w-6" />
             </div>
             <div>
@@ -297,7 +297,7 @@ export function CareersPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <Card className="border-slate-200 dark:border-slate-800">
             <CardContent className="p-6 space-y-3">
-              <div className="h-10 w-10 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+              <div className="h-10 w-10 rounded-lg bg-brand-500/10 dark:bg-brand-950/60 flex items-center justify-center text-brand-600 dark:text-brand-400">
                 <Globe2 className="h-5 w-5" />
               </div>
               <h3 className="font-semibold text-slate-900 dark:text-white text-sm">
@@ -311,7 +311,7 @@ export function CareersPage() {
 
           <Card className="border-slate-200 dark:border-slate-800">
             <CardContent className="p-6 space-y-3">
-              <div className="h-10 w-10 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+              <div className="h-10 w-10 rounded-lg bg-brand-500/10 dark:bg-brand-950/60 flex items-center justify-center text-brand-600 dark:text-brand-400">
                 <Zap className="h-5 w-5" />
               </div>
               <h3 className="font-semibold text-slate-900 dark:text-white text-sm">
@@ -325,7 +325,7 @@ export function CareersPage() {
 
           <Card className="border-slate-200 dark:border-slate-800">
             <CardContent className="p-6 space-y-3">
-              <div className="h-10 w-10 rounded-lg bg-purple-50 dark:bg-purple-950/60 flex items-center justify-center text-purple-600 dark:text-purple-400">
+              <div className="h-10 w-10 rounded-lg bg-brand-500/10 dark:bg-brand-950/60 flex items-center justify-center text-brand-600 dark:text-brand-400">
                 <Code2 className="h-5 w-5" />
               </div>
               <h3 className="font-semibold text-slate-900 dark:text-white text-sm">
@@ -339,7 +339,7 @@ export function CareersPage() {
 
           <Card className="border-slate-200 dark:border-slate-800">
             <CardContent className="p-6 space-y-3">
-              <div className="h-10 w-10 rounded-lg bg-amber-50 dark:bg-amber-950/60 flex items-center justify-center text-amber-600 dark:text-amber-400">
+              <div className="h-10 w-10 rounded-lg bg-brand-500/10 dark:bg-brand-950/60 flex items-center justify-center text-brand-600 dark:text-brand-400">
                 <Sparkles className="h-5 w-5" />
               </div>
               <h3 className="font-semibold text-slate-900 dark:text-white text-sm">
@@ -359,7 +359,7 @@ export function CareersPage() {
         onClose={closeDrawer}
         title={
           <div className="flex items-center gap-2">
-            <Briefcase className="h-5 w-5 text-indigo-600" />
+            <Briefcase className="h-5 w-5 text-brand-500" />
             <span>{editingJob ? 'Edit Career Role' : 'Publish New Career Opportunity'}</span>
           </div>
         }

@@ -185,7 +185,7 @@ export function NewsletterPage() {
               <div className="max-w-md mx-auto py-2 space-y-4">
                 {unsubSuccess ? (
                   <div className="p-6 text-center space-y-2 bg-slate-50 dark:bg-slate-800 rounded-2xl">
-                    <CheckCircle2 className="w-8 h-8 mx-auto text-emerald-600" />
+                    <CheckCircle2 className="w-8 h-8 mx-auto text-brand-500" />
                     <h3 className="font-bold text-slate-900 dark:text-white">
                       You have been unsubscribed
                     </h3>

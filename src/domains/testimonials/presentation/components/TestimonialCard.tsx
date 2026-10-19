@@ -36,7 +36,7 @@ export function TestimonialCard({
     <div
       className={`group relative flex flex-col justify-between overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 ${
         isPending
-          ? 'bg-amber-50/30 border-2 border-amber-400/60 dark:bg-amber-950/20 dark:border-amber-500/50'
+          ? 'bg-brand-500/5 border-2 border-brand-500/30 dark:bg-brand-950/20 dark:border-brand-500/40'
           : isRejected
             ? 'bg-rose-50/30 border border-rose-400/50 dark:bg-rose-950/20 dark:border-rose-500/40 opacity-80'
             : 'bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
@@ -54,7 +54,7 @@ export function TestimonialCard({
           )}
 
           {isPending && (
-            <Badge variant="warning" size="sm" className="font-semibold text-[10px]">
+            <Badge variant="brand" size="sm" className="font-semibold text-[10px]">
               Pending Review
             </Badge>
           )}
@@ -124,7 +124,7 @@ export function TestimonialCard({
               className="h-9 w-9 rounded-full object-cover ring-2 ring-slate-100 dark:ring-slate-800"
             />
           ) : (
-            <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-brand-600 to-indigo-600 text-white flex items-center justify-center font-bold text-xs uppercase">
+            <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-brand-600 to-brand-400 text-white flex items-center justify-center font-bold text-xs uppercase">
               {testimonial.author.slice(0, 2)}
             </div>
           )}
@@ -154,13 +154,13 @@ export function TestimonialCard({
 
       {/* Moderation Controls when pending */}
       {canModerate && isPending && (
-        <div className="mt-4 pt-3 border-t border-dashed border-amber-200 dark:border-amber-900/60 flex items-center justify-between gap-2">
+        <div className="mt-4 pt-3 border-t border-dashed border-brand-500/20 dark:border-brand-900/60 flex items-center justify-between gap-2">
           <div className="flex items-center gap-1.5">
             <Button
               variant="primary"
               size="sm"
               onClick={() => onApprove?.(testimonial)}
-              className="text-xs bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="text-xs"
             >
               <span>Approve</span>
             </Button>

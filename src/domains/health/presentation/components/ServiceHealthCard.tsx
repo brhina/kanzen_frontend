@@ -48,16 +48,7 @@ export function ServiceHealthCard({
         {latencyMs !== undefined && (
           <div className="flex items-center justify-between font-mono">
             <span className="text-slate-500 dark:text-slate-400">Response Latency:</span>
-            <span
-              className={cn(
-                'font-bold',
-                latencyMs < 20
-                  ? 'text-emerald-600 dark:text-emerald-400'
-                  : latencyMs < 80
-                    ? 'text-amber-600 dark:text-amber-400'
-                    : 'text-rose-600 dark:text-rose-400',
-              )}
-            >
+            <span className="font-bold text-brand-600 dark:text-brand-400">
               {latencyMs.toFixed(1)} ms
             </span>
           </div>

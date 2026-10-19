@@ -74,7 +74,7 @@ export function PageViewsChart({
               <span className="text-slate-600 dark:text-slate-300">Page Views</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
+              <span className="h-2.5 w-2.5 rounded-full bg-brand-400" />
               <span className="text-slate-600 dark:text-slate-300">Unique Visitors</span>
             </div>
           </div>
@@ -87,12 +87,12 @@ export function PageViewsChart({
             <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="viewsGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#6366f1" stopOpacity={0.4} />
-                  <stop offset="95%" stopColor="#6366f1" stopOpacity={0.0} />
+                  <stop offset="5%" stopColor="#f97316" stopOpacity={0.4} />
+                  <stop offset="95%" stopColor="#f97316" stopOpacity={0.0} />
                 </linearGradient>
                 <linearGradient id="visitorsGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.4} />
-                  <stop offset="95%" stopColor="#10b981" stopOpacity={0.0} />
+                  <stop offset="5%" stopColor="#fb923c" stopOpacity={0.4} />
+                  <stop offset="95%" stopColor="#fb923c" stopOpacity={0.0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" opacity={0.2} />
@@ -119,7 +119,7 @@ export function PageViewsChart({
               <Area
                 type="monotone"
                 dataKey="views"
-                stroke="#6366f1"
+                stroke="#f97316"
                 strokeWidth={2}
                 fillOpacity={1}
                 fill="url(#viewsGradient)"
@@ -128,7 +128,7 @@ export function PageViewsChart({
               <Area
                 type="monotone"
                 dataKey="visitors"
-                stroke="#10b981"
+                stroke="#fb923c"
                 strokeWidth={2}
                 fillOpacity={1}
                 fill="url(#visitorsGradient)"

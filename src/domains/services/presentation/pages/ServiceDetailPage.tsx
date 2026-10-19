@@ -154,7 +154,7 @@ export function ServiceDetailPage() {
           {service.features && service.features.length > 0 && (
             <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
               <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                <CheckCircle2 className="h-5 w-5 text-brand-500" />
                 <span>Scope of Work &amp; Capabilities</span>
               </h2>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
@@ -175,7 +175,7 @@ export function ServiceDetailPage() {
           {service.deliverables && service.deliverables.length > 0 && (
             <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
               <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <Package className="h-5 w-5 text-indigo-500" />
+                <Package className="h-5 w-5 text-brand-500" />
                 <span>Concrete Deliverables</span>
               </h2>
               <div className="space-y-2 pt-2">
@@ -184,7 +184,7 @@ export function ServiceDetailPage() {
                     key={idx}
                     className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50/50 px-4 py-3 text-xs text-slate-700 dark:border-slate-800/60 dark:bg-slate-800/40 dark:text-slate-200"
                   >
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
+                    <CheckCircle2 className="h-4 w-4 text-brand-500 shrink-0" />
                     <span className="font-medium">{deliv}</span>
                   </div>
                 ))}
@@ -203,7 +203,7 @@ export function ServiceDetailPage() {
                 {service.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-800 dark:bg-slate-800 dark:text-slate-200"
+                    className="rounded-lg bg-brand-500/10 border border-brand-500/20 px-3 py-1.5 text-xs font-semibold text-brand-600 dark:bg-brand-500/15 dark:text-brand-400 dark:border-brand-500/30"
                   >
                     {tech}
                   </span>

@@ -27,7 +27,7 @@ export function ServiceCard({
           <div className="flex items-center gap-2">
             <ServiceCategoryBadge category={service.category} />
             {service.status !== 'active' && (
-              <Badge variant="neutral" size="sm" className="capitalize text-[10px]">
+              <Badge variant="brand" size="sm" className="capitalize text-[10px]">
                 {service.status}
               </Badge>
             )}

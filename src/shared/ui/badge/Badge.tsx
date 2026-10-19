@@ -22,38 +22,38 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 
 const subtleVariants: Record<BadgeVariant, string> = {
   brand: 'bg-brand-50 text-brand-700 border-brand-200 dark:bg-brand-950/50 dark:text-brand-300 dark:border-brand-800',
-  neutral: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-700',
-  success: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/50 dark:text-emerald-300 dark:border-emerald-800',
-  warning: 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/50 dark:text-amber-300 dark:border-amber-800',
-  danger: 'bg-red-50 text-red-700 border-red-200 dark:bg-red-950/50 dark:text-red-300 dark:border-red-800',
-  info: 'bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-950/50 dark:text-sky-300 dark:border-sky-800',
+  neutral: 'bg-brand-50 text-brand-700 border-brand-200 dark:bg-brand-950/50 dark:text-brand-300 dark:border-brand-800',
+  success: 'bg-brand-50 text-brand-700 border-brand-200 dark:bg-brand-950/50 dark:text-brand-300 dark:border-brand-800',
+  warning: 'bg-brand-50 text-brand-700 border-brand-200 dark:bg-brand-950/50 dark:text-brand-300 dark:border-brand-800',
+  danger: 'bg-brand-50 text-brand-700 border-brand-200 dark:bg-brand-950/50 dark:text-brand-300 dark:border-brand-800',
+  info: 'bg-brand-50 text-brand-700 border-brand-200 dark:bg-brand-950/50 dark:text-brand-300 dark:border-brand-800',
 };
 
 const solidVariants: Record<BadgeVariant, string> = {
   brand: 'bg-brand-500 text-white border-transparent',
-  neutral: 'bg-slate-600 text-white border-transparent',
-  success: 'bg-emerald-600 text-white border-transparent',
-  warning: 'bg-amber-600 text-white border-transparent',
-  danger: 'bg-red-600 text-white border-transparent',
-  info: 'bg-sky-600 text-white border-transparent',
+  neutral: 'bg-brand-500 text-white border-transparent',
+  success: 'bg-brand-500 text-white border-transparent',
+  warning: 'bg-brand-500 text-white border-transparent',
+  danger: 'bg-brand-500 text-white border-transparent',
+  info: 'bg-brand-500 text-white border-transparent',
 };
 
 const outlineVariants: Record<BadgeVariant, string> = {
-  brand: 'bg-transparent text-brand-600 border-brand-300 dark:text-brand-400 dark:border-brand-700',
-  neutral: 'bg-transparent text-slate-700 border-slate-300 dark:text-slate-300 dark:border-slate-700',
-  success: 'bg-transparent text-emerald-600 border-emerald-300 dark:text-emerald-400 dark:border-emerald-700',
-  warning: 'bg-transparent text-amber-600 border-amber-300 dark:text-amber-400 dark:border-amber-700',
-  danger: 'bg-transparent text-red-600 border-red-300 dark:text-red-400 dark:border-red-700',
-  info: 'bg-transparent text-sky-600 border-sky-300 dark:text-sky-400 dark:border-sky-700',
+  brand: 'bg-transparent text-brand-600 border-brand-500 dark:text-brand-400 dark:border-brand-500',
+  neutral: 'bg-transparent text-brand-600 border-brand-500 dark:text-brand-400 dark:border-brand-500',
+  success: 'bg-transparent text-brand-600 border-brand-500 dark:text-brand-400 dark:border-brand-500',
+  warning: 'bg-transparent text-brand-600 border-brand-500 dark:text-brand-400 dark:border-brand-500',
+  danger: 'bg-transparent text-brand-600 border-brand-500 dark:text-brand-400 dark:border-brand-500',
+  info: 'bg-transparent text-brand-600 border-brand-500 dark:text-brand-400 dark:border-brand-500',
 };
 
 const dotColors: Record<BadgeVariant, string> = {
   brand: 'bg-brand-500',
-  neutral: 'bg-slate-400',
-  success: 'bg-emerald-500',
-  warning: 'bg-amber-500',
-  danger: 'bg-red-500',
-  info: 'bg-sky-500',
+  neutral: 'bg-brand-500',
+  success: 'bg-brand-500',
+  warning: 'bg-brand-500',
+  danger: 'bg-brand-500',
+  info: 'bg-brand-500',
 };
 
 const sizeClasses: Record<BadgeSize, string> = {
@@ -63,7 +63,7 @@ const sizeClasses: Record<BadgeSize, string> = {
 };
 
 export function Badge({
-  variant = 'neutral',
+  variant = 'brand',
   styleVariant = 'subtle',
   size = 'md',
   dot = false,

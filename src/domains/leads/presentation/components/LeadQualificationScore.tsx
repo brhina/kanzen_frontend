@@ -13,16 +13,14 @@ export function LeadQualificationScore({
 }: LeadQualificationScoreProps) {
   const normalizedScore = Math.max(0, Math.min(100, score || 0));
 
-  let colorClasses = 'text-slate-600 bg-slate-100 dark:bg-slate-800 dark:text-slate-400 border-slate-200 dark:border-slate-700';
+  const colorClasses = 'text-brand-600 bg-brand-500/10 dark:text-brand-400 border-brand-500/20';
   let badgeText = 'Cold';
   let Icon = AlertCircle;
 
   if (normalizedScore >= 80) {
-    colorClasses = 'text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
     badgeText = 'High Intent';
     Icon = Flame;
   } else if (normalizedScore >= 50) {
-    colorClasses = 'text-amber-700 bg-amber-50 dark:bg-amber-950/40 dark:text-amber-300 border-amber-200 dark:border-amber-800';
     badgeText = 'Qualified';
     Icon = Sparkles;
   }

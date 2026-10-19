@@ -8,47 +8,36 @@ interface LeadStatusBadgeProps {
 }
 
 export function LeadStatusBadge({ status, size = 'sm', className }: LeadStatusBadgeProps) {
+  let label = status;
   switch (status) {
     case LeadStatus.NEW:
     case 'new':
-      return (
-        <Badge variant="info" size={size} className={className}>
-          New
-        </Badge>
-      );
+      label = 'New';
+      break;
     case LeadStatus.CONTACTED:
     case 'contacted':
-      return (
-        <Badge variant="warning" size={size} className={className}>
-          Contacted
-        </Badge>
-      );
+      label = 'Contacted';
+      break;
     case LeadStatus.QUALIFIED:
     case 'qualified':
-      return (
-        <Badge variant="brand" size={size} className={className}>
-          Qualified
-        </Badge>
-      );
+      label = 'Qualified';
+      break;
     case LeadStatus.CONVERTED:
     case 'converted':
-      return (
-        <Badge variant="success" size={size} className={className}>
-          Converted
-        </Badge>
-      );
+      label = 'Converted';
+      break;
     case LeadStatus.DISQUALIFIED:
     case 'disqualified':
-      return (
-        <Badge variant="neutral" size={size} className={className}>
-          Disqualified
-        </Badge>
-      );
+      label = 'Disqualified';
+      break;
     default:
-      return (
-        <Badge variant="neutral" size={size} className={className}>
-          {status}
-        </Badge>
-      );
+      label = status;
+      break;
   }
+
+  return (
+    <Badge variant="brand" size={size} className={className}>
+      {label}
+    </Badge>
+  );
 }

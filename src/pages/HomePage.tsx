@@ -13,6 +13,7 @@ import {
 } from '@/domains/settings/application/use-cases/usePublicSettings';
 import { TestimonialCarousel } from '@/domains/testimonials/presentation/components/TestimonialCarousel';
 import { DynamicIcon } from '@/shared/ui/icon/DynamicIcon';
+import { HeroLatestUpdates } from './components/HeroLatestUpdates';
 
 export function HomePage() {
   const { isEditMode } = useUIStore();
@@ -74,49 +75,8 @@ export function HomePage() {
       )}
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 sm:py-28 lg:py-32 bg-gradient-to-b from-white via-slate-50/50 to-white dark:from-slate-950 dark:via-slate-900/50 dark:to-slate-950">
-        <div className="w-full px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto space-y-6">
-            <div className="inline-flex items-center rounded-full border border-brand-500/30 bg-brand-50/80 px-4 py-1.5 text-xs font-semibold text-brand-700 dark:bg-brand-950/60 dark:text-brand-300">
-              <span>Next-Generation Digital Infrastructure</span>
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white leading-[1.1]">
-              High-Impact Engineering,{' '}
-              <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-amber-500 bg-clip-text text-transparent">
-                Architecture & AI
-              </span>
-            </h1>
-
-            <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-              Veyroo Tech designs and scales mission-critical distributed systems,
-              enterprise cloud microservices, and specialized AI infrastructure built for maximum concurrency.
-            </p>
-
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-              <Link to="/contact">
-                <Button variant="primary" size="lg">
-                  <span>Start an Engagement</span>
-                </Button>
-              </Link>
-              <Link to="/solutions">
-                <Button variant="outline" size="lg">
-                  Explore Solutions
-                </Button>
-              </Link>
-            </div>
-
-            {/* Technical Proof Points */}
-            <div className="pt-8 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-medium text-slate-500 dark:text-slate-400">
-              {proofPoints.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-2">
-                  <DynamicIcon name={item.icon || 'CheckCircle2'} className="h-4 w-4 text-brand-500" />
-                  <span>{item.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+      <section className="relative overflow-hidden w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+        <HeroLatestUpdates proofPoints={proofPoints} />
       </section>
 
       {/* Offering Highlights Section */}

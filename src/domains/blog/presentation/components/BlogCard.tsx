@@ -12,14 +12,6 @@ export interface BlogCardProps {
   showAdminActions?: boolean;
 }
 
-const statusVariants: Record<string, 'neutral' | 'success' | 'warning' | 'info' | 'danger'> = {
-  [BlogPostStatus.PUBLISHED]: 'success',
-  [BlogPostStatus.DRAFT]: 'neutral',
-  [BlogPostStatus.REVIEW]: 'warning',
-  [BlogPostStatus.SCHEDULED]: 'info',
-  [BlogPostStatus.ARCHIVED]: 'danger',
-};
-
 export function BlogCard({ post, onEdit, showAdminActions = true }: BlogCardProps) {
   const formattedDate = post.publishedAt
     ? new Date(post.publishedAt).toLocaleDateString('en-US', {
@@ -57,12 +49,12 @@ export function BlogCard({ post, onEdit, showAdminActions = true }: BlogCardProp
         {/* Overlay category badge */}
         <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
           {post.categoryName && (
-            <Badge variant="info" size="sm" className="backdrop-blur-md bg-slate-900/70 text-white border-0">
+            <Badge variant="brand" size="sm" className="backdrop-blur-md font-medium">
               {post.categoryName}
             </Badge>
           )}
           {post.status !== BlogPostStatus.PUBLISHED && (
-            <Badge variant={statusVariants[post.status] || 'neutral'} size="sm" className="capitalize">
+            <Badge variant="brand" size="sm" className="capitalize">
               {post.status}
             </Badge>
           )}

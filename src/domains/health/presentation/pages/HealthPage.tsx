@@ -173,7 +173,7 @@ export function HealthPage() {
           <div className="mt-3 text-2xl font-black text-slate-900 dark:text-white">
             100% Online
           </div>
-          <div className="mt-3 border-t border-slate-100 pt-2 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+          <div className="mt-3 border-t border-slate-100 pt-2 text-[11px] text-brand-600 dark:text-brand-400 font-medium">
             Zero active incidents
           </div>
         </Card>

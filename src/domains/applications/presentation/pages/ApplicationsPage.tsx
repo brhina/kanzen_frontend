@@ -229,7 +229,7 @@ export function ApplicationsPage() {
               <span className="text-2xs font-semibold text-slate-500 uppercase tracking-wider">
                 New Applied
               </span>
-              <p className="text-2xl font-black text-indigo-600 dark:text-indigo-400 mt-1">
+              <p className="text-2xl font-black text-brand-600 dark:text-brand-400 mt-1">
                 {metrics.applied}
               </p>
             </div>
@@ -238,7 +238,7 @@ export function ApplicationsPage() {
               <span className="text-2xs font-semibold text-slate-500 uppercase tracking-wider">
                 Screening
               </span>
-              <p className="text-2xl font-black text-cyan-600 dark:text-cyan-400 mt-1">
+              <p className="text-2xl font-black text-brand-600 dark:text-brand-400 mt-1">
                 {metrics.screening}
               </p>
             </div>
@@ -256,16 +256,16 @@ export function ApplicationsPage() {
               <span className="text-2xs font-semibold text-slate-500 uppercase tracking-wider">
                 Offers Out
               </span>
-              <p className="text-2xl font-black text-purple-600 dark:text-purple-400 mt-1">
+              <p className="text-2xl font-black text-brand-600 dark:text-brand-400 mt-1">
                 {metrics.offer}
               </p>
             </div>
 
-            <div className="p-4 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/40 dark:bg-emerald-950/20">
-              <span className="text-2xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">
+            <div className="p-4 rounded-xl border border-brand-500/20 bg-brand-500/10 dark:bg-brand-950/20">
+              <span className="text-2xs font-semibold text-brand-700 dark:text-brand-400 uppercase tracking-wider">
                 Hired
               </span>
-              <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">
+              <p className="text-2xl font-black text-brand-600 dark:text-brand-400 mt-1">
                 {metrics.hired}
               </p>
             </div>
@@ -323,15 +323,15 @@ export function ApplicationsPage() {
 
               {jobIdFilter && (
                 <FilterGroup label="Job Reference" count={1}>
-                  <div className="flex items-center justify-between p-2.5 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 text-xs">
-                    <span className="font-medium text-indigo-700 dark:text-indigo-300 truncate">
+                  <div className="flex items-center justify-between p-2.5 rounded-xl bg-brand-500/10 dark:bg-brand-950/40 border border-brand-500/20 dark:border-brand-800 text-xs">
+                    <span className="font-medium text-brand-700 dark:text-brand-300 truncate">
                       Job ID: {jobIdFilter}
                     </span>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => setJobIdFilter('')}
-                      className="h-6 px-2 text-xs text-indigo-600 hover:text-indigo-800"
+                      className="h-6 px-2 text-xs text-brand-500 hover:text-brand-600"
                     >
                       Clear
                     </Button>
@@ -354,9 +354,9 @@ export function ApplicationsPage() {
         /* ================= CANDIDATE PUBLIC PORTAL ================= */
         <div className="space-y-12">
           {/* Status Lookup Card */}
-          <Card className="border-indigo-200 dark:border-indigo-900 max-w-2xl mx-auto">
+          <Card className="border-slate-200 dark:border-slate-800 max-w-2xl mx-auto">
             <CardHeader className="text-center pb-2">
-              <div className="h-12 w-12 rounded-full bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center mx-auto text-indigo-600 dark:text-indigo-400 mb-2">
+              <div className="h-12 w-12 rounded-full bg-brand-500/10 dark:bg-brand-950/60 flex items-center justify-center mx-auto text-brand-600 dark:text-brand-400 mb-2">
                 <FileCheck2 className="h-6 w-6" />
               </div>
               <CardTitle className="text-xl">
@@ -378,7 +378,7 @@ export function ApplicationsPage() {
                 <Button
                   type="submit"
                   variant="primary"
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white shrink-0"
+                  className="shrink-0"
                 >
                   <span>Lookup</span>
                 </Button>
@@ -401,7 +401,7 @@ export function ApplicationsPage() {
                           : 'Recent'}
                       </p>
                       {lookupResult.interviewDate && (
-                        <div className="p-2.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800 text-xs text-indigo-800 dark:text-indigo-200">
+                        <div className="p-2.5 rounded-lg bg-brand-500/10 dark:bg-brand-950/50 border border-brand-500/20 dark:border-brand-800 text-xs text-brand-800 dark:text-brand-200">
                           Scheduled Interview:{' '}
                           <strong>
                             {new Date(lookupResult.interviewDate).toLocaleString()}
@@ -410,7 +410,7 @@ export function ApplicationsPage() {
                       )}
                     </div>
                   ) : (
-                    <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-center text-xs text-amber-800 dark:text-amber-200">
+                    <div className="p-4 rounded-xl bg-brand-500/10 dark:bg-brand-950/30 border border-brand-500/20 dark:border-brand-800 text-center text-xs text-brand-800 dark:text-brand-200">
                       No active submissions found for <strong>{lookupEmail}</strong>. If you recently applied, please allow up to 1 hour for system processing.
                     </div>
                   )}
@@ -432,7 +432,7 @@ export function ApplicationsPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
               <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs space-y-2">
-                <span className="h-6 w-6 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 font-bold flex items-center justify-center">
+                <span className="h-6 w-6 rounded-full bg-brand-500/10 dark:bg-brand-950/60 text-brand-600 font-bold flex items-center justify-center">
                   1
                 </span>
                 <h4 className="font-bold text-slate-900 dark:text-white">
@@ -444,7 +444,7 @@ export function ApplicationsPage() {
               </div>
 
               <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs space-y-2">
-                <span className="h-6 w-6 rounded-full bg-cyan-50 dark:bg-cyan-950/60 text-cyan-600 font-bold flex items-center justify-center">
+                <span className="h-6 w-6 rounded-full bg-brand-500/10 dark:bg-brand-950/60 text-brand-600 font-bold flex items-center justify-center">
                   2
                 </span>
                 <h4 className="font-bold text-slate-900 dark:text-white">
@@ -456,7 +456,7 @@ export function ApplicationsPage() {
               </div>
 
               <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs space-y-2">
-                <span className="h-6 w-6 rounded-full bg-brand-50 dark:bg-brand-950/60 text-brand-600 font-bold flex items-center justify-center">
+                <span className="h-6 w-6 rounded-full bg-brand-500/10 dark:bg-brand-950/60 text-brand-600 font-bold flex items-center justify-center">
                   3
                 </span>
                 <h4 className="font-bold text-slate-900 dark:text-white">
@@ -467,8 +467,8 @@ export function ApplicationsPage() {
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/30 dark:bg-emerald-950/20 text-xs space-y-2">
-                <span className="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center">
+              <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs space-y-2">
+                <span className="h-6 w-6 rounded-full bg-brand-500/10 dark:bg-brand-950/60 text-brand-600 font-bold flex items-center justify-center">
                   4
                 </span>
                 <h4 className="font-bold text-slate-900 dark:text-white">
@@ -489,7 +489,7 @@ export function ApplicationsPage() {
         onClose={handleCloseDrawer}
         title={
           <div className="flex items-center gap-2">
-            <Users className="h-5 w-5 text-indigo-600" />
+            <Users className="h-5 w-5 text-brand-500" />
             <span>Candidate Evaluation & Scorecard</span>
           </div>
         }

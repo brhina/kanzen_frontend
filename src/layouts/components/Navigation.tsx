@@ -139,7 +139,7 @@ export function Navigation({ className = '' }: NavigationProps) {
               <span className="text-xs font-semibold text-slate-900 dark:text-white truncate">
                 {user.fullName || user.email}
               </span>
-              <Badge variant={user.isAdmin ? 'success' : 'info'} size="sm">
+              <Badge variant="brand" size="sm">
                 {user.isAdmin ? 'Admin' : 'Staff'}
               </Badge>
             </div>

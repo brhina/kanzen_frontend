@@ -45,7 +45,7 @@ export function JobPostingPage() {
   if (isLoading) {
     return (
       <div className="py-24 flex flex-col items-center justify-center gap-3">
-        <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-brand-500" />
         <p className="text-sm text-slate-500">Loading role specifications...</p>
       </div>
     );
@@ -78,9 +78,9 @@ export function JobPostingPage() {
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Staff Inline Control Header */}
       {canManage && (
-        <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-amber-200 bg-amber-50/70 p-4 dark:border-amber-900/40 dark:bg-amber-950/20">
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-brand-500/20 bg-brand-500/10 p-4 dark:border-brand-900/40 dark:bg-brand-950/20">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300">
+            <span className="text-xs font-bold uppercase tracking-wider text-brand-800 dark:text-brand-300">
               Recruiter Controls:
             </span>
             <JobStatusBadge status={job.status} />
@@ -121,7 +121,7 @@ export function JobPostingPage() {
             <JobTypeBadge type={job.type} />
             <JobTypeBadge level={job.experienceLevel} />
             {job.isUrgent && (
-              <Badge variant="danger" size="sm">
+              <Badge variant="brand" size="sm">
                 <span>Urgent Hiring</span>
               </Badge>
             )}
@@ -147,7 +147,7 @@ export function JobPostingPage() {
             <span>{job.locationDisplay}</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <DollarSign className="h-4 w-4 text-emerald-500" />
+            <DollarSign className="h-4 w-4 text-brand-500" />
             <span>{job.salaryRangeFormatted}</span>
           </div>
           {job.publishedAt && (
@@ -253,7 +253,7 @@ export function JobPostingPage() {
         onClose={() => setIsEditDrawerOpen(false)}
         title={
           <div className="flex items-center gap-2">
-            <Edit3 className="h-5 w-5 text-indigo-600" />
+            <Edit3 className="h-5 w-5 text-brand-600" />
             <span>Edit Role: {job.title}</span>
           </div>
         }

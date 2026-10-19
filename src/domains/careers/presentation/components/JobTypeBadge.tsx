@@ -28,27 +28,24 @@ export const JobTypeBadge: React.FC<JobTypeBadgeProps> = ({
     };
 
     return (
-      <Badge variant="neutral" size="sm" className={className}>
+      <Badge variant="brand" size="sm" className={className}>
         {typeLabels[type] ?? type}
       </Badge>
     );
   }
 
   if (mode) {
-    const modeConfig: Record<
-      WorkMode,
-      { label: string; variant: 'success' | 'info' | 'neutral' }
-    > = {
-      remote: { label: 'Remote', variant: 'success' },
-      hybrid: { label: 'Hybrid', variant: 'info' },
-      'on-site': { label: 'On-Site', variant: 'neutral' },
+    const modeConfig: Record<WorkMode, string> = {
+      remote: 'Remote',
+      hybrid: 'Hybrid',
+      'on-site': 'On-Site',
     };
 
-    const config = modeConfig[mode] ?? { label: mode, variant: 'neutral' as const };
+    const label = modeConfig[mode] ?? mode;
 
     return (
-      <Badge variant={config.variant} size="sm" className={className}>
-        {config.label}
+      <Badge variant="brand" size="sm" className={className}>
+        {label}
       </Badge>
     );
   }

@@ -221,7 +221,7 @@ export function ContactTable() {
                             variant="ghost"
                             onClick={() => handleMarkReplied(item.id)}
                             title="Mark as Replied"
-                            className="h-8 w-8 p-0 text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/40"
+                            className="h-8 w-8 p-0 text-brand-500 hover:bg-brand-500/10 dark:hover:bg-brand-500/20"
                           >
                             <CheckCircle className="w-4 h-4" />
                           </Button>

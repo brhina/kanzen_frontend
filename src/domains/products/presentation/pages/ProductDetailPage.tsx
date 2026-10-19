@@ -166,7 +166,7 @@ export function ProductDetailPage() {
                 {product.techStack.map((tech) => (
                   <span
                     key={tech}
-                    className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-800 dark:bg-slate-800 dark:text-slate-200"
+                    className="rounded-lg bg-brand-500/10 border border-brand-500/20 px-3 py-1.5 text-xs font-semibold text-brand-600 dark:bg-brand-500/15 dark:text-brand-400 dark:border-brand-500/30"
                   >
                     {tech}
                   </span>

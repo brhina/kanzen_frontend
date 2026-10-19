@@ -15,7 +15,7 @@ export function ServiceFeatureList({ features, maxItems, className = '' }: Servi
     <ul className={`space-y-2 text-xs text-slate-600 dark:text-slate-300 ${className}`}>
       {displayFeatures.map((feature, i) => (
         <li key={i} className="flex items-start gap-2">
-          <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-500 mt-0.5" />
+          <CheckCircle2 className="h-4 w-4 shrink-0 text-brand-500 mt-0.5" />
           <span>{feature}</span>
         </li>
       ))}

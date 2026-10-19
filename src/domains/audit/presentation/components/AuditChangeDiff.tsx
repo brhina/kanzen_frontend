@@ -46,12 +46,12 @@ export function AuditChangeDiff({ changes, className = '' }: AuditChangeDiffProp
         </div>
 
         {/* After Column */}
-        <div className="rounded-xl border border-emerald-200 bg-emerald-50/30 p-3 dark:border-emerald-900/40 dark:bg-emerald-950/20">
-          <div className="flex items-center justify-between pb-2 border-b border-emerald-200/80 dark:border-emerald-900/50 mb-2">
-            <span className="font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 text-[11px]">
+        <div className="rounded-xl border border-brand-500/20 bg-brand-500/10 p-3 dark:border-brand-900/40 dark:bg-brand-950/20">
+          <div className="flex items-center justify-between pb-2 border-b border-brand-500/20 dark:border-brand-900/50 mb-2">
+            <span className="font-bold uppercase tracking-wider text-brand-700 dark:text-brand-300 text-[11px]">
               Resulting State (After)
             </span>
-            <span className="text-[10px] text-emerald-500">
+            <span className="text-[10px] text-brand-500">
               {after ? `${Object.keys(after).length} fields` : 'Deleted'}
             </span>
           </div>
@@ -79,7 +79,7 @@ export function AuditChangeDiff({ changes, className = '' }: AuditChangeDiffProp
 
               return (
                 <div key={key} className="pt-1.5 flex items-start justify-between gap-2 text-[11px]">
-                  <span className={cn('font-semibold', isChanged ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500')}>
+                  <span className={cn('font-semibold', isChanged ? 'text-brand-600 dark:text-brand-400' : 'text-slate-500')}>
                     {key}:
                   </span>
                   <div className="flex items-center gap-2 text-right">
@@ -87,7 +87,7 @@ export function AuditChangeDiff({ changes, className = '' }: AuditChangeDiffProp
                       {valBefore !== undefined ? JSON.stringify(valBefore) : '—'}
                     </span>
                     <span>→</span>
-                    <span className="text-emerald-600 dark:text-emerald-400 font-bold truncate max-w-[150px]">
+                    <span className="text-brand-600 dark:text-brand-400 font-bold truncate max-w-[150px]">
                       {valAfter !== undefined ? JSON.stringify(valAfter) : '—'}
                     </span>
                   </div>

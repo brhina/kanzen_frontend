@@ -144,7 +144,7 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
   if (isSubmitted) {
     return (
       <div className={`p-8 text-center space-y-5 ${className}`}>
-        <div className="mx-auto h-16 w-16 rounded-full bg-emerald-100 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+        <div className="mx-auto h-16 w-16 rounded-full bg-brand-500/10 dark:bg-brand-950/60 flex items-center justify-center text-brand-600 dark:text-brand-400">
           <CheckCircle2 className="h-9 w-9" />
         </div>
         <div className="space-y-2">
@@ -183,19 +183,17 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
             <div
               key={step}
               className={`flex items-center gap-2 text-xs font-semibold ${
-                isActive
-                  ? 'text-indigo-600 dark:text-indigo-400'
-                  : isDone
-                    ? 'text-emerald-600 dark:text-emerald-400'
-                    : 'text-slate-400'
+                isActive || isDone
+                  ? 'text-brand-600 dark:text-brand-400'
+                  : 'text-slate-400'
               }`}
             >
               <div
                 className={`h-7 w-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
                   isActive
-                    ? 'bg-indigo-600 text-white'
+                    ? 'bg-brand-600 text-white'
                     : isDone
-                      ? 'bg-emerald-100 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400'
+                      ? 'bg-brand-500/10 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400'
                       : 'bg-slate-100 dark:bg-slate-800 text-slate-400'
                 }`}
               >
@@ -349,7 +347,7 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
               <select
                 value={noticePeriod}
                 onChange={(e) => setNoticePeriod(e.target.value)}
-                className="w-full h-10 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                className="w-full h-10 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
               >
                 <option value="Immediately">Immediately (No notice)</option>
                 <option value="2 weeks">2 Weeks</option>
@@ -429,7 +427,7 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
       {currentStep === 4 && (
         <div className="space-y-4">
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 p-4 space-y-3 text-xs">
-            <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-2xs text-indigo-600 dark:text-indigo-400">
+            <h4 className="font-bold uppercase tracking-wider text-2xs text-brand-600 dark:text-brand-400">
               Application Summary
             </h4>
             <div className="grid grid-cols-2 gap-3">
@@ -461,7 +459,7 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
 
             <div className="pt-2 border-t border-slate-200 dark:border-slate-800">
               <span className="text-slate-500">Resume Attached:</span>{' '}
-              <span className="font-mono text-2xs text-indigo-600 dark:text-indigo-400">
+              <span className="font-mono text-2xs text-brand-600 dark:text-brand-400">
                 {resumeFileName || resumeUrl}
               </span>
             </div>
@@ -501,7 +499,6 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
               variant="primary"
               size="sm"
               onClick={handleNext}
-              className="bg-indigo-600 hover:bg-indigo-700"
             >
               <span>Next</span>
             </Button>
@@ -513,7 +510,7 @@ export const JobApplicationForm: React.FC<JobApplicationFormProps> = ({
               onClick={handleSubmit}
               isLoading={applyMutation.isPending}
               disabled={applyMutation.isPending}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white min-w-32 flex items-center justify-center gap-1.5"
+              className="min-w-32 flex items-center justify-center gap-1.5"
             >
               <span>{applyMutation.isPending ? 'Submitting...' : 'Submit Application'}</span>
             </Button>

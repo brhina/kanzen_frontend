@@ -249,7 +249,7 @@ export const JobPostingForm: React.FC<JobPostingFormProps> = ({
           <select
             value={department}
             onChange={(e) => setDepartment(e.target.value)}
-            className="w-full h-10 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+            className="w-full h-10 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
           >
             <option value="Engineering">Engineering</option>
             <option value="Design">Design & UX</option>
@@ -269,7 +269,7 @@ export const JobPostingForm: React.FC<JobPostingFormProps> = ({
             onChange={(e) =>
               setExperienceLevel(e.target.value as ExperienceLevel)
             }
-            className="w-full h-10 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+            className="w-full h-10 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
           >
             <option value="junior">Junior (1-3 yrs)</option>
             <option value="mid">Mid-Level (3-5 yrs)</option>
@@ -285,7 +285,7 @@ export const JobPostingForm: React.FC<JobPostingFormProps> = ({
           <select
             value={mode}
             onChange={(e) => setMode(e.target.value as WorkMode)}
-            className="w-full h-10 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+            className="w-full h-10 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
           >
             <option value="remote">Remote</option>
             <option value="hybrid">Hybrid</option>
@@ -303,7 +303,7 @@ export const JobPostingForm: React.FC<JobPostingFormProps> = ({
           <select
             value={type}
             onChange={(e) => setType(e.target.value as JobType)}
-            className="w-full h-10 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+            className="w-full h-10 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
           >
             <option value="full-time">Full-Time</option>
             <option value="part-time">Part-Time</option>
@@ -332,7 +332,7 @@ export const JobPostingForm: React.FC<JobPostingFormProps> = ({
             onChange={(e) =>
               setStatus(e.target.value as JobPostingStatus)
             }
-            className="w-full h-10 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+            className="w-full h-10 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
           >
             <option value="open">Open (Active)</option>
             <option value="draft">Draft</option>
@@ -397,7 +397,7 @@ export const JobPostingForm: React.FC<JobPostingFormProps> = ({
             id="isUrgent"
             checked={isUrgent}
             onChange={(e) => setIsUrgent(e.target.checked)}
-            className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+            className="h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500"
           />
           <label
             htmlFor="isUrgent"
@@ -454,7 +454,7 @@ export const JobPostingForm: React.FC<JobPostingFormProps> = ({
             {technologies.map((tech) => (
               <span
                 key={tech}
-                className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-md bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800"
+                className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-md bg-brand-500/10 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 border border-brand-500/20 dark:border-brand-800"
               >
                 <span>{tech}</span>
                 <button
@@ -630,7 +630,7 @@ export const JobPostingForm: React.FC<JobPostingFormProps> = ({
           type="submit"
           variant="primary"
           disabled={isPending}
-          className="bg-indigo-600 hover:bg-indigo-700 min-w-32"
+          className="min-w-32"
         >
           {isPending
             ? 'Saving...'

@@ -78,15 +78,15 @@ export function SubscriberTable() {
   const renderStatusBadge = (status: NewsletterSubscriberStatus) => {
     switch (status) {
       case NewsletterSubscriberStatus.ACTIVE:
-        return <Badge variant="success" size="sm">Active</Badge>;
+        return <Badge variant="brand" size="sm">Active</Badge>;
       case NewsletterSubscriberStatus.PENDING:
-        return <Badge variant="warning" size="sm">Pending</Badge>;
+        return <Badge variant="brand" size="sm">Pending</Badge>;
       case NewsletterSubscriberStatus.UNSUBSCRIBED:
-        return <Badge variant="neutral" size="sm">Unsubscribed</Badge>;
+        return <Badge variant="brand" size="sm">Unsubscribed</Badge>;
       case NewsletterSubscriberStatus.BOUNCED:
-        return <Badge variant="danger" size="sm">Bounced</Badge>;
+        return <Badge variant="brand" size="sm">Bounced</Badge>;
       default:
-        return <Badge variant="neutral" size="sm">{status}</Badge>;
+        return <Badge variant="brand" size="sm">{status}</Badge>;
     }
   };
 
@@ -302,11 +302,11 @@ export function SubscriberTable() {
                     {/* Opt-In */}
                     <td className="py-3.5 px-4 text-xs">
                       {item.isConfirmed ? (
-                        <span className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium">
+                        <span className="inline-flex items-center gap-1 text-brand-600 dark:text-brand-400 font-medium">
                           <CheckCircle className="w-3.5 h-3.5" /> Confirmed
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400 font-medium">
+                        <span className="inline-flex items-center gap-1 text-slate-500 dark:text-slate-400 font-medium">
                           <XCircle className="w-3.5 h-3.5" /> Unconfirmed
                         </span>
                       )}
@@ -337,9 +337,9 @@ export function SubscriberTable() {
                           className="h-8 w-8 p-0"
                         >
                           {item.status === NewsletterSubscriberStatus.ACTIVE ? (
-                            <UserX className="w-4 h-4 text-amber-600" />
+                            <UserX className="w-4 h-4 text-brand-600" />
                           ) : (
-                            <UserCheck className="w-4 h-4 text-emerald-600" />
+                            <UserCheck className="w-4 h-4 text-brand-600" />
                           )}
                         </Button>
 

@@ -83,8 +83,8 @@ export function LeadForm({ onSuccess, className = '' }: LeadFormProps) {
 
   if (isSubmitted) {
     return (
-      <div className={`p-8 text-center space-y-4 bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 rounded-2xl ${className}`}>
-        <div className="w-14 h-14 mx-auto rounded-full bg-emerald-100 dark:bg-emerald-900/60 flex items-center justify-center text-emerald-600 dark:text-emerald-300">
+      <div className={`p-8 text-center space-y-4 bg-brand-500/10 dark:bg-brand-950/20 border border-brand-500/20 dark:border-brand-800/40 rounded-2xl ${className}`}>
+        <div className="w-14 h-14 mx-auto rounded-full bg-brand-500/20 dark:bg-brand-900/60 flex items-center justify-center text-brand-500 dark:text-brand-400">
           <CheckCircle2 className="w-8 h-8" />
         </div>
         <h3 className="text-xl font-bold text-slate-900 dark:text-white">

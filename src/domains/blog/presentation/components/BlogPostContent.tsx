@@ -107,7 +107,7 @@ export function BlogPostContent({ post, onLike, isLiking = false }: BlogPostCont
               size="sm"
               onClick={onLike}
               isLoading={isLiking}
-              className="flex items-center gap-1.5 hover:text-red-500 hover:border-red-200 dark:hover:border-red-900/40"
+              className="flex items-center gap-1.5 hover:text-brand-500 hover:border-brand-500/50 dark:hover:border-brand-500/50"
             >
               <span>Like ({post.likeCount})</span>
             </Button>
@@ -151,7 +151,7 @@ export function BlogPostContent({ post, onLike, isLiking = false }: BlogPostCont
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                className="rounded-md bg-brand-500/10 border border-brand-500/20 px-2.5 py-1 text-xs font-medium text-brand-600 dark:bg-brand-500/15 dark:text-brand-400 dark:border-brand-500/30"
               >
                 #{tag}
               </span>

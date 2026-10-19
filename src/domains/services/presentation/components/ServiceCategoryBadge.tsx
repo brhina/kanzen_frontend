@@ -22,7 +22,7 @@ const categoryLabels: Record<string, string> = {
 export function ServiceCategoryBadge({ category, className }: ServiceCategoryBadgeProps) {
   const label = categoryLabels[category] || category.replace('-', ' ');
   return (
-    <Badge variant={category === ServiceCategory.TRAINING ? 'brand' : 'info'} size="sm" className={className}>
+    <Badge variant="brand" size="sm" className={className}>
       {label}
     </Badge>
   );

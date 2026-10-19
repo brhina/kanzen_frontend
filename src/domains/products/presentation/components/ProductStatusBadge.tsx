@@ -23,7 +23,7 @@ export function ProductStatusBadge({ status, className }: ProductStatusBadgeProp
   };
 
   return (
-    <Badge variant={config.variant} size="sm" className={className}>
+    <Badge variant="brand" size="sm" className={className}>
       {config.label}
     </Badge>
   );

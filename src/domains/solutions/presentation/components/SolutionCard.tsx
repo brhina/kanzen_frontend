@@ -80,7 +80,7 @@ export function SolutionCard({
           <ul className="space-y-1.5 pt-2 border-t border-slate-100 dark:border-slate-800/80">
             {solution.features.slice(0, 3).map((feat, idx) => (
               <li key={idx} className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
-                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-brand-500 shrink-0 mt-0.5" />
                 <span className="line-clamp-1">{feat}</span>
               </li>
             ))}

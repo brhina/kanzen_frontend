@@ -93,7 +93,7 @@ export function CaseStudyPage() {
               Staff Controls:
             </span>
             <Badge
-              variant={study.status === 'published' ? 'success' : 'neutral'}
+              variant="brand"
               size="sm"
               className="capitalize font-mono text-xs"
             >
@@ -280,13 +280,13 @@ export function CaseStudyPage() {
 
             {/* Verified Results */}
             <section className="space-y-4">
-              <div className="flex items-center gap-2.5 text-emerald-600 dark:text-emerald-400">
+              <div className="flex items-center gap-2.5 text-brand-600 dark:text-brand-400">
                 <Trophy className="h-5 w-5" />
                 <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                   Verified Production Results
                 </h2>
               </div>
-              <div className="rounded-2xl border border-emerald-200 dark:border-emerald-900/50 bg-emerald-500/5 p-6 sm:p-8">
+              <div className="rounded-2xl border border-brand-500/20 dark:border-brand-500/30 bg-brand-500/5 p-6 sm:p-8">
                 <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
                   {study.results}
                 </p>
@@ -308,7 +308,7 @@ export function CaseStudyPage() {
                 {study.technologies.map((tech, idx) => (
                   <span
                     key={idx}
-                    className="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-mono text-slate-700 dark:bg-slate-800 dark:text-slate-300 font-semibold"
+                    className="rounded-md bg-brand-500/10 border border-brand-500/20 px-2.5 py-1 text-xs font-mono text-brand-600 dark:bg-brand-500/15 dark:text-brand-400 dark:border-brand-500/30 font-semibold"
                   >
                     {tech}
                   </span>

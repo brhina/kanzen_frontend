@@ -3,25 +3,25 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { AuditActionBadge } from '../components/AuditActionBadge';
 
 describe('AuditActionBadge', () => {
-  it('renders creation actions with green badge styling', () => {
+  it('renders creation actions with brand badge styling', () => {
     const html = renderToStaticMarkup(<AuditActionBadge action="article.create" />);
 
     expect(html).toContain('article.create');
-    expect(html).toContain('emerald');
+    expect(html).toContain('brand');
   });
 
-  it('renders delete actions with red badge styling', () => {
+  it('renders delete actions with brand badge styling', () => {
     const html = renderToStaticMarkup(<AuditActionBadge action="user.delete" />);
 
     expect(html).toContain('user.delete');
-    expect(html).toContain('red');
+    expect(html).toContain('brand');
   });
 
-  it('renders update actions with sky/blue badge styling', () => {
+  it('renders update actions with brand badge styling', () => {
     const html = renderToStaticMarkup(<AuditActionBadge action="setting.update" />);
 
     expect(html).toContain('setting.update');
-    expect(html).toContain('sky');
+    expect(html).toContain('brand');
   });
 
   it('renders auth actions with brand styling', () => {

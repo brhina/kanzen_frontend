@@ -119,7 +119,7 @@ export function LeadsPage() {
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-brand-600 shrink-0" />
                 <div>
                   <div className="text-xs font-bold text-slate-900 dark:text-white">Mutual NDA Protected</div>
                   <div className="text-[11px] text-slate-500">Full IP confidentiality</div>

@@ -25,8 +25,8 @@ const typeConfig: Record<
   success: {
     icon: <CheckCircle2 className="h-5 w-5" />,
     containerClass:
-      'border-emerald-200 bg-white dark:border-emerald-900/60 dark:bg-slate-900 text-slate-800 dark:text-slate-100',
-    iconClass: 'text-emerald-500',
+      'border-brand-500/20 bg-white dark:border-brand-500/30 dark:bg-slate-900 text-slate-800 dark:text-slate-100',
+    iconClass: 'text-brand-500',
   },
   error: {
     icon: <AlertCircle className="h-5 w-5" />,

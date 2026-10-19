@@ -36,7 +36,7 @@ export const JobCard: React.FC<JobCardProps> = ({
 
           <div className="flex items-center gap-2">
             {job.isUrgent && (
-              <Badge variant="danger" size="sm">
+              <Badge variant="brand" size="sm">
                 <span>Urgent Hiring</span>
               </Badge>
             )}
@@ -105,13 +105,13 @@ export const JobCard: React.FC<JobCardProps> = ({
             {job.technologies.slice(0, 5).map((tech, idx) => (
               <span
                 key={idx}
-                className="rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-mono text-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                className="rounded-md bg-brand-500/10 border border-brand-500/20 px-2 py-0.5 text-[11px] font-mono text-brand-600 dark:text-brand-400"
               >
                 {tech}
               </span>
             ))}
             {job.technologies.length > 5 && (
-              <span className="rounded-md bg-slate-100 px-1.5 py-0.5 text-[11px] font-mono text-slate-500 dark:bg-slate-800">
+              <span className="rounded-md bg-brand-500/10 border border-brand-500/20 px-1.5 py-0.5 text-[11px] font-mono text-brand-600 dark:text-brand-400">
                 +{job.technologies.length - 5}
               </span>
             )}

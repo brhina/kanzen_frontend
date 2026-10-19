@@ -75,8 +75,8 @@ export function NewsletterSignupForm({
 
   if (isSubscribed) {
     return (
-      <div className="p-6 text-center space-y-3 bg-emerald-50/70 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 rounded-2xl">
-        <div className="w-12 h-12 mx-auto rounded-full bg-emerald-100 dark:bg-emerald-900/60 flex items-center justify-center text-emerald-600 dark:text-emerald-300">
+      <div className="p-6 text-center space-y-3 bg-brand-500/10 dark:bg-brand-950/20 border border-brand-500/20 dark:border-brand-800/40 rounded-2xl">
+        <div className="w-12 h-12 mx-auto rounded-full bg-brand-500/20 dark:bg-brand-900/60 flex items-center justify-center text-brand-500 dark:text-brand-400">
           <CheckCircle2 className="w-6 h-6" />
         </div>
         <h4 className="text-base font-bold text-slate-900 dark:text-white">

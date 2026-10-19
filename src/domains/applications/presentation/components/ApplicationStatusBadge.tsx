@@ -11,36 +11,21 @@ export const ApplicationStatusBadge: React.FC<ApplicationStatusBadgeProps> = ({
   status,
   className,
 }) => {
-  const statusConfig: Record<
-    ApplicationStatus,
-    {
-      label: string;
-      variant:
-        | 'neutral'
-        | 'info'
-        | 'brand'
-        | 'success'
-        | 'danger'
-        | 'warning';
-    }
-  > = {
-    applied: { label: 'Applied', variant: 'neutral' },
-    screening: { label: 'Screening', variant: 'info' },
-    interview: { label: 'Interview', variant: 'brand' },
-    offer: { label: 'Offer', variant: 'brand' },
-    hired: { label: 'Hired', variant: 'success' },
-    rejected: { label: 'Rejected', variant: 'danger' },
-    withdrawn: { label: 'Withdrawn', variant: 'warning' },
+  const statusLabels: Record<ApplicationStatus, string> = {
+    applied: 'Applied',
+    screening: 'Screening',
+    interview: 'Interview',
+    offer: 'Offer',
+    hired: 'Hired',
+    rejected: 'Rejected',
+    withdrawn: 'Withdrawn',
   };
 
-  const config = statusConfig[status] ?? {
-    label: status,
-    variant: 'neutral' as const,
-  };
+  const label = statusLabels[status] ?? status;
 
   return (
-    <Badge variant={config.variant} size="sm" className={className}>
-      {config.label}
+    <Badge variant="brand" size="sm" className={className}>
+      {label}
     </Badge>
   );
 };

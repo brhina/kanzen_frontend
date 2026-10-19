@@ -11,24 +11,18 @@ export const JobStatusBadge: React.FC<JobStatusBadgeProps> = ({
   status,
   className,
 }) => {
-  const statusConfig: Record<
-    JobPostingStatus,
-    { label: string; variant: 'success' | 'warning' | 'danger' | 'neutral' }
-  > = {
-    open: { label: 'Open', variant: 'success' },
-    draft: { label: 'Draft', variant: 'neutral' },
-    paused: { label: 'Paused', variant: 'warning' },
-    closed: { label: 'Closed', variant: 'danger' },
+  const statusLabels: Record<JobPostingStatus, string> = {
+    open: 'Open',
+    draft: 'Draft',
+    paused: 'Paused',
+    closed: 'Closed',
   };
 
-  const config = statusConfig[status] ?? {
-    label: status,
-    variant: 'neutral' as const,
-  };
+  const label = statusLabels[status] ?? status;
 
   return (
-    <Badge variant={config.variant} size="sm" className={className}>
-      {config.label}
+    <Badge variant="brand" size="sm" className={className}>
+      {label}
     </Badge>
   );
 };

@@ -88,7 +88,7 @@ export function PortfolioItemPage() {
               Staff Controls:
             </span>
             <Badge
-              variant={item.status === 'published' ? 'success' : 'neutral'}
+              variant="brand"
               size="sm"
               className="capitalize font-mono text-xs"
             >
@@ -117,19 +117,19 @@ export function PortfolioItemPage() {
           </Badge>
 
           {item.isConfidential && (
-            <Badge variant="warning" size="sm" className="font-mono text-xs">
+            <Badge variant="brand" size="sm" className="font-mono text-xs">
               <span>Confidential Client (NDA)</span>
             </Badge>
           )}
 
           {item.isFeatured && (
-            <Badge variant="warning" size="sm">
+            <Badge variant="brand" size="sm">
               Featured Project
             </Badge>
           )}
 
           {item.status !== 'published' && (
-            <Badge variant="neutral" size="sm" className="capitalize text-xs">
+            <Badge variant="brand" size="sm" className="capitalize text-xs">
               {item.status}
             </Badge>
           )}
@@ -210,8 +210,8 @@ export function PortfolioItemPage() {
 
           {/* Results & Business Outcomes */}
           {item.results && (
-            <div className="rounded-2xl bg-emerald-500/5 border border-emerald-500/20 p-6 space-y-3">
-              <h3 className="text-base font-bold text-emerald-900 dark:text-emerald-400">
+            <div className="rounded-2xl bg-brand-500/5 border border-brand-500/20 p-6 space-y-3">
+              <h3 className="text-base font-bold text-brand-900 dark:text-brand-400">
                 Verified Business Outcomes
               </h3>
               <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
@@ -235,7 +235,7 @@ export function PortfolioItemPage() {
                     href={item.liveUrl}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="flex items-center justify-between p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white hover:text-primary-600 transition-colors"
+                    className="flex items-center justify-between p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white hover:text-brand-600 transition-colors"
                   >
                     <span>View Live Deployment</span>
                     <ExternalLink className="h-4 w-4" />
@@ -246,7 +246,7 @@ export function PortfolioItemPage() {
                     href={item.githubUrl}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="flex items-center justify-between p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white hover:text-primary-600 transition-colors"
+                    className="flex items-center justify-between p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white hover:text-brand-600 transition-colors"
                   >
                     <span>Inspect GitHub Repository</span>
                     <Code2 className="h-4 w-4" />
@@ -260,14 +260,14 @@ export function PortfolioItemPage() {
           {item.technologies && item.technologies.length > 0 && (
             <div className="rounded-2xl border border-slate-200 dark:border-slate-800 p-6 bg-white dark:bg-slate-900 space-y-3">
               <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-                <Layers className="h-4 w-4" />
+                <Layers className="h-4 w-4 text-brand-500" />
                 <span>Technologies & Frameworks</span>
               </h3>
               <div className="flex flex-wrap gap-1.5">
                 {item.technologies.map((tech, idx) => (
                   <span
                     key={idx}
-                    className="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium"
+                    className="px-2.5 py-1 rounded-md text-xs font-mono bg-brand-500/10 border border-brand-500/20 text-brand-600 dark:bg-brand-500/15 dark:text-brand-400 dark:border-brand-500/30 font-medium"
                   >
                     {tech}
                   </span>

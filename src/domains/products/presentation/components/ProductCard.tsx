@@ -69,7 +69,7 @@ export function ProductCard({
             {product.techStack.slice(0, 4).map((tech) => (
               <span
                 key={tech}
-                className="rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                className="rounded-md bg-brand-500/10 border border-brand-500/20 px-2 py-0.5 text-[11px] font-medium text-brand-600 dark:bg-brand-500/15 dark:text-brand-400 dark:border-brand-500/30"
               >
                 {tech}
               </span>

@@ -154,12 +154,12 @@ export function ConsultationBookingForm({
 
   if (isBooked) {
     return (
-      <div className={`p-8 sm:p-12 text-center space-y-5 bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 rounded-3xl ${className}`}>
-        <div className="w-16 h-16 mx-auto rounded-full bg-emerald-100 dark:bg-emerald-900/60 flex items-center justify-center text-emerald-600 dark:text-emerald-300">
+      <div className={`p-8 sm:p-12 text-center space-y-5 bg-brand-500/10 dark:bg-brand-950/20 border border-brand-500/20 dark:border-brand-800 rounded-3xl ${className}`}>
+        <div className="w-16 h-16 mx-auto rounded-full bg-brand-500/20 dark:bg-brand-900/60 flex items-center justify-center text-brand-500 dark:text-brand-400">
           <CheckCircle2 className="w-10 h-10" />
         </div>
         <div className="space-y-2">
-          <Badge variant="success" size="md">
+          <Badge variant="brand" size="md">
             {isTraining ? 'Training Workshop Reserved' : 'Consultation Confirmed'}
           </Badge>
           <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
@@ -224,7 +224,7 @@ export function ConsultationBookingForm({
               <div
                 className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
                   isPassed
-                    ? 'bg-emerald-600 text-white'
+                    ? 'bg-brand-600 text-white'
                     : isActive
                       ? 'bg-brand-600 text-white shadow-sm ring-2 ring-brand-500/20'
                       : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
@@ -237,7 +237,7 @@ export function ConsultationBookingForm({
                   isActive
                     ? 'text-slate-900 dark:text-white'
                     : isPassed
-                      ? 'text-emerald-600'
+                      ? 'text-brand-600'
                       : 'text-slate-400'
                 }`}
               >
@@ -695,7 +695,7 @@ export function ConsultationBookingForm({
             {/* Summary Dossier Card */}
             <div className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
-                <Badge variant={isTraining ? 'brand' : 'info'} size="md">
+                <Badge variant="brand" size="md">
                   {isTraining ? 'Corporate Engineering Workshop' : 'Architecture Advisory Session'}
                 </Badge>
                 {isTraining && (

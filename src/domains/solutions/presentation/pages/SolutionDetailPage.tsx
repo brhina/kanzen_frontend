@@ -81,7 +81,7 @@ export function SolutionDetailPage() {
               Staff Controls:
             </span>
             <Badge
-              variant={solution.status === 'active' ? 'success' : 'neutral'}
+              variant="brand"
               size="sm"
               className="capitalize font-mono text-xs"
             >
@@ -165,7 +165,7 @@ export function SolutionDetailPage() {
           {solution.features && solution.features.length > 0 && (
             <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
               <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                <CheckCircle2 className="h-5 w-5 text-brand-500" />
                 <span>Components &amp; Architectural Guarantees</span>
               </h2>
               <div className="space-y-2.5 pt-2">

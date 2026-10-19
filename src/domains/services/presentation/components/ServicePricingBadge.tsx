@@ -24,7 +24,7 @@ export function ServicePricingBadge({
   }
 
   return (
-    <Badge variant="neutral" size="sm" className={className}>
+    <Badge variant="brand" size="sm" className={className}>
       {text}
     </Badge>
   );

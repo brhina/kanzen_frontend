@@ -50,13 +50,13 @@ export function Footer({ className = '' }: FooterProps) {
             <div className="pt-2">
               <Link
                 to="/health"
-                className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700 transition-colors hover:bg-emerald-100 dark:border-emerald-500/30 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-950/60"
+                className="inline-flex items-center gap-2 rounded-full border border-brand-500/20 bg-brand-500/10 px-3 py-1 text-xs font-medium text-brand-600 transition-colors hover:bg-brand-500/20 dark:border-brand-500/30 dark:bg-brand-500/15 dark:text-brand-400 dark:hover:bg-brand-500/25"
               >
                 <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-400 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-500" />
                 </span>
-                <Activity className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                <Activity className="h-3.5 w-3.5 text-brand-500 dark:text-brand-400" />
                 <span>All Systems Operational</span>
               </Link>
             </div>

@@ -93,7 +93,7 @@ export function AuditLogTable({
                   </td>
                   <td className="px-4 py-3">
                     <Badge
-                      variant={log.status === 'success' ? 'success' : 'danger'}
+                      variant="brand"
                       size="sm"
                       className="text-[10px] uppercase font-bold"
                     >

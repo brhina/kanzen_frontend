@@ -33,7 +33,7 @@ export function OverviewMetricCard({
           {title}
         </span>
         {badge && (
-          <Badge variant="neutral" styleVariant="outline" size="sm" className="text-[10px] font-mono">
+          <Badge variant="brand" styleVariant="outline" size="sm" className="text-[10px] font-mono">
             {badge}
           </Badge>
         )}
@@ -55,7 +55,7 @@ export function OverviewMetricCard({
               className={cn(
                 'font-semibold font-mono text-[11px]',
                 trend === 'up'
-                  ? 'text-emerald-600 dark:text-emerald-400'
+                  ? 'text-brand-600 dark:text-brand-400'
                   : trend === 'down'
                     ? 'text-rose-600 dark:text-rose-400'
                     : 'text-slate-500 dark:text-slate-400',

@@ -31,7 +31,7 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
   if (isLoading) {
     return (
       <div className="py-16 flex flex-col items-center justify-center gap-3">
-        <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-brand-500" />
         <p className="text-xs text-slate-500">Loading candidate applications...</p>
       </div>
     );
@@ -98,8 +98,8 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
               {/* Rating */}
               <td className="px-4 py-3.5">
                 {app.rating ? (
-                  <div className="flex items-center gap-1 font-bold text-amber-500 font-mono">
-                    <Star className="h-3.5 w-3.5 fill-amber-400" />
+                  <div className="flex items-center gap-1 font-bold text-brand-500 font-mono">
+                    <Star className="h-3.5 w-3.5 fill-brand-400" />
                     <span>{app.rating}/5</span>
                   </div>
                 ) : (
@@ -113,7 +113,7 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
                   href={app.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-indigo-600 transition-colors"
+                  className="inline-flex items-center gap-1 px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-brand-500 transition-colors"
                   title="View Resume PDF"
                 >
                   <FileText className="h-3 w-3" />
@@ -137,7 +137,7 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
                       e.target.value as ApplicationStatus,
                     )
                   }
-                  className="h-8 px-2 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md text-2xs font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="h-8 px-2 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md text-2xs font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-brand-500"
                 >
                   <option value="applied">Applied</option>
                   <option value="screening">Screening</option>

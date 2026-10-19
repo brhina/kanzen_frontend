@@ -108,7 +108,7 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
         <div className="flex flex-wrap gap-4 text-xs text-slate-600 dark:text-slate-300 pt-1">
           <a
             href={`mailto:${application.email}`}
-            className="flex items-center gap-1.5 hover:text-indigo-600"
+            className="flex items-center gap-1.5 hover:text-brand-500"
           >
             <Mail className="h-3.5 w-3.5 text-slate-400" />
             <span>{application.email}</span>
@@ -116,7 +116,7 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
           {application.phone && (
             <a
               href={`tel:${application.phone}`}
-              className="flex items-center gap-1.5 hover:text-indigo-600"
+              className="flex items-center gap-1.5 hover:text-brand-500"
             >
               <Phone className="h-3.5 w-3.5 text-slate-400" />
               <span>{application.phone}</span>
@@ -131,9 +131,9 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
               href={application.linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300 hover:text-indigo-600"
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300 hover:text-brand-500"
             >
-              <Globe className="h-3.5 w-3.5 text-blue-600" />
+              <Globe className="h-3.5 w-3.5 text-brand-500" />
               <span>LinkedIn</span>
               <ExternalLink className="h-3 w-3 text-slate-400 ml-0.5" />
             </a>
@@ -143,7 +143,7 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
               href={application.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300 hover:text-indigo-600"
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300 hover:text-brand-500"
             >
               <Code2 className="h-3.5 w-3.5 text-slate-800 dark:text-slate-200" />
               <span>GitHub</span>
@@ -155,9 +155,9 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
               href={application.portfolioUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300 hover:text-indigo-600"
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300 hover:text-brand-500"
             >
-              <Globe className="h-3.5 w-3.5 text-emerald-600" />
+              <Globe className="h-3.5 w-3.5 text-brand-500" />
               <span>Portfolio</span>
               <ExternalLink className="h-3 w-3 text-slate-400 ml-0.5" />
             </a>
@@ -166,9 +166,9 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
       </div>
 
       {/* Resume Access Card */}
-      <div className="p-4 rounded-xl border border-indigo-200 dark:border-indigo-900 bg-indigo-50/40 dark:bg-indigo-950/20 flex items-center justify-between gap-3">
+      <div className="p-4 rounded-xl border border-brand-500/20 dark:border-brand-900 bg-brand-500/10 dark:bg-brand-950/20 flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+          <div className="h-10 w-10 rounded-lg bg-brand-500/20 dark:bg-brand-900/60 flex items-center justify-center text-brand-600 dark:text-brand-400">
             <FileText className="h-5 w-5" />
           </div>
           <div>
@@ -188,7 +188,7 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
           <Button
             variant="primary"
             size="sm"
-            className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs shrink-0"
+            className="text-xs shrink-0"
           >
             <span>Open Resume PDF</span>
           </Button>
@@ -269,7 +269,7 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
             size="sm"
             onClick={() => handleStatusChange('interview')}
             disabled={isPending || application.status === 'interview'}
-            className="text-xs bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="text-xs"
           >
             Interview
           </Button>
@@ -279,7 +279,7 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
             size="sm"
             onClick={() => handleStatusChange('offer')}
             disabled={isPending || application.status === 'offer'}
-            className="text-xs bg-purple-600 hover:bg-purple-700 text-white"
+            className="text-xs"
           >
             Make Offer
           </Button>
@@ -289,7 +289,7 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
             size="sm"
             onClick={() => handleStatusChange('hired')}
             disabled={isPending || application.status === 'hired'}
-            className="text-xs bg-emerald-600 hover:bg-emerald-700 text-white"
+            className="text-xs"
           >
             <span>Hire</span>
           </Button>
@@ -313,7 +313,7 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
             Recruiter Scorecard & Internal Notes
           </h4>
           {saveSuccess && (
-            <span className="text-2xs text-emerald-600 font-medium flex items-center gap-1">
+            <span className="text-2xs text-brand-500 font-medium flex items-center gap-1">
               <CheckCircle2 className="h-3.5 w-3.5" /> Saved evaluation!
             </span>
           )}
@@ -334,7 +334,7 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
                 <Star
                   className={`h-5 w-5 ${
                     star <= rating
-                      ? 'fill-amber-400 text-amber-400'
+                      ? 'fill-brand-400 text-brand-400'
                       : 'text-slate-300 dark:text-slate-600'
                   }`}
                 />
@@ -379,7 +379,7 @@ export const ApplicationDetailPanel: React.FC<ApplicationDetailPanelProps> = ({
             onClick={handleSaveEvaluation}
             isLoading={updateMutation.isPending}
             disabled={isPending}
-            className="bg-indigo-600 hover:bg-indigo-700 text-xs"
+            className="text-xs"
           >
             <span>{updateMutation.isPending ? 'Saving...' : 'Save Evaluation'}</span>
           </Button>

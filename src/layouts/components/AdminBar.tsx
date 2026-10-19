@@ -69,12 +69,12 @@ export function AdminBar({ className = '' }: AdminBarProps) {
           aria-expanded={false}
         >
           <span className="relative flex h-2 w-2" aria-hidden="true">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-500" />
           </span>
           <span>Admin Bar</span>
           {isEditMode && (
-            <Badge variant="warning" size="sm" className="ml-1 text-[10px]">
+            <Badge variant="brand" size="sm" className="ml-1 text-[10px]">
               Edit Mode
             </Badge>
           )}
@@ -98,7 +98,7 @@ export function AdminBar({ className = '' }: AdminBarProps) {
           <div className="flex items-center justify-between gap-2 w-full">
             <div className="flex items-center gap-2">
               <Badge
-                variant={user.isAdmin ? 'success' : 'info'}
+                variant="brand"
                 size="sm"
                 className="font-mono text-[10px] tracking-wide uppercase px-2 py-0.5"
               >

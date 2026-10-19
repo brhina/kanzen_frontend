@@ -114,18 +114,18 @@ export function ContactPage() {
 
             {phoneNumber && (
               <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-700 space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-cyan-50 dark:bg-cyan-950/60 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 flex items-center justify-center">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-base text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                  <h3 className="font-bold text-base text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
                     Corporate Phone
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">
                     Direct line for client operations and inquiries:
                   </p>
                 </div>
-                <div className="text-sm font-semibold text-cyan-600 dark:text-cyan-400">
+                <div className="text-sm font-semibold text-brand-600 dark:text-brand-400">
                   <a href={`tel:${phoneNumber.replace(/\s+/g, '')}`} className="hover:underline">
                     {phoneNumber}
                   </a>

@@ -49,12 +49,12 @@ export function PortfolioCard({
 
           <div className="flex items-center gap-1.5">
             {item.isConfidential && (
-              <Badge variant="warning" size="sm" className="font-mono text-[10px]">
+              <Badge variant="brand" size="sm" className="font-mono text-[10px]">
                 <span>NDA</span>
               </Badge>
             )}
             {item.status !== 'published' && (
-              <Badge variant="neutral" size="sm" className="capitalize text-[10px]">
+              <Badge variant="brand" size="sm" className="capitalize text-[10px]">
                 {item.status}
               </Badge>
             )}
@@ -128,13 +128,13 @@ export function PortfolioCard({
               {item.technologies.slice(0, 4).map((tech, idx) => (
                 <span
                   key={idx}
-                  className="rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-mono text-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                  className="rounded-md bg-brand-500/10 border border-brand-500/20 px-2 py-0.5 text-[11px] font-mono text-brand-600 dark:bg-brand-500/15 dark:text-brand-400 dark:border-brand-500/30"
                 >
                   {tech}
                 </span>
               ))}
               {item.technologies.length > 4 && (
-                <span className="rounded-md bg-slate-100 px-1.5 py-0.5 text-[11px] font-mono text-slate-500 dark:bg-slate-800">
+                <span className="rounded-md bg-brand-500/10 border border-brand-500/20 px-1.5 py-0.5 text-[11px] font-mono text-brand-600 dark:bg-brand-500/15 dark:text-brand-400 dark:border-brand-500/30">
                   +{item.technologies.length - 4}
                 </span>
               )}

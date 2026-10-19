@@ -16,34 +16,34 @@ export function ContactStatusBadge({
     case ContactStatus.PENDING:
     case 'pending':
       return (
-        <Badge variant="warning" size={size} className={className}>
+        <Badge variant="brand" size={size} className={className}>
           Pending
         </Badge>
       );
     case ContactStatus.READ:
     case 'read':
       return (
-        <Badge variant="info" size={size} className={className}>
+        <Badge variant="brand" size={size} className={className}>
           Read
         </Badge>
       );
     case ContactStatus.REPLIED:
     case 'replied':
       return (
-        <Badge variant="success" size={size} className={className}>
+        <Badge variant="brand" size={size} className={className}>
           Replied
         </Badge>
       );
     case ContactStatus.ARCHIVED:
     case 'archived':
       return (
-        <Badge variant="neutral" size={size} className={className}>
+        <Badge variant="brand" size={size} className={className}>
           Archived
         </Badge>
       );
     default:
       return (
-        <Badge variant="neutral" size={size} className={className}>
+        <Badge variant="brand" size={size} className={className}>
           {status}
         </Badge>
       );

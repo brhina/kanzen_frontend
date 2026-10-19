@@ -50,7 +50,7 @@ export function ForgotPasswordForm({
   if (submittedEmail) {
     return (
       <div className={`space-y-6 text-center ${className}`}>
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-500/10 text-brand-500 dark:bg-brand-950/60 dark:text-brand-400">
           <CheckCircle2 className="h-6 w-6" />
         </div>
         <div className="space-y-2">
