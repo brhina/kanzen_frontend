@@ -93,7 +93,7 @@ describe('HeroLatestUpdates Component', () => {
           description: 'Engineered sub-millisecond telemetry routing across 45 edge regions.',
           coverImage: '/images/portfolio/aerocloud.png',
           images: [],
-          category: PortfolioCategory.CLOUD_NATIVE,
+          category: PortfolioCategory.ENTERPRISE,
           services: ['Cloud Architecture', 'Edge Compute'],
           technologies: ['Rust', 'eBPF', 'Kubernetes'],
           isFeatured: true,
@@ -121,7 +121,7 @@ describe('HeroLatestUpdates Component', () => {
           projectDescription: 'Corporate training workshop for 25 platform architects.',
           trainingTopic: 'Distributed Systems & Microservice Resiliency Masterclass',
           type: ConsultationType.TRAINING,
-          status: ConsultationStatus.CONFIRMED,
+          status: ConsultationStatus.SCHEDULED,
           meetingType: MeetingType.VIDEO,
           timezone: 'UTC',
           serviceInterest: ['Distributed Systems'],
@@ -145,9 +145,9 @@ describe('HeroLatestUpdates Component', () => {
           tagline: 'Instant zero-trust service mesh with sub-millisecond latency overhead.',
           description: 'High performance data plane proxy and automated telemetry.',
           screenshots: ['/images/products/hypermesh-dashboard.png'],
-          category: ProductCategory.ENTERPRISE_SYSTEMS,
+          category: ProductCategory.SAAS,
           techStack: ['Go', 'Envoy', 'Kubernetes'],
-          status: ProductStatus.PUBLISHED,
+          status: ProductStatus.LIVE,
           isFeatured: true,
           order: 1,
           launchedAt: '2026-10-16T10:00:00.000Z',
@@ -171,7 +171,7 @@ describe('HeroLatestUpdates Component', () => {
           coverImage: '/images/solutions/banking-core.png',
           features: ['Deterministic Engine', 'Double-entry Verification'],
           industries: ['FinTech'],
-          status: SolutionStatus.PUBLISHED,
+          status: SolutionStatus.ACTIVE,
           isFeatured: true,
           order: 1,
           updatedAt: '2026-10-15T09:00:00.000Z',
@@ -199,7 +199,7 @@ describe('HeroLatestUpdates Component', () => {
           technologies: ['Kubernetes', 'Linux', 'eBPF'],
           order: 1,
           isFeatured: true,
-          status: ServiceItemStatus.PUBLISHED,
+          status: ServiceItemStatus.ACTIVE,
           updatedAt: '2026-10-14T09:00:00.000Z',
         },
       ],
@@ -233,8 +233,129 @@ describe('HeroLatestUpdates Component', () => {
     // Verify 6th item was capped out
     expect(html).not.toContain('Enterprise Kubernetes Optimization &amp; Hardening');
 
-    // Controls
-    expect(html).toContain('Previous update');
-    expect(html).toContain('Next update');
+    // Controls removed per user design request
+    expect(html).not.toContain('Previous update');
+    expect(html).not.toContain('Next update');
+    expect(html).not.toContain('Refresh latest updates');
+
+    // CTAs and navigation rendered cleanly
+    expect(html).toContain('Start an Engagement');
+    expect(html).toContain('Explore Solutions');
+  });
+
+  it('correctly fetches and surfaces updated/edited products and portfolios to the top with Updated badge', () => {
+    // Product created 6 months ago, but updated today (2026-10-19T12:00:00Z)
+    queryClient.setQueryData(['products', 'public', { limit: 5 }], {
+      products: [
+        {
+          id: 'product-legacy',
+          name: 'HyperMesh Enterprise 3.1 Refactor',
+          slug: 'hypermesh-refactor',
+          tagline: 'Zero-trust enterprise service mesh updated with WebAssembly plugins.',
+          description: 'Updated architecture platform.',
+          screenshots: ['/images/products/hypermesh-dashboard.png'],
+          category: ProductCategory.SAAS,
+          techStack: ['Rust', 'Wasm'],
+          status: ProductStatus.LIVE,
+          isFeatured: true,
+          order: 1,
+          createdAt: '2026-04-01T00:00:00.000Z',
+          launchedAt: '2026-04-01T00:00:00.000Z',
+          updatedAt: '2026-10-19T12:00:00.000Z', // Recent update today!
+        },
+      ],
+      total: 1,
+      page: 1,
+      limit: 5,
+      totalPages: 1,
+    });
+
+    // Portfolio item created 4 months ago, but updated yesterday (2026-10-18T18:00:00Z)
+    queryClient.setQueryData(['portfolio', 'public', { limit: 5 }], {
+      items: [
+        {
+          id: 'portfolio-legacy',
+          name: 'AeroCloud Multi-Region Scaling',
+          title: 'AeroCloud Multi-Region Scaling',
+          slug: 'aerocloud-scaling',
+          description: 'Expanded from 10 to 45 edge regions with automated failover.',
+          coverImage: '/images/portfolio/aerocloud.png',
+          images: [],
+          category: PortfolioCategory.ENTERPRISE,
+          services: ['Cloud Architecture'],
+          technologies: ['Kubernetes'],
+          isFeatured: true,
+          order: 1,
+          status: PortfolioItemStatus.PUBLISHED,
+          client: 'AeroCloud Dynamics',
+          createdAt: '2026-06-01T00:00:00.000Z',
+          completedAt: '2026-06-01T00:00:00.000Z',
+          updatedAt: '2026-10-18T18:00:00.000Z', // Updated yesterday
+        },
+      ],
+      total: 1,
+      page: 1,
+      limit: 5,
+      totalPages: 1,
+    });
+
+    // Blog post published on 2026-10-15
+    queryClient.setQueryData(['blog', 'public', { limit: 5 }], {
+      posts: [
+        {
+          id: 'blog-post-older',
+          title: 'Legacy Microservice Migration Patterns',
+          slug: 'legacy-migration',
+          content: 'Blog content...',
+          categoryName: 'Cloud',
+          publishedAt: '2026-10-15T00:00:00.000Z',
+          status: BlogPostStatus.PUBLISHED,
+          author: 'user-1',
+        },
+      ],
+      total: 1,
+      page: 1,
+      limit: 5,
+      totalPages: 1,
+    });
+
+    const html = renderComponent();
+
+    // Verify slide 1 is the recently updated product (updatedAt Oct 19)
+    expect(html).toContain('Go to slide 1: HyperMesh Enterprise 3.1 Refactor');
+    // Verify slide 2 is the updated portfolio item (updatedAt Oct 18)
+    expect(html).toContain('Go to slide 2: AeroCloud Multi-Region Scaling');
+    // Verify slide 3 is the blog post (publishedAt Oct 15)
+    expect(html).toContain('Go to slide 3: Legacy Microservice Migration Patterns');
+
+    // Both updated items display the "Updated" badge
+    expect(html).toContain('Updated');
+    expect(html).toContain('HyperMesh Enterprise 3.1 Refactor');
+    expect(html).toContain('AeroCloud Multi-Region Scaling');
+  });
+
+  it('renders technical proof points and responsive mobile CTA structure properly', () => {
+    const proofPoints = [
+      { label: '99.99% Guaranteed SLA', icon: 'CheckCircle2' },
+      { label: 'Zero-Trust Security', icon: 'ShieldCheck' },
+      { label: 'Sub-50ms Global Latency', icon: 'Zap' },
+    ];
+
+    const html = renderToStaticMarkup(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <HeroLatestUpdates proofPoints={proofPoints} />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    // Verify all proof points are rendered
+    expect(html).toContain('99.99% Guaranteed SLA');
+    expect(html).toContain('Zero-Trust Security');
+    expect(html).toContain('Sub-50ms Global Latency');
+
+    // Verify slide counter / controls are not rendered
+    expect(html).not.toContain('Previous update');
+    expect(html).not.toContain('Next update');
   });
 });

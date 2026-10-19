@@ -100,8 +100,8 @@ describe('HomePage', () => {
     expect(html).toContain('Latest engineering dispatches and system updates');
     expect(html).toContain('Quantum-Resistant Distributed Ciphers in High-Throughput Pipelines');
     expect(html).toContain('/images/blog/quantum-ciphers.png');
-    expect(html).toContain('Previous update');
-    expect(html).toContain('Next update');
+    expect(html).not.toContain('Previous update');
+    expect(html).not.toContain('Next update');
     expect(html).not.toContain('Horizontal Dispatch Rail');
   });
 
