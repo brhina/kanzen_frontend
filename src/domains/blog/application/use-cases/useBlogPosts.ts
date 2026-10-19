@@ -7,6 +7,10 @@ import type { BlogPostEntity } from '../../domain/entities/blog-post.entity';
 export interface UseBlogPostsOptions extends FilterBlogPostsDto {
   isAdminView?: boolean;
   enabled?: boolean;
+  staleTime?: number;
+  refetchOnWindowFocus?: boolean;
+  refetchInterval?: number;
+  refetchOnMount?: boolean | 'always';
 }
 
 export interface UseBlogPostsResult {
@@ -20,6 +24,10 @@ export interface UseBlogPostsResult {
 export function useBlogPosts({
   isAdminView = false,
   enabled = true,
+  staleTime,
+  refetchOnWindowFocus,
+  refetchInterval,
+  refetchOnMount,
   ...filter
 }: UseBlogPostsOptions = {}) {
   return useQuery<UseBlogPostsResult>({
@@ -31,6 +39,9 @@ export function useBlogPosts({
       return blogMapper.toPaginated(response);
     },
     enabled,
-    staleTime: 1000 * 60 * 2, // 2 minutes
+    staleTime: staleTime ?? 1000 * 60 * 2, // 2 minutes
+    ...(refetchOnWindowFocus !== undefined ? { refetchOnWindowFocus } : {}),
+    ...(refetchInterval !== undefined ? { refetchInterval } : {}),
+    ...(refetchOnMount !== undefined ? { refetchOnMount } : {}),
   });
 }

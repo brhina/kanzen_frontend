@@ -6,6 +6,11 @@ import type { ProductEntity } from '../../domain/entities/product.entity';
 
 export interface UseProductsOptions extends FilterProductsDto {
   isAdminView?: boolean;
+  staleTime?: number;
+  refetchOnWindowFocus?: boolean;
+  refetchInterval?: number;
+  refetchOnMount?: boolean | 'always';
+  enabled?: boolean;
 }
 
 export interface UseProductsResult {
@@ -18,6 +23,11 @@ export interface UseProductsResult {
 
 export function useProducts({
   isAdminView = false,
+  staleTime,
+  refetchOnWindowFocus,
+  refetchInterval,
+  refetchOnMount,
+  enabled = true,
   ...filter
 }: UseProductsOptions = {}) {
   return useQuery<UseProductsResult>({
@@ -30,6 +40,10 @@ export function useProducts({
       const response = await productsApi.listPublic(filter);
       return productsMapper.toPaginated(response);
     },
-    staleTime: 1000 * 60 * 3,
+    enabled,
+    staleTime: staleTime ?? 1000 * 60 * 3,
+    ...(refetchOnWindowFocus !== undefined ? { refetchOnWindowFocus } : {}),
+    ...(refetchInterval !== undefined ? { refetchInterval } : {}),
+    ...(refetchOnMount !== undefined ? { refetchOnMount } : {}),
   });
 }

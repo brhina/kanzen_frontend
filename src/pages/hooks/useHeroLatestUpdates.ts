@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import { useBlogPosts } from '@/domains/blog/application/use-cases/useBlogPosts';
 import { usePortfolioItems } from '@/domains/portfolio/application/use-cases/usePortfolioItems';
 import { useConsultations } from '@/domains/consultations/application/use-cases/useConsultations';
@@ -26,6 +26,7 @@ export interface HeroUpdateItem {
   href: string;
   date?: string;
   dateFormatted?: string;
+  isUpdated?: boolean;
   tag?: string;
   iconName: string;
   badgeVariant: 'brand' | 'neutral' | 'success' | 'warning' | 'info' | 'danger';
@@ -41,13 +42,84 @@ export interface HeroUpdateItem {
   };
 }
 
-export function useHeroLatestUpdates() {
-  const { data: blogData, isLoading: isLoadingBlog } = useBlogPosts({ limit: 5 });
-  const { data: portfolioData, isLoading: isLoadingPortfolio } = usePortfolioItems({ limit: 5 });
-  const { data: consultationsData, isLoading: isLoadingConsultations } = useConsultations({ limit: 5 });
-  const { data: productsData, isLoading: isLoadingProducts } = useProducts({ limit: 5 });
-  const { data: solutionsData, isLoading: isLoadingSolutions } = useSolutions({ limit: 5 });
-  const { data: servicesData, isLoading: isLoadingServices } = useServices({ limit: 5 });
+export interface UseHeroLatestUpdatesOptions {
+  refetchOnWindowFocus?: boolean;
+  staleTime?: number;
+  refetchInterval?: number;
+}
+
+function toIsoDate(val?: string | Date | null): string | undefined {
+  if (!val) return undefined;
+  if (val instanceof Date) return isNaN(val.getTime()) ? undefined : val.toISOString();
+  if (typeof val === 'string') {
+    const d = new Date(val);
+    return isNaN(d.getTime()) ? undefined : d.toISOString();
+  }
+  return undefined;
+}
+
+function hasBeenUpdated(updatedAt?: string | Date | null, originalDate?: string | Date | null): boolean {
+  if (!updatedAt || !originalDate) return false;
+  const updatedTime = new Date(updatedAt).getTime();
+  const origTime = new Date(originalDate).getTime();
+  return !isNaN(updatedTime) && !isNaN(origTime) && updatedTime > origTime;
+}
+
+export function useHeroLatestUpdates(options: UseHeroLatestUpdatesOptions = {}) {
+  const {
+    refetchOnWindowFocus = true,
+    staleTime = 1000 * 30, // 30 seconds default freshness for latest hero feed
+    refetchInterval,
+  } = options;
+
+  const queryOpts = {
+    limit: 5,
+    refetchOnWindowFocus,
+    staleTime,
+    ...(refetchInterval !== undefined ? { refetchInterval } : {}),
+  };
+
+  const {
+    data: blogData,
+    isLoading: isLoadingBlog,
+    refetch: refetchBlog,
+    isFetching: isFetchingBlog,
+  } = useBlogPosts(queryOpts);
+
+  const {
+    data: portfolioData,
+    isLoading: isLoadingPortfolio,
+    refetch: refetchPortfolio,
+    isFetching: isFetchingPortfolio,
+  } = usePortfolioItems(queryOpts);
+
+  const {
+    data: consultationsData,
+    isLoading: isLoadingConsultations,
+    refetch: refetchConsultations,
+    isFetching: isFetchingConsultations,
+  } = useConsultations(queryOpts);
+
+  const {
+    data: productsData,
+    isLoading: isLoadingProducts,
+    refetch: refetchProducts,
+    isFetching: isFetchingProducts,
+  } = useProducts(queryOpts);
+
+  const {
+    data: solutionsData,
+    isLoading: isLoadingSolutions,
+    refetch: refetchSolutions,
+    isFetching: isFetchingSolutions,
+  } = useSolutions(queryOpts);
+
+  const {
+    data: servicesData,
+    isLoading: isLoadingServices,
+    refetch: refetchServices,
+    isFetching: isFetchingServices,
+  } = useServices(queryOpts);
 
   const updates = useMemo<HeroUpdateItem[]>(() => {
     const collected: HeroUpdateItem[] = [];
@@ -55,7 +127,11 @@ export function useHeroLatestUpdates() {
     // 1. Blog posts
     if (blogData?.posts && Array.isArray(blogData.posts)) {
       for (const post of blogData.posts) {
-        const rawDate = post.publishedAt || post.createdAt;
+        const originalDate = toIsoDate(post.publishedAt) || toIsoDate(post.createdAt);
+        const updatedDate = toIsoDate(post.updatedAt);
+        const isUpdated = hasBeenUpdated(updatedDate, originalDate);
+        const rawDate = updatedDate || originalDate;
+
         collected.push({
           id: `blog-${post.id}`,
           type: 'blog',
@@ -65,6 +141,7 @@ export function useHeroLatestUpdates() {
           href: `/blog/${post.slug || post.id}`,
           date: rawDate,
           dateFormatted: rawDate ? formatDate(rawDate, 'MMM d, yyyy') : undefined,
+          isUpdated,
           tag: post.categoryName || (post.tags && post.tags[0]) || 'Article',
           iconName: 'BookOpen',
           badgeVariant: 'info',
@@ -85,7 +162,11 @@ export function useHeroLatestUpdates() {
     // 2. Portfolio items
     if (portfolioData?.items && Array.isArray(portfolioData.items)) {
       for (const item of portfolioData.items) {
-        const rawDate = item.completedAt || item.createdAt;
+        const originalDate = toIsoDate(item.completedAt) || toIsoDate(item.createdAt);
+        const updatedDate = toIsoDate(item.updatedAt);
+        const isUpdated = hasBeenUpdated(updatedDate, originalDate);
+        const rawDate = updatedDate || originalDate;
+
         collected.push({
           id: `portfolio-${item.id}`,
           type: 'portfolio',
@@ -95,6 +176,7 @@ export function useHeroLatestUpdates() {
           href: `/portfolio/${item.slug || item.id}`,
           date: rawDate,
           dateFormatted: rawDate ? formatDate(rawDate, 'MMM d, yyyy') : undefined,
+          isUpdated,
           tag: item.client ? `${item.client} Delivery` : 'Client Delivery',
           iconName: 'FolderGit2',
           badgeVariant: 'brand',
@@ -115,12 +197,11 @@ export function useHeroLatestUpdates() {
     // 3. Consultation and Training
     if (consultationsData?.items && Array.isArray(consultationsData.items)) {
       for (const consultation of consultationsData.items) {
-        const isTraining = consultation.type === ConsultationType.TRAINING || consultation.type === 'training';
-        const rawDate = consultation.preferredDate
-          ? new Date(consultation.preferredDate).toISOString()
-          : consultation.createdAt
-            ? new Date(consultation.createdAt).toISOString()
-            : undefined;
+        const isTraining = (consultation.type as string) === ConsultationType.TRAINING;
+        const originalDate = toIsoDate(consultation.preferredDate) || toIsoDate(consultation.createdAt);
+        const updatedDate = toIsoDate(consultation.updatedAt);
+        const isUpdated = hasBeenUpdated(updatedDate, originalDate);
+        const rawDate = updatedDate || originalDate;
 
         if (isTraining) {
           collected.push({
@@ -132,6 +213,7 @@ export function useHeroLatestUpdates() {
             href: `/consultations?type=training`,
             date: rawDate,
             dateFormatted: rawDate ? formatDate(rawDate, 'MMM d, yyyy') : 'Upcoming Cohort',
+            isUpdated,
             tag: consultation.deliveryFormat || 'Training Workshop',
             iconName: 'GraduationCap',
             badgeVariant: 'warning',
@@ -156,6 +238,7 @@ export function useHeroLatestUpdates() {
             href: `/consultations`,
             date: rawDate,
             dateFormatted: rawDate ? formatDate(rawDate, 'MMM d, yyyy') : 'Discovery Slot',
+            isUpdated,
             tag: 'Technical Advisory',
             iconName: 'Video',
             badgeVariant: 'success',
@@ -177,7 +260,11 @@ export function useHeroLatestUpdates() {
     // 4. Products
     if (productsData?.products && Array.isArray(productsData.products)) {
       for (const prod of productsData.products) {
-        const rawDate = prod.launchedAt || prod.createdAt;
+        const originalDate = toIsoDate(prod.launchedAt) || toIsoDate(prod.createdAt);
+        const updatedDate = toIsoDate(prod.updatedAt);
+        const isUpdated = hasBeenUpdated(updatedDate, originalDate);
+        const rawDate = updatedDate || originalDate;
+
         collected.push({
           id: `product-${prod.id}`,
           type: 'product',
@@ -187,6 +274,7 @@ export function useHeroLatestUpdates() {
           href: `/products/${prod.slug || prod.id}`,
           date: rawDate,
           dateFormatted: rawDate ? formatDate(rawDate, 'MMM d, yyyy') : 'Live Release',
+          isUpdated,
           tag: prod.category ? `${prod.category} Product` : 'SaaS Platform',
           iconName: 'Package',
           badgeVariant: 'brand',
@@ -207,7 +295,11 @@ export function useHeroLatestUpdates() {
     // 5. Solutions
     if (solutionsData?.solutions && Array.isArray(solutionsData.solutions)) {
       for (const sol of solutionsData.solutions) {
-        const rawDate = sol.updatedAt || sol.createdAt;
+        const originalDate = toIsoDate(sol.createdAt);
+        const updatedDate = toIsoDate(sol.updatedAt);
+        const isUpdated = hasBeenUpdated(updatedDate, originalDate);
+        const rawDate = updatedDate || originalDate;
+
         collected.push({
           id: `solution-${sol.id}`,
           type: 'solution',
@@ -217,6 +309,7 @@ export function useHeroLatestUpdates() {
           href: `/solutions/${sol.slug || sol.id}`,
           date: rawDate,
           dateFormatted: rawDate ? formatDate(rawDate, 'MMM d, yyyy') : 'Available',
+          isUpdated,
           tag: sol.industries?.[0] ? `${sol.industries[0]} Blueprint` : 'Enterprise Blueprint',
           iconName: sol.icon || 'Layers',
           badgeVariant: 'info',
@@ -238,7 +331,11 @@ export function useHeroLatestUpdates() {
     if (servicesData?.services && Array.isArray(servicesData.services)) {
       for (const serv of servicesData.services) {
         const isTrainingService = serv.category === 'training';
-        const rawDate = serv.updatedAt || serv.createdAt;
+        const originalDate = toIsoDate(serv.createdAt);
+        const updatedDate = toIsoDate(serv.updatedAt);
+        const isUpdated = hasBeenUpdated(updatedDate, originalDate);
+        const rawDate = updatedDate || originalDate;
+
         collected.push({
           id: `service-${serv.id}`,
           type: isTrainingService ? 'training' : 'service',
@@ -248,6 +345,7 @@ export function useHeroLatestUpdates() {
           href: isTrainingService ? `/consultations?type=training` : `/services/${serv.slug || serv.id}`,
           date: rawDate,
           dateFormatted: rawDate ? formatDate(rawDate, 'MMM d, yyyy') : 'Available Track',
+          isUpdated,
           tag: isTrainingService ? 'Workshop Syllabus' : 'Core Discipline',
           iconName: serv.icon || (isTrainingService ? 'GraduationCap' : 'Cpu'),
           badgeVariant: isTrainingService ? 'warning' : 'neutral',
@@ -301,5 +399,32 @@ export function useHeroLatestUpdates() {
     isLoadingSolutions &&
     isLoadingServices;
 
-  return { updates, isLoading };
+  const isFetching =
+    Boolean(isFetchingBlog) ||
+    Boolean(isFetchingPortfolio) ||
+    Boolean(isFetchingConsultations) ||
+    Boolean(isFetchingProducts) ||
+    Boolean(isFetchingSolutions) ||
+    Boolean(isFetchingServices);
+
+  const refetch = useCallback(async () => {
+    const results = await Promise.allSettled([
+      refetchBlog(),
+      refetchPortfolio(),
+      refetchConsultations(),
+      refetchProducts(),
+      refetchSolutions(),
+      refetchServices(),
+    ]);
+    return results;
+  }, [
+    refetchBlog,
+    refetchPortfolio,
+    refetchConsultations,
+    refetchProducts,
+    refetchSolutions,
+    refetchServices,
+  ]);
+
+  return { updates, isLoading, isFetching, refetch };
 }

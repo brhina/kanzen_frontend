@@ -6,6 +6,11 @@ import type { ConsultationEntity } from '../../domain/entities/consultation.enti
 
 export interface UseConsultationsOptions extends FilterConsultationsDto {
   isAdminView?: boolean;
+  staleTime?: number;
+  refetchOnWindowFocus?: boolean;
+  refetchInterval?: number;
+  refetchOnMount?: boolean | 'always';
+  enabled?: boolean;
 }
 
 export interface UseConsultationsResult {
@@ -17,7 +22,15 @@ export interface UseConsultationsResult {
 }
 
 export function useConsultations(options: UseConsultationsOptions = {}) {
-  const { isAdminView = false, ...filters } = options;
+  const {
+    isAdminView = false,
+    staleTime,
+    refetchOnWindowFocus,
+    refetchInterval,
+    refetchOnMount,
+    enabled = true,
+    ...filters
+  } = options;
   return useQuery<UseConsultationsResult>({
     queryKey: ['consultations', isAdminView ? 'admin' : 'public', filters],
     queryFn: async () => {
@@ -26,6 +39,10 @@ export function useConsultations(options: UseConsultationsOptions = {}) {
         : await consultationsApi.listPublic(filters);
       return ConsultationMapper.toPaginated(response);
     },
-    staleTime: 1000 * 60 * 2,
+    enabled,
+    staleTime: staleTime ?? 1000 * 60 * 2,
+    ...(refetchOnWindowFocus !== undefined ? { refetchOnWindowFocus } : {}),
+    ...(refetchInterval !== undefined ? { refetchInterval } : {}),
+    ...(refetchOnMount !== undefined ? { refetchOnMount } : {}),
   });
 }

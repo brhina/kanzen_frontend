@@ -50,6 +50,8 @@ export const consultationsApi = {
     if (params.search) searchParams.set('search', params.search);
     if (params.page) searchParams.set('page', String(params.page));
     if (params.limit) searchParams.set('limit', String(params.limit));
+    if (params.sortBy) searchParams.set('sortBy', String(params.sortBy));
+    if (params.sortOrder) searchParams.set('sortOrder', String(params.sortOrder));
 
     return apiClient
       .get(API_ENDPOINTS.consultations.list, { searchParams })

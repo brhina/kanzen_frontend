@@ -23,8 +23,13 @@ export const solutionsApi = {
   async listPublic(filter: FilterSolutionsDto = {}): Promise<SolutionResponseDto[]> {
     const searchParams = new URLSearchParams();
     if (filter.industry) searchParams.set('industry', filter.industry);
+    if (filter.status) searchParams.set('status', filter.status);
     if (filter.isFeatured !== undefined) searchParams.set('isFeatured', String(filter.isFeatured));
     if (filter.search) searchParams.set('search', filter.search);
+    if (filter.page) searchParams.set('page', String(filter.page));
+    if (filter.limit) searchParams.set('limit', String(filter.limit));
+    if (filter.sortBy) searchParams.set('sortBy', filter.sortBy);
+    if (filter.sortOrder) searchParams.set('sortOrder', filter.sortOrder);
 
     const res = await apiClient
       .get(API_ENDPOINTS.solutions.list, { searchParams })

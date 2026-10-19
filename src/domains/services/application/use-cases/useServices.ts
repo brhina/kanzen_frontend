@@ -6,6 +6,11 @@ import type { ServiceEntity } from '../../domain/entities/service.entity';
 
 export interface UseServicesOptions extends FilterServicesDto {
   isAdminView?: boolean;
+  staleTime?: number;
+  refetchOnWindowFocus?: boolean;
+  refetchInterval?: number;
+  refetchOnMount?: boolean | 'always';
+  enabled?: boolean;
 }
 
 export interface UseServicesResult {
@@ -18,6 +23,11 @@ export interface UseServicesResult {
 
 export function useServices({
   isAdminView = false,
+  staleTime,
+  refetchOnWindowFocus,
+  refetchInterval,
+  refetchOnMount,
+  enabled = true,
   ...filter
 }: UseServicesOptions = {}) {
   return useQuery<UseServicesResult>({
@@ -30,6 +40,10 @@ export function useServices({
       const response = await servicesApi.listPublic(filter);
       return servicesMapper.toPaginated(response);
     },
-    staleTime: 1000 * 60 * 3, // 3 minutes
+    enabled,
+    staleTime: staleTime ?? 1000 * 60 * 3, // 3 minutes
+    ...(refetchOnWindowFocus !== undefined ? { refetchOnWindowFocus } : {}),
+    ...(refetchInterval !== undefined ? { refetchInterval } : {}),
+    ...(refetchOnMount !== undefined ? { refetchOnMount } : {}),
   });
 }

@@ -6,6 +6,11 @@ import type { PortfolioItemEntity } from '../../domain/entities/portfolio-item.e
 
 export interface UsePortfolioItemsOptions extends PortfolioFilterQuery {
   isAdminView?: boolean;
+  staleTime?: number;
+  refetchOnWindowFocus?: boolean;
+  refetchInterval?: number;
+  refetchOnMount?: boolean | 'always';
+  enabled?: boolean;
 }
 
 export interface UsePortfolioItemsResult {
@@ -18,6 +23,11 @@ export interface UsePortfolioItemsResult {
 
 export function usePortfolioItems({
   isAdminView = false,
+  staleTime,
+  refetchOnWindowFocus,
+  refetchInterval,
+  refetchOnMount,
+  enabled = true,
   ...filter
 }: UsePortfolioItemsOptions = {}) {
   return useQuery<UsePortfolioItemsResult>({
@@ -30,6 +40,10 @@ export function usePortfolioItems({
       const response = await portfolioApi.listPublic(filter);
       return PortfolioMapper.toPaginated(response);
     },
-    staleTime: 1000 * 60 * 3, // 3 minutes
+    enabled,
+    staleTime: staleTime ?? 1000 * 60 * 3, // 3 minutes
+    ...(refetchOnWindowFocus !== undefined ? { refetchOnWindowFocus } : {}),
+    ...(refetchInterval !== undefined ? { refetchInterval } : {}),
+    ...(refetchOnMount !== undefined ? { refetchOnMount } : {}),
   });
 }

@@ -6,6 +6,11 @@ import type { SolutionEntity } from '../../domain/entities/solution.entity';
 
 export interface UseSolutionsOptions extends FilterSolutionsDto {
   isAdminView?: boolean;
+  staleTime?: number;
+  refetchOnWindowFocus?: boolean;
+  refetchInterval?: number;
+  refetchOnMount?: boolean | 'always';
+  enabled?: boolean;
 }
 
 export interface UseSolutionsResult {
@@ -18,6 +23,11 @@ export interface UseSolutionsResult {
 
 export function useSolutions({
   isAdminView = false,
+  staleTime,
+  refetchOnWindowFocus,
+  refetchInterval,
+  refetchOnMount,
+  enabled = true,
   ...filter
 }: UseSolutionsOptions = {}) {
   return useQuery<UseSolutionsResult>({
@@ -30,6 +40,10 @@ export function useSolutions({
       const response = await solutionsApi.listPublic(filter);
       return solutionsMapper.toPaginated(response);
     },
-    staleTime: 1000 * 60 * 3,
+    enabled,
+    staleTime: staleTime ?? 1000 * 60 * 3,
+    ...(refetchOnWindowFocus !== undefined ? { refetchOnWindowFocus } : {}),
+    ...(refetchInterval !== undefined ? { refetchInterval } : {}),
+    ...(refetchOnMount !== undefined ? { refetchOnMount } : {}),
   });
 }

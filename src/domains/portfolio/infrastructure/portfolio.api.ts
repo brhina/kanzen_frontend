@@ -34,8 +34,13 @@ export const portfolioApi = {
   async listPublic(filter: PortfolioFilterQuery = {}): Promise<PortfolioItemResponseDto[]> {
     const searchParams = new URLSearchParams();
     if (filter.category) searchParams.set('category', filter.category);
+    if (filter.status) searchParams.set('status', filter.status);
     if (filter.isFeatured !== undefined) searchParams.set('isFeatured', String(filter.isFeatured));
     if (filter.search) searchParams.set('search', filter.search);
+    if (filter.page) searchParams.set('page', String(filter.page));
+    if (filter.limit) searchParams.set('limit', String(filter.limit));
+    if (filter.sortBy) searchParams.set('sortBy', filter.sortBy);
+    if (filter.sortOrder) searchParams.set('sortOrder', filter.sortOrder);
 
     const res = await apiClient
       .get(API_ENDPOINTS.portfolio.list, { searchParams })
