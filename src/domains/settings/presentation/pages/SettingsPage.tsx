@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useAuthStore } from '@/core/auth/auth.store';
-import { SettingGroupEnum, SettingType } from '../../domain/enums/setting.enums';
+import { SettingGroupEnum } from '../../domain/enums/setting.enums';
 import type { SettingEntity } from '../../domain/entities/setting.entity';
 import type { CreateSettingDto } from '../../infrastructure/settings.dto';
 import { useSettings } from '../../application/use-cases/useSettings';
@@ -14,13 +14,8 @@ import { Drawer } from '@/shared/ui/drawer';
 import { Modal } from '@/shared/ui/modal';
 import { Button } from '@/shared/ui/button';
 import { Spinner } from '@/shared/ui/spinner/Spinner';
+import { Tabs, type TabItem } from '@/shared/ui/tabs';
 import { HeaderBanner } from '@/layouts/components';
-import {
-  SearchFilterBar,
-  FilterGroup,
-  FilterPill,
-  FilterSelect,
-} from '@/shared/ui/filter';
 import { AlertTriangle } from 'lucide-react';
 
 interface SettingTabMeta {
@@ -94,12 +89,8 @@ export function SettingsPage() {
     user?.isAdmin ||
     (Array.isArray(user?.permissions) && user.permissions.includes('settings:write'));
 
-  // Filtering & View State
+  // Grouping & View State
   const [activeTabKey, setActiveTabKey] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [typeFilter, setTypeFilter] = useState<string>('all');
-  const [visibilityFilter, setVisibilityFilter] = useState<string>('all');
-  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
   // Drawer & Modal State
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -132,88 +123,29 @@ export function SettingsPage() {
     return dbSettings || [];
   }, [dbSettings]);
 
-  // Filtered settings
+  // Horizontal classification tabs with per-group counts
+  const classificationTabs = useMemo<TabItem[]>(
+    () =>
+      SETTINGS_TABS.map((tab) => ({
+        id: tab.key,
+        label: tab.label,
+        count:
+          tab.key === 'all'
+            ? allSettings.length
+            : allSettings.filter(
+                (s) => (s.group || '').toLowerCase() === tab.key.toLowerCase(),
+              ).length,
+      })),
+    [allSettings],
+  );
+
+  // Grouped settings for the active tab
   const filteredSettings = useMemo(() => {
-    return allSettings.filter((setting) => {
-      // Group filter
-      if (activeTabKey !== 'all' && (setting.group || '').toLowerCase() !== activeTabKey.toLowerCase()) {
-        return false;
-      }
-
-      // Search filter
-      if (searchQuery.trim()) {
-        const query = searchQuery.toLowerCase();
-        const matchesKey = setting.key.toLowerCase().includes(query);
-        const matchesLabel = (setting.label || '').toLowerCase().includes(query);
-        const matchesDesc = (setting.description || '').toLowerCase().includes(query);
-        if (!matchesKey && !matchesLabel && !matchesDesc) {
-          return false;
-        }
-      }
-
-      // Type filter
-      if (typeFilter !== 'all' && (setting.type || '').toLowerCase() !== typeFilter.toLowerCase()) {
-        return false;
-      }
-
-      // Visibility filter
-      if (visibilityFilter === 'public' && !setting.isPublic) return false;
-      if (visibilityFilter === 'protected' && setting.isPublic) return false;
-
-      return true;
-    });
-  }, [allSettings, activeTabKey, searchQuery, typeFilter, visibilityFilter]);
-
-  // Active filter count for badge
-  const activeFilterCount = useMemo(() => {
-    let count = 0;
-    if (activeTabKey !== 'all') count++;
-    if (typeFilter !== 'all') count++;
-    if (visibilityFilter !== 'all') count++;
-    return count;
-  }, [activeTabKey, typeFilter, visibilityFilter]);
-
-  // Active filter chips
-  const activeChips = useMemo(() => {
-    const chips = [];
-    if (searchQuery) {
-      chips.push({
-        id: 'search',
-        label: `Search: "${searchQuery}"`,
-        onRemove: () => setSearchQuery(''),
-      });
-    }
-    if (activeTabKey !== 'all') {
-      const tab = SETTINGS_TABS.find((t) => t.key === activeTabKey);
-      chips.push({
-        id: 'group',
-        label: `Group: ${tab?.label || activeTabKey}`,
-        onRemove: () => setActiveTabKey('all'),
-      });
-    }
-    if (typeFilter !== 'all') {
-      chips.push({
-        id: 'type',
-        label: `Type: ${typeFilter.toUpperCase()}`,
-        onRemove: () => setTypeFilter('all'),
-      });
-    }
-    if (visibilityFilter !== 'all') {
-      chips.push({
-        id: 'visibility',
-        label: `Visibility: ${visibilityFilter === 'public' ? 'Public' : 'Protected'}`,
-        onRemove: () => setVisibilityFilter('all'),
-      });
-    }
-    return chips;
-  }, [searchQuery, activeTabKey, typeFilter, visibilityFilter]);
-
-  const handleResetFilters = () => {
-    setSearchQuery('');
-    setActiveTabKey('all');
-    setTypeFilter('all');
-    setVisibilityFilter('all');
-  };
+    if (activeTabKey === 'all') return allSettings;
+    return allSettings.filter(
+      (setting) => (setting.group || '').toLowerCase() === activeTabKey.toLowerCase(),
+    );
+  }, [allSettings, activeTabKey]);
 
   const handleSave = async (updates: Record<string, unknown>) => {
     const items = Object.entries(updates).map(([key, value]) => ({
@@ -246,91 +178,42 @@ export function SettingsPage() {
         description="Manage global website constants, search engine optimization indexes, social media coordinates, transactional mail relays, and secure third-party credentials."
       />
 
-      {/* Unified Search & Advanced Filter Bar */}
-      <SearchFilterBar
-        search={searchQuery}
-        onSearchChange={setSearchQuery}
-        searchPlaceholder="Search configurations by key, label, or description..."
-        isExpanded={isFilterExpanded}
-        onToggleExpanded={setIsFilterExpanded}
-        activeFilterCount={activeFilterCount}
-        hasActiveFilters={activeFilterCount > 0 || Boolean(searchQuery)}
-        onReset={handleResetFilters}
-        totalCount={allSettings.length}
-        filteredCount={filteredSettings.length}
-        resultsLabel="configuration parameters"
-        activeChips={activeChips}
-        actions={
-          <>
+      {/* Classification Tabs & Actions */}
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div className="min-w-0 flex-1 overflow-x-auto no-scrollbar">
+          <Tabs
+            tabs={classificationTabs}
+            activeTab={activeTabKey}
+            onChange={setActiveTabKey}
+            variant="pills"
+            className="inline-flex"
+          />
+        </div>
+
+        <div className="flex items-center gap-2 shrink-0">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => refetch()}
+            disabled={isLoading || isRefetching}
+            className="text-xs"
+          >
+            {isLoading || isRefetching ? 'Reloading...' : 'Reload Settings'}
+          </Button>
+          {canWrite ? (
             <Button
               type="button"
-              variant="outline"
+              variant="primary"
               size="sm"
-              onClick={() => refetch()}
-              disabled={isLoading || isRefetching}
-              className="text-xs"
+              onClick={() => setIsDrawerOpen(true)}
+              className="shrink-0"
             >
-              {isLoading || isRefetching ? 'Reloading...' : 'Reload Settings'}
+              Add Configuration
             </Button>
-            {canWrite ? (
-              <Button
-                type="button"
-                variant="primary"
-                size="sm"
-                onClick={() => setIsDrawerOpen(true)}
-                className="shrink-0"
-              >
-                Add Configuration
-              </Button>
-            ) : undefined}
-          </>
-        }
-      >
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {/* Classification Group */}
-          <FilterGroup label="Classification Group" count={SETTINGS_TABS.length}>
-            <div className="flex flex-wrap gap-1.5 pt-1">
-              {SETTINGS_TABS.map((tab) => (
-                <FilterPill
-                  key={tab.key}
-                  label={tab.label}
-                  isSelected={activeTabKey === tab.key}
-                  onClick={() => setActiveTabKey(tab.key)}
-                />
-              ))}
-            </div>
-          </FilterGroup>
-
-          {/* Data Type Filter */}
-          <FilterGroup label="Data Type">
-            <FilterSelect
-              value={typeFilter}
-              onChange={(e) => setTypeFilter(e.target.value)}
-              options={[
-                { value: 'all', label: 'All Data Types' },
-                { value: SettingType.STRING, label: 'String' },
-                { value: SettingType.NUMBER, label: 'Number' },
-                { value: SettingType.BOOLEAN, label: 'Boolean Flag' },
-                { value: SettingType.SECRET, label: 'Encrypted Secret' },
-                { value: SettingType.JSON, label: 'JSON Document' },
-              ]}
-            />
-          </FilterGroup>
-
-          {/* Visibility Filter */}
-          <FilterGroup label="Access Visibility">
-            <FilterSelect
-              value={visibilityFilter}
-              onChange={(e) => setVisibilityFilter(e.target.value)}
-              options={[
-                { value: 'all', label: 'All Visibilities' },
-                { value: 'public', label: 'Public API Exposed' },
-                { value: 'protected', label: 'Admin Protected Only' },
-              ]}
-            />
-          </FilterGroup>
+          ) : undefined}
         </div>
-      </SearchFilterBar>
+      </div>
 
       {/* Main Form Body */}
       {isLoading ? (

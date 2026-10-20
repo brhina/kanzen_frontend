@@ -32,7 +32,6 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Products', href: '/products' },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Case Studies', href: '/case-studies' },
-  { label: 'Process', href: '/process' },
   { label: 'Blog', href: '/blog' },
   { label: 'Careers', href: '/careers' },
   { label: 'About', href: '/about' },

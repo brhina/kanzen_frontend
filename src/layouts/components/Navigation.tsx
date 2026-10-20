@@ -7,7 +7,6 @@ import {
   FileText,
   BookOpen,
   Info,
-  Workflow,
   Users2,
   MessageSquareQuote,
   Mail,
@@ -68,7 +67,6 @@ const NAV_GROUPS: NavGroup[] = [
     title: 'Company & Talent',
     items: [
       { label: 'About Us', href: '/about', icon: Info },
-      { label: 'Engineering Process', href: '/process', icon: Workflow },
       { label: 'Careers', href: '/careers', icon: Users2 },
       { label: 'Candidate Portal', href: '/applications', icon: FileCheck },
       { label: 'Engineering Blog', href: '/blog', icon: BookOpen },

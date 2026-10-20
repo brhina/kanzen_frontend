@@ -155,20 +155,6 @@ export function HomePage() {
                 </div>
               ))}
             </div>
-
-            <div className="flex justify-center pt-2">
-              <Link to="/process">
-                <Button variant="outline" size="sm" className="group">
-                  <span>{processContent.sectionCtaLabel}</span>
-                  <span
-                    aria-hidden="true"
-                    className="ml-1.5 transition-transform group-hover:translate-x-0.5"
-                  >
-                    →
-                  </span>
-                </Button>
-              </Link>
-            </div>
           </div>
         </section>
       )}

@@ -29,7 +29,7 @@ export function HeaderBanner({
     return (
       <div
         className={cn(
-          'relative overflow-hidden rounded-3xl bg-gradient-to-b from-slate-50 via-white to-slate-50/80 px-6 py-12 sm:px-12 sm:py-16 animate-pulse dark:bg-radial dark:from-slate-900 dark:via-slate-950 dark:to-slate-950',
+          'relative overflow-hidden rounded-3xl bg-gradient-to-b from-slate-50 via-white to-slate-50/80 px-6 py-7 sm:px-12 sm:py-9 animate-pulse dark:bg-radial dark:from-slate-900 dark:via-slate-950 dark:to-slate-950',
           className,
         )}
         aria-busy="true"
@@ -47,7 +47,7 @@ export function HeaderBanner({
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-3xl bg-gradient-to-b from-slate-50 via-white to-slate-50/80 px-6 py-12 text-slate-900 sm:px-12 sm:py-16 dark:border-slate-800/80 dark:bg-radial dark:from-slate-900 dark:via-slate-950 dark:to-slate-950 dark:text-white transition-colors',
+        'relative overflow-hidden rounded-3xl bg-gradient-to-b from-slate-50 via-white to-slate-50/80 px-6 py-7 text-slate-900 sm:px-12 sm:py-9 dark:border-slate-800/80 dark:bg-radial dark:from-slate-900 dark:via-slate-950 dark:to-slate-950 dark:text-white transition-colors',
         className,
       )}
     >

@@ -14,7 +14,6 @@ export const routes: RouteObject[] = [
       // Core Top-Level Pages
       { index: true, lazy: () => import('../pages/HomePage') },
       { path: 'about', lazy: () => import('../pages/AboutPage') },
-      { path: 'process', lazy: () => import('../pages/ProcessPage') },
       { path: 'dashboard', lazy: () => import('../pages/DashboardPage') },
 
       // Unified Domain Offerings & Management Pages

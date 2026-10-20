@@ -7,7 +7,6 @@ export interface BreadcrumbTrailProps {
 
 const SEGMENT_LABELS: Record<string, string> = {
   about: 'About Us',
-  process: 'Our Process',
   dashboard: 'Dashboard',
   blog: 'Blog',
   category: 'Category',
