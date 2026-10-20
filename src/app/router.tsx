@@ -2,10 +2,27 @@ import { createBrowserRouter, type RouteObject } from 'react-router';
 import { AppLayout } from '../layouts/AppLayout';
 import { AuthLayout } from '../layouts/AuthLayout';
 import { RootLayout } from '../layouts/RootLayout';
+import { Spinner } from '../shared/ui/spinner/Spinner';
+
+function RouteHydrateFallback() {
+  return (
+    <div
+      className="min-h-screen w-full flex flex-col items-center justify-center gap-3 bg-white dark:bg-slate-950"
+      role="status"
+      aria-label="Loading page"
+    >
+      <Spinner size="lg" />
+      <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
+        Loading&hellip;
+      </p>
+    </div>
+  );
+}
 
 export const routes: RouteObject[] = [
   {
     element: <RootLayout />,
+    hydrateFallbackElement: <RouteHydrateFallback />,
     children: [
       {
         path: '/',
