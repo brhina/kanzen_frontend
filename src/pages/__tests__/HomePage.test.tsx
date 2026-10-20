@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HomePage } from '../HomePage';
 import { useUIStore } from '@/core/stores/ui.store';
+import { seedPublicSettings } from '@/test/settings.fixture';
 
 describe('HomePage', () => {
   let queryClient: QueryClient;
@@ -17,6 +18,8 @@ describe('HomePage', () => {
         },
       },
     });
+
+    seedPublicSettings(queryClient);
 
     queryClient.setQueryData(['testimonials', 'featured'], [
       {

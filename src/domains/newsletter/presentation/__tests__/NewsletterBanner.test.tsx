@@ -2,10 +2,12 @@ import { describe, it, expect } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { NewsletterBanner } from '../components/NewsletterBanner';
+import { seedPublicSettings } from '@/test/settings.fixture';
 
 describe('NewsletterBanner', () => {
   it('renders default title and call to action correctly', () => {
     const queryClient = new QueryClient();
+    seedPublicSettings(queryClient);
     const html = renderToStaticMarkup(
       <QueryClientProvider client={queryClient}>
         <NewsletterBanner />
@@ -19,6 +21,7 @@ describe('NewsletterBanner', () => {
 
   it('renders custom title and subtitle when provided', () => {
     const queryClient = new QueryClient();
+    seedPublicSettings(queryClient);
     const html = renderToStaticMarkup(
       <QueryClientProvider client={queryClient}>
         <NewsletterBanner

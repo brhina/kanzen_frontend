@@ -14,6 +14,7 @@ import { ServiceItemStatus } from '@/domains/services/domain/enums/service-statu
 import { ConsultationType } from '@/domains/consultations/domain/enums/consultation-type.enum';
 import { ConsultationStatus } from '@/domains/consultations/domain/enums/consultation-status.enum';
 import { MeetingType } from '@/domains/consultations/domain/enums/meeting-type.enum';
+import { seedPublicSettings } from '@/test/settings.fixture';
 
 describe('HeroLatestUpdates Component', () => {
   let queryClient: QueryClient;
@@ -27,6 +28,8 @@ describe('HeroLatestUpdates Component', () => {
         },
       },
     });
+
+    seedPublicSettings(queryClient);
   });
 
   const renderComponent = () => {
