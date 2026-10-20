@@ -146,8 +146,6 @@ describe('HomePage', () => {
     expect(html).toContain('Domain Modeling &amp; Blueprinting');
     expect(html).toContain('Precision Implementation');
     expect(html).toContain('Observability &amp; Global Deployment');
-    expect(html).toContain('Explore Full Delivery Process');
-    expect(html).toContain('/process');
   });
 
   it('renders newsletter subscription section for public visitors', () => {

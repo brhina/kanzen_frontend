@@ -45,7 +45,7 @@ describe('Header', () => {
     expect(html).toContain('Products');
     expect(html).toContain('Portfolio');
     expect(html).toContain('Case Studies');
-    expect(html).toContain('Process');
+    expect(html).not.toContain('/process');
     expect(html).toContain('Blog');
     expect(html).toContain('Careers');
     expect(html).toContain('About');
