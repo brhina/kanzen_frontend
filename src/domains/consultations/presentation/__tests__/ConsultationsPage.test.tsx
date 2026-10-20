@@ -90,28 +90,22 @@ describe('ConsultationsPage', () => {
     const html = renderPage();
 
     // Centered header & badge
-    expect(html).toContain('Direct Technical Discovery');
-    expect(html).toContain('Book an Architecture Consultation');
-    expect(html).toContain('Engage directly with our Principal Architects');
+    expect(html).toContain('Consultations &amp; Corporate Training');
+    expect(html).toContain('Book Expert Engineering Sessions');
+    expect(html).toContain('Reserve a 1-on-1 architecture advisory');
 
-    // Value indicators
-    expect(html).toContain('45-Minute Deep Dive');
-    expect(html).toContain('Live whiteboard review');
-    expect(html).toContain('Direct Screen Share');
-    expect(html).toContain('Architecture teardowns');
-    expect(html).toContain('Mutual NDA Protected');
-    expect(html).toContain('Full IP confidentiality');
-
-    // Scheduled sessions showcase & drawer booking actions (like ServicesPage)
+    // Type-differentiated public booking CTAs
     expect(html).toContain('Book a Session');
     expect(html).toContain('Book Team Training');
+
+    // Scheduled sessions showcase & cards
     expect(html).toContain('Enterprise Cloud &amp; Kubernetes Engineering Masterclass');
     expect(html).toContain('Production GenAI &amp; LLM Systems Workshop');
     expect(html).toContain('Corporate Workshop');
     expect(html).toContain('1-on-1 Advisory');
   });
 
-  it('renders booking wizard form inside drawer when requested', () => {
+  it('renders the dedicated consultation booking wizard inside drawer when requested', () => {
     const queryClient = new QueryClient({
       defaultOptions: { queries: { retry: false } },
     });
@@ -124,8 +118,30 @@ describe('ConsultationsPage', () => {
       </QueryClientProvider>,
     );
 
-    expect(html).toContain('Who will be joining the session?');
+    expect(html).toContain('Book Your 1-on-1 Architecture Consultation');
     expect(html).toContain('Your Full Name');
+    expect(html).not.toContain('Who will be joining the session?');
+    expect(html).not.toContain('Target Engineering Team Size');
+  });
+
+  it('renders the dedicated training booking wizard when type=training', () => {
+    const queryClient = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    const html = renderToStaticMarkup(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter initialEntries={['/consultations?book=true&type=training']}>
+          <ConsultationsPage />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    expect(html).toContain('Reserve Corporate Team Training');
+    expect(html).toContain('Target Engineering Team Size');
+    expect(html).toContain('Your Full Name');
+    expect(html).not.toContain('Who will be joining the session?');
+    expect(html).not.toContain('Book Your 1-on-1 Architecture Consultation');
   });
 
   it('renders staff dispatch dashboard when user has permission', () => {
