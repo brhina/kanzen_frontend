@@ -15,14 +15,12 @@ import { Textarea } from '@/shared/ui/textarea';
 import { Badge } from '@/shared/ui/badge';
 import {
   CheckCircle2,
-  Calendar,
   Building2,
-  Video,
   Users,
   GraduationCap,
   Sparkles,
-  BookOpen,
   Laptop,
+  UserRound,
 } from 'lucide-react';
 
 export interface ConsultationBookingFormProps {
@@ -72,6 +70,8 @@ const TRAINING_TRACKS = [
   },
 ];
 
+const SECTION_LABEL_CLASS = 'text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider';
+
 export function ConsultationBookingForm({
   initialType,
   initialTopic,
@@ -88,7 +88,6 @@ export function ConsultationBookingForm({
   const defaultTopic = initialTopic || queryTopic || '';
   const defaultService = initialService || queryService;
 
-  const [currentStep, setCurrentStep] = useState<number>(1);
   const [isBooked, setIsBooked] = useState<boolean>(false);
   const bookConsultation = useBookConsultation();
 
@@ -122,23 +121,16 @@ export function ConsultationBookingForm({
     },
   });
 
-  const selectedType = watch('type');
   const selectedAttendees = watch('attendeesCount');
   const selectedTopic = watch('trainingTopic');
   const selectedDeliveryFormat = watch('deliveryFormat');
   const formValues = getValues();
 
   useEffect(() => {
-    if (queryType && queryType !== selectedType) {
-      setValue('type', queryType);
-      if (queryType === 'training' && selectedAttendees === 1) {
-        setValue('attendeesCount', 10);
-      }
-    }
     if (queryTopic && !selectedTopic) {
       setValue('trainingTopic', queryTopic);
     }
-  }, [queryType, queryTopic, selectedType, selectedTopic, selectedAttendees, setValue]);
+  }, [queryTopic, selectedTopic, setValue]);
 
   const onSubmit = async (data: CreateConsultationDto) => {
     try {
@@ -150,7 +142,7 @@ export function ConsultationBookingForm({
     }
   };
 
-  const isTraining = selectedType === ConsultationType.TRAINING;
+  const isTraining = defaultType === ConsultationType.TRAINING;
 
   if (isBooked) {
     return (
@@ -196,7 +188,6 @@ export function ConsultationBookingForm({
             size="sm"
             onClick={() => {
               setIsBooked(false);
-              setCurrentStep(1);
               reset();
             }}
           >
@@ -208,585 +199,312 @@ export function ConsultationBookingForm({
   }
 
   return (
-    <div className={`space-y-8 ${className}`}>
-      {/* Wizard Progress Bar */}
-      <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
-        {[
-          { step: 1, label: isTraining ? 'Track & Team' : 'Contact & Mode' },
-          { step: 2, label: isTraining ? 'Curriculum' : 'Scope' },
-          { step: 3, label: 'Schedule & Format' },
-          { step: 4, label: 'Confirm' },
-        ].map((item) => {
-          const isActive = currentStep === item.step;
-          const isPassed = currentStep > item.step;
-          return (
-            <div key={item.step} className="flex items-center gap-2">
-              <div
-                className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
-                  isPassed
-                    ? 'bg-brand-600 text-white'
-                    : isActive
-                      ? 'bg-brand-600 text-white shadow-sm ring-2 ring-brand-500/20'
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
-                }`}
-              >
-                {isPassed ? '✓' : item.step}
-              </div>
-              <span
-                className={`text-xs font-bold hidden sm:inline ${
-                  isActive
-                    ? 'text-slate-900 dark:text-white'
-                    : isPassed
-                      ? 'text-brand-600'
-                      : 'text-slate-400'
-                }`}
-              >
-                {item.label}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <div className={className}>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
         {bookConsultation.isError && (
           <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-sm text-red-700 dark:text-red-300">
             {bookConsultation.error?.message || 'Failed to complete booking. Please verify required fields.'}
           </div>
         )}
 
-        {/* STEP 1: SESSION MODE & CONTACT DETAILS */}
-        {currentStep === 1 && (
-          <div className="space-y-6 animate-fadeIn">
+        {/* Header */}
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <div className="p-2 rounded-xl bg-brand-600 text-white shrink-0">
+              {isTraining ? (
+                <GraduationCap className="w-5 h-5" />
+              ) : (
+                <UserRound className="w-5 h-5" />
+              )}
+            </div>
             <div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                Who will be joining the session?
-              </h3>
-              <p className="text-xs text-slate-500 mt-1">
-                Select between 1-on-1 technical advisory or corporate team engineering training.
-              </p>
-            </div>
-
-            {/* Session Type Mode Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              <button
-                type="button"
-                onClick={() => {
-                  setValue('type', ConsultationType.CONSULTATION);
-                  setValue('attendeesCount', 1);
-                }}
-                className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
-                  selectedType === ConsultationType.CONSULTATION
-                    ? 'border-brand-600 bg-brand-50/70 dark:bg-brand-950/40 ring-2 ring-brand-500/20 shadow-sm'
-                    : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700'
-                }`}
-              >
-                <div className="flex items-center gap-2 mb-1.5">
-                  <div
-                    className={`p-1.5 rounded-lg ${
-                      selectedType === ConsultationType.CONSULTATION
-                        ? 'bg-brand-600 text-white'
-                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                    }`}
-                  >
-                    <Video className="w-4 h-4" />
-                  </div>
-                  <span className="font-bold text-sm text-slate-900 dark:text-white">
-                    Architecture Consultation
-                  </span>
-                </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                  1-on-1 advisory with a Principal Architect. Code review, cloud scalability teardown, or technical discovery.
-                </p>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setValue('type', ConsultationType.TRAINING);
-                  if (!selectedAttendees || selectedAttendees <= 1) {
-                    setValue('attendeesCount', 10);
-                  }
-                }}
-                className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
-                  selectedType === ConsultationType.TRAINING
-                    ? 'border-brand-600 bg-brand-50/70 dark:bg-brand-950/40 ring-2 ring-brand-500/20 shadow-sm'
-                    : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700'
-                }`}
-              >
-                <div className="flex items-center gap-2 mb-1.5">
-                  <div
-                    className={`p-1.5 rounded-lg ${
-                      selectedType === ConsultationType.TRAINING
-                        ? 'bg-brand-600 text-white'
-                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                    }`}
-                  >
-                    <GraduationCap className="w-4 h-4" />
-                  </div>
-                  <span className="font-bold text-sm text-slate-900 dark:text-white">
-                    Corporate &amp; Team Training
-                  </span>
-                  <Badge variant="brand" size="sm">
-                    Workshops
-                  </Badge>
-                </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                  Hands-on engineering masterclasses, live sandbox labs, and syllabus tailored for engineering teams.
-                </p>
-              </button>
-            </div>
-
-            {/* Team Size Selector if Training */}
-            {isTraining && (
-              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-2">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                  <Users className="w-3.5 h-3.5 text-brand-600" />
-                  Target Engineering Team Size
-                </label>
-                <div className="grid grid-cols-4 gap-2 pt-1">
-                  {[
-                    { value: 5, label: 'Small Team (1-5)' },
-                    { value: 12, label: 'Core Team (6-15)' },
-                    { value: 25, label: 'Department (16-30)' },
-                    { value: 50, label: 'Enterprise (30+)' },
-                  ].map((tier) => (
-                    <button
-                      key={tier.value}
-                      type="button"
-                      onClick={() => setValue('attendeesCount', tier.value)}
-                      className={`py-2 px-2 rounded-xl text-xs font-semibold border transition-all text-center cursor-pointer ${
-                        selectedAttendees === tier.value
-                          ? 'bg-brand-600 text-white border-brand-600 shadow-sm'
-                          : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-brand-500'
-                      }`}
-                    >
-                      {tier.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Attendee Contact Information */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input
-                label="Your Full Name *"
-                placeholder="Sarah Johnson"
-                {...register('name', { required: 'Name is required' })}
-                error={errors.name?.message}
-              />
-              <Input
-                label="Work Email *"
-                type="email"
-                placeholder="sarah@techcorp.com"
-                {...register('email', { required: 'Email is required' })}
-                error={errors.email?.message}
-              />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input
-                label={isTraining ? 'Company / Organization *' : 'Company / Organization'}
-                placeholder="TechCorp Inc."
-                {...register('company', {
-                  required: isTraining ? 'Company name is required for training sessions' : false,
-                })}
-                error={errors.company?.message}
-              />
-              <Input
-                label="Phone Number"
-                type="tel"
-                placeholder="+1 415 555 2671"
-                {...register('phone')}
-              />
-            </div>
-
-            <div className="pt-2 flex justify-end">
-              <Button
-                type="button"
-                variant="primary"
-                onClick={() => {
-                  const vals = getValues();
-                  if (!vals.name || !vals.email) {
-                    alert('Please enter your name and email to continue.');
-                    return;
-                  }
-                  if (isTraining && !vals.company) {
-                    alert('Please enter your company / organization name for training workshops.');
-                    return;
-                  }
-                  setCurrentStep(2);
-                }}
-              >
-                {isTraining ? 'Next: Training Curriculum' : 'Next: Technical Scope'}
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* STEP 2: PROJECT SCOPE OR TRAINING CURRICULUM */}
-        {currentStep === 2 && (
-          <div className="space-y-6 animate-fadeIn">
-            {isTraining ? (
-              <div className="space-y-5">
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                    Select Corporate Training Track
-                  </h3>
-                  <p className="text-xs text-slate-500 mt-1">
-                    Choose one of our production-grade training masterclasses, or propose a custom syllabus.
-                  </p>
-                </div>
-
-                <div className="space-y-2.5">
-                  {TRAINING_TRACKS.map((track) => {
-                    const isSelected = selectedTopic === track.name;
-                    return (
-                      <button
-                        key={track.id}
-                        type="button"
-                        onClick={() => {
-                          setValue('trainingTopic', track.name);
-                          if (track.serviceSlug) {
-                            setValue('serviceInterest', [track.serviceSlug]);
-                          }
-                        }}
-                        className={`w-full p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
-                          isSelected
-                            ? 'border-brand-600 bg-brand-50/70 dark:bg-brand-950/40 ring-2 ring-brand-500/20 shadow-sm'
-                            : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="font-bold text-sm text-slate-900 dark:text-white">
-                            {track.name}
-                          </span>
-                          {isSelected && (
-                            <Badge variant="brand" size="sm">
-                              Selected Track
-                            </Badge>
-                          )}
-                        </div>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                          {track.description}
-                        </p>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div>
-                  <Textarea
-                    label="Team Skill Gaps & Specific Learning Goals *"
-                    rows={4}
-                    placeholder="Describe your engineers' current proficiency, specific technologies, architecture challenges, or specific scenarios you want covered in live sandbox labs..."
-                    {...register('projectDescription', {
-                      required: 'Please describe your team’s learning goals or technical scope.',
-                    })}
-                    error={errors.projectDescription?.message}
-                  />
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-5">
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                    What are you looking to engineer?
-                  </h3>
-                  <p className="text-xs text-slate-500 mt-1">
-                    Help us select the right Principal Architect for your technical domain.
-                  </p>
-                </div>
-
-                <Controller
-                  control={control}
-                  name="serviceInterest"
-                  render={({ field }) => (
-                    <ServiceInterestSelect
-                      value={field.value || []}
-                      onChange={field.onChange}
-                    />
-                  )}
-                />
-
-                <div>
-                  <Textarea
-                    label="Project Objectives & Technical Scope *"
-                    rows={4}
-                    placeholder="Describe your current software platform, target cloud infrastructure, scaling challenges, or tech stack requirements..."
-                    {...register('projectDescription', {
-                      required: 'Project description is required',
-                    })}
-                    error={errors.projectDescription?.message}
-                  />
-                </div>
-              </div>
-            )}
-
-            <div className="flex items-center justify-between pt-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setCurrentStep(1)}
-              >
-                Back
-              </Button>
-              <Button
-                type="button"
-                variant="primary"
-                onClick={() => {
-                  const vals = getValues();
-                  if (vals.projectDescription) {
-                    setCurrentStep(3);
-                  } else {
-                    alert('Please provide your project objectives or learning goals.');
-                  }
-                }}
-              >
-                Next: Schedule &amp; Format
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* STEP 3: SCHEDULE, DELIVERY FORMAT & CALENDAR */}
-        {currentStep === 3 && (
-          <div className="space-y-6 animate-fadeIn">
-            <div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                {isTraining ? 'Choose Workshop Schedule & Delivery Format' : 'Choose Session Time & Format'}
+                {isTraining
+                  ? 'Reserve Corporate Team Training'
+                  : 'Book Your 1-on-1 Architecture Consultation'}
               </h3>
               <p className="text-xs text-slate-500 mt-1">
                 {isTraining
-                  ? 'Select your preferred start date, time window, and interactive delivery medium.'
-                  : 'All consultation sessions are 45 minutes of direct technical collaboration.'}
+                  ? 'Hands-on engineering masterclasses and live sandbox labs, tailored for your team.'
+                  : '45 minutes of direct technical collaboration with a Principal Architect.'}
               </p>
             </div>
+          </div>
+          <Badge variant="brand" size="sm" className="shrink-0">
+            {isTraining ? 'Team Training' : '1-on-1 Advisory'}
+          </Badge>
+        </div>
 
-            {/* Delivery Format for Training vs Consultation */}
-            {isTraining ? (
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-                  Workshop Delivery Format
-                </label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {[
-                    {
-                      format: DeliveryFormat.VIRTUAL_INTERACTIVE,
-                      icon: Laptop,
-                      label: 'Virtual Interactive Lab',
-                      desc: 'Live instructor-led sandbox exercises with split rooms',
-                    },
-                    {
-                      format: DeliveryFormat.ON_SITE_INTENSIVE,
-                      icon: Building2,
-                      label: 'On-Site Intensive',
-                      desc: 'In-person hands-on bootcamp at your corporate offices',
-                    },
-                    {
-                      format: DeliveryFormat.HYBRID,
-                      icon: Sparkles,
-                      label: 'Hybrid Cohort',
-                      desc: 'Self-paced sandboxes + weekly live architecture debriefs',
-                    },
-                  ].map((item) => {
-                    const isSelected = selectedDeliveryFormat === item.format;
-                    const Icon = item.icon;
-                    return (
-                      <button
-                        key={item.format}
-                        type="button"
-                        onClick={() => {
-                          setValue('deliveryFormat', item.format);
-                          setValue(
-                            'meetingType',
-                            item.format === DeliveryFormat.ON_SITE_INTENSIVE
-                              ? MeetingType.IN_PERSON
-                              : MeetingType.VIDEO,
-                          );
-                        }}
-                        className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
-                          isSelected
-                            ? 'border-brand-600 bg-brand-50/70 dark:bg-brand-950/40 ring-2 ring-brand-500/20 shadow-sm'
-                            : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700'
-                        }`}
-                      >
-                        <div
-                          className={`w-8 h-8 rounded-lg flex items-center justify-center mb-2 ${
-                            isSelected
-                              ? 'bg-brand-600 text-white'
-                              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                          }`}
-                        >
-                          <Icon className="w-4 h-4" />
-                        </div>
-                        <div className="font-bold text-xs text-slate-900 dark:text-white">
-                          {item.label}
-                        </div>
-                        <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-                          {item.desc}
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
+        {/* Team Size (Training only) */}
+        {isTraining && (
+          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 space-y-2">
+            <label className={`${SECTION_LABEL_CLASS} flex items-center gap-1.5`}>
+              <Users className="w-3.5 h-3.5 text-brand-600" />
+              Target Engineering Team Size
+            </label>
+            <div className="grid grid-cols-4 gap-2 pt-1">
+              {[
+                { value: 5, label: 'Small Team (1-5)' },
+                { value: 12, label: 'Core Team (6-15)' },
+                { value: 25, label: 'Department (16-30)' },
+                { value: 50, label: 'Enterprise (30+)' },
+              ].map((tier) => (
+                <button
+                  key={tier.value}
+                  type="button"
+                  onClick={() => setValue('attendeesCount', tier.value)}
+                  className={`py-2 px-2 rounded-xl text-xs font-semibold border transition-all text-center cursor-pointer ${
+                    selectedAttendees === tier.value
+                      ? 'bg-brand-600 text-white border-brand-600 shadow-sm'
+                      : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-brand-500'
+                  }`}
+                >
+                  {tier.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Contact Details */}
+        <div className="space-y-4">
+          <h4 className={SECTION_LABEL_CLASS}>Contact Details</h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Input
+              label="Your Full Name *"
+              placeholder="Sarah Johnson"
+              {...register('name', { required: 'Name is required' })}
+              error={errors.name?.message}
+            />
+            <Input
+              label="Work Email *"
+              type="email"
+              placeholder="sarah@techcorp.com"
+              {...register('email', { required: 'Email is required' })}
+              error={errors.email?.message}
+            />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Input
+              label={isTraining ? 'Company / Organization *' : 'Company / Organization'}
+              placeholder="TechCorp Inc."
+              {...register('company', {
+                required: isTraining ? 'Company name is required for training sessions' : false,
+              })}
+              error={errors.company?.message}
+            />
+            <Input
+              label="Phone Number"
+              type="tel"
+              placeholder="+1 415 555 2671"
+              {...register('phone')}
+            />
+          </div>
+        </div>
+
+        {/* Technical Scope or Training Curriculum */}
+        <div className="space-y-4">
+          <div>
+            <h4 className={SECTION_LABEL_CLASS}>
+              {isTraining ? 'Training Curriculum' : 'Technical Scope'}
+            </h4>
+            <p className="text-xs text-slate-500 mt-1">
+              {isTraining
+                ? 'Choose one of our production-grade training masterclasses, or propose a custom syllabus.'
+                : 'Help us select the right Principal Architect for your technical domain.'}
+            </p>
+          </div>
+
+          {isTraining ? (
+            <>
+              <div className="space-y-2.5">
+                {TRAINING_TRACKS.map((track) => {
+                  const isSelected = selectedTopic === track.name;
+                  return (
+                    <button
+                      key={track.id}
+                      type="button"
+                      onClick={() => {
+                        setValue('trainingTopic', track.name);
+                        if (track.serviceSlug) {
+                          setValue('serviceInterest', [track.serviceSlug]);
+                        }
+                      }}
+                      className={`w-full p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
+                        isSelected
+                          ? 'border-brand-600 bg-brand-50/70 dark:bg-brand-950/40 ring-2 ring-brand-500/20 shadow-sm'
+                          : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-sm text-slate-900 dark:text-white">
+                          {track.name}
+                        </span>
+                        {isSelected && (
+                          <Badge variant="brand" size="sm">
+                            Selected Track
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                        {track.description}
+                      </p>
+                    </button>
+                  );
+                })}
               </div>
-            ) : (
+
+              <Textarea
+                label="Team Skill Gaps & Specific Learning Goals *"
+                rows={4}
+                placeholder="Describe your engineers' current proficiency, specific technologies, architecture challenges, or specific scenarios you want covered in live sandbox labs..."
+                {...register('projectDescription', {
+                  required: 'Please describe your team’s learning goals or technical scope.',
+                })}
+                error={errors.projectDescription?.message}
+              />
+            </>
+          ) : (
+            <>
               <Controller
                 control={control}
-                name="meetingType"
+                name="serviceInterest"
                 render={({ field }) => (
-                  <MeetingTypePicker
-                    value={field.value || MeetingType.VIDEO}
+                  <ServiceInterestSelect
+                    value={field.value || []}
                     onChange={field.onChange}
                   />
                 )}
               />
-            )}
 
-            {/* Calendar & Time Slots */}
-            <ConsultationCalendar
-              selectedDate={formValues.preferredDate}
-              onSelectDate={(date) => {
-                setValue('preferredDate', date);
-              }}
-              selectedTime={formValues.preferredTime}
-              onSelectTime={(time) => {
-                setValue('preferredTime', time);
-              }}
-              timezone={formValues.timezone || 'America/New_York'}
-              onTimezoneChange={(tz) => {
-                setValue('timezone', tz);
-              }}
-            />
+              <Textarea
+                label="Project Objectives & Technical Scope *"
+                rows={4}
+                placeholder="Describe your current software platform, target cloud infrastructure, scaling challenges, or tech stack requirements..."
+                {...register('projectDescription', {
+                  required: 'Project description is required',
+                })}
+                error={errors.projectDescription?.message}
+              />
+            </>
+          )}
+        </div>
 
-            <div className="flex items-center justify-between pt-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setCurrentStep(2)}
-              >
-                Back
-              </Button>
-              <Button
-                type="button"
-                variant="primary"
-                onClick={() => setCurrentStep(4)}
-              >
-                Review Summary
-              </Button>
-            </div>
+        {/* Schedule & Format */}
+        <div className="space-y-4">
+          <div>
+            <h4 className={SECTION_LABEL_CLASS}>
+              {isTraining ? 'Delivery Format & Schedule' : 'Session Time & Format'}
+            </h4>
+            <p className="text-xs text-slate-500 mt-1">
+              {isTraining
+                ? 'Select your preferred start date, time window, and interactive delivery medium.'
+                : 'All consultation sessions are 45 minutes of direct technical collaboration.'}
+            </p>
           </div>
-        )}
 
-        {/* STEP 4: REVIEW & CONFIRMATION */}
-        {currentStep === 4 && (
-          <div className="space-y-6 animate-fadeIn">
-            <div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                {isTraining ? 'Confirm Corporate Training Details' : 'Confirm Consultation Details'}
-              </h3>
-              <p className="text-xs text-slate-500 mt-1">
-                Review your session dossier prior to dispatching reservation.
-              </p>
-            </div>
-
-            {/* Summary Dossier Card */}
-            <div className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
-                <Badge variant="brand" size="md">
-                  {isTraining ? 'Corporate Engineering Workshop' : 'Architecture Advisory Session'}
-                </Badge>
-                {isTraining && (
-                  <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-1">
-                    <Users className="w-3.5 h-3.5 text-brand-600" />
-                    {formValues.attendeesCount || 10} Engineers
-                  </span>
-                )}
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-4 border-b border-slate-200 dark:border-slate-800 text-sm">
-                <div>
-                  <span className="text-xs text-slate-500">Contact &amp; Organization</span>
-                  <div className="font-bold text-slate-900 dark:text-white mt-0.5">
-                    {formValues.name}
-                  </div>
-                  <div className="text-xs text-slate-500">{formValues.email}</div>
-                  {formValues.company && (
-                    <div className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
-                      <Building2 className="w-3.5 h-3.5" /> {formValues.company}
+          {isTraining ? (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {[
+                {
+                  format: DeliveryFormat.VIRTUAL_INTERACTIVE,
+                  icon: Laptop,
+                  label: 'Virtual Interactive Lab',
+                  desc: 'Live instructor-led sandbox exercises with split rooms',
+                },
+                {
+                  format: DeliveryFormat.ON_SITE_INTENSIVE,
+                  icon: Building2,
+                  label: 'On-Site Intensive',
+                  desc: 'In-person hands-on bootcamp at your corporate offices',
+                },
+                {
+                  format: DeliveryFormat.HYBRID,
+                  icon: Sparkles,
+                  label: 'Hybrid Cohort',
+                  desc: 'Self-paced sandboxes + weekly live architecture debriefs',
+                },
+              ].map((item) => {
+                const isSelected = selectedDeliveryFormat === item.format;
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.format}
+                    type="button"
+                    onClick={() => {
+                      setValue('deliveryFormat', item.format);
+                      setValue(
+                        'meetingType',
+                        item.format === DeliveryFormat.ON_SITE_INTENSIVE
+                          ? MeetingType.IN_PERSON
+                          : MeetingType.VIDEO,
+                      );
+                    }}
+                    className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
+                      isSelected
+                        ? 'border-brand-600 bg-brand-50/70 dark:bg-brand-950/40 ring-2 ring-brand-500/20 shadow-sm'
+                        : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700'
+                    }`}
+                  >
+                    <div
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center mb-2 ${
+                        isSelected
+                          ? 'bg-brand-600 text-white'
+                          : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
                     </div>
-                  )}
-                </div>
-
-                <div>
-                  <span className="text-xs text-slate-500">Scheduled Date &amp; Format</span>
-                  <div className="font-bold text-brand-600 flex items-center gap-1.5 mt-0.5">
-                    <Calendar className="w-4 h-4" />
-                    {formValues.preferredDate} at {formValues.preferredTime}
-                  </div>
-                  <div className="text-xs text-slate-500">{formValues.timezone}</div>
-                  <div className="text-xs text-slate-700 dark:text-slate-300 flex items-center gap-1 mt-1 font-medium capitalize">
-                    {isTraining ? (
-                      <>
-                        <Laptop className="w-3.5 h-3.5 text-brand-600" />
-                        {formValues.deliveryFormat?.replace('_', ' ') || 'Virtual Interactive Lab'}
-                      </>
-                    ) : (
-                      <>
-                        <Video className="w-3.5 h-3.5 text-brand-600" />
-                        {formValues.meetingType} format
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <span className="text-xs text-slate-500">
-                  {isTraining ? 'Curriculum Track & Learning Scope' : 'Technical Scope'}
-                </span>
-                {formValues.trainingTopic && (
-                  <div className="font-bold text-sm text-slate-900 dark:text-white mt-0.5 flex items-center gap-1.5">
-                    <BookOpen className="w-4 h-4 text-brand-600" />
-                    {formValues.trainingTopic}
-                  </div>
-                )}
-                <p className="text-sm text-slate-800 dark:text-slate-200 mt-1 leading-relaxed">
-                  {formValues.projectDescription}
-                </p>
-                {formValues.serviceInterest && formValues.serviceInterest.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mt-2">
-                    {formValues.serviceInterest.map((item) => (
-                      <Badge key={item} variant="neutral" size="sm">
-                        {item}
-                      </Badge>
-                    ))}
-                  </div>
-                )}
-              </div>
+                    <div className="font-bold text-xs text-slate-900 dark:text-white">
+                      {item.label}
+                    </div>
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                      {item.desc}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
+          ) : (
+            <Controller
+              control={control}
+              name="meetingType"
+              render={({ field }) => (
+                <MeetingTypePicker
+                  value={field.value || MeetingType.VIDEO}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+          )}
 
-            <div className="flex items-center justify-between pt-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setCurrentStep(3)}
-              >
-                Back to Schedule
-              </Button>
-              <Button
-                type="submit"
-                variant="primary"
-                size="lg"
-                isLoading={bookConsultation.isPending}
-              >
-                {isTraining ? 'Confirm & Reserve Training Workshop' : 'Confirm & Reserve Consultation'}
-              </Button>
-            </div>
-          </div>
-        )}
+          <ConsultationCalendar
+            selectedDate={formValues.preferredDate}
+            onSelectDate={(date) => {
+              setValue('preferredDate', date);
+            }}
+            selectedTime={formValues.preferredTime}
+            onSelectTime={(time) => {
+              setValue('preferredTime', time);
+            }}
+            timezone={formValues.timezone || 'America/New_York'}
+            onTimezoneChange={(tz) => {
+              setValue('timezone', tz);
+            }}
+          />
+        </div>
+
+        {/* Submit */}
+        <div className="pt-4 flex justify-end border-t border-slate-200 dark:border-slate-800">
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            isLoading={bookConsultation.isPending}
+          >
+            {isTraining ? 'Confirm & Reserve Training Workshop' : 'Confirm & Reserve Consultation'}
+          </Button>
+        </div>
       </form>
     </div>
   );

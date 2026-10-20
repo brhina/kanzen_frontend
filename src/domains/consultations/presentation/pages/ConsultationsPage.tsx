@@ -1,9 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router';
 import {
-  Video,
-  Clock,
-  ShieldCheck,
   Calendar,
   Search,
 } from 'lucide-react';
@@ -136,10 +133,27 @@ export function ConsultationsPage() {
       {/* 1. Header Banner */}
       <div className="relative">
         <HeaderBanner
-          badge="Direct Technical Discovery"
-          title="Book an Architecture Consultation"
-          description="Engage directly with our Principal Architects. In 45 minutes, we evaluate your technical roadmap, scalability bottlenecks, and proposed architecture."
-        />
+          badge="Consultations & Corporate Training"
+          title="Book Expert Engineering Sessions"
+          description="Reserve a 1-on-1 architecture advisory with a Principal Architect, or schedule hands-on corporate engineering training tailored for your team."
+        >
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <Button
+              type="button"
+              variant="primary"
+              onClick={() => handleOpenPublicBooking('consultation')}
+            >
+              Book a Session
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => handleOpenPublicBooking('training')}
+            >
+              Book Team Training
+            </Button>
+          </div>
+        </HeaderBanner>
       </div>
 
       {/* 4. Staff Dispatch Desk Toolbar Header (when staff with permission) */}
@@ -337,7 +351,9 @@ export function ConsultationsPage() {
         description={
           isAdminFormOpen
             ? 'Administrative Session Dispatch: Configure curriculum topic, cohort headcount, meeting links, and cloud sandbox notes.'
-            : 'Engage directly with our Principal Architects and Engineering Leads. Complete the requirements below to reserve your slot.'
+            : drawerMode === 'training'
+              ? 'Reserve a hands-on corporate engineering workshop. Tell us about your team, pick a curriculum track, and we will tailor the labs to your stack.'
+              : 'Reserve a 1-on-1 technical advisory session with a Principal Architect. Complete the requirements below to lock your slot.'
         }
         size="xl"
       >

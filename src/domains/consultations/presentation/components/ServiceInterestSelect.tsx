@@ -1,15 +1,18 @@
 import { useServices } from '@/domains/services/application/use-cases/useServices';
+import { Select } from '@/shared/ui/select';
 
 interface ServiceInterestSelectProps {
   value: string[];
   onChange: (selected: string[]) => void;
   className?: string;
+  error?: string;
 }
 
 export function ServiceInterestSelect({
   value = [],
   onChange,
   className = '',
+  error,
 }: ServiceInterestSelectProps) {
   const { data: servicesData } = useServices();
 
@@ -34,38 +37,17 @@ export function ServiceInterestSelect({
           { id: 'legacy-modernization', label: 'Legacy Modernization' },
         ];
 
-  const toggle = (id: string) => {
-    if (value.includes(id)) {
-      onChange(value.filter((item) => item !== id));
-    } else {
-      onChange([...value, id]);
-    }
-  };
-
   return (
-    <div className={`space-y-2 ${className}`}>
-      <label className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-        Architecture & Service Domains
-      </label>
-      <div className="flex flex-wrap gap-2 pt-1">
-        {serviceOptions.map((srv) => {
-          const isSelected = value.includes(srv.id);
-          return (
-            <button
-              key={srv.id}
-              type="button"
-              onClick={() => toggle(srv.id)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all border cursor-pointer ${
-                isSelected
-                  ? 'bg-brand-600 text-white border-brand-600 shadow-sm'
-                  : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-brand-500'
-              }`}
-            >
-              {srv.label}
-            </button>
-          );
-        })}
-      </div>
-    </div>
+    <Select
+      label="Architecture & Service Domains"
+      className={className}
+      error={error}
+      value={value[0] ?? ''}
+      onChange={(e) => onChange(e.target.value ? [e.target.value] : [])}
+      options={[
+        { value: '', label: 'Select a service domain...' },
+        ...serviceOptions.map((srv) => ({ value: srv.id, label: srv.label })),
+      ]}
+    />
   );
 }
