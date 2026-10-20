@@ -15,6 +15,11 @@ import {
   useHeroLatestUpdates,
   type HeroUpdateItem,
 } from '../hooks/useHeroLatestUpdates';
+import { useHomePageContent } from '@/domains/settings/application/use-cases/usePageContent';
+import type {
+  HeroContent,
+  ProofPointItem,
+} from '@/domains/settings/domain/settings-content.types';
 import { Button } from '@/shared/ui/button';
 import { DynamicIcon } from '@/shared/ui/icon/DynamicIcon';
 import { cn } from '@/shared/utils/cn';
@@ -35,11 +40,32 @@ function renderUpdateIcon(iconName: string, className = 'w-4 h-4') {
   return <Comp className={className} />;
 }
 
-export interface HeroLatestUpdatesProps {
-  proofPoints?: { label: string; icon?: string }[];
+/** Renders the settings-driven title with its brand-accented substring. */
+function renderTitle(title: string, highlight: string) {
+  if (!title) return null;
+  if (!highlight) return title;
+  const index = title.indexOf(highlight);
+  if (index === -1) return title;
+  return (
+    <>
+      {title.slice(0, index)}
+      <span className="text-brand-600 dark:text-brand-400">{highlight}</span>
+      {title.slice(index + highlight.length)}
+    </>
+  );
 }
 
-export function HeroLatestUpdates({ proofPoints }: HeroLatestUpdatesProps) {
+export interface HeroLatestUpdatesProps {
+  /** Overrides the proof points sourced from settings (tests / stories). */
+  proofPoints?: ProofPointItem[];
+  /** Overrides the hero copy sourced from settings (tests / stories). */
+  hero?: HeroContent;
+}
+
+export function HeroLatestUpdates({ proofPoints, hero }: HeroLatestUpdatesProps) {
+  const { content } = useHomePageContent();
+  const heroContent = hero ?? content.hero;
+  const proofPointsList = proofPoints ?? content.proofPoints;
   const { updates, isLoading } = useHeroLatestUpdates();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -102,43 +128,38 @@ export function HeroLatestUpdates({ proofPoints }: HeroLatestUpdatesProps) {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-500" />
           </span>
-          <span className="truncate">Next-Generation Digital Infrastructure</span>
+          <span className="truncate">{heroContent.badge}</span>
           <span className="text-slate-300 dark:text-slate-700 hidden sm:inline">&bull;</span>
           <span className="font-mono uppercase tracking-wider text-[11px] text-brand-600 dark:text-brand-400 hidden sm:inline">
-            High-Impact Engineering, Architecture &amp; AI
+            {heroContent.kicker}
           </span>
         </div>
 
         <div className="text-center max-w-3xl mx-auto space-y-4 my-auto px-2">
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white leading-[1.15]">
-            High-Impact Engineering,{' '}
-            <span className="text-brand-600 dark:text-brand-400">
-              Architecture &amp; AI
-            </span>
+            {renderTitle(heroContent.title, heroContent.titleHighlight)}
           </h1>
           <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal max-w-2xl mx-auto">
-            {isLoading
-              ? 'Loading latest platform dispatches...'
-              : 'Enterprise cloud microservices, mission-critical distributed systems, and AI infrastructure.'}
+            {isLoading ? heroContent.loadingText : heroContent.subtitle}
           </p>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2.5 sm:gap-4 pt-2 w-full max-w-xs sm:max-w-none mx-auto">
-            <Link to="/contact" className="w-full sm:w-auto">
+            <Link to={heroContent.primaryCtaHref} className="w-full sm:w-auto">
               <Button variant="primary" size="lg" className="w-full sm:w-auto justify-center font-bold">
-                <span>Start an Engagement</span>
+                <span>{heroContent.primaryCtaLabel}</span>
               </Button>
             </Link>
-            <Link to="/solutions" className="w-full sm:w-auto">
+            <Link to={heroContent.secondaryCtaHref} className="w-full sm:w-auto">
               <Button variant="outline" size="lg" className="w-full sm:w-auto justify-center border-slate-200 dark:border-slate-800">
-                <span>Explore Solutions</span>
+                <span>{heroContent.secondaryCtaLabel}</span>
               </Button>
             </Link>
           </div>
         </div>
 
-        {proofPoints && proofPoints.length > 0 && (
+        {proofPointsList && proofPointsList.length > 0 && (
           <div className="w-full max-w-4xl mx-auto border-t border-slate-200 dark:border-slate-800 pt-4 sm:pt-6">
             <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 lg:gap-6 text-xs font-medium text-slate-600 dark:text-slate-400">
-              {proofPoints.map((item, idx) => (
+              {proofPointsList.map((item, idx) => (
                 <div
                   key={idx}
                   className="flex items-center justify-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/80 dark:bg-slate-900/80 shadow-2xs text-[11px] sm:text-xs text-slate-700 dark:text-slate-300"
@@ -154,25 +175,9 @@ export function HeroLatestUpdates({ proofPoints }: HeroLatestUpdatesProps) {
     );
   }
 
-  const getActionLabel = (type: HeroUpdateItem['type']) => {
-    switch (type) {
-      case 'blog':
-        return 'Read Article';
-      case 'training':
-        return 'Reserve Workshop Cohort';
-      case 'consultation':
-        return 'Book Discovery Call';
-      case 'product':
-        return 'Explore Product Platform';
-      case 'solution':
-        return 'View Enterprise Solution';
-      case 'service':
-        return 'Explore Service Syllabus';
-      case 'portfolio':
-        return 'View Case Study';
-      default:
-        return 'Explore Update';
-    }
+  const getActionLabel = (item: HeroUpdateItem) => {
+    const labels = heroContent.actionLabels || {};
+    return labels[item.type] || labels.default || item.typeLabel || item.type;
   };
 
   return (
@@ -191,10 +196,10 @@ export function HeroLatestUpdates({ proofPoints }: HeroLatestUpdatesProps) {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-500" />
           </span>
-          <span className="truncate">Next-Generation Digital Infrastructure</span>
+          <span className="truncate">{heroContent.badge}</span>
           <span className="text-slate-300 dark:text-slate-700 hidden sm:inline">&bull;</span>
           <span className="font-mono uppercase tracking-wider text-[11px] text-brand-600 dark:text-brand-400 hidden sm:inline">
-            High-Impact Engineering, Architecture &amp; AI
+            {heroContent.kicker}
           </span>
         </div>
       </div>
@@ -269,27 +274,27 @@ export function HeroLatestUpdates({ proofPoints }: HeroLatestUpdatesProps) {
                   rightIcon={<ArrowRight className="w-4 h-4 shrink-0" />}
                   className="w-full sm:w-auto justify-center font-bold border border-brand-600"
                 >
-                  <span>{getActionLabel(item.type)}</span>
+                  <span>{getActionLabel(item)}</span>
                 </Button>
               </Link>
 
-              <Link to="/contact" className="w-full sm:w-auto">
+              <Link to={heroContent.primaryCtaHref} className="w-full sm:w-auto">
                 <Button
                   variant="outline"
                   size="lg"
                   className="w-full sm:w-auto justify-center border-slate-200 dark:border-slate-800"
                 >
-                  <span>Start an Engagement</span>
+                  <span>{heroContent.primaryCtaLabel}</span>
                 </Button>
               </Link>
 
-              <Link to="/solutions" className="w-full sm:w-auto">
+              <Link to={heroContent.secondaryCtaHref} className="w-full sm:w-auto">
                 <Button
                   variant="ghost"
                   size="lg"
                   className="w-full sm:w-auto justify-center border border-slate-200/60 dark:border-slate-800/60"
                 >
-                  <span>Explore Solutions</span>
+                  <span>{heroContent.secondaryCtaLabel}</span>
                 </Button>
               </Link>
             </div>
@@ -324,10 +329,10 @@ export function HeroLatestUpdates({ proofPoints }: HeroLatestUpdatesProps) {
         </div>
 
         {/* Technical Proof Points with thin borders */}
-        {proofPoints && proofPoints.length > 0 && (
+        {proofPointsList && proofPointsList.length > 0 && (
           <div className="w-full max-w-4xl mx-auto">
             <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 lg:gap-6 text-xs font-medium text-slate-600 dark:text-slate-400">
-              {proofPoints.map((item, idx) => (
+              {proofPointsList.map((item, idx) => (
                 <div
                   key={idx}
                   className="flex items-center justify-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/80 dark:bg-slate-900/80 shadow-2xs text-[11px] sm:text-xs text-slate-700 dark:text-slate-300"

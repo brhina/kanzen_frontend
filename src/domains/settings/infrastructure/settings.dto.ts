@@ -36,3 +36,22 @@ export interface SettingResponseDto {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface BulkUpdateItem {
+  key: string;
+  value: unknown;
+}
+
+export interface BulkUpdateSettingsDto {
+  items: BulkUpdateItem[];
+}
+
+export interface DefaultSettingDto {
+  key: string;
+  value: unknown;
+  type: string;
+  group: string;
+  label: string;
+  description?: string;
+  isPublic: boolean;
+}

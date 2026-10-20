@@ -203,11 +203,14 @@ export const API_ENDPOINTS = {
   settings: {
     public: 'settings/public',
     adminAll: 'admin/settings',
+    adminDefaults: 'admin/settings/defaults',
+    adminBulk: 'admin/settings/bulk',
     adminGroup: (group: string) => `admin/settings?group=${group}`,
     adminKey: (key: string) => `admin/settings/${key}`,
     adminCreate: 'admin/settings',
     adminUpdate: (key: string) => `admin/settings/${key}`,
     adminDelete: (key: string) => `admin/settings/${key}`,
+    adminReset: (key: string) => `admin/settings/${key}/reset`,
   },
   health: {
     status: 'health',

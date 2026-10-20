@@ -7,8 +7,8 @@ import { HeaderBanner } from '@/layouts/components';
 import {
   useSocialLinks,
   useCompanySettings,
-  useContactSettings,
 } from '@/domains/settings/application/use-cases/usePublicSettings';
+import { useContactPageContent } from '@/domains/settings/application/use-cases/usePageContent';
 import { SocialIcon } from '@/shared/ui/social/SocialIcon';
 import {
   Mail,
@@ -24,25 +24,25 @@ export function ContactPage() {
   const [activeView, setActiveView] = useState<'inbox' | 'form'>('inbox');
 
   const { company } = useCompanySettings();
-  const { contact } = useContactSettings();
+  const { content: contactContent, isLoading: isLoadingSettings } = useContactPageContent();
   const socialLinks = useSocialLinks();
 
-  const companyName = company?.name || 'Veyroo Tech';
-  const supportEmail = contact?.supportEmail || company?.email || 'hello@veyroo.tech';
-  const headquarters = contact?.headquarters || company?.address || 'Nairobi, Kenya · Silicon Savannah';
-  const businessHours = contact?.businessHours || 'Monday – Friday: 08:00 – 18:00 EAT';
+  const supportEmail = contactContent.supportEmail;
+  const headquarters = contactContent.headquarters;
+  const businessHours = contactContent.businessHours;
   const phoneNumber = company?.phone;
 
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Header Banner */}
       <HeaderBanner
-        badge={canManage ? 'Inquiries & Support Desk' : 'Direct Communication & Inquiries'}
-        title={canManage ? 'Inquiries & Support Desk' : `Get in Touch with ${companyName}`}
+        isLoading={!canManage && isLoadingSettings}
+        badge={canManage ? 'Inquiries & Support Desk' : contactContent.badge}
+        title={canManage ? 'Inquiries & Support Desk' : contactContent.title}
         description={
           canManage
             ? 'Triage incoming partnership requests, technical inquiries, and client collaborations with live status workflows.'
-            : 'Have questions about our engineering capabilities, consulting engagements, or partnership programs? We are here to help.'
+            : contactContent.description
         }
       />
 

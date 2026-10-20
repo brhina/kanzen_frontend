@@ -10,6 +10,7 @@ export interface SettingGroupProps {
   description?: string;
   settings: SettingEntity[];
   values: Record<string, unknown>;
+  defaults?: Record<string, unknown>;
   onChange: (key: string, newValue: unknown) => void;
   onReset?: (key: string) => void;
   onDelete?: (key: string) => void;
@@ -23,6 +24,7 @@ export function SettingGroup({
   description,
   settings,
   values,
+  defaults,
   onChange,
   onReset,
   onDelete,
@@ -90,6 +92,7 @@ export function SettingGroup({
                 key={setting.key}
                 setting={setting}
                 value={values[setting.key] !== undefined ? values[setting.key] : setting.value}
+                defaultValue={defaults?.[setting.key]}
                 onChange={onChange}
                 onReset={onReset}
                 onDelete={onDelete}

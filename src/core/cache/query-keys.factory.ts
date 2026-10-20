@@ -157,6 +157,7 @@ export const queryKeys = {
   settings: {
     all: ['settings'] as const,
     public: () => [...queryKeys.settings.all, 'public'] as const,
+    defaults: () => [...queryKeys.settings.all, 'defaults'] as const,
     group: (group: string) =>
       [...queryKeys.settings.all, 'group', group] as const,
   },

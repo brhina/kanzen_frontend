@@ -5,6 +5,8 @@ export interface HeaderBannerProps {
   badge?: ReactNode;
   title: ReactNode;
   description?: ReactNode;
+  /** Renders placeholder lines while settings-backed copy is loading. */
+  isLoading?: boolean;
   children?: ReactNode;
   className?: string;
   badgeClassName?: string;
@@ -16,12 +18,32 @@ export function HeaderBanner({
   badge,
   title,
   description,
+  isLoading = false,
   children,
   className = '',
   badgeClassName = '',
   titleClassName = '',
   descriptionClassName = '',
 }: HeaderBannerProps) {
+  if (isLoading) {
+    return (
+      <div
+        className={cn(
+          'relative overflow-hidden rounded-3xl bg-gradient-to-b from-slate-50 via-white to-slate-50/80 px-6 py-12 sm:px-12 sm:py-16 animate-pulse dark:bg-radial dark:from-slate-900 dark:via-slate-950 dark:to-slate-950',
+          className,
+        )}
+        aria-busy="true"
+        aria-label="Loading page content"
+      >
+        <div className="relative z-10 max-w-3xl mx-auto text-center space-y-4">
+          <div className="mx-auto h-6 w-44 rounded-full bg-slate-200/80 dark:bg-slate-800" />
+          <div className="mx-auto h-10 w-3/4 rounded-xl bg-slate-200/80 dark:bg-slate-800" />
+          <div className="mx-auto h-4 w-2/3 rounded-lg bg-slate-200/60 dark:bg-slate-800/80" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className={cn(

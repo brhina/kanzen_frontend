@@ -2,7 +2,9 @@ import { apiClient } from '@/core/api/client';
 import { API_ENDPOINTS } from '@/core/api/endpoints';
 import type { ApiResponse } from '@/core/api/types';
 import type {
+  BulkUpdateSettingsDto,
   CreateSettingDto,
+  DefaultSettingDto,
   FilterSettingsDto,
   SettingResponseDto,
   UpdateSettingDto,
@@ -74,6 +76,28 @@ export const settingsApi = {
         json: dto,
       })
       .json<ApiResponse<SettingResponseDto> | SettingResponseDto>();
+    return unwrapResponse(res);
+  },
+
+  /**
+   * Update multiple settings in a single request (single cache invalidation)
+   */
+  async bulkUpdate(dto: BulkUpdateSettingsDto): Promise<SettingResponseDto[]> {
+    const res = await apiClient
+      .patch(API_ENDPOINTS.settings.adminBulk, {
+        json: dto,
+      })
+      .json<ApiResponse<SettingResponseDto[]> | SettingResponseDto[]>();
+    return unwrapResponse(res);
+  },
+
+  /**
+   * Seeded default registry used for the admin "restore default" action
+   */
+  async getDefaults(): Promise<DefaultSettingDto[]> {
+    const res = await apiClient
+      .get(API_ENDPOINTS.settings.adminDefaults)
+      .json<ApiResponse<DefaultSettingDto[]> | DefaultSettingDto[]>();
     return unwrapResponse(res);
   },
 

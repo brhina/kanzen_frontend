@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { Activity } from 'lucide-react';
 import { usePublicSettings } from '@/domains/settings/application/use-cases/usePublicSettings';
+import { useFooterContent } from '@/domains/settings/application/use-cases/usePageContent';
 import { SocialIcon } from '@/shared/ui/social/SocialIcon';
 import { cn } from '@/shared/utils/cn';
 
@@ -11,7 +12,8 @@ export interface FooterProps {
 const CURRENT_YEAR = new Date().getFullYear();
 
 export function Footer({ className = '' }: FooterProps) {
-  const { company, socialLinks } = usePublicSettings();
+  const { socialLinks } = usePublicSettings();
+  const { content } = useFooterContent();
 
   return (
     <footer
@@ -27,11 +29,11 @@ export function Footer({ className = '' }: FooterProps) {
             <Link
               to="/"
               className="flex items-center gap-2.5"
-              aria-label={`${company?.name || 'Veyroo Tech'} Homepage`}
+              aria-label={`${content.name} Homepage`}
             >
               <img
                 src="/veyroo.png"
-                alt="Veyroo Tech Logo"
+                alt={`${content.name} Logo`}
                 className="h-8 w-8 object-contain shrink-0"
                 width={32}
                 height={32}
@@ -42,8 +44,7 @@ export function Footer({ className = '' }: FooterProps) {
             </Link>
 
             <p className="text-sm leading-relaxed max-w-sm text-slate-600 dark:text-slate-400">
-              {company?.tagline ||
-                'Architecting mission-critical digital systems, high-concurrency microservices, and enterprise AI infrastructure with uncompromising engineering rigor.'}
+              {content.description || content.tagline}
             </p>
 
             {/* System Health Badge */}
@@ -104,7 +105,7 @@ export function Footer({ className = '' }: FooterProps) {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/about" className="hover:text-slate-900 dark:hover:text-white transition-colors">
-                  About Veyroo Tech
+                  {content.aboutLinkLabel}
                 </Link>
               </li>
               <li>
@@ -169,7 +170,7 @@ export function Footer({ className = '' }: FooterProps) {
         {/* Bottom Bar: Legal & Dynamic Social Icons */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 dark:border-slate-800 md:flex-row">
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            &copy; {CURRENT_YEAR} {company?.name || 'Veyroo Tech'}. All rights reserved.
+            &copy; {CURRENT_YEAR} {content.name}. All rights reserved.
           </p>
 
           {/* Dynamically configured social links from settings */}

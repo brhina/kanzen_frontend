@@ -2,18 +2,21 @@ import { Link } from 'react-router';
 import { Button } from '@/shared/ui/button';
 import { HeaderBanner } from '@/layouts/components';
 import { useProcessSteps } from '@/domains/settings/application/use-cases/usePublicSettings';
+import { useProcessPageContent } from '@/domains/settings/application/use-cases/usePageContent';
 import { DynamicIcon } from '@/shared/ui/icon/DynamicIcon';
 
 export function ProcessPage() {
   const processSteps = useProcessSteps();
+  const { content, isLoading } = useProcessPageContent();
 
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-12">
       {/* Hero Banner */}
       <HeaderBanner
-        badge="Engineering Discipline"
-        title="The Veyroo Delivery Framework"
-        description="A predictable, milestone-driven engineering cycle designed to eliminate architectural debt and deliver high-velocity stability."
+        isLoading={isLoading}
+        badge={content.badge}
+        title={content.title}
+        description={content.description}
       />
 
       {/* Steps List */}
@@ -42,17 +45,21 @@ export function ProcessPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="rounded-3xl border border-slate-200/90 bg-gradient-to-b from-slate-50 via-white to-slate-100/60 p-8 sm:p-12 text-slate-900 text-center space-y-6 dark:border-slate-800 dark:bg-radial dark:from-slate-900 dark:via-slate-950 dark:to-slate-950 dark:text-white">
-        <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Ready to initiate your architecture cycle?</h2>
-        <p className="max-w-xl mx-auto text-slate-600 dark:text-slate-300 text-sm sm:text-base">
-          Our engineering leadership is ready to analyze your platform requirements and scope.
-        </p>
-        <Link to="/contact">
-          <Button variant="primary" size="lg">
-            <span>Initiate Discovery Phase</span>
-          </Button>
-        </Link>
-      </section>
+      {!isLoading && content.cta.title && (
+        <section className="rounded-3xl border border-slate-200/90 bg-gradient-to-b from-slate-50 via-white to-slate-100/60 p-8 sm:p-12 text-slate-900 text-center space-y-6 dark:border-slate-800 dark:bg-radial dark:from-slate-900 dark:via-slate-950 dark:to-slate-950 dark:text-white">
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+            {content.cta.title}
+          </h2>
+          <p className="max-w-xl mx-auto text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+            {content.cta.description}
+          </p>
+          <Link to={content.cta.buttonHref}>
+            <Button variant="primary" size="lg">
+              <span>{content.cta.buttonLabel}</span>
+            </Button>
+          </Link>
+        </section>
+      )}
     </div>
   );
 }

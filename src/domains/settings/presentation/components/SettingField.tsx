@@ -11,6 +11,8 @@ import { cn } from '@/shared/utils/cn';
 export interface SettingFieldProps {
   setting: SettingEntity;
   value: unknown;
+  /** Seeded default value for this key; enables the "Restore default" action. */
+  defaultValue?: unknown;
   onChange: (key: string, newValue: unknown) => void;
   onReset?: (key: string) => void;
   onDelete?: (key: string) => void;
@@ -22,6 +24,7 @@ export interface SettingFieldProps {
 export function SettingField({
   setting,
   value,
+  defaultValue,
   onChange,
   onReset,
   onDelete,
@@ -47,6 +50,22 @@ export function SettingField({
     }
     return value !== setting.value;
   })();
+
+  const canRestoreDefault = (() => {
+    if (defaultValue === undefined) return false;
+    if (typeof defaultValue === 'object' && defaultValue !== null) {
+      try {
+        return JSON.stringify(value) !== JSON.stringify(defaultValue);
+      } catch {
+        return value !== defaultValue;
+      }
+    }
+    return value !== defaultValue;
+  })();
+
+  const handleRestoreDefault = () => {
+    onChange(setting.key, defaultValue);
+  };
 
   const handleCopy = async () => {
     try {
@@ -163,6 +182,19 @@ export function SettingField({
               className="h-7 px-2 text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"
             >
               Reset
+            </Button>
+          )}
+
+          {canRestoreDefault && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={handleRestoreDefault}
+              title="Stage the seeded default value"
+              className="h-7 px-2 text-[11px] text-slate-500 hover:text-brand-600 hover:border-brand-500 dark:hover:text-brand-400"
+            >
+              Restore default
             </Button>
           )}
 

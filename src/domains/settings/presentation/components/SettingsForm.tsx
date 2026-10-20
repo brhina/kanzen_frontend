@@ -9,6 +9,7 @@ export interface SettingsFormProps {
   categoryTitle: string;
   categoryDescription?: string;
   settings: SettingEntity[];
+  defaults?: Record<string, unknown>;
   onSave: (updates: Record<string, unknown>) => Promise<void>;
   onDelete?: (key: string) => void;
   canDelete?: boolean;
@@ -21,6 +22,7 @@ export function SettingsForm({
   categoryTitle,
   categoryDescription,
   settings,
+  defaults,
   onSave,
   onDelete,
   canDelete = false,
@@ -120,6 +122,7 @@ export function SettingsForm({
         description={categoryDescription}
         settings={settings}
         values={formValues}
+        defaults={defaults}
         onChange={handleFieldChange}
         onReset={handleSingleReset}
         onDelete={onDelete}

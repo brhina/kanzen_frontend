@@ -14,6 +14,7 @@ export const SettingGroupEnum = {
   SEO: 'seo',
   SOCIAL: 'social',
   CONTACT: 'contact',
+  PAGES: 'pages',
   EMAIL: 'email',
   INTEGRATIONS: 'integrations',
   SYSTEM: 'system',

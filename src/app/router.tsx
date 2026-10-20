@@ -1,12 +1,16 @@
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, type RouteObject } from 'react-router';
 import { AppLayout } from '../layouts/AppLayout';
 import { AuthLayout } from '../layouts/AuthLayout';
+import { RootLayout } from '../layouts/RootLayout';
 
-export const router = createBrowserRouter([
+export const routes: RouteObject[] = [
   {
-    path: '/',
-    element: <AppLayout />,
+    element: <RootLayout />,
     children: [
+      {
+        path: '/',
+        element: <AppLayout />,
+        children: [
       // Core Top-Level Pages
       { index: true, lazy: () => import('../pages/HomePage') },
       { path: 'about', lazy: () => import('../pages/AboutPage') },
@@ -62,10 +66,17 @@ export const router = createBrowserRouter([
       { path: 'reset-password/:token', lazy: () => import('../domains/auth/presentation/pages/ResetPasswordPage') },
     ],
   },
-  {
-    path: '*',
-    lazy: () => import('../pages/NotFoundPage'),
+      {
+        path: '*',
+        lazy: () => import('../pages/NotFoundPage'),
+      },
+    ],
   },
-]);
+];
+
+export const router =
+  typeof document !== 'undefined'
+    ? createBrowserRouter(routes)
+    : (null as unknown as ReturnType<typeof createBrowserRouter>);
 
 export default router;

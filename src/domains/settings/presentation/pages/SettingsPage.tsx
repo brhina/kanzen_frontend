@@ -4,7 +4,8 @@ import { SettingGroupEnum, SettingType } from '../../domain/enums/setting.enums'
 import type { SettingEntity } from '../../domain/entities/setting.entity';
 import type { CreateSettingDto } from '../../infrastructure/settings.dto';
 import { useSettings } from '../../application/use-cases/useSettings';
-import { useUpdateSetting } from '../../application/use-cases/useUpdateSetting';
+import { useBulkUpdateSettings } from '../../application/use-cases/useBulkUpdateSettings';
+import { useSettingsDefaults } from '../../application/use-cases/useSettingsDefaults';
 import { useCreateSetting } from '../../application/use-cases/useCreateSetting';
 import { useDeleteSetting } from '../../application/use-cases/useDeleteSetting';
 import { SettingsForm } from '../components/SettingsForm';
@@ -61,6 +62,12 @@ const SETTINGS_TABS: SettingTabMeta[] = [
     description: 'Inquiry routing addresses, corporate telephone lines, office locations, and operational hours.',
   },
   {
+    key: SettingGroupEnum.PAGES,
+    label: 'Pages & Content',
+    title: 'Marketing Page Content & Copy',
+    description: 'Hero, about, process, testimonials, newsletter, and footer copy rendered by public pages — every value here is served live to the website.',
+  },
+  {
     key: SettingGroupEnum.EMAIL,
     label: 'Email & SMTP',
     title: 'Transactional Mail & SMTP Transport',
@@ -100,9 +107,19 @@ export function SettingsPage() {
 
   // Queries & Mutations
   const { data: dbSettings, isLoading, isRefetching, refetch } = useSettings();
+  const { data: settingDefaults } = useSettingsDefaults();
   const createMutation = useCreateSetting();
-  const updateMutation = useUpdateSetting();
+  const bulkMutation = useBulkUpdateSettings();
   const deleteMutation = useDeleteSetting();
+
+  // Seeded default values keyed by setting key (for per-field restore)
+  const defaultValues = useMemo(() => {
+    const map: Record<string, unknown> = {};
+    for (const [key, item] of Object.entries(settingDefaults || {})) {
+      map[key] = item.value;
+    }
+    return map;
+  }, [settingDefaults]);
 
   // Selected tab meta
   const activeTab = useMemo(
@@ -199,12 +216,11 @@ export function SettingsPage() {
   };
 
   const handleSave = async (updates: Record<string, unknown>) => {
-    for (const [key, value] of Object.entries(updates)) {
-      await updateMutation.mutateAsync({
-        key,
-        dto: { value },
-      });
-    }
+    const items = Object.entries(updates).map(([key, value]) => ({
+      key,
+      value,
+    }));
+    await bulkMutation.mutateAsync({ items });
     refetch();
   };
 
@@ -328,6 +344,7 @@ export function SettingsPage() {
           categoryTitle={activeTab.title}
           categoryDescription={activeTab.description}
           settings={filteredSettings}
+          defaults={defaultValues}
           onSave={handleSave}
           onDelete={canWrite ? (key) => {
             const found = allSettings.find((s) => s.key === key);
@@ -335,7 +352,7 @@ export function SettingsPage() {
           } : undefined}
           canDelete={canWrite}
           onAddNew={canWrite ? () => setIsDrawerOpen(true) : undefined}
-          isSaving={updateMutation.isPending}
+          isSaving={bulkMutation.isPending}
         />
       )}
 

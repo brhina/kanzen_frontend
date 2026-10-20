@@ -19,6 +19,7 @@ const GROUP_OPTIONS = [
   { value: SettingGroupEnum.SEO, label: 'SEO Defaults & Metadata' },
   { value: SettingGroupEnum.SOCIAL, label: 'Corporate Social Links' },
   { value: SettingGroupEnum.CONTACT, label: 'Contact Coordinates' },
+  { value: SettingGroupEnum.PAGES, label: 'Pages & Content' },
   { value: SettingGroupEnum.EMAIL, label: 'Email & SMTP Transport' },
   { value: SettingGroupEnum.INTEGRATIONS, label: 'Integrations & External APIs' },
   { value: SettingGroupEnum.SYSTEM, label: 'System & Platform Flags' },
@@ -67,8 +68,9 @@ export function CreateSettingForm({
 
     if (!cleanKey) {
       newErrors.key = 'Setting key is required (e.g. company.vatNumber)';
-    } else if (!/^[a-zA-Z0-9_.-]+$/.test(cleanKey)) {
-      newErrors.key = 'Key can only contain alphanumeric characters, dots, dashes, and underscores';
+    } else if (!/^[a-z][a-z0-9_]*(\.[a-z0-9_]+)+$/i.test(cleanKey)) {
+      newErrors.key =
+        'Key must be a dotted identifier like "company.name" (letters, digits and underscores only)';
     }
 
     if (!cleanLabel) {

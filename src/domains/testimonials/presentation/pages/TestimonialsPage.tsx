@@ -26,6 +26,7 @@ import {
 import { Modal } from '@/shared/ui/modal';
 import { Drawer } from '@/shared/ui/drawer';
 import { Skeleton } from '@/shared/ui/skeleton';
+import { useTestimonialsPageContent } from '@/domains/settings/application/use-cases/usePageContent';
 
 export function TestimonialsPage() {
   const { user } = useAuthStore();
@@ -218,14 +219,16 @@ export function TestimonialsPage() {
   };
 
   const isLoading = isStaff ? isLoadingAdmin : isLoadingPublic;
+  const { content: bannerContent, isLoading: isLoadingSettings } = useTestimonialsPageContent();
 
   return (
     <div className="w-full px-4 py-8 sm:px-6 lg:px-8 space-y-10">
       {/* Header Banner */}
       <HeaderBanner
-        badge="Client Endorsements & Proof"
-        title="Wall of Verified Client Love"
-        description="Honest assessments, technical feedback, and engineering endorsements from leadership teams across the globe."
+        isLoading={isLoadingSettings}
+        badge={bannerContent.banner.badge}
+        title={bannerContent.banner.title}
+        description={bannerContent.banner.description}
       >
         <div className="flex items-center justify-center gap-3 pt-2">
           <div className="inline-flex items-center gap-2 bg-white/90 dark:bg-slate-800/80 backdrop-blur-md px-4 py-2 rounded-2xl border border-slate-200 dark:border-slate-700">
